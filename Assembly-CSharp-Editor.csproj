@@ -114,6 +114,27 @@
  <Reference Include="UnityEditor.UI">
  <HintPath>C:/Users/OnCra/Documents/Unity Projects/Projeto-VII/Library/ScriptAssemblies/UnityEditor.UI.dll</HintPath>
  </Reference>
+ <Reference Include="Unity.VisualEffectGraph.Runtime">
+ <HintPath>C:/Users/OnCra/Documents/Unity Projects/Projeto-VII/Library/ScriptAssemblies/Unity.VisualEffectGraph.Runtime.dll</HintPath>
+ </Reference>
+ <Reference Include="Unity.VisualEffectGraph.Editor">
+ <HintPath>C:/Users/OnCra/Documents/Unity Projects/Projeto-VII/Library/ScriptAssemblies/Unity.VisualEffectGraph.Editor.dll</HintPath>
+ </Reference>
+ <Reference Include="Unity.Recorder.Editor">
+ <HintPath>C:/Users/OnCra/Documents/Unity Projects/Projeto-VII/Library/ScriptAssemblies/Unity.Recorder.Editor.dll</HintPath>
+ </Reference>
+ <Reference Include="Unity.Recorder">
+ <HintPath>C:/Users/OnCra/Documents/Unity Projects/Projeto-VII/Library/ScriptAssemblies/Unity.Recorder.dll</HintPath>
+ </Reference>
+ <Reference Include="Unity.UI.Builder.Editor">
+ <HintPath>C:/Users/OnCra/Documents/Unity Projects/Projeto-VII/Library/ScriptAssemblies/Unity.UI.Builder.Editor.dll</HintPath>
+ </Reference>
+ <Reference Include="Unity.RemoteConfig.Editor">
+ <HintPath>C:/Users/OnCra/Documents/Unity Projects/Projeto-VII/Library/ScriptAssemblies/Unity.RemoteConfig.Editor.dll</HintPath>
+ </Reference>
+ <Reference Include="Unity.RemoteConfig">
+ <HintPath>C:/Users/OnCra/Documents/Unity Projects/Projeto-VII/Library/ScriptAssemblies/Unity.RemoteConfig.dll</HintPath>
+ </Reference>
  <Reference Include="UnityEngine">
  <HintPath>C:/Program Files/Unity/Hub/Editor/2020.1.0f1/Editor/Data/Managed/UnityEngine/UnityEngine.dll</HintPath>
  </Reference>
@@ -326,6 +347,12 @@
  </Reference>
  <Reference Include="ICSharpCode.NRefactory">
  <HintPath>C:/Users/OnCra/Documents/Unity Projects/Projeto-VII/Library/PackageCache/com.unity.render-pipelines.core@8.2.0/Editor/ShaderGenerator/ICSharpCode.NRefactory.dll</HintPath>
+ </Reference>
+ <Reference Include="DOTweenEditor">
+ <HintPath>C:/Users/OnCra/Documents/Unity Projects/Projeto-VII/Assets/Plugins/Demigiant/DOTween/Editor/DOTweenEditor.dll</HintPath>
+ </Reference>
+ <Reference Include="DOTween">
+ <HintPath>C:/Users/OnCra/Documents/Unity Projects/Projeto-VII/Assets/Plugins/Demigiant/DOTween/DOTween.dll</HintPath>
  </Reference>
  <Reference Include="nunit.framework">
  <HintPath>C:/Users/OnCra/Documents/Unity Projects/Projeto-VII/Library/PackageCache/com.unity.ext.nunit@1.0.0/net35/unity-custom/nunit.framework.dll</HintPath>
@@ -677,9 +704,17 @@
  </Reference>
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="Assembly-CSharp-firstpass.csproj">
+      <Project>{9b596ca2-7856-f05b-a4be-babd3277994a}</Project>
+      <Name>Assembly-CSharp-firstpass</Name>
+    </ProjectReference>
     <ProjectReference Include="Assembly-CSharp.csproj">
       <Project>{525cfd85-8bb1-b3f8-744f-d46f64e5ff8a}</Project>
       <Name>Assembly-CSharp</Name>
+    </ProjectReference>
+    <ProjectReference Include="Assembly-CSharp-Editor-firstpass.csproj">
+      <Project>{0b2aeaca-e5b7-f999-7af5-44f6d37526d9}</Project>
+      <Name>Assembly-CSharp-Editor-firstpass</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
