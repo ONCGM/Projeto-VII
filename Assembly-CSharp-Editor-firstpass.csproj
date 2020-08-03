@@ -801,10 +801,6 @@
       <Project>{9b596ca2-7856-f05b-a4be-babd3277994a}</Project>
       <Name>Assembly-CSharp-firstpass</Name>
     </ProjectReference>
-    <ProjectReference Include="GameInput.csproj">
-      <Project>{2209c00e-2745-5108-f784-114aedf35e4a}</Project>
-      <Name>GameInput</Name>
-    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it.

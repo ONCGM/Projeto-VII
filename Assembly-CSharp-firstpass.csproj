@@ -769,12 +769,6 @@
  <HintPath>C:/Program Files/Unity/Hub/Editor/2020.1.0f1/Editor/Data/MonoBleedingEdge/lib/mono/4.7.1-api/Facades/System.Xml.XPath.XDocument.dll</HintPath>
  </Reference>
   </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="GameInput.csproj">
-      <Project>{2209c00e-2745-5108-f784-114aedf35e4a}</Project>
-      <Name>GameInput</Name>
-    </ProjectReference>
-  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it.
        Other similar extension points exist, see Microsoft.Common.targets.

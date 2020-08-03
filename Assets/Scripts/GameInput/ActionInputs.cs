@@ -6,14 +6,12 @@ using System.Collections.Generic;
 using UnityEngine.InputSystem;
 using UnityEngine.InputSystem.Utilities;
 
-namespace GameInput
+public class @ActionInputs : IInputActionCollection, IDisposable
 {
-    public class @ActionInputs : IInputActionCollection, IDisposable
+    public InputActionAsset asset { get; }
+    public @ActionInputs()
     {
-        public InputActionAsset asset { get; }
-        public @ActionInputs()
-        {
-            asset = InputActionAsset.FromJson(@"{
+        asset = InputActionAsset.FromJson(@"{
     ""name"": ""ActionInputs"",
     ""maps"": [
         {
@@ -21,154 +19,132 @@ namespace GameInput
             ""id"": ""fd194e84-ed8a-44ea-9ce6-2a5abe3f5972"",
             ""actions"": [
                 {
-                    ""name"": ""Move"",
+                    ""name"": ""Horizontal"",
                     ""type"": ""PassThrough"",
                     ""id"": ""df18e738-fa3d-4773-8906-2ae6e139d745"",
-                    ""expectedControlType"": ""Dpad"",
-                    ""processors"": """",
+                    ""expectedControlType"": ""Axis"",
+                    ""processors"": ""AxisDeadzone,Normalize(max=1)"",
                     ""interactions"": """"
                 },
                 {
-                    ""name"": ""Camera"",
-                    ""type"": ""Button"",
-                    ""id"": ""cb3a5988-e57f-44c1-976e-ad65cbf3a5e5"",
-                    ""expectedControlType"": ""Button"",
-                    ""processors"": """",
+                    ""name"": ""Vertical"",
+                    ""type"": ""PassThrough"",
+                    ""id"": ""978109b5-a488-46f9-a50f-e42938991f9e"",
+                    ""expectedControlType"": ""Axis"",
+                    ""processors"": ""AxisDeadzone,Normalize(max=1)"",
                     ""interactions"": """"
                 }
             ],
             ""bindings"": [
                 {
-                    ""name"": ""2D Vector Keyboard"",
-                    ""id"": ""bda5a946-f047-4b2e-85e7-582a747bbcaf"",
-                    ""path"": ""2DVector"",
+                    ""name"": ""Horizontal"",
+                    ""id"": ""a2031189-e0cb-456d-b4d4-0678db35194f"",
+                    ""path"": ""1DAxis"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",
-                    ""action"": ""Move"",
+                    ""action"": ""Horizontal"",
                     ""isComposite"": true,
                     ""isPartOfComposite"": false
                 },
                 {
-                    ""name"": ""up"",
-                    ""id"": ""ce40c48d-f1f4-41b4-91b4-b70101c2c08e"",
-                    ""path"": ""<Keyboard>/w"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": ""PC"",
-                    ""action"": ""Move"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": true
-                },
-                {
-                    ""name"": ""down"",
-                    ""id"": ""f56b475c-a632-457f-aa12-79bae864735e"",
-                    ""path"": ""<Keyboard>/s"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": ""PC"",
-                    ""action"": ""Move"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": true
-                },
-                {
-                    ""name"": ""left"",
-                    ""id"": ""ca2a5699-8dee-4fdd-979d-b4fde0efa56f"",
-                    ""path"": ""<Keyboard>/a"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": ""PC"",
-                    ""action"": ""Move"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": true
-                },
-                {
-                    ""name"": ""right"",
-                    ""id"": ""aaf72bc2-d476-4053-a633-444c0f6e6cd0"",
+                    ""name"": ""positive"",
+                    ""id"": ""56314dc2-086b-49e5-b512-706979b721d6"",
                     ""path"": ""<Keyboard>/d"",
                     ""interactions"": """",
                     ""processors"": """",
-                    ""groups"": ""PC"",
-                    ""action"": ""Move"",
+                    ""groups"": """",
+                    ""action"": ""Horizontal"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": true
                 },
                 {
-                    ""name"": ""2D Vector Gamepad"",
-                    ""id"": ""80bcad74-190e-472a-a753-15657620e609"",
-                    ""path"": ""2DVector"",
+                    ""name"": ""positive"",
+                    ""id"": ""5ac22407-8266-4655-aa5d-0e8d8a3b2f0a"",
+                    ""path"": ""<Gamepad>/leftStick/right"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",
-                    ""action"": ""Move"",
+                    ""action"": ""Horizontal"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": ""negative"",
+                    ""id"": ""37182348-a0d4-4664-a62f-a99b6f9cdfb0"",
+                    ""path"": ""<Keyboard>/a"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Horizontal"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": ""negative"",
+                    ""id"": ""e400a7a4-95ef-49d3-b3ef-fa3841392ca6"",
+                    ""path"": ""<Gamepad>/leftStick/left"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Horizontal"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": ""Vertical"",
+                    ""id"": ""9d9bfc40-20bd-49c4-b1ee-d174b7102a96"",
+                    ""path"": ""1DAxis"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Vertical"",
                     ""isComposite"": true,
                     ""isPartOfComposite"": false
                 },
                 {
-                    ""name"": ""up"",
-                    ""id"": ""a17177b7-13b2-4801-99e7-8ec31b00eb91"",
-                    ""path"": ""<Gamepad>/leftStick/y"",
+                    ""name"": ""positive"",
+                    ""id"": ""4bc2fab1-bbd5-4a4e-87cd-4da072c414d6"",
+                    ""path"": ""<Keyboard>/w"",
                     ""interactions"": """",
                     ""processors"": """",
-                    ""groups"": ""PC"",
-                    ""action"": ""Move"",
+                    ""groups"": """",
+                    ""action"": ""Vertical"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": true
                 },
                 {
-                    ""name"": ""down"",
-                    ""id"": ""22cfcf35-af00-43eb-a3be-853670d64c0c"",
-                    ""path"": ""<Gamepad>/leftStick/y"",
+                    ""name"": ""positive"",
+                    ""id"": ""7f460449-4c3a-4b40-99be-ce040cbd15a0"",
+                    ""path"": ""<Gamepad>/leftStick/up"",
                     ""interactions"": """",
                     ""processors"": """",
-                    ""groups"": ""PC"",
-                    ""action"": ""Move"",
+                    ""groups"": """",
+                    ""action"": ""Vertical"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": true
                 },
                 {
-                    ""name"": ""left"",
-                    ""id"": ""d3173f36-b5d8-442e-9898-c48682c0f9e0"",
-                    ""path"": ""<Gamepad>/leftStick/x"",
+                    ""name"": ""negative"",
+                    ""id"": ""98c06bb3-65f7-4e29-a4f9-066a8efdf10d"",
+                    ""path"": ""<Keyboard>/s"",
                     ""interactions"": """",
                     ""processors"": """",
-                    ""groups"": ""PC"",
-                    ""action"": ""Move"",
+                    ""groups"": """",
+                    ""action"": ""Vertical"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": true
                 },
                 {
-                    ""name"": ""right"",
-                    ""id"": ""3adfa8fb-cb4b-4d56-bf8e-787679c9d73e"",
-                    ""path"": ""<Gamepad>/leftStick/x"",
+                    ""name"": ""negative"",
+                    ""id"": ""eaa05e45-3a4f-4f2c-82a5-1722dfe5cd7f"",
+                    ""path"": ""<Gamepad>/leftStick/down"",
                     ""interactions"": """",
                     ""processors"": """",
-                    ""groups"": ""PC"",
-                    ""action"": ""Move"",
+                    ""groups"": """",
+                    ""action"": ""Vertical"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": true
-                },
-                {
-                    ""name"": """",
-                    ""id"": ""1ade445a-ae02-45aa-9f08-77b08c95df28"",
-                    ""path"": ""<Keyboard>/c"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": ""PC"",
-                    ""action"": ""Camera"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": false
-                },
-                {
-                    ""name"": """",
-                    ""id"": ""42f33cb2-9622-4b6d-a48b-0cc3712a50ba"",
-                    ""path"": ""<Gamepad>/select"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": ""PC"",
-                    ""action"": ""Camera"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": false
                 }
             ]
         },
@@ -224,149 +200,148 @@ namespace GameInput
         }
     ]
 }");
-            // Movement
-            m_Movement = asset.FindActionMap("Movement", throwIfNotFound: true);
-            m_Movement_Move = m_Movement.FindAction("Move", throwIfNotFound: true);
-            m_Movement_Camera = m_Movement.FindAction("Camera", throwIfNotFound: true);
-            // Combat
-            m_Combat = asset.FindActionMap("Combat", throwIfNotFound: true);
-            m_Combat_Newaction = m_Combat.FindAction("New action", throwIfNotFound: true);
-        }
-
-        public void Dispose()
-        {
-            UnityEngine.Object.Destroy(asset);
-        }
-
-        public InputBinding? bindingMask
-        {
-            get => asset.bindingMask;
-            set => asset.bindingMask = value;
-        }
-
-        public ReadOnlyArray<InputDevice>? devices
-        {
-            get => asset.devices;
-            set => asset.devices = value;
-        }
-
-        public ReadOnlyArray<InputControlScheme> controlSchemes => asset.controlSchemes;
-
-        public bool Contains(InputAction action)
-        {
-            return asset.Contains(action);
-        }
-
-        public IEnumerator<InputAction> GetEnumerator()
-        {
-            return asset.GetEnumerator();
-        }
-
-        IEnumerator IEnumerable.GetEnumerator()
-        {
-            return GetEnumerator();
-        }
-
-        public void Enable()
-        {
-            asset.Enable();
-        }
-
-        public void Disable()
-        {
-            asset.Disable();
-        }
-
         // Movement
-        private readonly InputActionMap m_Movement;
-        private IMovementActions m_MovementActionsCallbackInterface;
-        private readonly InputAction m_Movement_Move;
-        private readonly InputAction m_Movement_Camera;
-        public struct MovementActions
-        {
-            private @ActionInputs m_Wrapper;
-            public MovementActions(@ActionInputs wrapper) { m_Wrapper = wrapper; }
-            public InputAction @Move => m_Wrapper.m_Movement_Move;
-            public InputAction @Camera => m_Wrapper.m_Movement_Camera;
-            public InputActionMap Get() { return m_Wrapper.m_Movement; }
-            public void Enable() { Get().Enable(); }
-            public void Disable() { Get().Disable(); }
-            public bool enabled => Get().enabled;
-            public static implicit operator InputActionMap(MovementActions set) { return set.Get(); }
-            public void SetCallbacks(IMovementActions instance)
-            {
-                if (m_Wrapper.m_MovementActionsCallbackInterface != null)
-                {
-                    @Move.started -= m_Wrapper.m_MovementActionsCallbackInterface.OnMove;
-                    @Move.performed -= m_Wrapper.m_MovementActionsCallbackInterface.OnMove;
-                    @Move.canceled -= m_Wrapper.m_MovementActionsCallbackInterface.OnMove;
-                    @Camera.started -= m_Wrapper.m_MovementActionsCallbackInterface.OnCamera;
-                    @Camera.performed -= m_Wrapper.m_MovementActionsCallbackInterface.OnCamera;
-                    @Camera.canceled -= m_Wrapper.m_MovementActionsCallbackInterface.OnCamera;
-                }
-                m_Wrapper.m_MovementActionsCallbackInterface = instance;
-                if (instance != null)
-                {
-                    @Move.started += instance.OnMove;
-                    @Move.performed += instance.OnMove;
-                    @Move.canceled += instance.OnMove;
-                    @Camera.started += instance.OnCamera;
-                    @Camera.performed += instance.OnCamera;
-                    @Camera.canceled += instance.OnCamera;
-                }
-            }
-        }
-        public MovementActions @Movement => new MovementActions(this);
-
+        m_Movement = asset.FindActionMap("Movement", throwIfNotFound: true);
+        m_Movement_Horizontal = m_Movement.FindAction("Horizontal", throwIfNotFound: true);
+        m_Movement_Vertical = m_Movement.FindAction("Vertical", throwIfNotFound: true);
         // Combat
-        private readonly InputActionMap m_Combat;
-        private ICombatActions m_CombatActionsCallbackInterface;
-        private readonly InputAction m_Combat_Newaction;
-        public struct CombatActions
+        m_Combat = asset.FindActionMap("Combat", throwIfNotFound: true);
+        m_Combat_Newaction = m_Combat.FindAction("New action", throwIfNotFound: true);
+    }
+
+    public void Dispose()
+    {
+        UnityEngine.Object.Destroy(asset);
+    }
+
+    public InputBinding? bindingMask
+    {
+        get => asset.bindingMask;
+        set => asset.bindingMask = value;
+    }
+
+    public ReadOnlyArray<InputDevice>? devices
+    {
+        get => asset.devices;
+        set => asset.devices = value;
+    }
+
+    public ReadOnlyArray<InputControlScheme> controlSchemes => asset.controlSchemes;
+
+    public bool Contains(InputAction action)
+    {
+        return asset.Contains(action);
+    }
+
+    public IEnumerator<InputAction> GetEnumerator()
+    {
+        return asset.GetEnumerator();
+    }
+
+    IEnumerator IEnumerable.GetEnumerator()
+    {
+        return GetEnumerator();
+    }
+
+    public void Enable()
+    {
+        asset.Enable();
+    }
+
+    public void Disable()
+    {
+        asset.Disable();
+    }
+
+    // Movement
+    private readonly InputActionMap m_Movement;
+    private IMovementActions m_MovementActionsCallbackInterface;
+    private readonly InputAction m_Movement_Horizontal;
+    private readonly InputAction m_Movement_Vertical;
+    public struct MovementActions
+    {
+        private @ActionInputs m_Wrapper;
+        public MovementActions(@ActionInputs wrapper) { m_Wrapper = wrapper; }
+        public InputAction @Horizontal => m_Wrapper.m_Movement_Horizontal;
+        public InputAction @Vertical => m_Wrapper.m_Movement_Vertical;
+        public InputActionMap Get() { return m_Wrapper.m_Movement; }
+        public void Enable() { Get().Enable(); }
+        public void Disable() { Get().Disable(); }
+        public bool enabled => Get().enabled;
+        public static implicit operator InputActionMap(MovementActions set) { return set.Get(); }
+        public void SetCallbacks(IMovementActions instance)
         {
-            private @ActionInputs m_Wrapper;
-            public CombatActions(@ActionInputs wrapper) { m_Wrapper = wrapper; }
-            public InputAction @Newaction => m_Wrapper.m_Combat_Newaction;
-            public InputActionMap Get() { return m_Wrapper.m_Combat; }
-            public void Enable() { Get().Enable(); }
-            public void Disable() { Get().Disable(); }
-            public bool enabled => Get().enabled;
-            public static implicit operator InputActionMap(CombatActions set) { return set.Get(); }
-            public void SetCallbacks(ICombatActions instance)
+            if (m_Wrapper.m_MovementActionsCallbackInterface != null)
             {
-                if (m_Wrapper.m_CombatActionsCallbackInterface != null)
-                {
-                    @Newaction.started -= m_Wrapper.m_CombatActionsCallbackInterface.OnNewaction;
-                    @Newaction.performed -= m_Wrapper.m_CombatActionsCallbackInterface.OnNewaction;
-                    @Newaction.canceled -= m_Wrapper.m_CombatActionsCallbackInterface.OnNewaction;
-                }
-                m_Wrapper.m_CombatActionsCallbackInterface = instance;
-                if (instance != null)
-                {
-                    @Newaction.started += instance.OnNewaction;
-                    @Newaction.performed += instance.OnNewaction;
-                    @Newaction.canceled += instance.OnNewaction;
-                }
+                @Horizontal.started -= m_Wrapper.m_MovementActionsCallbackInterface.OnHorizontal;
+                @Horizontal.performed -= m_Wrapper.m_MovementActionsCallbackInterface.OnHorizontal;
+                @Horizontal.canceled -= m_Wrapper.m_MovementActionsCallbackInterface.OnHorizontal;
+                @Vertical.started -= m_Wrapper.m_MovementActionsCallbackInterface.OnVertical;
+                @Vertical.performed -= m_Wrapper.m_MovementActionsCallbackInterface.OnVertical;
+                @Vertical.canceled -= m_Wrapper.m_MovementActionsCallbackInterface.OnVertical;
+            }
+            m_Wrapper.m_MovementActionsCallbackInterface = instance;
+            if (instance != null)
+            {
+                @Horizontal.started += instance.OnHorizontal;
+                @Horizontal.performed += instance.OnHorizontal;
+                @Horizontal.canceled += instance.OnHorizontal;
+                @Vertical.started += instance.OnVertical;
+                @Vertical.performed += instance.OnVertical;
+                @Vertical.canceled += instance.OnVertical;
             }
         }
-        public CombatActions @Combat => new CombatActions(this);
-        private int m_PCSchemeIndex = -1;
-        public InputControlScheme PCScheme
+    }
+    public MovementActions @Movement => new MovementActions(this);
+
+    // Combat
+    private readonly InputActionMap m_Combat;
+    private ICombatActions m_CombatActionsCallbackInterface;
+    private readonly InputAction m_Combat_Newaction;
+    public struct CombatActions
+    {
+        private @ActionInputs m_Wrapper;
+        public CombatActions(@ActionInputs wrapper) { m_Wrapper = wrapper; }
+        public InputAction @Newaction => m_Wrapper.m_Combat_Newaction;
+        public InputActionMap Get() { return m_Wrapper.m_Combat; }
+        public void Enable() { Get().Enable(); }
+        public void Disable() { Get().Disable(); }
+        public bool enabled => Get().enabled;
+        public static implicit operator InputActionMap(CombatActions set) { return set.Get(); }
+        public void SetCallbacks(ICombatActions instance)
         {
-            get
+            if (m_Wrapper.m_CombatActionsCallbackInterface != null)
             {
-                if (m_PCSchemeIndex == -1) m_PCSchemeIndex = asset.FindControlSchemeIndex("PC");
-                return asset.controlSchemes[m_PCSchemeIndex];
+                @Newaction.started -= m_Wrapper.m_CombatActionsCallbackInterface.OnNewaction;
+                @Newaction.performed -= m_Wrapper.m_CombatActionsCallbackInterface.OnNewaction;
+                @Newaction.canceled -= m_Wrapper.m_CombatActionsCallbackInterface.OnNewaction;
+            }
+            m_Wrapper.m_CombatActionsCallbackInterface = instance;
+            if (instance != null)
+            {
+                @Newaction.started += instance.OnNewaction;
+                @Newaction.performed += instance.OnNewaction;
+                @Newaction.canceled += instance.OnNewaction;
             }
         }
-        public interface IMovementActions
+    }
+    public CombatActions @Combat => new CombatActions(this);
+    private int m_PCSchemeIndex = -1;
+    public InputControlScheme PCScheme
+    {
+        get
         {
-            void OnMove(InputAction.CallbackContext context);
-            void OnCamera(InputAction.CallbackContext context);
+            if (m_PCSchemeIndex == -1) m_PCSchemeIndex = asset.FindControlSchemeIndex("PC");
+            return asset.controlSchemes[m_PCSchemeIndex];
         }
-        public interface ICombatActions
-        {
-            void OnNewaction(InputAction.CallbackContext context);
-        }
+    }
+    public interface IMovementActions
+    {
+        void OnHorizontal(InputAction.CallbackContext context);
+        void OnVertical(InputAction.CallbackContext context);
+    }
+    public interface ICombatActions
+    {
+        void OnNewaction(InputAction.CallbackContext context);
     }
 }
