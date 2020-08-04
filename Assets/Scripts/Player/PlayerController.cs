@@ -8,7 +8,7 @@ using UnityEngine.InputSystem.Composites;
 namespace Player {
     public class PlayerController : MonoBehaviour {
         [Header("Movement")]
-        [SerializeField] private float walkSpeed = 6f;
+        [SerializeField] private float walkSpeed = 9f;
         [SerializeField] private float runSpeed = 15f;
         private float playerSpeed = 1f;
         private NavMeshAgent agent;
@@ -18,7 +18,7 @@ namespace Player {
         private ActionInputs inputs;
 
         /// Is the player inside the shop? True for yes. 
-        private bool isInsideShop;
+        private bool isInsideShop = true;
         /// <summary>
         /// Is the player inside the shop? True for yes.
         /// </summary>

@@ -52,6 +52,8 @@
   <ItemGroup>
      <Compile Include="Assets\Scripts\Player\PlayerController.cs" />
      <Compile Include="Assets\Scripts\GameInput\ActionInputs.cs" />
+     <Compile Include="Assets\Scripts\Store\StoreEntrance.cs" />
+     <Compile Include="Assets\Scripts\Store\StoreTransition.cs" />
      <None Include="Assets\TextMesh Pro\Shaders\TMPro.cginc" />
      <None Include="Assets\TextMesh Pro\Shaders\TMP_SDF-Mobile Overlay.shader" />
      <None Include="Assets\TextMesh Pro\Shaders\TMP_Bitmap.shader" />
