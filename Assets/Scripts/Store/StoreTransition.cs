@@ -15,7 +15,9 @@ public class StoreTransition : MonoBehaviour {
     }
 
     private void OnSceneLoaded(Scene scene, LoadSceneMode mode) {
-        GameObject.FindWithTag("MainCamera").GetComponent<Camera>().GetUniversalAdditionalCameraData().cameraStack.Add(gameObject.GetComponent<Camera>());
+        UniversalAdditionalCameraData cameraData = GameObject.FindWithTag("MainCamera").GetComponent<Camera>().GetUniversalAdditionalCameraData();
+        cameraData.cameraStack.Clear();
+        cameraData.cameraStack.Add(gameObject.GetComponent<Camera>());
         anim.SetTrigger("Open");
     }
 
@@ -25,5 +27,10 @@ public class StoreTransition : MonoBehaviour {
 
     public void SelfDestruct() {
         Destroy(gameObject);
+    }
+
+    private void OnDestroy() {
+        SceneManager.sceneLoaded -= OnSceneLoaded;
+        GameObject.FindWithTag("MainCamera").GetComponent<Camera>().GetUniversalAdditionalCameraData().cameraStack.Clear();
     }
 }

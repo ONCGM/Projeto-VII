@@ -16,11 +16,11 @@ public class StoreEntrance : MonoBehaviour {
     
     private void OnTriggerEnter(Collider other) {
         if(!other.CompareTag("Player") || startedTransition) return;
-        SceneManager.LoadScene(sceneIndex);
-        // GameObject transitionCamera = Instantiate(transitionPrefab);
-        // DontDestroyOnLoad(transitionCamera);
-        // transitionCamera.GetComponent<StoreTransition>().sceneIndex = sceneIndex;
-        // mainCamera.GetUniversalAdditionalCameraData().cameraStack.Add(transitionCamera.GetComponent<Camera>());
+        GameObject transitionCamera = Instantiate(transitionPrefab);
+        DontDestroyOnLoad(transitionCamera);
+        transitionCamera.GetComponent<StoreTransition>().sceneIndex = sceneIndex;
+        mainCamera.GetUniversalAdditionalCameraData().cameraStack.Clear();
+        mainCamera.GetUniversalAdditionalCameraData().cameraStack.Add(transitionCamera.GetComponent<Camera>());
         startedTransition = true;
     }
 }
