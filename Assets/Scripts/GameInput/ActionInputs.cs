@@ -15,7 +15,7 @@ public class @ActionInputs : IInputActionCollection, IDisposable
     ""name"": ""ActionInputs"",
     ""maps"": [
         {
-            ""name"": ""Movement"",
+            ""name"": ""Player"",
             ""id"": ""fd194e84-ed8a-44ea-9ce6-2a5abe3f5972"",
             ""actions"": [
                 {
@@ -32,6 +32,30 @@ public class @ActionInputs : IInputActionCollection, IDisposable
                     ""id"": ""978109b5-a488-46f9-a50f-e42938991f9e"",
                     ""expectedControlType"": ""Axis"",
                     ""processors"": ""AxisDeadzone,Normalize(max=1)"",
+                    ""interactions"": """"
+                },
+                {
+                    ""name"": ""Run"",
+                    ""type"": ""Button"",
+                    ""id"": ""c3573caf-cdca-412d-a275-c4a4e4fc4fc4"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """"
+                },
+                {
+                    ""name"": ""Attack"",
+                    ""type"": ""Button"",
+                    ""id"": ""acad5bff-2f64-4f92-9cf0-7a5628e110ac"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """"
+                },
+                {
+                    ""name"": ""Special"",
+                    ""type"": ""Button"",
+                    ""id"": ""9053b252-e60b-4770-8331-557448749be8"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
                     ""interactions"": """"
                 }
             ],
@@ -145,31 +169,70 @@ public class @ActionInputs : IInputActionCollection, IDisposable
                     ""action"": ""Vertical"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": true
-                }
-            ]
-        },
-        {
-            ""name"": ""Combat"",
-            ""id"": ""ab2a0e5f-5fad-4394-8e4e-a38d50b2d201"",
-            ""actions"": [
-                {
-                    ""name"": ""New action"",
-                    ""type"": ""Button"",
-                    ""id"": ""92079911-86a1-45d2-a947-f45d4c9e6398"",
-                    ""expectedControlType"": ""Button"",
-                    ""processors"": """",
-                    ""interactions"": """"
-                }
-            ],
-            ""bindings"": [
+                },
                 {
                     ""name"": """",
-                    ""id"": ""4ee046f5-8fd9-4443-bf2a-17b1c33a1631"",
-                    ""path"": """",
+                    ""id"": ""bbd79855-4c6b-46ca-b009-29aa2e7d6312"",
+                    ""path"": ""<Keyboard>/leftShift"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Run"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""2ee0ce1e-4122-4be4-a63a-638c89277aa1"",
+                    ""path"": ""<Gamepad>/buttonEast"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Run"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""aa458275-2581-4f9b-b947-ce193a8639a7"",
+                    ""path"": ""<Keyboard>/space"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Attack"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""bcbf207c-4a36-4493-ad5b-9cc4fb29280b"",
+                    ""path"": ""<Gamepad>/buttonWest"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": ""PC"",
-                    ""action"": ""New action"",
+                    ""action"": ""Attack"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""ee67b99b-7de2-498c-8cc8-d350f1cc322f"",
+                    ""path"": ""<Keyboard>/leftCtrl"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Special"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""5625861c-03a6-4b93-96f6-9d496be291ed"",
+                    ""path"": ""<Gamepad>/buttonNorth"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Special"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 }
@@ -200,13 +263,13 @@ public class @ActionInputs : IInputActionCollection, IDisposable
         }
     ]
 }");
-        // Movement
-        m_Movement = asset.FindActionMap("Movement", throwIfNotFound: true);
-        m_Movement_Horizontal = m_Movement.FindAction("Horizontal", throwIfNotFound: true);
-        m_Movement_Vertical = m_Movement.FindAction("Vertical", throwIfNotFound: true);
-        // Combat
-        m_Combat = asset.FindActionMap("Combat", throwIfNotFound: true);
-        m_Combat_Newaction = m_Combat.FindAction("New action", throwIfNotFound: true);
+        // Player
+        m_Player = asset.FindActionMap("Player", throwIfNotFound: true);
+        m_Player_Horizontal = m_Player.FindAction("Horizontal", throwIfNotFound: true);
+        m_Player_Vertical = m_Player.FindAction("Vertical", throwIfNotFound: true);
+        m_Player_Run = m_Player.FindAction("Run", throwIfNotFound: true);
+        m_Player_Attack = m_Player.FindAction("Attack", throwIfNotFound: true);
+        m_Player_Special = m_Player.FindAction("Special", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -253,34 +316,49 @@ public class @ActionInputs : IInputActionCollection, IDisposable
         asset.Disable();
     }
 
-    // Movement
-    private readonly InputActionMap m_Movement;
-    private IMovementActions m_MovementActionsCallbackInterface;
-    private readonly InputAction m_Movement_Horizontal;
-    private readonly InputAction m_Movement_Vertical;
-    public struct MovementActions
+    // Player
+    private readonly InputActionMap m_Player;
+    private IPlayerActions m_PlayerActionsCallbackInterface;
+    private readonly InputAction m_Player_Horizontal;
+    private readonly InputAction m_Player_Vertical;
+    private readonly InputAction m_Player_Run;
+    private readonly InputAction m_Player_Attack;
+    private readonly InputAction m_Player_Special;
+    public struct PlayerActions
     {
         private @ActionInputs m_Wrapper;
-        public MovementActions(@ActionInputs wrapper) { m_Wrapper = wrapper; }
-        public InputAction @Horizontal => m_Wrapper.m_Movement_Horizontal;
-        public InputAction @Vertical => m_Wrapper.m_Movement_Vertical;
-        public InputActionMap Get() { return m_Wrapper.m_Movement; }
+        public PlayerActions(@ActionInputs wrapper) { m_Wrapper = wrapper; }
+        public InputAction @Horizontal => m_Wrapper.m_Player_Horizontal;
+        public InputAction @Vertical => m_Wrapper.m_Player_Vertical;
+        public InputAction @Run => m_Wrapper.m_Player_Run;
+        public InputAction @Attack => m_Wrapper.m_Player_Attack;
+        public InputAction @Special => m_Wrapper.m_Player_Special;
+        public InputActionMap Get() { return m_Wrapper.m_Player; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
         public bool enabled => Get().enabled;
-        public static implicit operator InputActionMap(MovementActions set) { return set.Get(); }
-        public void SetCallbacks(IMovementActions instance)
+        public static implicit operator InputActionMap(PlayerActions set) { return set.Get(); }
+        public void SetCallbacks(IPlayerActions instance)
         {
-            if (m_Wrapper.m_MovementActionsCallbackInterface != null)
+            if (m_Wrapper.m_PlayerActionsCallbackInterface != null)
             {
-                @Horizontal.started -= m_Wrapper.m_MovementActionsCallbackInterface.OnHorizontal;
-                @Horizontal.performed -= m_Wrapper.m_MovementActionsCallbackInterface.OnHorizontal;
-                @Horizontal.canceled -= m_Wrapper.m_MovementActionsCallbackInterface.OnHorizontal;
-                @Vertical.started -= m_Wrapper.m_MovementActionsCallbackInterface.OnVertical;
-                @Vertical.performed -= m_Wrapper.m_MovementActionsCallbackInterface.OnVertical;
-                @Vertical.canceled -= m_Wrapper.m_MovementActionsCallbackInterface.OnVertical;
+                @Horizontal.started -= m_Wrapper.m_PlayerActionsCallbackInterface.OnHorizontal;
+                @Horizontal.performed -= m_Wrapper.m_PlayerActionsCallbackInterface.OnHorizontal;
+                @Horizontal.canceled -= m_Wrapper.m_PlayerActionsCallbackInterface.OnHorizontal;
+                @Vertical.started -= m_Wrapper.m_PlayerActionsCallbackInterface.OnVertical;
+                @Vertical.performed -= m_Wrapper.m_PlayerActionsCallbackInterface.OnVertical;
+                @Vertical.canceled -= m_Wrapper.m_PlayerActionsCallbackInterface.OnVertical;
+                @Run.started -= m_Wrapper.m_PlayerActionsCallbackInterface.OnRun;
+                @Run.performed -= m_Wrapper.m_PlayerActionsCallbackInterface.OnRun;
+                @Run.canceled -= m_Wrapper.m_PlayerActionsCallbackInterface.OnRun;
+                @Attack.started -= m_Wrapper.m_PlayerActionsCallbackInterface.OnAttack;
+                @Attack.performed -= m_Wrapper.m_PlayerActionsCallbackInterface.OnAttack;
+                @Attack.canceled -= m_Wrapper.m_PlayerActionsCallbackInterface.OnAttack;
+                @Special.started -= m_Wrapper.m_PlayerActionsCallbackInterface.OnSpecial;
+                @Special.performed -= m_Wrapper.m_PlayerActionsCallbackInterface.OnSpecial;
+                @Special.canceled -= m_Wrapper.m_PlayerActionsCallbackInterface.OnSpecial;
             }
-            m_Wrapper.m_MovementActionsCallbackInterface = instance;
+            m_Wrapper.m_PlayerActionsCallbackInterface = instance;
             if (instance != null)
             {
                 @Horizontal.started += instance.OnHorizontal;
@@ -289,43 +367,19 @@ public class @ActionInputs : IInputActionCollection, IDisposable
                 @Vertical.started += instance.OnVertical;
                 @Vertical.performed += instance.OnVertical;
                 @Vertical.canceled += instance.OnVertical;
+                @Run.started += instance.OnRun;
+                @Run.performed += instance.OnRun;
+                @Run.canceled += instance.OnRun;
+                @Attack.started += instance.OnAttack;
+                @Attack.performed += instance.OnAttack;
+                @Attack.canceled += instance.OnAttack;
+                @Special.started += instance.OnSpecial;
+                @Special.performed += instance.OnSpecial;
+                @Special.canceled += instance.OnSpecial;
             }
         }
     }
-    public MovementActions @Movement => new MovementActions(this);
-
-    // Combat
-    private readonly InputActionMap m_Combat;
-    private ICombatActions m_CombatActionsCallbackInterface;
-    private readonly InputAction m_Combat_Newaction;
-    public struct CombatActions
-    {
-        private @ActionInputs m_Wrapper;
-        public CombatActions(@ActionInputs wrapper) { m_Wrapper = wrapper; }
-        public InputAction @Newaction => m_Wrapper.m_Combat_Newaction;
-        public InputActionMap Get() { return m_Wrapper.m_Combat; }
-        public void Enable() { Get().Enable(); }
-        public void Disable() { Get().Disable(); }
-        public bool enabled => Get().enabled;
-        public static implicit operator InputActionMap(CombatActions set) { return set.Get(); }
-        public void SetCallbacks(ICombatActions instance)
-        {
-            if (m_Wrapper.m_CombatActionsCallbackInterface != null)
-            {
-                @Newaction.started -= m_Wrapper.m_CombatActionsCallbackInterface.OnNewaction;
-                @Newaction.performed -= m_Wrapper.m_CombatActionsCallbackInterface.OnNewaction;
-                @Newaction.canceled -= m_Wrapper.m_CombatActionsCallbackInterface.OnNewaction;
-            }
-            m_Wrapper.m_CombatActionsCallbackInterface = instance;
-            if (instance != null)
-            {
-                @Newaction.started += instance.OnNewaction;
-                @Newaction.performed += instance.OnNewaction;
-                @Newaction.canceled += instance.OnNewaction;
-            }
-        }
-    }
-    public CombatActions @Combat => new CombatActions(this);
+    public PlayerActions @Player => new PlayerActions(this);
     private int m_PCSchemeIndex = -1;
     public InputControlScheme PCScheme
     {
@@ -335,13 +389,12 @@ public class @ActionInputs : IInputActionCollection, IDisposable
             return asset.controlSchemes[m_PCSchemeIndex];
         }
     }
-    public interface IMovementActions
+    public interface IPlayerActions
     {
         void OnHorizontal(InputAction.CallbackContext context);
         void OnVertical(InputAction.CallbackContext context);
-    }
-    public interface ICombatActions
-    {
-        void OnNewaction(InputAction.CallbackContext context);
+        void OnRun(InputAction.CallbackContext context);
+        void OnAttack(InputAction.CallbackContext context);
+        void OnSpecial(InputAction.CallbackContext context);
     }
 }

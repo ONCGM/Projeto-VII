@@ -7,6 +7,7 @@ using UnityEngine.SceneManagement;
 
 namespace Store {
     public class StoreEntrance : MonoBehaviour {
+        #pragma warning disable 0649
         [Header("Scene Loading")] [SerializeField]
         private int sceneIndex;
 
@@ -16,6 +17,7 @@ namespace Store {
         [SerializeField] private GameObject transitionPrefab;
         private bool startedTransition;
 
+        #pragma warning restore 0649
         private void OnTriggerEnter(Collider other) {
             if(!other.CompareTag("Player") || startedTransition) return;
             GameObject transitionCamera = Instantiate(transitionPrefab);

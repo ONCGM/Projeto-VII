@@ -49,7 +49,7 @@ namespace Player {
         private void Start() { }
 
         private void Update() {
-            movementScale = new Vector3(inputs.Movement.Horizontal.ReadValue<float>(), 0f, inputs.Movement.Vertical.ReadValue<float>());
+            movementScale = new Vector3(inputs.Player.Horizontal.ReadValue<float>(), 0f, inputs.Player.Vertical.ReadValue<float>());
         }
 
         private void FixedUpdate() {
