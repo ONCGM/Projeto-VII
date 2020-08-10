@@ -50,7 +50,7 @@
     <ImplicitlyExpandDesignTimeFacades>false</ImplicitlyExpandDesignTimeFacades>
   </PropertyGroup>
   <ItemGroup>
-     <Compile Include="Assets\Scripts\Player\PlayerController.cs" />
+     <Compile Include="Assets\Scripts\Entity\Player\PlayerController.cs" />
      <Compile Include="Assets\Scripts\Islands\IslandsSceneTransition.cs" />
      <Compile Include="Assets\Scripts\Game\LoadGameScene.cs" />
      <Compile Include="Assets\Scripts\Town\PortSceneTransition.cs" />
@@ -60,6 +60,9 @@
      <Compile Include="Assets\Scripts\Ship\ShipTravelRoutine.cs" />
      <Compile Include="Assets\Scripts\Game\GameMaster.cs" />
      <Compile Include="Assets\Scripts\Store\StoreEntrance.cs" />
+     <Compile Include="Assets\Scripts\Entity\Enemies\Enemy.cs" />
+     <Compile Include="Assets\Scripts\Entity\Entity.cs" />
+     <Compile Include="Assets\Scripts\Entity\EntityInterfaces.cs" />
      <None Include="Assets\TextMesh Pro\Shaders\TMPro.cginc" />
      <None Include="Assets\TextMesh Pro\Shaders\TMP_SDF-Mobile Overlay.shader" />
      <None Include="Assets\TextMesh Pro\Shaders\TMP_Bitmap.shader" />

@@ -6,22 +6,20 @@ using UnityEngine.AI;
 using UnityEngine.InputSystem;
 using UnityEngine.InputSystem.Composites;
 
-namespace Player {
-    public class PlayerController : MonoBehaviour {
+namespace Entity.Player {
+    public class PlayerController : Entity {
         [Header("Movement")]
         [SerializeField, Range(0f, 25f)] private float walkSpeed = 9f;
         [SerializeField, Range(0f, 25f)] private float runSpeed = 15f;
         [SerializeField, Range(0f, 2f)] private float rotationSpeed = 0.1f;
         [SerializeField, Range(0f, 2f)] private float minRotationInput = 0.075f;
         private float playerSpeed = 1f;
-        private NavMeshAgent agent;
         private Vector3 movementScale = Vector3.zero;
 
-        [Header("Attacks")] 
+        [Header("Attacks")]
+        [SerializeField] private LayerMask enemyLayer;
+        [SerializeField] private SphereCollider swordCollider;
         private int comboNumber;
-        
-        // Animator
-        private Animator anim;
         
         // Input
         private ActionInputs inputs;
@@ -45,11 +43,11 @@ namespace Player {
             }
         }
 
-        private void Awake() {
+        protected override void Awake() {
+            base.Awake();
             inputs = new ActionInputs();
             inputs.Player.Attack.performed += ComboAttack;
-            anim = GetComponent<Animator>();
-            agent = GetComponent<NavMeshAgent>();
+            if(ReferenceEquals(swordCollider, null)) swordCollider = GetComponentInChildren<SphereCollider>();
             playerSpeed = (isInsideShop ? walkSpeed : runSpeed);
             agent.speed = playerSpeed;
         }
@@ -111,6 +109,36 @@ namespace Player {
             } else {
                 comboNumber = 0;
             }
+        }
+        
+        /// <summary>
+        /// Called by animation to trigger collision check.
+        /// </summary>
+        public void ComboAttackCollision() {
+            if(CheckCollisionSword(swordCollider)) {
+                // Play audio and effects.
+            }
+        }
+        
+        /// <summary>
+        /// Test collisions for melee hits.
+        /// </summary>
+        /// <param name="referenceSphere"> Weapon sphere collider. </param>
+        private bool CheckCollisionSword(SphereCollider referenceSphere) {
+            bool hitAnEnemy = false;
+            
+            Collider[] contacts = Physics.OverlapSphere(referenceSphere.transform.position, referenceSphere.radius,
+                                                        enemyLayer, QueryTriggerInteraction.Ignore);
+
+            foreach(var contact in contacts) {
+                // Damage Enemies.
+                if(true) {
+                    // damaged an enemy
+                    hitAnEnemy = true;
+                }
+            }
+
+            return hitAnEnemy;
         }
     }
 }
