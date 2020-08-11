@@ -1,13 +1,18 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using Entity.Enemies;
 using UnityEngine;
 using UnityEngine.AI;
 using UnityEngine.InputSystem;
 using UnityEngine.InputSystem.Composites;
 
 namespace Entity.Player {
+    /// <summary>
+    /// Controls anything related to the player.
+    /// </summary>
     public class PlayerController : Entity {
+        #pragma warning disable 0649
         [Header("Movement")]
         [SerializeField, Range(0f, 25f)] private float walkSpeed = 9f;
         [SerializeField, Range(0f, 25f)] private float runSpeed = 15f;
@@ -16,9 +21,18 @@ namespace Entity.Player {
         private float playerSpeed = 1f;
         private Vector3 movementScale = Vector3.zero;
 
-        [Header("Attacks")]
-        [SerializeField] private LayerMask enemyLayer;
+        [Header("Melee Attacks")]
+        [SerializeField] private LayerMask enemyLayer = 11;
         [SerializeField] private SphereCollider swordCollider;
+        [SerializeField, Range(1, 25)] private int meleeDamage = 10;
+        [SerializeField, Range(0.01f, 3f)] private float meleeDamageComboMultiplier = .2f;
+        [Header("Ranged Attacks")]
+        [SerializeField, Range(1, 50)] private int rangedDamagePerBullet = 15;
+        [SerializeField, Range(1, 9)] private int rangedBulletsPerAttack = 1;
+        [SerializeField, Range(0f, 90f)] private float bulletSpreadAngle = 70f; 
+        [SerializeField, Range(2f, 55f)] private float rangedAttackMaxRange = 50f;
+        [SerializeField] private Transform bulletSpawnPosition;
+        [SerializeField] private GameObject bulletPrefab;
         private int comboNumber;
         
         // Input
@@ -31,6 +45,8 @@ namespace Entity.Player {
                                                                 Animator.StringToHash("Combo_1"),
                                                                 Animator.StringToHash("Combo_2")};
 
+        private static readonly int SpecialAnim = Animator.StringToHash("Special");
+
         /// <summary>
         /// Is the player inside the shop? True for yes.
         /// </summary>
@@ -42,17 +58,20 @@ namespace Entity.Player {
                 if(agent != null) agent.speed = playerSpeed;
             }
         }
+        
+        #pragma warning restore 0649
 
+        #region Unity Events
         protected override void Awake() {
             base.Awake();
             inputs = new ActionInputs();
             inputs.Player.Attack.performed += ComboAttack;
+            inputs.Player.Special.performed += SpecialAttack;
             if(ReferenceEquals(swordCollider, null)) swordCollider = GetComponentInChildren<SphereCollider>();
             playerSpeed = (isInsideShop ? walkSpeed : runSpeed);
             agent.speed = playerSpeed;
         }
 
-        #region Enable Disable Evens
         
         // OnEnable Unity Event, enables input.
         private void OnEnable() {
@@ -63,14 +82,26 @@ namespace Entity.Player {
         private void OnDisable() {
             inputs.Disable();
         }
-        #endregion
         
-        private void Start() { }
 
         private void Update() {
             GetInput();
         }
+        
+        private void FixedUpdate() {
+            MovePlayer();
+        }
+        
+        #endregion
 
+        #region Entity Base Overrides
+
+        public override void Kill() {
+            //
+        }
+
+        #endregion
+        
         private void GetInput() {
             movementScale = new Vector3(inputs.Player.Horizontal.ReadValue<float>(), 0f, inputs.Player.Vertical.ReadValue<float>());
 
@@ -78,15 +109,44 @@ namespace Entity.Player {
             transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.LookRotation(movementScale), rotationSpeed);
         }
 
-        private void FixedUpdate() {
-            MovePlayer();
-        }
-
         /// <summary>
         /// Moves the player based on input using the nav mesh agent.
         /// </summary>
         private void MovePlayer() {
-            agent.Move(movementScale * (playerSpeed * Time.deltaTime));
+            if(agent.enabled) agent.Move(movementScale * (playerSpeed * Time.deltaTime));
+        }
+
+        /// <summary>
+        /// Player special attack. Fires a pistol.
+        /// </summary>
+        private void SpecialAttack(InputAction.CallbackContext callbackContext) {
+            if(anim.GetCurrentAnimatorStateInfo(0).IsName("Player_Attack_Special_Anim")) return;
+            agent.enabled = false;
+            anim.SetTrigger(SpecialAnim);
+        }
+
+        /// <summary>
+        /// Called by animation to unlock player movement.
+        /// </summary>
+        public void SpecialAttackRelease() {
+            var angleOffsetPerBullet = bulletSpreadAngle / rangedBulletsPerAttack;
+            var position = bulletSpawnPosition.position;
+
+            for(var i = 0; i < rangedBulletsPerAttack; i++) {
+                var rotation = bulletSpawnPosition.rotation.eulerAngles;
+                
+                if(rangedBulletsPerAttack > 1) {
+                    rotation.y -= bulletSpreadAngle * 0.5f;
+                    rotation.y += angleOffsetPerBullet * i;
+                }
+
+                var bullet = Instantiate(bulletPrefab, position, Quaternion.Euler(rotation)).GetComponent<PlayerBullet>();
+                bullet.Damage = rangedDamagePerBullet;
+                bullet.MaxRange = rangedAttackMaxRange;
+                bullet.InitialPosition = position;
+            }
+            
+            agent.enabled = true;
         }
 
         /// <summary>
@@ -95,6 +155,9 @@ namespace Entity.Player {
         private void ComboAttack(InputAction.CallbackContext callbackContext) {
             if(anim.GetCurrentAnimatorStateInfo(0).IsName("Idle")) {
                 comboNumber = 0;
+                anim.ResetTrigger(ComboAnim[0]);
+                anim.ResetTrigger(ComboAnim[1]);
+                anim.ResetTrigger(ComboAnim[2]);
             }
             
             if(comboNumber < 1) {
@@ -125,17 +188,15 @@ namespace Entity.Player {
         /// </summary>
         /// <param name="referenceSphere"> Weapon sphere collider. </param>
         private bool CheckCollisionSword(SphereCollider referenceSphere) {
-            bool hitAnEnemy = false;
-            
-            Collider[] contacts = Physics.OverlapSphere(referenceSphere.transform.position, referenceSphere.radius,
-                                                        enemyLayer, QueryTriggerInteraction.Ignore);
+            var hitAnEnemy = false;
+            var damageAmount = Mathf.RoundToInt(meleeDamage * (1f + meleeDamageComboMultiplier * comboNumber));
+
+            Collider[] contacts = Physics.OverlapSphere(referenceSphere.transform.position, referenceSphere.radius, enemyLayer, QueryTriggerInteraction.Ignore);
 
             foreach(var contact in contacts) {
-                // Damage Enemies.
-                if(true) {
-                    // damaged an enemy
-                    hitAnEnemy = true;
-                }
+                if(!contact.gameObject.GetComponent<Enemy>()) continue;
+                contact.gameObject.GetComponent<Enemy>().Damage(damageAmount);
+                hitAnEnemy = true;
             }
 
             return hitAnEnemy;

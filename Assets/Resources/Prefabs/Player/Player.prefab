@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 4959965698363454210}
   - component: {fileID: 4712490838467738846}
   - component: {fileID: 5488198524039601822}
-  - component: {fileID: 3074218096961788053}
+  - component: {fileID: 2249089822568947525}
   m_Layer: 0
   m_Name: Sword
   m_TagString: Untagged
@@ -82,19 +82,18 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!136 &3074218096961788053
-CapsuleCollider:
+--- !u!135 &2249089822568947525
+SphereCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 984074147884981991}
   m_Material: {fileID: 0}
-  m_IsTrigger: 1
+  m_IsTrigger: 0
   m_Enabled: 1
-  m_Radius: 0.5
-  m_Height: 2
-  m_Direction: 1
+  serializedVersion: 2
+  m_Radius: 2
   m_Center: {x: 0, y: 0, z: 0}
 --- !u!1 &3555962724994509046
 GameObject:
@@ -107,9 +106,9 @@ GameObject:
   - component: {fileID: 3555962724994509050}
   - component: {fileID: 3555962724994509051}
   - component: {fileID: 3555962724994509044}
+  - component: {fileID: 3555962724994509049}
   - component: {fileID: 3555962724994509045}
   - component: {fileID: 3555962724994509055}
-  - component: {fileID: 3555962724994509049}
   - component: {fileID: 3555962724994509048}
   - component: {fileID: 2408179602984835775}
   m_Layer: 0
@@ -184,6 +183,40 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
+--- !u!114 &3555962724994509049
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3555962724994509046}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: abd30120a5220364c95490d4bc58e217, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  health: 10
+  maxHealth: 10
+  stamina: 10
+  maxStamina: 10
+  level: 0
+  experience: 0
+  walkSpeed: 9
+  runSpeed: 15
+  rotationSpeed: 0.1
+  minRotationInput: 0.075
+  enemyLayer:
+    serializedVersion: 2
+    m_Bits: 4096
+  swordCollider: {fileID: 2249089822568947525}
+  meleeDamage: 10
+  meleeDamageComboMultiplier: 0.2
+  rangedDamagePerBullet: 15
+  rangedBulletsPerAttack: 1
+  bulletSpreadAngle: 70
+  rangedAttackMaxRange: 5
+  bulletSpawnPosition: {fileID: 4517349244887649291}
+  bulletPrefab: {fileID: 5173478839772874508, guid: 9ab390d8334dfe8429e4894c880874ee, type: 3}
 --- !u!136 &3555962724994509045
 CapsuleCollider:
   m_ObjectHideFlags: 0
@@ -214,22 +247,6 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 84
   m_CollisionDetection: 0
---- !u!114 &3555962724994509049
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3555962724994509046}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: abd30120a5220364c95490d4bc58e217, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  walkSpeed: 9
-  runSpeed: 15
-  rotationSpeed: 0.1
-  minRotationInput: 0.075
 --- !u!195 &3555962724994509048
 NavMeshAgent:
   m_ObjectHideFlags: 0
