@@ -6,6 +6,7 @@ using UnityEngine;
 using UnityEngine.AI;
 using UnityEngine.InputSystem;
 using UnityEngine.InputSystem.Composites;
+using UnityEngine.SceneManagement;
 
 namespace Entity.Player {
     /// <summary>
@@ -14,8 +15,8 @@ namespace Entity.Player {
     public class PlayerController : Entity {
         #pragma warning disable 0649
         [Header("Movement")]
-        [SerializeField, Range(0f, 25f)] private float walkSpeed = 9f;
-        [SerializeField, Range(0f, 25f)] private float runSpeed = 15f;
+        [SerializeField, Range(0f, 25f)] private float storeSpeed = 9f;
+        [SerializeField, Range(0f, 25f)] private float worldSpeed = 15f;
         [SerializeField, Range(0f, 2f)] private float rotationSpeed = 0.1f;
         [SerializeField, Range(0f, 2f)] private float minRotationInput = 0.075f;
         private float playerSpeed = 1f;
@@ -54,7 +55,7 @@ namespace Entity.Player {
             get => isInsideShop;
             set {
                 isInsideShop = value;
-                playerSpeed = (isInsideShop ? walkSpeed : runSpeed);
+                playerSpeed = (isInsideShop ? storeSpeed : worldSpeed);
                 if(agent != null) agent.speed = playerSpeed;
             }
         }
@@ -68,7 +69,7 @@ namespace Entity.Player {
             inputs.Player.Attack.performed += ComboAttack;
             inputs.Player.Special.performed += SpecialAttack;
             if(ReferenceEquals(swordCollider, null)) swordCollider = GetComponentInChildren<SphereCollider>();
-            playerSpeed = (isInsideShop ? walkSpeed : runSpeed);
+            playerSpeed = (isInsideShop ? storeSpeed : worldSpeed);
             agent.speed = playerSpeed;
         }
 
@@ -97,7 +98,7 @@ namespace Entity.Player {
         #region Entity Base Overrides
 
         public override void Kill() {
-            //
+            SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
         }
 
         #endregion

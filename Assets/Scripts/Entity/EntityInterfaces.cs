@@ -23,6 +23,11 @@ namespace Entity {
         int Level { get; set; }
         
         /// <summary>
+        /// The level cap of this entity.
+        /// </summary>
+        int MaxLevel { get; set; }
+        
+        /// <summary>
         /// The experience of this entity.
         /// </summary>
         int Experience { get; set; }

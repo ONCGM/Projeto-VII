@@ -1048,6 +1048,10 @@ PrefabInstance:
       propertyPath: playerLayer.m_Bits
       value: 1024
       objectReference: {fileID: 0}
+    - target: {fileID: 3705584951524824784, guid: 3beef2a5f70967742993eeed8eb1c11c, type: 3}
+      propertyPath: settings
+      value: 
+      objectReference: {fileID: 11400000, guid: 1939d06c0fe00674c904c50edbff3a8b, type: 2}
     - target: {fileID: 3705584951524824787, guid: 3beef2a5f70967742993eeed8eb1c11c, type: 3}
       propertyPath: m_Name
       value: Test Enemy

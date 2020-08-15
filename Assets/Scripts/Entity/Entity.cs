@@ -11,27 +11,33 @@ namespace Entity {
     [RequireComponent(typeof(NavMeshAgent), typeof(Animator), typeof(CapsuleCollider))]
     public abstract class Entity : MonoBehaviour, IEntity, IDamageable {
         // Basic stats.
-        [SerializeField] private int health = 10;
-        [SerializeField] private int maxHealth = 10;
+        [SerializeField] protected int health = 10;
+        [SerializeField] protected int maxHealth = 10;
         public virtual int Health {
             get => health;
             set => health = value;
         }
         
-        [SerializeField] private int stamina = 10;
-        [SerializeField] private int maxStamina = 10;
+        [SerializeField] protected int stamina = 10;
+        [SerializeField] protected int maxStamina = 10;
         public virtual int Stamina {
             get => stamina;
             set => stamina = value;
         }
 
-        [SerializeField] private int level = 0;
+        [SerializeField] protected int level = 0;
         public virtual int Level {
             get => level;
             set => level = value;
         }
+        
+        [SerializeField] protected int maxLevel = 0;
+        public virtual int MaxLevel {
+            get => maxLevel;
+            set => maxLevel = value;
+        }
 
-        [SerializeField] private int experience = 0;
+        [SerializeField] protected int experience = 0;
         public virtual int Experience {
             get => experience;
             set => experience = value;
