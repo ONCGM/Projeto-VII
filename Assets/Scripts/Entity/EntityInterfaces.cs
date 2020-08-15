@@ -3,6 +3,9 @@ using System.Collections.Generic;
 using UnityEngine;
 
 namespace Entity {
+    /// <summary>
+    /// Base interface for entities accessing base values.
+    /// </summary>
     public interface IEntity {
         /// <summary>
         /// The health of this entity.
@@ -25,6 +28,9 @@ namespace Entity {
         int Experience { get; set; }
     }
     
+    /// <summary>
+    /// Base interface for entities dealing and receiving damage.
+    /// </summary>
     public interface IDamageable
     {
         /// <summary>
@@ -45,6 +51,9 @@ namespace Entity {
         void Kill();
     }
 
+    /// <summary>
+    /// Base interface for the player and entities interacting.
+    /// </summary>
     public interface IInteractable {
         void StartInteraction();
 
