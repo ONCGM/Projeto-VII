@@ -40,7 +40,7 @@ namespace Entity.Player {
         private ActionInputs inputs;
 
         /// Is the player inside the shop? True for yes. 
-        private bool isInsideShop = true;
+        private bool isInsideShop;
 
         private static readonly List<int> ComboAnim = new List<int>{Animator.StringToHash("Combo_0"),
                                                                 Animator.StringToHash("Combo_1"),
@@ -141,7 +141,7 @@ namespace Entity.Player {
                     rotation.y += angleOffsetPerBullet * i;
                 }
 
-                var bullet = Instantiate(bulletPrefab, position, Quaternion.Euler(rotation)).GetComponent<PlayerBullet>();
+                var bullet = Instantiate(bulletPrefab, position, Quaternion.Euler(rotation)).GetComponent<EntityBullet>();
                 bullet.Damage = rangedDamagePerBullet;
                 bullet.MaxRange = rangedAttackMaxRange;
                 bullet.InitialPosition = position;

@@ -14,21 +14,21 @@ namespace Entity.Enemies {
         [SerializeField] private LayerMask playerLayer = 10;
 
         [Header("Enemy Settings")]
-        [SerializeField] private EnemySettings settings;
+        [SerializeField] protected EnemySettings settings;
         private float movementSpeed = 1f;
         private int primaryAttackDamage = 1;
         private int secondaryAttackDamage = 1;
         private EnemyType enemyType;
-        private GameObject player;
-        private IDamageable playerDamageable;
+        protected GameObject player;
+        protected IDamageable playerDamageable;
 
-        private void Start() {
+        protected virtual void Start() {
             player = GameObject.FindWithTag("Player");
             playerDamageable = player.GetComponent<IDamageable>();
             SetEnemyValues();
         }
 
-        private void SetEnemyValues() {
+        protected virtual void SetEnemyValues() {
             Health = settings.baseMaxHealth;
             maxHealth = settings.baseMaxHealth;
             Stamina = settings.baseMaxStamina;
@@ -40,18 +40,18 @@ namespace Entity.Enemies {
             enemyType = settings.enemyType;
         }
 
-        private void FixedUpdate() {
+        protected virtual void FixedUpdate() {
             Move();
         }
 
-        private void Move() {
+        protected virtual void Move() {
             agent.SetDestination(player.transform.position);
             if(Vector3.Distance(transform.position, player.transform.position) < 1f) {
                 Attack();
             }
         }
 
-        private void Attack() {
+        protected virtual void Attack() {
             playerDamageable.Damage(primaryAttackDamage);
         }
     }

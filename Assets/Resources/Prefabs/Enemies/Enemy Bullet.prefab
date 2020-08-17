@@ -14,8 +14,8 @@ GameObject:
   - component: {fileID: 5173478839772874504}
   - component: {fileID: 5173478839772874506}
   - component: {fileID: 5173478839772874507}
-  m_Layer: 11
-  m_Name: Player Bullet
+  m_Layer: 13
+  m_Name: Enemy Bullet
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -47,7 +47,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b05c20dd1ba59ba4883763ec906d0e9a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  tagToDamage: Enemy
+  tagToDamage: Player
   damageLossOverDistance:
     serializedVersion: 2
     m_Curve:
@@ -139,7 +139,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 2d35cd027e62fdc4da83bfaf1b9467b4, type: 2}
+  - {fileID: 2100000, guid: 6d78e7d9893ebb441ae834f3cc3a9ef4, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0

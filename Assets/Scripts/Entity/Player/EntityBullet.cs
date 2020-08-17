@@ -4,14 +4,15 @@ using System.Collections.Generic;
 using Entity.Enemies;
 using UnityEngine;
 
-namespace Entity.Player {
+namespace Entity {
     /// <summary>
     /// Fired by the player special attack, deals damage with enemies it encounters through collisions.
     /// </summary>
     [RequireComponent(typeof(Rigidbody), typeof(SphereCollider))]
-    public class PlayerBullet : MonoBehaviour {
+    public class EntityBullet : MonoBehaviour {
         #pragma warning disable 0649
-        [Header("Damage Settings")] 
+        [Header("Damage Settings")]
+        [SerializeField] private string tagToDamage = string.Empty;
         [SerializeField] private AnimationCurve damageLossOverDistance;
 
         [Header("Projectile Settings")] 
@@ -59,7 +60,7 @@ namespace Entity.Player {
         }
 
         private void OnCollisionEnter(Collision other) {
-            if(!other.gameObject.CompareTag("Enemy")) {
+            if(!other.gameObject.CompareTag(tagToDamage)) {
                 Destroy(gameObject);
                 return;
             }
@@ -69,7 +70,7 @@ namespace Entity.Player {
                                                                                                    (initialPosition -
                                                                                                     transform.position)
                                                                                                    .magnitude))));
-            other.gameObject.GetComponent<Enemy>().Damage(damageAmount);
+            other.gameObject.GetComponent<IDamageable>().Damage(damageAmount);
             Debug.Log($"Hit {other.gameObject.name} for {damageAmount} damage.");
             Destroy(gameObject);
         }

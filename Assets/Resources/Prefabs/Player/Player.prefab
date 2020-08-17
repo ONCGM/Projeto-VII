@@ -200,9 +200,10 @@ MonoBehaviour:
   stamina: 10
   maxStamina: 10
   level: 0
+  maxLevel: 0
   experience: 0
-  walkSpeed: 9
-  runSpeed: 15
+  storeSpeed: 9
+  worldSpeed: 15
   rotationSpeed: 0.1
   minRotationInput: 0.075
   enemyLayer:
@@ -257,7 +258,7 @@ NavMeshAgent:
   m_Enabled: 1
   m_AgentTypeID: 0
   m_Radius: 0.5
-  m_Speed: 3.5
+  m_Speed: 15
   m_Acceleration: 8
   avoidancePriority: 50
   m_AngularSpeed: 120
