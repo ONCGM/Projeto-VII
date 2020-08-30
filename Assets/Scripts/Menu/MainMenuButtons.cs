@@ -5,7 +5,7 @@ using UnityEngine.SceneManagement;
 
 namespace Menu {
     public class MainMenuButtons : MonoBehaviour {
-        [Header("Settings")] 
+        [Header("ItemSettings")] 
         [SerializeField] private int gameSceneIndex = 2;
         
         public void StartGameScene() {

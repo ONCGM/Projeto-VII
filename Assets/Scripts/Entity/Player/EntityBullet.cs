@@ -6,16 +6,16 @@ using UnityEngine;
 
 namespace Entity {
     /// <summary>
-    /// Fired by the player special attack, deals damage with enemies it encounters through collisions.
+    /// Fired by the player special attack or enemies, deals damage with entities it encounters through collisions.
     /// </summary>
     [RequireComponent(typeof(Rigidbody), typeof(SphereCollider))]
     public class EntityBullet : MonoBehaviour {
         #pragma warning disable 0649
-        [Header("Damage Settings")]
+        [Header("Damage ItemSettings")]
         [SerializeField] private string tagToDamage = string.Empty;
         [SerializeField] private AnimationCurve damageLossOverDistance;
 
-        [Header("Projectile Settings")] 
+        [Header("Projectile ItemSettings")] 
         [SerializeField] private float bulletInitialForce = 35f;
 
         [SerializeField] private int timeUntilSelfDestruction = 15;

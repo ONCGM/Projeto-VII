@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using Items;
 using UnityEngine;
 
 namespace Entity.Enemies {
@@ -16,8 +17,12 @@ namespace Entity.Enemies {
         [SerializeField] public int baseDamageSecondaryAttack;
         [SerializeField] public int maxLevelCap;
         [SerializeField] public EnemyType enemyType;
+
+        [Header("Loot Values")] 
+        [SerializeField, Range(0f, 1f)] public float chanceToDropItem;
+        [SerializeField] public List<ItemSettings> itemsToDrop = new List<ItemSettings>();
         
-        [Header("AI Settings")]
+        [Header("AI ItemSettings")]
         [SerializeField] public bool isAggressive;
         [SerializeField] public bool attacksEntitiesWhoDamagedThisEntity;
         [SerializeField] public bool shouldPatrolWhenIdle;

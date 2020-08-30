@@ -7,6 +7,7 @@ namespace Entity.Enemies {
     /// Pirate Enemy class. The average joe in difficulty.
     /// </summary>
     public class Pirate : Enemy {
+        #pragma warning disable 0649
         [Header("Ranged Attacks")]
         private int rangedDamagePerBullet = 15;
         private int rangedBulletsPerAttack = 1;
@@ -15,7 +16,9 @@ namespace Entity.Enemies {
         [SerializeField] private Transform bulletSpawnPosition;
         [SerializeField] private GameObject bulletPrefab;
         private bool inRoutine;
-
+        
+        #pragma warning restore 0649
+        
         protected override void SetEnemyValues() {
             base.SetEnemyValues();
             rangedDamagePerBullet = settings.baseDamageSecondaryAttack;
@@ -30,6 +33,9 @@ namespace Entity.Enemies {
             }
         }
 
+        /// <summary>
+        /// Ranged attack coroutine. Allow the enemy to use a weapon a long ranges.
+        /// </summary>
         private IEnumerator AttackRanged() {
             inRoutine = true;
             agent.speed = settings.baseMoveSpeed * 0.025f;

@@ -5,10 +5,10 @@ using UnityEngine;
 namespace Entity.Enemies {
     public class EnemyBullet : MonoBehaviour {
         #pragma warning disable 0649
-        [Header("Damage Settings")] 
+        [Header("Damage ItemSettings")] 
         [SerializeField] private AnimationCurve damageLossOverDistance;
 
-        [Header("Projectile Settings")] 
+        [Header("Projectile ItemSettings")] 
         [SerializeField] private float bulletInitialForce = 35f;
 
         [SerializeField] private int timeUntilSelfDestruction = 15;

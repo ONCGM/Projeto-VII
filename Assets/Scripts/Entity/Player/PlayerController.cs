@@ -2,6 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using Entity.Enemies;
+using Items;
 using UnityEngine;
 using UnityEngine.AI;
 using UnityEngine.InputSystem;
@@ -27,6 +28,8 @@ namespace Entity.Player {
         [SerializeField] private SphereCollider swordCollider;
         [SerializeField, Range(1, 25)] private int meleeDamage = 10;
         [SerializeField, Range(0.01f, 3f)] private float meleeDamageComboMultiplier = .2f;
+        private int comboNumber;
+        
         [Header("Ranged Attacks")]
         [SerializeField, Range(1, 50)] private int rangedDamagePerBullet = 15;
         [SerializeField, Range(1, 9)] private int rangedBulletsPerAttack = 1;
@@ -34,20 +37,33 @@ namespace Entity.Player {
         [SerializeField, Range(2f, 55f)] private float rangedAttackMaxRange = 50f;
         [SerializeField] private Transform bulletSpawnPosition;
         [SerializeField] private GameObject bulletPrefab;
-        private int comboNumber;
+
+        [Header("Inventory")] 
+        [SerializeField] private int playerInventorySize = 10;
+
+        private Inventory inventory;
         
+        /// <summary>
+        /// The player's inventory.
+        /// </summary>
+        public Inventory Inventory {
+            get => inventory;
+            set => inventory = value;
+        }
+
+
         // Input
         private ActionInputs inputs;
-
-        /// Is the player inside the shop? True for yes. 
-        private bool isInsideShop;
-
+      
         private static readonly List<int> ComboAnim = new List<int>{Animator.StringToHash("Combo_0"),
                                                                 Animator.StringToHash("Combo_1"),
                                                                 Animator.StringToHash("Combo_2")};
 
         private static readonly int SpecialAnim = Animator.StringToHash("Special");
 
+        /// Is the player inside the shop? True for yes. 
+        private bool isInsideShop;
+        
         /// <summary>
         /// Is the player inside the shop? True for yes.
         /// </summary>
@@ -71,6 +87,7 @@ namespace Entity.Player {
             if(ReferenceEquals(swordCollider, null)) swordCollider = GetComponentInChildren<SphereCollider>();
             playerSpeed = (isInsideShop ? storeSpeed : worldSpeed);
             agent.speed = playerSpeed;
+            inventory = new Inventory(playerInventorySize, new List<InventoryItemEntry>());
         }
 
         
@@ -192,7 +209,8 @@ namespace Entity.Player {
             var hitAnEnemy = false;
             var damageAmount = Mathf.RoundToInt(meleeDamage * (1f + meleeDamageComboMultiplier * comboNumber));
 
-            Collider[] contacts = Physics.OverlapSphere(referenceSphere.transform.position, referenceSphere.radius, enemyLayer, QueryTriggerInteraction.Ignore);
+            var contacts = new Collider[]{};
+            Physics.OverlapSphereNonAlloc(referenceSphere.transform.position, referenceSphere.radius, contacts, enemyLayer, QueryTriggerInteraction.Ignore);
 
             foreach(var contact in contacts) {
                 if(!contact.gameObject.GetComponent<Enemy>()) continue;

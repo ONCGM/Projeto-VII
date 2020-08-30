@@ -60,8 +60,6 @@ namespace Entity {
     /// Base interface for the player and entities interacting.
     /// </summary>
     public interface IInteractable {
-        void StartInteraction();
-
-        void EndInteraction();
+        void Interact();
     }
 }

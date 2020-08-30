@@ -19,6 +19,9 @@ MonoBehaviour:
   baseDamageSecondaryAttack: 11
   maxLevelCap: 30
   enemyType: 1
+  chanceToDropItem: 0.5
+  itemsToDrop:
+  - {fileID: 11400000, guid: e108f82e77cc9b6459fcd62a2e0c4691, type: 2}
   isAggressive: 1
   attacksEntitiesWhoDamagedThisEntity: 1
   shouldPatrolWhenIdle: 1

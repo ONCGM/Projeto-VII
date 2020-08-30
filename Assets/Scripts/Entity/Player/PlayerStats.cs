@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using Items;
 using UnityEngine;
 
 namespace Entity.Player {
@@ -16,13 +17,13 @@ namespace Entity.Player {
         public int Level { get; set; }
         public int Experience { get; set; }
         public int Coins { get; set; }
-        public List<object> CurrentInventory { get; set; }
-        public List<int> CurrentUpgrades { get; set; }
+        public List<InventoryItemEntry> CurrentInventory { get; set; }
+        public int CurrentUpgradeLevel { get; set; }
 
         public PlayerStats(int health, int maxHealth, int stamina, 
                            int maxStamina, int level, int experience,
-                           int coins, List<object> currentInventory,
-                           List<int> currentUpgrades) {
+                           int coins, List<InventoryItemEntry> currentInventory,
+                           int currentUpgradeLevel) {
             Health = health;
             MaxHealth = maxHealth;
             Stamina = stamina;
@@ -31,7 +32,7 @@ namespace Entity.Player {
             Experience = experience;
             Coins = coins;
             CurrentInventory = currentInventory;
-            CurrentUpgrades = currentUpgrades;
+            CurrentUpgradeLevel = currentUpgradeLevel;
         }
     }
 }
