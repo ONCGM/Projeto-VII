@@ -282,7 +282,15 @@ MonoBehaviour:
   stamina: 10
   maxStamina: 10
   level: 0
+  maxLevel: 0
   experience: 0
+  playerTag: Player
+  playerLayer:
+    serializedVersion: 2
+    m_Bits: 10
+  settings: {fileID: 0}
+  chanceToDrop: 0.1
+  itemsToDrop: []
 --- !u!136 &101296481
 CapsuleCollider:
   m_ObjectHideFlags: 0
@@ -713,7 +721,15 @@ MonoBehaviour:
   stamina: 10
   maxStamina: 10
   level: 0
+  maxLevel: 0
   experience: 0
+  playerTag: Player
+  playerLayer:
+    serializedVersion: 2
+    m_Bits: 10
+  settings: {fileID: 0}
+  chanceToDrop: 0.1
+  itemsToDrop: []
 --- !u!136 &1267906095
 CapsuleCollider:
   m_ObjectHideFlags: 0
@@ -888,7 +904,15 @@ MonoBehaviour:
   stamina: 10
   maxStamina: 10
   level: 0
+  maxLevel: 0
   experience: 0
+  playerTag: Player
+  playerLayer:
+    serializedVersion: 2
+    m_Bits: 10
+  settings: {fileID: 0}
+  chanceToDrop: 0.1
+  itemsToDrop: []
 --- !u!136 &1418996900
 CapsuleCollider:
   m_ObjectHideFlags: 0
@@ -976,9 +1000,9 @@ GameObject:
   m_Component:
   - component: {fileID: 1533506638}
   - component: {fileID: 1533506637}
-  - component: {fileID: 1533506636}
   - component: {fileID: 1533506640}
   - component: {fileID: 1533506639}
+  - component: {fileID: 1533506636}
   m_Layer: 0
   m_Name: Main Camera
   m_TagString: MainCamera
@@ -986,14 +1010,19 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!81 &1533506636
-AudioListener:
+--- !u!114 &1533506636
+MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1533506635}
   m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 86c6556701af9e04380698b89f691b6e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ListenerNumber: -1
 --- !u!20 &1533506637
 Camera:
   m_ObjectHideFlags: 0
@@ -1213,7 +1242,15 @@ MonoBehaviour:
   stamina: 10
   maxStamina: 10
   level: 0
+  maxLevel: 0
   experience: 0
+  playerTag: Player
+  playerLayer:
+    serializedVersion: 2
+    m_Bits: 10
+  settings: {fileID: 0}
+  chanceToDrop: 0.1
+  itemsToDrop: []
 --- !u!136 &1575125516
 CapsuleCollider:
   m_ObjectHideFlags: 0
