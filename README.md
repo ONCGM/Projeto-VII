@@ -1,2 +1,40 @@
 # Projeto-VII
 Repo do sétimo projeto do curso de jogos digitais.
+
+
+  Créditos e Agradecimentos
+Equipe:
+  Elias Pereira
+Character Programmer
+Enemy Programmer
+Sound Implementation
+Sound 
+Level Design
+Game Design
+Inventory Programmer
+Store Programmer
+Gameplay Programmer
+Economy Planning
+  Kevin da Silva
+Scenery Art
+Object & Items Art
+Environment Art
+Store & City Art
+  Juan Machado
+Character Art
+Character Animation
+Character Rigging
+Character Textures
+Ship Art
+Ship Texture
+  Saulo Freitas
+UI Art
+Scenery Textures
+Object & Items Textures
+Environment Textures
+Store & City Textures
+
+Special Thanks:
+Scott Lilly - C# Reference
+Brackeys - Unity Reference
+Mix & Jam - Unity Reference
