@@ -29,6 +29,7 @@ namespace Entity.Enemies {
         
         protected GameObject player;
         protected IDamageable playerDamageable;
+        [SerializeField] private GameObject DamageCanvasPrefab;
 
         protected virtual void Start() {
             player = GameObject.FindWithTag("Player");
@@ -75,6 +76,8 @@ namespace Entity.Enemies {
         protected virtual void Attack() {
             // TODO: Extend damage to play animations, detect collision and damage other entities.
             playerDamageable.Damage(primaryAttackDamage);
+            Instantiate(DamageCanvasPrefab, transform.position, Quaternion.identity)
+                .GetComponent<DamageCanvas>().damageValue = primaryAttackDamage;
         }
 
         public override void Kill() {

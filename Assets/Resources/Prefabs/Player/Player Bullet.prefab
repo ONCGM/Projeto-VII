@@ -83,6 +83,7 @@ MonoBehaviour:
     m_RotationOrder: 4
   bulletInitialForce: 25
   timeUntilSelfDestruction: 15
+  DamageCanvasPrefab: {fileID: 8168437462130401804, guid: 8bb4a911fd662ec4e80d3d9b635f6d3f, type: 3}
 --- !u!54 &5173478839772874503
 Rigidbody:
   m_ObjectHideFlags: 0

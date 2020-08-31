@@ -2,15 +2,20 @@
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
+using UnityEngine.Events;
 
 namespace Items {
     /// <summary>
     /// Class for holding items. Only used by the player so far.
     /// </summary>
     public class Inventory {
+        // Fields and Properties.
         public int InventorySize { get; set; }
 
         public List<InventoryItemEntry> ItemsInInventory { get; private set;}
+        
+        // Events.
+        public UnityEvent OnInventoryUpdate = new UnityEvent();
 
         public Inventory(int inventorySize, List<InventoryItemEntry> items) {
             InventorySize = inventorySize;
@@ -37,12 +42,16 @@ namespace Items {
                     itemEntry.AddToStack(amountToAddToStack);
                     
                     amount -= amountToAddToStack;
+                    
+                    OnInventoryUpdate?.Invoke();
                 } else {
                     if(ItemsInInventory.Count < InventorySize) {
                         ItemsInInventory.Add(new InventoryItemEntry(item.ItemSettings, 0));
                     } else {
                         // TODO: Out of space pop-up.
                     }
+                    
+                    OnInventoryUpdate?.Invoke();
                 }
             }
         }
@@ -52,6 +61,7 @@ namespace Items {
         /// </summary>
         /// <param name="item"> Item to remove.</param>
         public InventoryItemEntry? RemoveItemEntry(InventoryItemEntry item) {
+            OnInventoryUpdate?.Invoke();
             if(!ItemsInInventory.Exists(x => (x.ItemSettings.itemId == item.ItemSettings.itemId))) return null;
             var itemEntry = ItemsInInventory.First(x => 
                                                        (x.ItemSettings.itemId == item.ItemSettings.itemId));
@@ -62,6 +72,7 @@ namespace Items {
                 ItemsInInventory.Remove(itemEntry);
             }
             
+            OnInventoryUpdate?.Invoke();
             return itemEntry;
         }
     }

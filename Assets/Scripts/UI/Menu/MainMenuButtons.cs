@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
-namespace Menu {
+namespace UI.Menu {
     public class MainMenuButtons : MonoBehaviour {
         [Header("ItemSettings")] 
         [SerializeField] private int gameSceneIndex = 2;

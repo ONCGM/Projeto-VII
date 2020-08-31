@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using Entity.Enemies;
 using UnityEngine;
+using Object = UnityEngine.Object;
 
 namespace Entity {
     /// <summary>
@@ -15,10 +16,14 @@ namespace Entity {
         [SerializeField] private string tagToDamage = string.Empty;
         [SerializeField] private AnimationCurve damageLossOverDistance;
 
-        [Header("Projectile ItemSettings")] 
+        [Header("Projectile Settings")] 
         [SerializeField] private float bulletInitialForce = 35f;
 
         [SerializeField] private int timeUntilSelfDestruction = 15;
+
+        [Header("Damage Canvas Prefab")] 
+        [SerializeField] private GameObject DamageCanvasPrefab;
+        
 
         private int damage = 15;
         public int Damage {
@@ -71,6 +76,9 @@ namespace Entity {
                                                                                                     transform.position)
                                                                                                    .magnitude))));
             other.gameObject.GetComponent<IDamageable>().Damage(damageAmount);
+
+            Instantiate(DamageCanvasPrefab, transform.position, Quaternion.identity).GetComponent<DamageCanvas>().damageValue = damageAmount;
+            
             Debug.Log($"Hit {other.gameObject.name} for {damageAmount} damage.");
             Destroy(gameObject);
         }

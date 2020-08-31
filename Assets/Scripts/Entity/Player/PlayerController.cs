@@ -63,7 +63,9 @@ namespace Entity.Player {
 
         /// Is the player inside the shop? True for yes. 
         private bool isInsideShop;
-        
+
+        [SerializeField] private GameObject DamageCanvasPrefab;
+
         /// <summary>
         /// Is the player inside the shop? True for yes.
         /// </summary>
@@ -88,8 +90,11 @@ namespace Entity.Player {
             playerSpeed = (isInsideShop ? storeSpeed : worldSpeed);
             agent.speed = playerSpeed;
             inventory = new Inventory(playerInventorySize, new List<InventoryItemEntry>());
+            
+            InvokeRepeating(nameof(RecoverStamina), 1f, 1f);
         }
 
+        private void RecoverStamina() => Stamina = Mathf.Clamp(Stamina + 2, 0, maxStamina);
         
         // OnEnable Unity Event, enables input.
         private void OnEnable() {
@@ -138,6 +143,8 @@ namespace Entity.Player {
         /// Player special attack. Fires a pistol.
         /// </summary>
         private void SpecialAttack(InputAction.CallbackContext callbackContext) {
+            if(Stamina < 3) return;
+            Stamina -= 4;
             if(anim.GetCurrentAnimatorStateInfo(0).IsName("Player_Attack_Special_Anim")) return;
             agent.enabled = false;
             anim.SetTrigger(SpecialAnim);
@@ -171,6 +178,10 @@ namespace Entity.Player {
         /// Player basic attack with three with combo.
         /// </summary>
         private void ComboAttack(InputAction.CallbackContext callbackContext) {
+            if(Stamina < 3) return;
+            Stamina -= 3;
+            
+            
             if(anim.GetCurrentAnimatorStateInfo(0).IsName("Idle")) {
                 comboNumber = 0;
                 anim.ResetTrigger(ComboAnim[0]);
@@ -197,7 +208,9 @@ namespace Entity.Player {
         /// </summary>
         public void ComboAttackCollision() {
             if(CheckCollisionSword(swordCollider)) {
-                // Play audio and effects.
+                //TODO: Play audio and effects.
+                Instantiate(DamageCanvasPrefab, transform.position, Quaternion.identity)
+                    .GetComponent<DamageCanvas>().damageValue = meleeDamage;
             }
         }
         
