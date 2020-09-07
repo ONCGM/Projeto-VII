@@ -9,6 +9,7 @@ namespace Items {
     [CreateAssetMenu(fileName = "Item_Settings_", menuName = "Scriptable Objects/Item")]
     public class ItemSettings : ScriptableObject {
         // TODO: Add lock based on progress, so only spawns after a certain amount of progress.
+        // TODO: Add localization in names, description and etc.
         [Header("Drop ItemSettings")] 
         [SerializeField] public GameObject itemPrefab;
         [SerializeField] public GameObject itemModel;

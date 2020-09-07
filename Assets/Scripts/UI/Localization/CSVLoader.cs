@@ -13,7 +13,7 @@ namespace UI.Localization {
         private TextAsset languagesFile;
         private readonly char lineSeparator = '\n';
         private readonly char surroundingCharacters = '"';
-        private readonly string[] fieldSeparator = {"\", \""};
+        private readonly string[] fieldSeparator = {"\",\""};
         private readonly string fileName = "Languages";
 
         /// <summary>
@@ -51,17 +51,20 @@ namespace UI.Localization {
                 for(var j = 0; j < fields.Length; j++) {
                     fields[j] = fields[j].TrimStart(' ', surroundingCharacters);
                     fields[j] = fields[j].TrimEnd(surroundingCharacters);
+                    if(languageId.Equals("jp")) fields[j] = fields[j].Replace("\"", string.Empty);
                 }
 
-                if(fields.Length <= index) continue;
-                
-                var key = fields[0];
+                if(fields.Length > index) {
+                    var key = fields[0];
 
-                if(dictionary.ContainsKey(key)) { continue; }
+                    if(dictionary.ContainsKey(key)) {
+                        continue;
+                    }
 
-                var value = fields[index];
-                    
-                dictionary.Add(key, value);
+                    var value = fields[index];
+
+                    dictionary.Add(key, value);
+                }
             }
 
             return dictionary;

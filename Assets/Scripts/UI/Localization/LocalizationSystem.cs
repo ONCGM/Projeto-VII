@@ -27,7 +27,7 @@ namespace Localization {
         }
 
         // Language dictionaries.
-        private static Dictionary<string, string> localizedPt_Br = new Dictionary<string, string>();
+        private static Dictionary<string, string> localizedPtBr = new Dictionary<string, string>();
         
         private static Dictionary<string, string> localizedEn = new Dictionary<string, string>();
         
@@ -35,7 +35,7 @@ namespace Localization {
 
         // Events.
         public static Action OnLanguageUpdate;
-        private static Language currentLanguage = Language.Portuguese_Brazil;
+        private static Language currentLanguage = Language.Japanese;
 
         /// <summary>
         /// Has the system been initialized.
@@ -49,11 +49,11 @@ namespace Localization {
             var loader = new CSVLoader();
             loader.LoadCSVFile();
 
-            localizedPt_Br = loader.GetLanguageValues("pt_br");
+            localizedEn = loader.GetLanguageValues("en");
             
-            localizedPt_Br = loader.GetLanguageValues("en");
+            localizedPtBr = loader.GetLanguageValues("pt_br");
             
-            localizedPt_Br = loader.GetLanguageValues("jp");
+            localizedJp = loader.GetLanguageValues("jp");
 
             InitializationComplete = true;
         }
@@ -68,13 +68,13 @@ namespace Localization {
 
             switch(CurrentLanguage) {
                 case Language.Portuguese_Brazil:
-                    localizedPt_Br.TryGetValue(key, out value);
+                    if(!localizedPtBr.TryGetValue(key, out value)) { value = "☹"; }
                     break;
                 case Language.English:
-                    localizedEn.TryGetValue(key, out value);
+                    if(!localizedEn.TryGetValue(key, out value)) { value = "☹"; }
                     break;
                 case Language.Japanese:
-                    localizedJp.TryGetValue(key, out value);
+                    if(!localizedJp.TryGetValue(key, out value)) { value = "☹"; }
                     break;
             }
 

@@ -10,10 +10,11 @@
         /// </summary>
         public enum ExecutionState {
             Normal,
-            PopUp,
-            Paused
+            PopUpPause,
+            FullPause
         }
 
+        //TODO
         public object SaveData { get; private set; }
 
         public void SetSaveData(object saveData) {
