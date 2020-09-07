@@ -82,12 +82,13 @@
      <Compile Include="Assets\Scripts\UI\OpenCloseGameMenu.cs" />
      <Compile Include="Assets\Scripts\Entity\Entity.cs" />
      <Compile Include="Assets\Scripts\Entity\Player\EntityBullet.cs" />
-     <Compile Include="Assets\Scripts\Game\GameState.cs" />
      <Compile Include="Assets\Scripts\Entity\Player\PlayerStats.cs" />
      <Compile Include="Assets\Scripts\UI\DamageCanvas.cs" />
      <Compile Include="Assets\Scripts\Entity\Enemies\EnemyBullet.cs" />
      <Compile Include="Assets\Scripts\UI\Localization\LocalizedString.cs" />
      <Compile Include="Assets\Scripts\UI\Popups\CanvasPopupDialog.cs" />
+     <Compile Include="Assets\Scripts\UI\Menu\CombatDebriefUi.cs" />
+     <Compile Include="Assets\Scripts\UI\SmallItemUI.cs" />
      <None Include="Assets\TextMesh Pro\Shaders\TMPro.cginc" />
      <None Include="Assets\TextMesh Pro\Shaders\TMP_SDF-Mobile Overlay.shader" />
      <None Include="Assets\Art\Font\LICENSE.txt" />

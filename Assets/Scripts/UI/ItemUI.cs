@@ -8,6 +8,9 @@ using UnityEngine;
 using UnityEngine.UI;
 
 namespace UI {
+    /// <summary>
+    /// Populates a full size item ui.
+    /// </summary>
     public class ItemUI : MonoBehaviour {
         #pragma warning disable 0649
         // Fields and Properties.

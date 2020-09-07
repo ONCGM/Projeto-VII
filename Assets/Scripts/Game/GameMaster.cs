@@ -26,12 +26,12 @@ namespace Game {
         }
         
 
-        private GameState gameState;
+        private ExecutionState gameState;
 
         /// <summary>
         /// Current state of the game.
         /// </summary>
-        public GameState GameState {
+        public ExecutionState GameState {
             get => gameState;
             set {
                 gameState = value;
@@ -62,5 +62,23 @@ namespace Game {
         /// Called whenever the PlayerStats are updated.
         /// </summary>
         public static Action OnGameStateUpdated;
+        
+        //TODO
+        public object SaveData { get; private set; }
+
+        public void SetSaveData(object saveData) {
+            SaveData = saveData;
+        }
+    }
+    
+    /// <summary>
+    /// Current execution state of the game.
+    /// <para> Used to stop enemies if player gets a popup and
+    /// similar scenarios.</para>
+    /// </summary>
+    public enum ExecutionState {
+        Normal,
+        PopupPause,
+        FullPause
     }
 }

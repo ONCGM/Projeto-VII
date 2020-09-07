@@ -20,27 +20,24 @@ namespace UI.Localization {
         // Sets up the component and loads the text.
         private void Awake() {
             textMesh = GetComponent<TMP_Text>();
-            var value = LocalizationSystem.GetLocalizedValue(localizedText.value);
-            textMesh.text = value;
+            textMesh.text = localizedText.value;
 
             LocalizationSystem.OnLanguageUpdate += UpdateText;
         }
 
         /// <summary>
-        /// Updates the text when the language or key has changed.
+        /// Updates the text when the language has changed.
         /// </summary>
         private void UpdateText() {
-            var value = LocalizationSystem.GetLocalizedValue(localizedText.value);
-            textMesh.text = value;
+            textMesh.text = localizedText.value;
         }
         
         /// <summary>
-        /// Updates the text when the language or key has changed.
+        /// Updates the text when the key has changed.
         /// </summary>
-        public void UpdateText(string key) {
-            localizedText.key = key;
-            var value = LocalizationSystem.GetLocalizedValue(localizedText.value);
-            textMesh.text = value;
+        public void UpdateKey(string key) {
+            localizedText = new LocalizedString(key);
+            textMesh.text = localizedText.value;
         }
 
         // <summary>
