@@ -7,12 +7,12 @@ using UnityEngine;
 
 namespace UI.Localization {
     /// <summary>
-    /// Localizes a TextMeshPro text using a key.
+    /// Localizes a TextMeshPro text using a LocalizedString.
     /// </summary>
     [RequireComponent(typeof(TMP_Text))]
     public class TextMeshLocalizer : MonoBehaviour {
         [Header("Settings")] 
-        [SerializeField] private string key = "placeholder";
+        [SerializeField] private LocalizedString localizedText;
 
         // Components.
         private TMP_Text textMesh;
@@ -20,7 +20,7 @@ namespace UI.Localization {
         // Sets up the component and loads the text.
         private void Awake() {
             textMesh = GetComponent<TMP_Text>();
-            var value = LocalizationSystem.GetLocalizedValue(key);
+            var value = LocalizationSystem.GetLocalizedValue(localizedText.value);
             textMesh.text = value;
 
             LocalizationSystem.OnLanguageUpdate += UpdateText;
@@ -30,7 +30,7 @@ namespace UI.Localization {
         /// Updates the text when the language has changed.
         /// </summary>
         private void UpdateText() {
-            var value = LocalizationSystem.GetLocalizedValue(key);
+            var value = LocalizationSystem.GetLocalizedValue(localizedText.value);
             textMesh.text = value;
         }
 

@@ -5,6 +5,9 @@ using UI.Localization;
 using UnityEngine;
 
 namespace Localization {
+    /// <summary>
+    /// Loads and reads localization values based on a given language.
+    /// </summary>
     public static class LocalizationSystem {
         /// <summary>
         /// Enum defining the languages used in this project.
@@ -41,25 +44,37 @@ namespace Localization {
         /// Has the system been initialized.
         /// </summary>
         public static bool InitializationComplete { get; private set; }
+        
+        /// <summary>
+        /// CSV file loader.
+        /// </summary>
+        public static CSVLoader Loader { get; private set; }
 
         /// <summary>
         /// Initializes the system and loads language values.
         /// </summary>
         public static void Initialize() {
-            var loader = new CSVLoader();
-            loader.LoadCSVFile();
+            Loader = new CSVLoader();
+            Loader.LoadCSVFile();
 
-            localizedEn = loader.GetLanguageValues("en");
-            
-            localizedPtBr = loader.GetLanguageValues("pt_br");
-            
-            localizedJp = loader.GetLanguageValues("jp");
+            UpdateLanguageDictionaries();
 
             InitializationComplete = true;
         }
+        
+        /// <summary>
+        /// Reloads the language dictionaries values.
+        /// </summary>
+        public static void UpdateLanguageDictionaries() {
+            localizedEn = Loader.GetLanguageValues("en");
+            
+            localizedPtBr = Loader.GetLanguageValues("pt_br");
+            
+            localizedJp = Loader.GetLanguageValues("jp");
+        }
 
         /// <summary>
-        /// Returns a localized string based on the given key.
+        /// Returns a text string based on the given key.
         /// </summary>
         public static string GetLocalizedValue(string key) {
             if(!InitializationComplete) Initialize();
@@ -79,6 +94,71 @@ namespace Localization {
             }
 
             return value;
+        }
+
+        /// <summary>
+        /// Adds an entry to the localization file in the Portuguese language.
+        /// </summary>
+        /// <param name="key"> Key of the entry. </param>
+        /// <param name="value"> Portuguese text of the entry. </param>
+        public static void AddEntry(string key, string value) {
+            var replace = value;
+            
+            if(value.Contains("\"")) {
+                 replace = value.Replace('"', '\"');
+            }
+            
+            if(Loader is null) Loader = new CSVLoader();
+            
+            Loader.LoadCSVFile();
+            Loader.AddEntry(key, value);
+            Loader.LoadCSVFile();
+            
+            UpdateLanguageDictionaries();
+        }
+        
+        /// <summary>
+        /// Edits an entry to the localization file in the Portuguese language.
+        /// </summary>
+        /// <param name="key"> Key of the entry. </param>
+        /// <param name="value"> Portuguese text of the entry. </param>
+        public static void EditEntry(string key, string value) {
+            var replace = value;
+            
+            if(value.Contains("\"")) {
+                replace = value.Replace('"', '\"');
+            }
+            
+            if(Loader is null) Loader = new CSVLoader();
+            
+            Loader.LoadCSVFile();
+            Loader.EditEntry(key, value);
+            Loader.LoadCSVFile();
+            
+            UpdateLanguageDictionaries();
+        }
+        
+        /// <summary>
+        /// Removes an entry to the localization file.
+        /// </summary>
+        /// <param name="key"> Key of the entry. </param>
+        public static void RemoveEntry(string key) {
+            if(Loader is null) Loader = new CSVLoader();
+            
+            Loader.LoadCSVFile();
+            Loader.RemoveEntry(key);
+            Loader.LoadCSVFile();
+            
+            UpdateLanguageDictionaries();
+        }
+
+        /// <summary>
+        /// Returns the complete Portuguese language dictionary for editor usage.
+        /// </summary>
+        public static Dictionary<string, string> GetLanguageDictionary() {
+            if(!InitializationComplete) { Initialize(); }
+
+            return localizedPtBr;
         }
     }
 }

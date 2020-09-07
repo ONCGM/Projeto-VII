@@ -1,12 +1,14 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.IO;
+using System.Linq;
 using System.Text.RegularExpressions;
 using UnityEngine;
 
 namespace UI.Localization {
     /// <summary>
-    /// Loads a csv file and parses language from it.
+    /// Loads a csv file and parses strings from it.
     /// </summary>
     public class CSVLoader {
         // Text and file.
@@ -69,5 +71,65 @@ namespace UI.Localization {
 
             return dictionary;
         }
+        
+    #if UNITY_EDITOR
+        /// <summary>
+        /// Adds a new entry to the localization csv in the Portuguese language.
+        /// </summary>
+        /// <param name="key"> Name of the entry. </param>
+        /// <param name="value"> Portuguese text of the entry. </param>
+        public void AddEntry(string key, string value) {
+            var append = $"\n\"{key}\",\"English\",\"{value}\",\"日本語\"";
+            File.AppendAllText($"Assets/Resources/{fileName}.csv", append);
+            
+            UnityEditor.AssetDatabase.Refresh();
+        }
+
+        /// <summary>
+        /// Removes an entry from the localization file.
+        /// </summary>
+        /// <param name="key"> Key of the entry to remove. </param>
+        public void RemoveEntry(string key) {
+            var lines = languagesFile.text.Split(lineSeparator);
+         
+            var keys = new string[lines.Length];
+
+            for(var i = 0; i < lines.Length; i++) {
+                var line = lines[i];
+
+                keys[i] = line.Split(fieldSeparator, StringSplitOptions.None)[0];
+            }
+
+            var index = -1;
+
+            for(var i = 0; i < keys.Length; i++) {
+                if(keys[i].Contains(key)) {
+                    index = i;
+                    break;
+                }
+            }
+
+            if(index <= 0) {
+                Debug.LogFormat("Could not find \"{0}\" key in the localization file.", key);
+                return;
+            }
+
+            var replacedLines = lines.Where(x => x != lines[index]).ToArray();
+
+            var replacedFormatted = string.Join(lineSeparator.ToString(), replacedLines);
+            
+            File.WriteAllText($"Assets/Resources/{fileName}.csv", replacedFormatted);
+        }
+
+        /// <summary>
+        /// Edits a given entry in the localization file.
+        /// </summary>
+        /// <param name="key"> Key of the entry. </param>
+        /// <param name="value"> Portuguese text of the entry. </param>
+        public void EditEntry(string key, string value) {
+            RemoveEntry(key);
+            AddEntry(key, value);
+        }
+    #endif
     }
 }

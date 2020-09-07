@@ -345,7 +345,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 56164da1cbf840c44b7b5abda0961f3f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  key: MENU_LABEL_PLAY
+  localizedText:
+    key: MENU_LABEL_PLAY
 --- !u!1 &620356662
 GameObject:
   m_ObjectHideFlags: 0
@@ -493,7 +494,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 56164da1cbf840c44b7b5abda0961f3f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  key: MENU_LABEL_QUIT
+  localizedText:
+    key: MENU_LABEL_QUIT
 --- !u!1 &745305823
 GameObject:
   m_ObjectHideFlags: 0
