@@ -27,9 +27,18 @@ namespace UI.Localization {
         }
 
         /// <summary>
-        /// Updates the text when the language has changed.
+        /// Updates the text when the language or key has changed.
         /// </summary>
         private void UpdateText() {
+            var value = LocalizationSystem.GetLocalizedValue(localizedText.value);
+            textMesh.text = value;
+        }
+        
+        /// <summary>
+        /// Updates the text when the language or key has changed.
+        /// </summary>
+        public void UpdateText(string key) {
+            localizedText.key = key;
             var value = LocalizationSystem.GetLocalizedValue(localizedText.value);
             textMesh.text = value;
         }

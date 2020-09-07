@@ -6,6 +6,7 @@ using UnityEngine;
 
 namespace UI {
     public class InventoryUI : MonoBehaviour {
+        #pragma warning disable 0649
         [Header("Player Reference")]
         [SerializeField] private PlayerController player;
 
@@ -16,7 +17,9 @@ namespace UI {
 
         [Header("Prefabs")]
         [SerializeField] private GameObject itemUiPrefab;
-
+        #pragma warning restore 0649
+        
+        
         /// <summary>
         /// Finds references and sets up the class.
         /// </summary>

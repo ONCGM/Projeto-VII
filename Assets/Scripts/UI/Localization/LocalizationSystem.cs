@@ -38,7 +38,7 @@ namespace Localization {
 
         // Events.
         public static Action OnLanguageUpdate;
-        private static Language currentLanguage = Language.Japanese;
+        private static Language currentLanguage = Language.Portuguese_Brazil;
 
         /// <summary>
         /// Has the system been initialized.

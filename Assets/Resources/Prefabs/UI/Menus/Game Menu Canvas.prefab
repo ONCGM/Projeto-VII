@@ -1585,7 +1585,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 56164da1cbf840c44b7b5abda0961f3f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  key: MENU_LABEL_RETURN_MAIN
+  localizedText:
+    key: MENU_LABEL_MAINMENU
 --- !u!114 &8646309091371037697
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2453,7 +2454,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 56164da1cbf840c44b7b5abda0961f3f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  key: MENU_LABEL_DESKTOP
+  localizedText:
+    key: MENU_LABEL_DESKTOP
 --- !u!114 &4903566856069355787
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3323,7 +3325,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 56164da1cbf840c44b7b5abda0961f3f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  key: GAME_INVENTORY
+  localizedText:
+    key: GAME_INVENTORY
 --- !u!114 &8384049595295639620
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4209,7 +4212,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 56164da1cbf840c44b7b5abda0961f3f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  key: GAME_MAP
+  localizedText:
+    key: GAME_MAP
 --- !u!114 &8384049596452933307
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4600,7 +4604,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 56164da1cbf840c44b7b5abda0961f3f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  key: MENU_OPTIONS
+  localizedText:
+    key: MENU_OPTIONS
 --- !u!114 &8384049596584024224
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4748,7 +4753,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 56164da1cbf840c44b7b5abda0961f3f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  key: MENU_IO_SAVE
+  localizedText:
+    key: MENU_IO_SAVE
 --- !u!114 &2637110665371246324
 MonoBehaviour:
   m_ObjectHideFlags: 0

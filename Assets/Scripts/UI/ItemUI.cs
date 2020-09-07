@@ -2,6 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using Items;
+using Localization;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
@@ -32,8 +33,8 @@ namespace UI {
             itemInfo = item;
             
             icon.sprite = itemInfo.ItemSettings.itemImage;
-            title.text = $"{itemInfo.ItemSettings.itemName} x {itemInfo.Stack}";
-            description.text = itemInfo.ItemSettings.itemDescription;
+            title.text = $"{LocalizationSystem.GetLocalizedValue(itemInfo.ItemSettings.itemNameKey)} x {itemInfo.Stack}";
+            description.text = LocalizationSystem.GetLocalizedValue(itemInfo.ItemSettings.itemDescriptionKey);
             consume.enabled = false;
             discard.enabled = false;
         }

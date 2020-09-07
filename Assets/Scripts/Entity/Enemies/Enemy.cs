@@ -12,6 +12,7 @@ namespace Entity.Enemies {
     /// Base enemy class.
     /// </summary>
     public class Enemy : Entity {
+        #pragma warning disable 0649
         [Header("Player ItemSettings")]
         [SerializeField] private string playerTag = "Player";
         [SerializeField] private LayerMask playerLayer = 10;
@@ -30,6 +31,8 @@ namespace Entity.Enemies {
         protected GameObject player;
         protected IDamageable playerDamageable;
         [SerializeField] private GameObject DamageCanvasPrefab;
+        
+        #pragma warning restore 0649
 
         protected virtual void Start() {
             player = GameObject.FindWithTag("Player");

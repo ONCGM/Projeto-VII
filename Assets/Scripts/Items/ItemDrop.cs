@@ -14,7 +14,7 @@ namespace Items {
     [RequireComponent( typeof(StudioEventEmitter), typeof(Collider))]
     public class ItemDrop : MonoBehaviour {
         #pragma warning disable 0649
-        [Header("Animation ItemSettings")]
+        [Header("Animation Item Settings")]
         [SerializeField, Range(0.1f, 3f)] private float jumpHeight = 0.75f;
         [SerializeField, Range(0.1f, 5f)] private float jumpTime = 1.5f;
 
@@ -79,7 +79,7 @@ namespace Items {
             player.Inventory.AddItemEntry(stats);
 
             foreach(var item in player.Inventory.ItemsInInventory) {
-                Debug.Log(item.ItemSettings.itemName);
+                Debug.Log(item.ItemSettings.itemNameKey);
             }
             
             // TODO: Add particles, sfx and effects.
