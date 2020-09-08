@@ -52,6 +52,7 @@
   <ItemGroup>
      <Compile Include="Assets\Scripts\UI\InventoryUI.cs" />
      <Compile Include="Assets\Scripts\Entity\Player\PlayerController.cs" />
+     <Compile Include="Assets\Scripts\UI\SmallItemUI.cs" />
      <Compile Include="Assets\Scripts\UI\ItemUI.cs" />
      <Compile Include="Assets\Scripts\Entity\Enemies\Critter.cs" />
      <Compile Include="Assets\Scripts\UI\Localization\TextMeshLocalizer.cs" />
@@ -65,10 +66,12 @@
      <Compile Include="Assets\Scripts\UI\Menu\MainMenuButtons.cs" />
      <Compile Include="Assets\Scripts\Entity\Enemies\Pirate.cs" />
      <Compile Include="Assets\Scripts\Entity\Enemies\EnemyEnums.cs" />
+     <Compile Include="Assets\Scripts\UI\Popups\CanvasPopupDialog.cs" />
      <Compile Include="Assets\Scripts\Entity\EntityInterfaces.cs" />
      <Compile Include="Assets\Scripts\Entity\Enemies\EnemySettings.cs" />
      <Compile Include="Assets\Scripts\GameInput\ActionInputs.cs" />
      <Compile Include="Assets\Scripts\UI\Tab.cs" />
+     <Compile Include="Assets\Scripts\UI\Localization\LocalizedString.cs" />
      <Compile Include="Assets\Scripts\Items\Inventory.cs" />
      <Compile Include="Assets\Scripts\Store\StoreTransition.cs" />
      <Compile Include="Assets\Scripts\UI\PlayerStatsUI.cs" />
@@ -77,6 +80,7 @@
      <Compile Include="Assets\Scripts\Game\GameMaster.cs" />
      <Compile Include="Assets\Scripts\UI\Localization\CSVLoader.cs" />
      <Compile Include="Assets\Scripts\Items\InventoryItemEntry.cs" />
+     <Compile Include="Assets\Scripts\UI\Menu\CombatDebriefUi.cs" />
      <Compile Include="Assets\Scripts\Items\ItemDrop.cs" />
      <Compile Include="Assets\Scripts\Store\StoreEntrance.cs" />
      <Compile Include="Assets\Scripts\UI\OpenCloseGameMenu.cs" />
@@ -85,10 +89,6 @@
      <Compile Include="Assets\Scripts\Entity\Player\PlayerStats.cs" />
      <Compile Include="Assets\Scripts\UI\DamageCanvas.cs" />
      <Compile Include="Assets\Scripts\Entity\Enemies\EnemyBullet.cs" />
-     <Compile Include="Assets\Scripts\UI\Localization\LocalizedString.cs" />
-     <Compile Include="Assets\Scripts\UI\Popups\CanvasPopupDialog.cs" />
-     <Compile Include="Assets\Scripts\UI\Menu\CombatDebriefUi.cs" />
-     <Compile Include="Assets\Scripts\UI\SmallItemUI.cs" />
      <None Include="Assets\TextMesh Pro\Shaders\TMPro.cginc" />
      <None Include="Assets\TextMesh Pro\Shaders\TMP_SDF-Mobile Overlay.shader" />
      <None Include="Assets\Art\Font\LICENSE.txt" />

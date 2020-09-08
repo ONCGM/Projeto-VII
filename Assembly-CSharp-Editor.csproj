@@ -50,8 +50,8 @@
     <ImplicitlyExpandDesignTimeFacades>false</ImplicitlyExpandDesignTimeFacades>
   </PropertyGroup>
   <ItemGroup>
-     <Compile Include="Assets\Scripts\UI\Localization\Editor\LocalizedStringDrawer.cs" />
      <Compile Include="Assets\Scripts\UI\Localization\Editor\LocalizerEditor.cs" />
+     <Compile Include="Assets\Scripts\UI\Localization\Editor\LocalizedStringDrawer.cs" />
  <Reference Include="UnityEditor.TestRunner">
  <HintPath>C:/Users/OnCra/Documents/Unity Projects/Projeto-VII/Library/ScriptAssemblies/UnityEditor.TestRunner.dll</HintPath>
  </Reference>
