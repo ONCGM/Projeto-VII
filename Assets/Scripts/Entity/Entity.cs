@@ -18,11 +18,27 @@ namespace Entity {
             set => health = value;
         }
         
+        /// <summary>
+        /// Maximum amount of health.
+        /// </summary>
+        public virtual int MaxHealth {
+            get => maxHealth;
+            set => maxHealth = value;
+        }
+        
         [SerializeField] protected int stamina = 10;
         [SerializeField] protected int maxStamina = 10;
         public virtual int Stamina {
             get => stamina;
             set => stamina = value;
+        }
+        
+        /// <summary>
+        /// Maximum amount of stamina.
+        /// </summary>
+        public virtual int MaxStamina {
+            get => maxStamina;
+            set => maxStamina = value;
         }
 
         [SerializeField] protected int level = 0;
@@ -42,7 +58,14 @@ namespace Entity {
             get => experience;
             set => experience = value;
         }
+
+        [SerializeField] private int coins;
         
+        public int Coins {
+            get => coins;
+            set => coins = value;
+        }
+
         // Basic Components.
         protected NavMeshAgent agent;
         protected Animator anim;

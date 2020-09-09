@@ -15,8 +15,8 @@ MonoBehaviour:
   itemPrefab: {fileID: 7544617556613125104, guid: 1efbb2db66435784d8866bd90cf148a0, type: 3}
   itemModel: {fileID: 919132149155446097, guid: cbd1954899df523489bf1e9801ead802, type: 3}
   itemId: 0
-  itemName: Default Item
-  itemDescription: You should not be seeing this. If so, please tell me.
+  itemNameKey: placeholder
+  itemDescriptionKey: placeholder
   itemEffects: This item does not has any effect.
   maxStackQuantity: 10
   itemImage: {fileID: 21300000, guid: 3fd34c3bdf6a36f45b8379eb287d58ac, type: 3}

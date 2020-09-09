@@ -200,8 +200,9 @@ MonoBehaviour:
   stamina: 10
   maxStamina: 10
   level: 0
-  maxLevel: 0
+  maxLevel: 30
   experience: 0
+  coins: 0
   storeSpeed: 9
   worldSpeed: 15
   rotationSpeed: 0.1
@@ -218,6 +219,8 @@ MonoBehaviour:
   rangedAttackMaxRange: 5
   bulletSpawnPosition: {fileID: 4517349244887649291}
   bulletPrefab: {fileID: 5173478839772874508, guid: 9ab390d8334dfe8429e4894c880874ee, type: 3}
+  playerInventorySize: 10
+  DamageCanvasPrefab: {fileID: 0}
 --- !u!136 &3555962724994509045
 CapsuleCollider:
   m_ObjectHideFlags: 0

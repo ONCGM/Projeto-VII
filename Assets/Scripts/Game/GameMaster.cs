@@ -30,12 +30,29 @@ namespace Game {
 
         /// <summary>
         /// Current state of the game.
+        /// <para> Used to stop enemies if player gets a popup and
+        /// similar scenarios.</para>
         /// </summary>
         public ExecutionState GameState {
             get => gameState;
             set {
                 gameState = value;
                 OnGameStateUpdated?.Invoke();
+                Time.timeScale = gameState == ExecutionState.FullPause ? 0f : 1f;
+            }
+        }
+
+        private bool gameMenuIsOpen;
+        
+        /// <summary>
+        /// Has the player opened the in game menu?
+        /// </summary>
+        public bool GameMenuIsOpen {
+            get => gameMenuIsOpen;
+            set {
+                gameMenuIsOpen = value;
+                gameState = gameMenuIsOpen ? ExecutionState.PopupPause : ExecutionState.Normal;
+                OnGameMenuUpdated?.Invoke();
             }
         }
 
@@ -52,7 +69,37 @@ namespace Game {
             }
             
         }
-        
+
+        private TimeOfDay currentTimeOfDay = TimeOfDay.Morning;
+
+        /// <summary>
+        /// What time is it in game.
+        /// </summary>
+        public TimeOfDay CurrentTimeOfDay {
+            get => currentTimeOfDay;
+            set {
+                currentTimeOfDay = value;
+                OnGameTimeOfDayUpdated.Invoke();
+            }
+        }
+
+        private int currentGameDay = 0;
+
+        /// <summary>
+        /// The current in game day.
+        /// </summary>
+        public int CurrentGameDay {
+            get => currentGameDay;
+            set {
+                currentGameDay = value;
+                OnGameDayUpdate?.Invoke();
+                if(currentGameDay >= 30) {
+                    // TODO: Add end game event.
+                    OnEndGameDayUpdate?.Invoke();
+                }
+            }
+        }
+
         /// <summary>
         /// Called whenever the PlayerStats are updated.
         /// </summary>
@@ -62,6 +109,26 @@ namespace Game {
         /// Called whenever the PlayerStats are updated.
         /// </summary>
         public static Action OnGameStateUpdated;
+        
+        /// <summary>
+        /// Called whenever the game menu is open or closed.
+        /// </summary>
+        public static Action OnGameMenuUpdated;
+
+        /// <summary>
+        /// Called whenever the in game time changes.
+        /// </summary>
+        public static Action OnGameTimeOfDayUpdated;
+
+        /// <summary>
+        /// Called whenever a in game day passes.
+        /// </summary>
+        public static Action OnGameDayUpdate;
+        
+        /// <summary>
+        /// Called when the last game day starts and ends.
+        /// </summary>
+        public static Action OnEndGameDayUpdate;
         
         //TODO
         public object SaveData { get; private set; }
@@ -73,12 +140,19 @@ namespace Game {
     
     /// <summary>
     /// Current execution state of the game.
-    /// <para> Used to stop enemies if player gets a popup and
-    /// similar scenarios.</para>
     /// </summary>
     public enum ExecutionState {
         Normal,
         PopupPause,
         FullPause
+    }
+
+    /// <summary>
+    /// Defines the periods of the day used in the game.
+    /// </summary>
+    public enum TimeOfDay {
+        Night,
+        Morning,
+        Afternoon
     }
 }

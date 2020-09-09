@@ -43,6 +43,6 @@ namespace UI.Localization {
         // <summary>
         // Removes the subscription from the action.
         // </summary>
-        // private void OnDestroy() => LocalizationSystem.OnLanguageUpdate -= UpdateText;
+        private void OnDestroy() => LocalizationSystem.OnLanguageUpdate -= UpdateText;
     }
 }

@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using Entity.Enemies;
 using Items;
+using UI;
 using UnityEngine;
 using UnityEngine.AI;
 using UnityEngine.InputSystem;
@@ -15,34 +16,36 @@ namespace Entity.Player {
     /// </summary>
     public class PlayerController : Entity {
         #pragma warning disable 0649
-        [Header("Movement")]
-        [SerializeField, Range(0f, 25f)] private float storeSpeed = 9f;
+        [Header("Movement")] [SerializeField, Range(0f, 25f)]
+        private float storeSpeed = 9f;
+
         [SerializeField, Range(0f, 25f)] private float worldSpeed = 15f;
         [SerializeField, Range(0f, 2f)] private float rotationSpeed = 0.1f;
         [SerializeField, Range(0f, 2f)] private float minRotationInput = 0.075f;
         private float playerSpeed = 1f;
         private Vector3 movementScale = Vector3.zero;
 
-        [Header("Melee Attacks")]
-        [SerializeField] private LayerMask enemyLayer = 11;
+        [Header("Melee Attacks")] [SerializeField]
+        private LayerMask enemyLayer = 11;
+
         [SerializeField] private SphereCollider swordCollider;
         [SerializeField, Range(1, 25)] private int meleeDamage = 10;
         [SerializeField, Range(0.01f, 3f)] private float meleeDamageComboMultiplier = .2f;
         private int comboNumber;
-        
-        [Header("Ranged Attacks")]
-        [SerializeField, Range(1, 50)] private int rangedDamagePerBullet = 15;
+
+        [Header("Ranged Attacks")] [SerializeField, Range(1, 50)]
+        private int rangedDamagePerBullet = 15;
+
         [SerializeField, Range(1, 9)] private int rangedBulletsPerAttack = 1;
-        [SerializeField, Range(0f, 90f)] private float bulletSpreadAngle = 70f; 
-        [SerializeField, Range(2f, 55f)] private float rangedAttackMaxRange = 50f;
+        [SerializeField, Range(0f, 90f)] private float bulletSpreadAngle = 70f;
+        [SerializeField, Range(2f, 55f)] private float rangedAttackMaxRange = 10f;
         [SerializeField] private Transform bulletSpawnPosition;
         [SerializeField] private GameObject bulletPrefab;
 
-        [Header("Inventory")] 
-        [SerializeField] private int playerInventorySize = 10;
+        [Header("Inventory")] [SerializeField] private int playerInventorySize = 10;
 
         private Inventory inventory;
-        
+
         /// <summary>
         /// The player's inventory.
         /// </summary>
@@ -54,10 +57,12 @@ namespace Entity.Player {
 
         // Input
         private ActionInputs inputs;
-      
-        private static readonly List<int> ComboAnim = new List<int>{Animator.StringToHash("Combo_0"),
-                                                                Animator.StringToHash("Combo_1"),
-                                                                Animator.StringToHash("Combo_2")};
+
+        private static readonly List<int> ComboAnim = new List<int> {
+            Animator.StringToHash("Combo_0"),
+            Animator.StringToHash("Combo_1"),
+            Animator.StringToHash("Combo_2")
+        };
 
         private static readonly int SpecialAnim = Animator.StringToHash("Special");
 
@@ -75,12 +80,14 @@ namespace Entity.Player {
                 isInsideShop = value;
                 playerSpeed = (isInsideShop ? storeSpeed : worldSpeed);
                 if(agent != null) agent.speed = playerSpeed;
+                PlayerStatsUI.UpdateUiValues.Invoke();
             }
         }
-        
+
         #pragma warning restore 0649
 
         #region Unity Events
+
         protected override void Awake() {
             base.Awake();
             inputs = new ActionInputs();
@@ -90,13 +97,16 @@ namespace Entity.Player {
             playerSpeed = (isInsideShop ? storeSpeed : worldSpeed);
             agent.speed = playerSpeed;
             inventory = new Inventory(playerInventorySize, new List<InventoryItemEntry>());
-            
+
             InvokeRepeating(nameof(RecoverStamina), 1f, 1f);
         }
 
-        private void RecoverStamina() => Stamina = Mathf.Clamp(Stamina + 2, 0, maxStamina);
-        
-        // OnEnable Unity Event, enables input.
+        private void RecoverStamina() { 
+            Stamina = Mathf.Clamp(Stamina + 2, 0, maxStamina);
+            PlayerStatsUI.UpdateUiValues.Invoke();
+        }
+
+    // OnEnable Unity Event, enables input.
         private void OnEnable() {
             inputs.Enable();
         }
@@ -148,6 +158,7 @@ namespace Entity.Player {
             if(anim.GetCurrentAnimatorStateInfo(0).IsName("Player_Attack_Special_Anim")) return;
             agent.enabled = false;
             anim.SetTrigger(SpecialAnim);
+            PlayerStatsUI.UpdateUiValues.Invoke();
         }
 
         /// <summary>
@@ -201,6 +212,8 @@ namespace Entity.Player {
             } else {
                 comboNumber = 0;
             }
+            
+            PlayerStatsUI.UpdateUiValues.Invoke();
         }
         
         /// <summary>

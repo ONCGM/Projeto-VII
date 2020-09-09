@@ -3237,6 +3237,7 @@ GameObject:
   - component: {fileID: 8384049595133812054}
   - component: {fileID: 8384049595133812052}
   - component: {fileID: 6867044075671762212}
+  - component: {fileID: 4818136336356219067}
   m_Layer: 5
   m_Name: Game Menu
   m_TagString: Untagged
@@ -3341,6 +3342,19 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9535228c40f451c44a505a322de551da, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  fadeAnimationSpeed: 0.7
+--- !u!225 &4818136336356219067
+CanvasGroup:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8384049595133812048}
+  m_Enabled: 1
+  m_Alpha: 1
+  m_Interactable: 1
+  m_BlocksRaycasts: 0
+  m_IgnoreParentGroups: 0
 --- !u!1 &8384049595295639622
 GameObject:
   m_ObjectHideFlags: 0
@@ -4424,7 +4438,7 @@ Canvas:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8384049596464260047}
-  m_Enabled: 0
+  m_Enabled: 1
   serializedVersion: 3
   m_RenderMode: 0
   m_Camera: {fileID: 0}

@@ -540,6 +540,10 @@ PrefabInstance:
       propertyPath: rangedAttackMaxRange
       value: 10
       objectReference: {fileID: 0}
+    - target: {fileID: 3555962724994509049, guid: 07cf473303d2a8e4b8beac9eac9431a4, type: 3}
+      propertyPath: maxLevel
+      value: 30
+      objectReference: {fileID: 0}
     - target: {fileID: 3555962724994509050, guid: 07cf473303d2a8e4b8beac9eac9431a4, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
@@ -1838,6 +1842,10 @@ PrefabInstance:
       propertyPath: m_SizeDelta.y
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 4818136336356219067, guid: 54d24528ca8842e4c8bce0c2addc3a9d, type: 3}
+      propertyPath: m_Alpha
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 5680513163221491942, guid: 54d24528ca8842e4c8bce0c2addc3a9d, type: 3}
       propertyPath: m_AnchorMin.y
       value: 0
@@ -2108,7 +2116,7 @@ PrefabInstance:
       objectReference: {fileID: 2105986402}
     - target: {fileID: 8384049596464260044, guid: 54d24528ca8842e4c8bce0c2addc3a9d, type: 3}
       propertyPath: m_Enabled
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 8384049596464260047, guid: 54d24528ca8842e4c8bce0c2addc3a9d, type: 3}
       propertyPath: m_Name

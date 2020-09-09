@@ -31,6 +31,11 @@ namespace Entity {
         /// The experience of this entity.
         /// </summary>
         int Experience { get; set; }
+
+        /// <summary>
+        /// Amount of coins that the entity has.
+        /// </summary>
+        int Coins { get; set; }
     }
     
     /// <summary>
