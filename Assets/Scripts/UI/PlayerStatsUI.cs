@@ -8,6 +8,7 @@ using Localization;
 using TMPro;
 using UI.Localization;
 using UnityEngine;
+using UnityEngine.InputSystem;
 using UnityEngine.UI;
 
 namespace UI {
@@ -77,6 +78,7 @@ namespace UI {
             GameMaster.OnGameTimeOfDayUpdated -= UpdateUiValues;
             GameMaster.OnPlayerStatsUpdated -= UpdateUiValues;
             GameMaster.OnGameDayUpdate -= UpdateUiValues;
+            UpdateUiValues = null;
         }
 
         /// <summary>

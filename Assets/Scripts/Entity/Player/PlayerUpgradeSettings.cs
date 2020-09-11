@@ -28,7 +28,7 @@ namespace Entity.Player {
         /// Return the current player level based on total experience.
         /// </summary>
         public int GetLevelBasedOnTotalExperience(int experience) {
-            return Mathf.FloorToInt(Mathf.Sqrt((float) ((experience - baseExperienceNeededForLevelUp) / 1.99f)));
+            return Mathf.FloorToInt(Mathf.Sqrt((experience - baseExperienceNeededForLevelUp) / levelUpMultiplier));
         }
     }
 }
