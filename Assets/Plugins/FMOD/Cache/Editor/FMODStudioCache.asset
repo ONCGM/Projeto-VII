@@ -1,5 +1,41 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
+--- !u!114 &-9219564662029299817
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c18180ecb35941f4682ae60107b85b7c, type: 3}
+  m_Name: bank:/Music.bank
+  m_EditorClassIdentifier: 
+  Path: FMOD/Project-VII/Build/Desktop/Music.bank
+  SubDir: 
+  lastModified: 637344009092023375
+  LoadResult: 0
+  FileSizes: []
+  Exists: 0
+--- !u!114 &-9200795520007438640
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c18180ecb35941f4682ae60107b85b7c, type: 3}
+  m_Name: bank:/UI.bank
+  m_EditorClassIdentifier: 
+  Path: FMOD/Project-VII/Build/Desktop/UI.bank
+  SubDir: 
+  lastModified: 637344081312928947
+  LoadResult: 0
+  FileSizes: []
+  Exists: 0
 --- !u!114 &-9058901591885987365
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -17,7 +53,593 @@ MonoBehaviour:
   lastModified: 637319771823653704
   LoadResult: 0
   FileSizes: []
+  Exists: 0
+--- !u!114 &-9019029053755068645
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c18180ecb35941f4682ae60107b85b7c, type: 3}
+  m_Name: bank:/Master.bank
+  m_EditorClassIdentifier: 
+  Path: FMOD/Project-VII/Build/Desktop/Master.bank
+  SubDir: 
+  lastModified: 637344009564818391
+  LoadResult: 0
+  FileSizes: []
+  Exists: 0
+--- !u!114 &-9006300001195994468
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c18180ecb35941f4682ae60107b85b7c, type: 3}
+  m_Name: bank:/Environment_SFX.bank
+  m_EditorClassIdentifier: 
+  Path: FMOD/Project-VII/Build/Desktop/Environment_SFX.bank
+  SubDir: 
+  lastModified: 637344009563890884
+  LoadResult: 0
+  FileSizes: []
+  Exists: 0
+--- !u!114 &-8859946889512999767
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c18180ecb35941f4682ae60107b85b7c, type: 3}
+  m_Name: bank:/Master.bank
+  m_EditorClassIdentifier: 
+  Path: FMOD/Project-VII/Build/Desktop/Master.bank
+  SubDir: 
+  lastModified: 637344083166993170
+  LoadResult: 0
+  FileSizes: []
   Exists: 1
+--- !u!114 &-8251779858510841607
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c18180ecb35941f4682ae60107b85b7c, type: 3}
+  m_Name: bank:/Entity_SFX.bank
+  m_EditorClassIdentifier: 
+  Path: FMOD/Project-VII/Build/Desktop/Entity_SFX.bank
+  SubDir: 
+  lastModified: 637344009091484921
+  LoadResult: 0
+  FileSizes: []
+  Exists: 0
+--- !u!114 &-6904262806707754926
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c18180ecb35941f4682ae60107b85b7c, type: 3}
+  m_Name: bank:/Entity_SFX.bank
+  m_EditorClassIdentifier: 
+  Path: FMOD/Project-VII/Build/Desktop/Entity_SFX.bank
+  SubDir: 
+  lastModified: 637343813847571468
+  LoadResult: 0
+  FileSizes: []
+  Exists: 0
+--- !u!114 &-6441771681808897906
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c18180ecb35941f4682ae60107b85b7c, type: 3}
+  m_Name: bank:/Entity_SFX.bank
+  m_EditorClassIdentifier: 
+  Path: FMOD/Project-VII/Build/Desktop/Entity_SFX.bank
+  SubDir: 
+  lastModified: 637343815322209760
+  LoadResult: 0
+  FileSizes: []
+  Exists: 0
+--- !u!114 &-6237756845396410779
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c18180ecb35941f4682ae60107b85b7c, type: 3}
+  m_Name: bank:/Master.bank
+  m_EditorClassIdentifier: 
+  Path: FMOD/Project-VII/Build/Desktop/Master.bank
+  SubDir: 
+  lastModified: 637343815322114951
+  LoadResult: 0
+  FileSizes: []
+  Exists: 0
+--- !u!114 &-5843515961929633576
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c18180ecb35941f4682ae60107b85b7c, type: 3}
+  m_Name: bank:/Entity_SFX.bank
+  m_EditorClassIdentifier: 
+  Path: FMOD/Project-VII/Build/Desktop/Entity_SFX.bank
+  SubDir: 
+  lastModified: 637343853129576214
+  LoadResult: 0
+  FileSizes: []
+  Exists: 0
+--- !u!114 &-5591606927630736084
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c18180ecb35941f4682ae60107b85b7c, type: 3}
+  m_Name: bank:/UI.bank
+  m_EditorClassIdentifier: 
+  Path: FMOD/Project-VII/Build/Desktop/UI.bank
+  SubDir: 
+  lastModified: 637344009092053298
+  LoadResult: 0
+  FileSizes: []
+  Exists: 0
+--- !u!114 &-5373453007045342419
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c18180ecb35941f4682ae60107b85b7c, type: 3}
+  m_Name: bank:/Master.bank
+  m_EditorClassIdentifier: 
+  Path: FMOD/Project-VII/Build/Desktop/Master.bank
+  SubDir: 
+  lastModified: 637344009091963524
+  LoadResult: 0
+  FileSizes: []
+  Exists: 0
+--- !u!114 &-5243411052421049231
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c18180ecb35941f4682ae60107b85b7c, type: 3}
+  m_Name: bank:/General_SFX.bank
+  m_EditorClassIdentifier: 
+  Path: FMOD/Project-VII/Build/Desktop/General_SFX.bank
+  SubDir: 
+  lastModified: 637343813847661234
+  LoadResult: 0
+  FileSizes: []
+  Exists: 0
+--- !u!114 &-5101012903713810166
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c18180ecb35941f4682ae60107b85b7c, type: 3}
+  m_Name: bank:/Master.bank
+  m_EditorClassIdentifier: 
+  Path: FMOD/Project-VII/Build/Desktop/Master.bank
+  SubDir: 
+  lastModified: 637343853129466495
+  LoadResult: 0
+  FileSizes: []
+  Exists: 0
+--- !u!114 &-4670212989161815522
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c18180ecb35941f4682ae60107b85b7c, type: 3}
+  m_Name: bank:/Gameplay_SFX.bank
+  m_EditorClassIdentifier: 
+  Path: FMOD/Project-VII/Build/Desktop/Gameplay_SFX.bank
+  SubDir: 
+  lastModified: 637344013775656146
+  LoadResult: 0
+  FileSizes: []
+  Exists: 0
+--- !u!114 &-4596042686916356759
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c18180ecb35941f4682ae60107b85b7c, type: 3}
+  m_Name: bank:/General_SFX.bank
+  m_EditorClassIdentifier: 
+  Path: FMOD/Project-VII/Build/Desktop/General_SFX.bank
+  SubDir: 
+  lastModified: 637343815322289552
+  LoadResult: 0
+  FileSizes: []
+  Exists: 0
+--- !u!114 &-4536361930178047628
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c18180ecb35941f4682ae60107b85b7c, type: 3}
+  m_Name: bank:/General_SFX.bank
+  m_EditorClassIdentifier: 
+  Path: FMOD/Project-VII/Build/Desktop/General_SFX.bank
+  SubDir: 
+  lastModified: 637344009091923632
+  LoadResult: 0
+  FileSizes: []
+  Exists: 0
+--- !u!114 &-4473521775123889674
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c18180ecb35941f4682ae60107b85b7c, type: 3}
+  m_Name: bank:/Environment_SFX.bank
+  m_EditorClassIdentifier: 
+  Path: FMOD/Project-VII/Build/Desktop/Environment_SFX.bank
+  SubDir: 
+  lastModified: 637343815322229710
+  LoadResult: 0
+  FileSizes: []
+  Exists: 0
+--- !u!114 &-4360841136443664558
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c18180ecb35941f4682ae60107b85b7c, type: 3}
+  m_Name: bank:/Entity_SFX.bank
+  m_EditorClassIdentifier: 
+  Path: FMOD/Project-VII/Build/Desktop/Entity_SFX.bank
+  SubDir: 
+  lastModified: 637344009563860962
+  LoadResult: 0
+  FileSizes: []
+  Exists: 0
+--- !u!114 &-4314789964780048171
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c18180ecb35941f4682ae60107b85b7c, type: 3}
+  m_Name: bank:/NPCS.bank
+  m_EditorClassIdentifier: 
+  Path: FMOD/Project-VII/Build/Desktop/NPCS.bank
+  SubDir: 
+  lastModified: 637344081312958862
+  LoadResult: 0
+  FileSizes: []
+  Exists: 0
+--- !u!114 &-3712917091715476535
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c18180ecb35941f4682ae60107b85b7c, type: 3}
+  m_Name: bank:/Gameplay_SFX.bank
+  m_EditorClassIdentifier: 
+  Path: FMOD/Project-VII/Build/Desktop/Gameplay_SFX.bank
+  SubDir: 
+  lastModified: 637343813847641292
+  LoadResult: 0
+  FileSizes: []
+  Exists: 0
+--- !u!114 &-3582177293604695447
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c18180ecb35941f4682ae60107b85b7c, type: 3}
+  m_Name: bank:/Gameplay_SFX.bank
+  m_EditorClassIdentifier: 
+  Path: FMOD/Project-VII/Build/Desktop/Gameplay_SFX.bank
+  SubDir: 
+  lastModified: 637344009091893715
+  LoadResult: 0
+  FileSizes: []
+  Exists: 0
+--- !u!114 &-2792118388695801250
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c18180ecb35941f4682ae60107b85b7c, type: 3}
+  m_Name: bank:/Music.bank
+  m_EditorClassIdentifier: 
+  Path: FMOD/Project-VII/Build/Desktop/Music.bank
+  SubDir: 
+  lastModified: 637343853129516385
+  LoadResult: 0
+  FileSizes: []
+  Exists: 0
+--- !u!114 &-2504738298279231048
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c18180ecb35941f4682ae60107b85b7c, type: 3}
+  m_Name: bank:/Store.bank
+  m_EditorClassIdentifier: 
+  Path: FMOD/Project-VII/Build/Desktop/Store.bank
+  SubDir: 
+  lastModified: 637344081313038640
+  LoadResult: 0
+  FileSizes: []
+  Exists: 0
+--- !u!114 &-2028759514372799713
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c18180ecb35941f4682ae60107b85b7c, type: 3}
+  m_Name: bank:/UI.bank
+  m_EditorClassIdentifier: 
+  Path: FMOD/Project-VII/Build/Desktop/UI.bank
+  SubDir: 
+  lastModified: 637344013775775833
+  LoadResult: 0
+  FileSizes: []
+  Exists: 0
+--- !u!114 &-1968046499065603487
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c18180ecb35941f4682ae60107b85b7c, type: 3}
+  m_Name: bank:/Enemies.bank
+  m_EditorClassIdentifier: 
+  Path: FMOD/Project-VII/Build/Desktop/Enemies.bank
+  SubDir: 
+  lastModified: 637344081312131068
+  LoadResult: 0
+  FileSizes: []
+  Exists: 0
+--- !u!114 &-1912030336090858068
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c18180ecb35941f4682ae60107b85b7c, type: 3}
+  m_Name: bank:/Islands.bank
+  m_EditorClassIdentifier: 
+  Path: FMOD/Project-VII/Build/Desktop/Islands.bank
+  SubDir: 
+  lastModified: 637344081312978813
+  LoadResult: 0
+  FileSizes: []
+  Exists: 0
+--- !u!114 &-1446215177443399384
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ceb653cd98e289a4e8697a1af55201f2, type: 3}
+  m_Name: event:/SFX/Gameplay_Events/ItemPickup
+  m_EditorClassIdentifier: 
+  Path: event:/SFX/Gameplay_Events/ItemPickup
+  guid: 5596f497ce5ede4ba14114418929e4a9
+  Banks:
+  - {fileID: -8859946889512999767}
+  IsStream: 0
+  Is3D: 1
+  IsOneShot: 1
+  Parameters: []
+  MinDistance: 1
+  MaxDistance: 5
+  Length: 1718
+--- !u!114 &-1158050641475153093
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c18180ecb35941f4682ae60107b85b7c, type: 3}
+  m_Name: bank:/Environment_SFX.bank
+  m_EditorClassIdentifier: 
+  Path: FMOD/Project-VII/Build/Desktop/Environment_SFX.bank
+  SubDir: 
+  lastModified: 637344009091514733
+  LoadResult: 0
+  FileSizes: []
+  Exists: 0
+--- !u!114 &-1044280213218293725
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c18180ecb35941f4682ae60107b85b7c, type: 3}
+  m_Name: bank:/Gameplay_SFX.bank
+  m_EditorClassIdentifier: 
+  Path: FMOD/Project-VII/Build/Desktop/Gameplay_SFX.bank
+  SubDir: 
+  lastModified: 637343853129636060
+  LoadResult: 0
+  FileSizes: []
+  Exists: 0
+--- !u!114 &-843770909857951988
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c18180ecb35941f4682ae60107b85b7c, type: 3}
+  m_Name: bank:/Music.bank
+  m_EditorClassIdentifier: 
+  Path: FMOD/Project-VII/Build/Desktop/Music.bank
+  SubDir: 
+  lastModified: 637344013775755873
+  LoadResult: 0
+  FileSizes: []
+  Exists: 0
+--- !u!114 &-789759626475891150
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c18180ecb35941f4682ae60107b85b7c, type: 3}
+  m_Name: bank:/Player.bank
+  m_EditorClassIdentifier: 
+  Path: FMOD/Project-VII/Build/Desktop/Player.bank
+  SubDir: 
+  lastModified: 637344081312789292
+  LoadResult: 0
+  FileSizes: []
+  Exists: 0
+--- !u!114 &-517798051386505383
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c18180ecb35941f4682ae60107b85b7c, type: 3}
+  m_Name: bank:/General_SFX.bank
+  m_EditorClassIdentifier: 
+  Path: FMOD/Project-VII/Build/Desktop/General_SFX.bank
+  SubDir: 
+  lastModified: 637344009564788468
+  LoadResult: 0
+  FileSizes: []
+  Exists: 0
+--- !u!114 &-356756595458750016
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ceb653cd98e289a4e8697a1af55201f2, type: 3}
+  m_Name: event:/SFX/Enemies_Events/Enemy_Pirate_Attack_Ranged
+  m_EditorClassIdentifier: 
+  Path: event:/SFX/Enemies_Events/Enemy_Pirate_Attack_Ranged
+  guid: b9db15421ebe6f46a9ba87bd9ca9ba38
+  Banks:
+  - {fileID: -8859946889512999767}
+  IsStream: 0
+  Is3D: 1
+  IsOneShot: 1
+  Parameters: []
+  MinDistance: 1
+  MaxDistance: 20
+  Length: 0
 --- !u!114 &11400000
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -32,15 +654,207 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   EditorBanks:
   - {fileID: 3626791303816003544}
-  - {fileID: -9058901591885987365}
-  EditorEvents: []
+  - {fileID: -8859946889512999767}
+  EditorEvents:
+  - {fileID: 7434615611338692721}
+  - {fileID: 8727216911623776973}
+  - {fileID: 7830312170845007100}
+  - {fileID: 8573760444326029085}
+  - {fileID: 1969115540569975560}
+  - {fileID: -1446215177443399384}
+  - {fileID: -356756595458750016}
   EditorParameters: []
   MasterBanks:
-  - {fileID: -9058901591885987365}
+  - {fileID: -8859946889512999767}
   StringsBanks:
   - {fileID: 3626791303816003544}
-  stringsBankWriteTime: 637319771823753447
+  stringsBankWriteTime: 637344083167023112
   cacheVersion: 3
+--- !u!114 &51799581311487465
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c18180ecb35941f4682ae60107b85b7c, type: 3}
+  m_Name: bank:/UI.bank
+  m_EditorClassIdentifier: 
+  Path: FMOD/Project-VII/Build/Desktop/UI.bank
+  SubDir: 
+  lastModified: 637343853129685907
+  LoadResult: 0
+  FileSizes: []
+  Exists: 0
+--- !u!114 &84001064709253343
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c18180ecb35941f4682ae60107b85b7c, type: 3}
+  m_Name: bank:/UI.bank
+  m_EditorClassIdentifier: 
+  Path: FMOD/Project-VII/Build/Desktop/UI.bank
+  SubDir: 
+  lastModified: 637343813847681448
+  LoadResult: 0
+  FileSizes: []
+  Exists: 0
+--- !u!114 &1062449950806250623
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c18180ecb35941f4682ae60107b85b7c, type: 3}
+  m_Name: bank:/General_SFX.bank
+  m_EditorClassIdentifier: 
+  Path: FMOD/Project-VII/Build/Desktop/General_SFX.bank
+  SubDir: 
+  lastModified: 637344013775676094
+  LoadResult: 0
+  FileSizes: []
+  Exists: 0
+--- !u!114 &1434798033643894382
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c18180ecb35941f4682ae60107b85b7c, type: 3}
+  m_Name: bank:/Music.bank
+  m_EditorClassIdentifier: 
+  Path: FMOD/Project-VII/Build/Desktop/Music.bank
+  SubDir: 
+  lastModified: 637343815322150273
+  LoadResult: 0
+  FileSizes: []
+  Exists: 0
+--- !u!114 &1704091610499186261
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c18180ecb35941f4682ae60107b85b7c, type: 3}
+  m_Name: bank:/Music.bank
+  m_EditorClassIdentifier: 
+  Path: FMOD/Project-VII/Build/Desktop/Music.bank
+  SubDir: 
+  lastModified: 637344009564858560
+  LoadResult: 0
+  FileSizes: []
+  Exists: 0
+--- !u!114 &1969115540569975560
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ceb653cd98e289a4e8697a1af55201f2, type: 3}
+  m_Name: event:/SFX/Enemies_Events/Enemy_Critter_Attack
+  m_EditorClassIdentifier: 
+  Path: event:/SFX/Enemies_Events/Enemy_Critter_Attack
+  guid: 4dba61afd6cf3f4fac1e2e6e048c884a
+  Banks:
+  - {fileID: -8859946889512999767}
+  IsStream: 0
+  Is3D: 1
+  IsOneShot: 1
+  Parameters: []
+  MinDistance: 1
+  MaxDistance: 20
+  Length: 0
+--- !u!114 &2177236583908548898
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c18180ecb35941f4682ae60107b85b7c, type: 3}
+  m_Name: bank:/Gameplay_SFX.bank
+  m_EditorClassIdentifier: 
+  Path: FMOD/Project-VII/Build/Desktop/Gameplay_SFX.bank
+  SubDir: 
+  lastModified: 637343815322259645
+  LoadResult: 0
+  FileSizes: []
+  Exists: 0
+--- !u!114 &2951356738737638865
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c18180ecb35941f4682ae60107b85b7c, type: 3}
+  m_Name: bank:/Entity_SFX.bank
+  m_EditorClassIdentifier: 
+  Path: FMOD/Project-VII/Build/Desktop/Entity_SFX.bank
+  SubDir: 
+  lastModified: 637344013775446720
+  LoadResult: 0
+  FileSizes: []
+  Exists: 0
+--- !u!114 &3133086945821917305
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c18180ecb35941f4682ae60107b85b7c, type: 3}
+  m_Name: bank:/Master.bank
+  m_EditorClassIdentifier: 
+  Path: FMOD/Project-VII/Build/Desktop/Master.bank
+  SubDir: 
+  lastModified: 637344081312829194
+  LoadResult: 0
+  FileSizes: []
+  Exists: 0
+--- !u!114 &3284653606565436484
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c18180ecb35941f4682ae60107b85b7c, type: 3}
+  m_Name: bank:/Town.bank
+  m_EditorClassIdentifier: 
+  Path: FMOD/Project-VII/Build/Desktop/Town.bank
+  SubDir: 
+  lastModified: 637344081313008720
+  LoadResult: 0
+  FileSizes: []
+  Exists: 0
 --- !u!114 &3626791303816003544
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -55,9 +869,299 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Path: FMOD/Project-VII/Build/Desktop/Master.strings.bank
   SubDir: 
-  lastModified: 637319771823753447
+  lastModified: 637344083167023112
   LoadResult: 0
   FileSizes:
   - Name: Desktop
-    Value: 688
+    Value: 1110
   Exists: 1
+--- !u!114 &4533646855639711258
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c18180ecb35941f4682ae60107b85b7c, type: 3}
+  m_Name: bank:/Environment_SFX.bank
+  m_EditorClassIdentifier: 
+  Path: FMOD/Project-VII/Build/Desktop/Environment_SFX.bank
+  SubDir: 
+  lastModified: 637343853129606143
+  LoadResult: 0
+  FileSizes: []
+  Exists: 0
+--- !u!114 &4858052120037825740
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c18180ecb35941f4682ae60107b85b7c, type: 3}
+  m_Name: bank:/UI.bank
+  m_EditorClassIdentifier: 
+  Path: FMOD/Project-VII/Build/Desktop/UI.bank
+  SubDir: 
+  lastModified: 637344009564878502
+  LoadResult: 0
+  FileSizes: []
+  Exists: 0
+--- !u!114 &5071384527046936926
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c18180ecb35941f4682ae60107b85b7c, type: 3}
+  m_Name: bank:/Master.bank
+  m_EditorClassIdentifier: 
+  Path: FMOD/Project-VII/Build/Desktop/Master.bank
+  SubDir: 
+  lastModified: 637343813847471745
+  LoadResult: 0
+  FileSizes: []
+  Exists: 0
+--- !u!114 &5142004095758358275
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c18180ecb35941f4682ae60107b85b7c, type: 3}
+  m_Name: bank:/Environment_SFX.bank
+  m_EditorClassIdentifier: 
+  Path: FMOD/Project-VII/Build/Desktop/Environment_SFX.bank
+  SubDir: 
+  lastModified: 637343813847601379
+  LoadResult: 0
+  FileSizes: []
+  Exists: 0
+--- !u!114 &5857625448121789502
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c18180ecb35941f4682ae60107b85b7c, type: 3}
+  m_Name: bank:/General_SFX.bank
+  m_EditorClassIdentifier: 
+  Path: FMOD/Project-VII/Build/Desktop/General_SFX.bank
+  SubDir: 
+  lastModified: 637343853129655994
+  LoadResult: 0
+  FileSizes: []
+  Exists: 0
+--- !u!114 &6320796251236150283
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c18180ecb35941f4682ae60107b85b7c, type: 3}
+  m_Name: bank:/Gameplay_SFX.bank
+  m_EditorClassIdentifier: 
+  Path: FMOD/Project-VII/Build/Desktop/Gameplay_SFX.bank
+  SubDir: 
+  lastModified: 637344009564768554
+  LoadResult: 0
+  FileSizes: []
+  Exists: 0
+--- !u!114 &6608165035267669677
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c18180ecb35941f4682ae60107b85b7c, type: 3}
+  m_Name: bank:/Music.bank
+  m_EditorClassIdentifier: 
+  Path: FMOD/Project-VII/Build/Desktop/Music.bank
+  SubDir: 
+  lastModified: 637343813847511616
+  LoadResult: 0
+  FileSizes: []
+  Exists: 0
+--- !u!114 &6707063442096756804
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c18180ecb35941f4682ae60107b85b7c, type: 3}
+  m_Name: bank:/Music.bank
+  m_EditorClassIdentifier: 
+  Path: FMOD/Project-VII/Build/Desktop/Music.bank
+  SubDir: 
+  lastModified: 637344081312899001
+  LoadResult: 0
+  FileSizes: []
+  Exists: 0
+--- !u!114 &7152693295566781850
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c18180ecb35941f4682ae60107b85b7c, type: 3}
+  m_Name: bank:/UI.bank
+  m_EditorClassIdentifier: 
+  Path: FMOD/Project-VII/Build/Desktop/UI.bank
+  SubDir: 
+  lastModified: 637343815322309716
+  LoadResult: 0
+  FileSizes: []
+  Exists: 0
+--- !u!114 &7434615611338692721
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ceb653cd98e289a4e8697a1af55201f2, type: 3}
+  m_Name: event:/SFX/Enemies_Events/Enemy_Pirate_Attack_Melee
+  m_EditorClassIdentifier: 
+  Path: event:/SFX/Enemies_Events/Enemy_Pirate_Attack_Melee
+  guid: 0f7ea6bdea5df94fae4dbd0771b140ac
+  Banks:
+  - {fileID: -8859946889512999767}
+  IsStream: 0
+  Is3D: 1
+  IsOneShot: 1
+  Parameters: []
+  MinDistance: 1
+  MaxDistance: 20
+  Length: 0
+--- !u!114 &7484840242170890143
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c18180ecb35941f4682ae60107b85b7c, type: 3}
+  m_Name: bank:/Environment_SFX.bank
+  m_EditorClassIdentifier: 
+  Path: FMOD/Project-VII/Build/Desktop/Environment_SFX.bank
+  SubDir: 
+  lastModified: 637344013775466648
+  LoadResult: 0
+  FileSizes: []
+  Exists: 0
+--- !u!114 &7830312170845007100
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ceb653cd98e289a4e8697a1af55201f2, type: 3}
+  m_Name: event:/SFX/Player_Events/Player_Attack_Special
+  m_EditorClassIdentifier: 
+  Path: event:/SFX/Player_Events/Player_Attack_Special
+  guid: 3720a8c4f941af40880dae03e66a27f4
+  Banks:
+  - {fileID: -8859946889512999767}
+  IsStream: 0
+  Is3D: 1
+  IsOneShot: 1
+  Parameters: []
+  MinDistance: 1
+  MaxDistance: 20
+  Length: 0
+--- !u!114 &8573760444326029085
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ceb653cd98e289a4e8697a1af55201f2, type: 3}
+  m_Name: event:/SFX/Player_Events/Player_Footsteps
+  m_EditorClassIdentifier: 
+  Path: event:/SFX/Player_Events/Player_Footsteps
+  guid: 405d90b77d38ba47a6d851fca6646956
+  Banks:
+  - {fileID: -8859946889512999767}
+  IsStream: 0
+  Is3D: 1
+  IsOneShot: 1
+  Parameters: []
+  MinDistance: 1
+  MaxDistance: 20
+  Length: 0
+--- !u!114 &8727216911623776973
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ceb653cd98e289a4e8697a1af55201f2, type: 3}
+  m_Name: event:/SFX/Player_Events/Player_Attack_Melee
+  m_EditorClassIdentifier: 
+  Path: event:/SFX/Player_Events/Player_Attack_Melee
+  guid: 0fdcf26d058efc45ba5e5acc0e620f7e
+  Banks:
+  - {fileID: -8859946889512999767}
+  IsStream: 0
+  Is3D: 1
+  IsOneShot: 1
+  Parameters: []
+  MinDistance: 1
+  MaxDistance: 20
+  Length: 0
+--- !u!114 &8769077314712222877
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c18180ecb35941f4682ae60107b85b7c, type: 3}
+  m_Name: bank:/Master.bank
+  m_EditorClassIdentifier: 
+  Path: FMOD/Project-VII/Build/Desktop/Master.bank
+  SubDir: 
+  lastModified: 637344013775706008
+  LoadResult: 0
+  FileSizes: []
+  Exists: 0

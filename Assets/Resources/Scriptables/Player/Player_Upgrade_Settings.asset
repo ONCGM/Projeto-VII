@@ -1,0 +1,42 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 88b7627276e976942b6db4a7c484173e, type: 3}
+  m_Name: Player_Upgrade_Settings
+  m_EditorClassIdentifier: 
+  baseExperienceNeededForLevelUp: 12
+  levelUpMultiplier: 1.99
+  upgradeEveryHowManyLevels: 5
+  meleeMultiplierUpgradeValues:
+  - 0.03
+  - 0.07
+  - 0.1
+  - 0.13
+  - 0.17
+  - 0.2
+  - 0.25
+  bulletsPerShotUpgradeValues: 00000000000000000300000003000000050000000500000007000000
+  bulletAngleUpgradeValues:
+  - 65
+  - 60
+  - 57
+  - 52
+  - 47
+  - 45
+  - 40
+  bulletRangeUpgradeValues:
+  - 11
+  - 12
+  - 13
+  - 14
+  - 16
+  - 18
+  - 20

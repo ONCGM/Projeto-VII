@@ -1,0 +1,83 @@
+﻿using System;
+using System.Collections;
+using System.Collections.Generic;
+using Items;
+using UnityEngine;
+
+namespace Entity.Player {
+    /// <summary>
+    /// Holds player data and used for serialization.
+    /// </summary>
+    [Serializable]
+    public struct PlayerStats {
+        public int Health {
+            get => health;
+            set => health = value;
+        }
+
+        public int MaxHealth {
+            get => maxHealth;
+            set => maxHealth = value;
+        }
+
+        public int Stamina {
+            get => stamina;
+            set => stamina = value;
+        }
+
+        public int MaxStamina {
+            get => maxStamina;
+            set => maxStamina = value;
+        }
+        public int Level {
+            get => level;
+            set => level = Mathf.Clamp(value, 0, 30);
+        }
+
+        public int Experience {
+            get => experience;
+            set => experience = value;
+        }
+
+        public int TotalExperience {
+            get => totalExperience;
+            set => totalExperience = value;
+        }
+
+        public int Coins {
+            get => coins;
+            set => coins = value;
+        }
+
+        public int CurrentUpgradeLevel {
+            get => currentUpgradeLevel;
+            set => currentUpgradeLevel = Mathf.Clamp(value, 0, 7);
+        }
+
+        public List<InventoryItemEntry> CurrentInventory {
+            get => currentInventory;
+            set => currentInventory = value;
+        }
+
+        [SerializeField]
+        private int health, maxHealth, stamina, maxStamina,
+        level, experience, totalExperience, coins, currentUpgradeLevel;
+        private List<InventoryItemEntry> currentInventory;
+
+        public PlayerStats(int health, int maxHealth, int stamina, 
+                           int maxStamina, int lvl, int experience, int totalExperience,
+                           int coins, List<InventoryItemEntry> currentInventory,
+                           int currentUpgradeLvl) : this() {
+            Health = health;
+            MaxHealth = maxHealth;
+            Stamina = stamina;
+            MaxStamina = maxStamina;
+            Level = lvl;
+            Experience = experience;
+            Coins = coins;
+            CurrentInventory = currentInventory;
+            CurrentUpgradeLevel = currentUpgradeLvl;
+            TotalExperience = totalExperience;
+        }
+    }
+}

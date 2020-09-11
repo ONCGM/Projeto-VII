@@ -50,25 +50,53 @@
     <ImplicitlyExpandDesignTimeFacades>false</ImplicitlyExpandDesignTimeFacades>
   </PropertyGroup>
   <ItemGroup>
+     <Compile Include="Assets\Scripts\UI\InventoryUI.cs" />
      <Compile Include="Assets\Scripts\Entity\Player\PlayerController.cs" />
+     <Compile Include="Assets\Scripts\UI\SmallItemUI.cs" />
+     <Compile Include="Assets\Scripts\UI\ItemUI.cs" />
+     <Compile Include="Assets\Scripts\Entity\Enemies\Critter.cs" />
+     <Compile Include="Assets\Scripts\UI\Localization\TextMeshLocalizer.cs" />
      <Compile Include="Assets\Scripts\Islands\IslandsSceneTransition.cs" />
+     <Compile Include="Assets\Scripts\Entity\Player\PlayerUpgradeSettings.cs" />
+     <Compile Include="Assets\Scripts\UI\Localization\LocalizationSystem.cs" />
      <Compile Include="Assets\Scripts\Game\LoadGameScene.cs" />
+     <Compile Include="Assets\Scripts\Items\ItemSettings.cs" />
      <Compile Include="Assets\Scripts\Town\PortSceneTransition.cs" />
-     <Compile Include="Assets\Scripts\Menu\MainMenuButtons.cs" />
+     <Compile Include="Assets\Scripts\Entity\Enemies\Enemy.cs" />
+     <Compile Include="Assets\Scripts\UI\Menu\MainMenuButtons.cs" />
+     <Compile Include="Assets\Scripts\Entity\Enemies\Pirate.cs" />
+     <Compile Include="Assets\Scripts\Entity\Enemies\EnemyEnums.cs" />
+     <Compile Include="Assets\Scripts\UI\Popups\CanvasPopupDialog.cs" />
+     <Compile Include="Assets\Scripts\Entity\EntityInterfaces.cs" />
+     <Compile Include="Assets\Scripts\Entity\Enemies\EnemySettings.cs" />
      <Compile Include="Assets\Scripts\GameInput\ActionInputs.cs" />
+     <Compile Include="Assets\Scripts\UI\Tab.cs" />
+     <Compile Include="Assets\Scripts\UI\Localization\LocalizedString.cs" />
+     <Compile Include="Assets\Scripts\Items\Inventory.cs" />
      <Compile Include="Assets\Scripts\Store\StoreTransition.cs" />
+     <Compile Include="Assets\Scripts\UI\PlayerStatsUI.cs" />
+     <Compile Include="Assets\Scripts\UI\TabManager.cs" />
      <Compile Include="Assets\Scripts\Ship\ShipTravelRoutine.cs" />
      <Compile Include="Assets\Scripts\Game\GameMaster.cs" />
+     <Compile Include="Assets\Scripts\UI\Localization\CSVLoader.cs" />
+     <Compile Include="Assets\Scripts\Items\InventoryItemEntry.cs" />
+     <Compile Include="Assets\Scripts\UI\Menu\CombatDebriefUi.cs" />
+     <Compile Include="Assets\Scripts\Items\ItemDrop.cs" />
      <Compile Include="Assets\Scripts\Store\StoreEntrance.cs" />
-     <Compile Include="Assets\Scripts\Entity\Enemies\Enemy.cs" />
+     <Compile Include="Assets\Scripts\UI\OpenCloseGameMenu.cs" />
      <Compile Include="Assets\Scripts\Entity\Entity.cs" />
-     <Compile Include="Assets\Scripts\Entity\EntityInterfaces.cs" />
+     <Compile Include="Assets\Scripts\Entity\Player\EntityBullet.cs" />
+     <Compile Include="Assets\Scripts\Entity\Player\PlayerStats.cs" />
+     <Compile Include="Assets\Scripts\UI\DamageCanvas.cs" />
+     <Compile Include="Assets\Scripts\Entity\Enemies\EnemyBullet.cs" />
      <None Include="Assets\TextMesh Pro\Shaders\TMPro.cginc" />
      <None Include="Assets\TextMesh Pro\Shaders\TMP_SDF-Mobile Overlay.shader" />
+     <None Include="Assets\Art\Font\LICENSE.txt" />
      <None Include="Assets\TextMesh Pro\Shaders\TMP_Bitmap.shader" />
      <None Include="Assets\TextMesh Pro\Shaders\TMPro_Mobile.cginc" />
      <None Include="Assets\TextMesh Pro\Shaders\TMP_SDF SSD.shader" />
      <None Include="Assets\TextMesh Pro\Shaders\TMP_SDF-Surface-Mobile.shader" />
+     <None Include="Assets\Art\Font\Unicode_Hex_Sets.txt" />
      <None Include="Assets\TextMesh Pro\Shaders\TMP_SDF-Surface.shader" />
      <None Include="Assets\TextMesh Pro\Sprites\EmojiOne Attribution.txt" />
      <None Include="Assets\TextMesh Pro\Shaders\TMP_Bitmap-Custom-Atlas.shader" />
@@ -200,9 +228,6 @@
  </Reference>
  <Reference Include="Unity.RenderPipelines.Core.ShaderLibrary">
  <HintPath>C:/Users/OnCra/Documents/Unity Projects/Projeto-VII/Library/ScriptAssemblies/Unity.RenderPipelines.Core.ShaderLibrary.dll</HintPath>
- </Reference>
- <Reference Include="Unity.UI.Builder.Editor">
- <HintPath>C:/Users/OnCra/Documents/Unity Projects/Projeto-VII/Library/ScriptAssemblies/Unity.UI.Builder.Editor.dll</HintPath>
  </Reference>
  <Reference Include="Unity.TextMeshPro">
  <HintPath>C:/Users/OnCra/Documents/Unity Projects/Projeto-VII/Library/ScriptAssemblies/Unity.TextMeshPro.dll</HintPath>

@@ -5,6 +5,7 @@ TagManager:
   serializedVersion: 2
   tags:
   - Enemy
+  - Items
   layers:
   - Default
   - TransparentFX
@@ -17,10 +18,10 @@ TagManager:
   - Post Processing
   - Camera Overlay
   - Player
+  - Pl_Projectiles
   - Enemies
-  - 
-  - 
-  - 
+  - En_Projectiles
+  - Items
   - 
   - 
   - 
