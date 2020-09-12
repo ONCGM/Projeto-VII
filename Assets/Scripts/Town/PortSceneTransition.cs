@@ -18,7 +18,7 @@ namespace Town {
         private ShipTravelController ship;
         
         // Transition.
-        private bool startedTransition;
+        public bool startedTransition;
         #pragma warning restore 0649
 
         // Spawns a new ship if needed.

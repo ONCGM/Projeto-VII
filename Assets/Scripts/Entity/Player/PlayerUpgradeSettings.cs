@@ -16,6 +16,7 @@ namespace Entity.Player {
         [SerializeField] public List<int> bulletsPerShotUpgradeValues = new List<int>();
         [SerializeField] public List<float> bulletAngleUpgradeValues = new List<float>();
         [SerializeField] public List<float> bulletRangeUpgradeValues = new List<float>();
+        [SerializeField] public List<int> islandSizeUnlocksAtLevel = new List<int>();
 
         /// <summary>
         /// Returns the amount of experience the player will need for the next level.

@@ -2,6 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using Entity.Enemies;
+using Game;
 using Items;
 using UI;
 using UnityEngine;
@@ -102,16 +103,27 @@ namespace Entity.Player {
             playerSpeed = (isInsideShop ? storeSpeed : worldSpeed);
             agent.speed = playerSpeed;
             inventory = new Inventory(playerInventorySize, new List<InventoryItemEntry>());
-
+            GameMaster.OnGameExecutionStateUpdated += UpdatePlayerMovementToMatchGameState;
+            
             InvokeRepeating(nameof(RecoverStamina), 1f, 1f);
         }
 
+        /// <summary>
+        /// Sets the player movement state based on the game execution state.
+        /// </summary>
+        private void UpdatePlayerMovementToMatchGameState() {
+            CanMove = (GameMaster.Instance.GameState == ExecutionState.Normal);
+        }
+        
+        /// <summary>
+        /// Recovers the player stamina at a steady rate.
+        /// </summary>
         private void RecoverStamina() { 
             Stamina = Mathf.Clamp(Stamina + 2, 0, maxStamina);
             PlayerStatsUI.UpdateUiValues.Invoke();
         }
 
-    // OnEnable Unity Event, enables input.
+        // OnEnable Unity Event, enables input.
         private void OnEnable() {
             inputs.Enable();
         }
@@ -120,8 +132,14 @@ namespace Entity.Player {
         private void OnDisable() {
             inputs.Disable();
         }
-        
 
+        // Unsubscribes from events.
+        private void OnDestroy() {
+            GameMaster.OnGameExecutionStateUpdated -= UpdatePlayerMovementToMatchGameState;
+        }
+
+
+        // Update events.
         private void Update() {
             GetInput();
         }

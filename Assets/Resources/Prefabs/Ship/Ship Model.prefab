@@ -51,6 +51,20 @@ MonoBehaviour:
   townSceneIndex: 3
   travelSceneIndex: 4
   islandsSceneIndex: 5
+  playerComponentsTag: Player Components
+  playerTag: Player
+  townLightTag: Town Dir Light
+  seaLightTag: Sea Dir Light
+  islandLightTag: Island Dir Light
+  travelTitleKey: MENU_POPUP_TITLE_TRAVEL
+  travelMessageKey: MENU_POPUP_MESSAGE_TRAVEL_ISLAND
+  backToTownMessageKey: MENU_POPUP_MESSAGE_TRAVEL_TOWN
+  confirmButtonKey: MENU_LABEL_CONTINUE
+  cancelButtonKey: MENU_LABEL_CANCEL
+  smallIslandButtonKey: MENU_POPUP_BUTTON_SMALL_ISLAND
+  mediumIslandButtonKey: MENU_POPUP_BUTTON_MEDIUM_ISLAND
+  largeIslandButtonKey: MENU_POPUP_BUTTON_LARGE_ISLAND
+  popupPrefab: {fileID: 3017782093125859472, guid: ff97a6ef454e32b498a293f927ae08a4, type: 3}
 --- !u!33 &7148259464809809872
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -163,7 +177,7 @@ Transform:
   - {fileID: 7148259465863309202}
   m_Father: {fileID: 7148259464809809873}
   m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 60.255, y: -0.7, z: 0}
 --- !u!114 &7148259465278347024
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -256,7 +270,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fa7155796051b734daa718462081dc5f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_BindingMode: 1
+  m_BindingMode: 4
   m_FollowOffset: {x: 0, y: 35, z: -20}
   m_XDamping: 1
   m_YDamping: 1

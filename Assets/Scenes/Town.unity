@@ -471,7 +471,7 @@ GameObject:
   - component: {fileID: 984221928}
   m_Layer: 0
   m_Name: Directional Light
-  m_TagString: Untagged
+  m_TagString: Town Dir Light
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -597,7 +597,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &1059651074
 Transform:
   m_ObjectHideFlags: 0
@@ -662,6 +662,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   shipPrefab: {fileID: 7148259464809809877, guid: 56d73c39c3e5e6a4d8229935c00d2042, type: 3}
   shipSpawnPosition: {fileID: 1017042488}
+  startedTransition: 0
 --- !u!65 &1128485635
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -728,63 +729,6 @@ Transform:
   m_Father: {fileID: 1059651074}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!1001 &1343561599
-PrefabInstance:
-  m_ObjectHideFlags: 0
-  serializedVersion: 2
-  m_Modification:
-    m_TransformParent: {fileID: 0}
-    m_Modifications:
-    - target: {fileID: 7148259464809809873, guid: 56d73c39c3e5e6a4d8229935c00d2042, type: 3}
-      propertyPath: m_LocalPosition.x
-      value: -45.4
-      objectReference: {fileID: 0}
-    - target: {fileID: 7148259464809809873, guid: 56d73c39c3e5e6a4d8229935c00d2042, type: 3}
-      propertyPath: m_LocalPosition.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 7148259464809809873, guid: 56d73c39c3e5e6a4d8229935c00d2042, type: 3}
-      propertyPath: m_LocalPosition.z
-      value: 3
-      objectReference: {fileID: 0}
-    - target: {fileID: 7148259464809809873, guid: 56d73c39c3e5e6a4d8229935c00d2042, type: 3}
-      propertyPath: m_LocalRotation.x
-      value: -0
-      objectReference: {fileID: 0}
-    - target: {fileID: 7148259464809809873, guid: 56d73c39c3e5e6a4d8229935c00d2042, type: 3}
-      propertyPath: m_LocalRotation.y
-      value: -0.018179178
-      objectReference: {fileID: 0}
-    - target: {fileID: 7148259464809809873, guid: 56d73c39c3e5e6a4d8229935c00d2042, type: 3}
-      propertyPath: m_LocalRotation.z
-      value: -0
-      objectReference: {fileID: 0}
-    - target: {fileID: 7148259464809809873, guid: 56d73c39c3e5e6a4d8229935c00d2042, type: 3}
-      propertyPath: m_LocalRotation.w
-      value: 0.9998348
-      objectReference: {fileID: 0}
-    - target: {fileID: 7148259464809809873, guid: 56d73c39c3e5e6a4d8229935c00d2042, type: 3}
-      propertyPath: m_RootOrder
-      value: 15
-      objectReference: {fileID: 0}
-    - target: {fileID: 7148259464809809873, guid: 56d73c39c3e5e6a4d8229935c00d2042, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 7148259464809809873, guid: 56d73c39c3e5e6a4d8229935c00d2042, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.y
-      value: -2.083
-      objectReference: {fileID: 0}
-    - target: {fileID: 7148259464809809873, guid: 56d73c39c3e5e6a4d8229935c00d2042, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 7148259464809809877, guid: 56d73c39c3e5e6a4d8229935c00d2042, type: 3}
-      propertyPath: m_Name
-      value: Ship Model
-      objectReference: {fileID: 0}
-    m_RemovedComponents: []
-  m_SourcePrefab: {fileID: 100100000, guid: 56d73c39c3e5e6a4d8229935c00d2042, type: 3}
 --- !u!1 &1467303740
 GameObject:
   m_ObjectHideFlags: 0
@@ -1503,6 +1447,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Player Canvas
       objectReference: {fileID: 0}
+    - target: {fileID: 746516348840554813, guid: 46c9e677923abcf4393d5dcfbf0aa8c7, type: 3}
+      propertyPath: m_TagString
+      value: Player Components
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 46c9e677923abcf4393d5dcfbf0aa8c7, type: 3}
 --- !u!1001 &2415737981603670344
@@ -1576,6 +1524,10 @@ PrefabInstance:
     - target: {fileID: 3257038297513013133, guid: e10af212e904fd54aabfaf825f4405e1, type: 3}
       propertyPath: m_Name
       value: Player Camera
+      objectReference: {fileID: 0}
+    - target: {fileID: 3257038297513013133, guid: e10af212e904fd54aabfaf825f4405e1, type: 3}
+      propertyPath: m_TagString
+      value: Player Components
       objectReference: {fileID: 0}
     - target: {fileID: 3257038297513013170, guid: e10af212e904fd54aabfaf825f4405e1, type: 3}
       propertyPath: m_LocalPosition.x
@@ -2385,6 +2337,10 @@ PrefabInstance:
     - target: {fileID: 8384049596464260047, guid: 54d24528ca8842e4c8bce0c2addc3a9d, type: 3}
       propertyPath: m_Name
       value: Game Menu Canvas
+      objectReference: {fileID: 0}
+    - target: {fileID: 8384049596464260047, guid: 54d24528ca8842e4c8bce0c2addc3a9d, type: 3}
+      propertyPath: m_TagString
+      value: Player Components
       objectReference: {fileID: 0}
     - target: {fileID: 8384049596464260051, guid: 54d24528ca8842e4c8bce0c2addc3a9d, type: 3}
       propertyPath: m_LocalPosition.x

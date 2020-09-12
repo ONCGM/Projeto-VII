@@ -122,7 +122,7 @@ NavMeshSettings:
     preserveTilesOutsideBounds: 0
     debug:
       m_Flags: 0
-  m_NavMeshData: {fileID: 23800000, guid: d4c71cbd9a5b2da4d9661e259b8747c0, type: 2}
+  m_NavMeshData: {fileID: 0}
 --- !u!1 &779193123
 GameObject:
   m_ObjectHideFlags: 0
@@ -210,8 +210,8 @@ GameObject:
   - component: {fileID: 1101539515}
   - component: {fileID: 1101539514}
   m_Layer: 0
-  m_Name: Directional Light
-  m_TagString: Untagged
+  m_Name: Directional Light (Disable after edit)
+  m_TagString: Sea Dir Light
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -374,8 +374,8 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1223595755}
-  m_LocalRotation: {x: 0.5257311, y: 0, z: 0, w: 0.85065085}
-  m_LocalPosition: {x: -53.13, y: 23.02, z: -25.01}
+  m_LocalRotation: {x: 0.34965152, y: 0.6205227, z: -0.36010337, w: 0.60251224}
+  m_LocalPosition: {x: -65.39133, y: 35, z: 3.588913}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
@@ -459,7 +459,7 @@ GameObject:
   - component: {fileID: 1306111303}
   - component: {fileID: 1306111302}
   m_Layer: 0
-  m_Name: Plane
+  m_Name: Water
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

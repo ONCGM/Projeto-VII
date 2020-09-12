@@ -38,7 +38,7 @@ namespace Game {
             get => gameState;
             set {
                 gameState = value;
-                OnGameStateUpdated?.Invoke();
+                OnGameExecutionStateUpdated?.Invoke();
                 Time.timeScale = gameState == ExecutionState.FullPause ? 0f : 1f;
             }
         }
@@ -107,6 +107,12 @@ namespace Game {
         public bool SpawnInFrontOfStore { get; set; } = true;
 
         /// <summary>
+        /// The current selected size of island by the player choice. 
+        /// Set by the town travel popup and used by the island generator.
+        /// </summary>
+        public IslandSizes SelectedIslandSize { get; set; } = IslandSizes.Small; 
+        
+        /// <summary>
         /// The current spawned ship in the game world.
         /// </summary>
         public ShipTravelController ShipTravel { get; set; }
@@ -117,9 +123,9 @@ namespace Game {
         public static Action OnPlayerStatsUpdated;
         
         /// <summary>
-        /// Called whenever the PlayerStats are updated.
+        /// Called whenever the game execution state is updated.
         /// </summary>
-        public static Action OnGameStateUpdated;
+        public static Action OnGameExecutionStateUpdated;
         
         /// <summary>
         /// Called whenever the game menu is open or closed.
@@ -140,7 +146,7 @@ namespace Game {
         /// Called when the last game day starts and ends.
         /// </summary>
         public static Action OnEndGameDayUpdate;
-        
+
         //TODO
         public object SaveData { get; private set; }
 
@@ -165,5 +171,15 @@ namespace Game {
         Night,
         Morning,
         Afternoon
+    }
+
+    /// <summary>
+    /// Defines the sizes of island for the island generator.
+    /// Also synonym with the game difficulty.
+    /// </summary>
+    public enum IslandSizes {
+        Small,
+        Medium,
+        Large
     }
 }
