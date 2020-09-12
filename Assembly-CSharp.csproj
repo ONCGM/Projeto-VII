@@ -76,7 +76,7 @@
      <Compile Include="Assets\Scripts\Store\StoreTransition.cs" />
      <Compile Include="Assets\Scripts\UI\PlayerStatsUI.cs" />
      <Compile Include="Assets\Scripts\UI\TabManager.cs" />
-     <Compile Include="Assets\Scripts\Ship\ShipTravelRoutine.cs" />
+     <Compile Include="Assets\Scripts\Ship\ShipTravelController.cs" />
      <Compile Include="Assets\Scripts\Game\GameMaster.cs" />
      <Compile Include="Assets\Scripts\UI\Localization\CSVLoader.cs" />
      <Compile Include="Assets\Scripts\Items\InventoryItemEntry.cs" />
@@ -89,6 +89,7 @@
      <Compile Include="Assets\Scripts\Entity\Player\PlayerStats.cs" />
      <Compile Include="Assets\Scripts\UI\DamageCanvas.cs" />
      <Compile Include="Assets\Scripts\Entity\Enemies\EnemyBullet.cs" />
+     <Compile Include="Assets\Scripts\Town\PlayerSpawnPositionBasedOnLastScene.cs" />
      <None Include="Assets\TextMesh Pro\Shaders\TMPro.cginc" />
      <None Include="Assets\TextMesh Pro\Shaders\TMP_SDF-Mobile Overlay.shader" />
      <None Include="Assets\Art\Font\LICENSE.txt" />
@@ -801,6 +802,14 @@
     <ProjectReference Include="Assembly-CSharp-firstpass.csproj">
       <Project>{9b596ca2-7856-f05b-a4be-babd3277994a}</Project>
       <Name>Assembly-CSharp-firstpass</Name>
+    </ProjectReference>
+    <ProjectReference Include="NavMeshComponentsEditor.csproj">
+      <Project>{b6cfd396-b0df-b562-5406-92c6a8b42560}</Project>
+      <Name>NavMeshComponentsEditor</Name>
+    </ProjectReference>
+    <ProjectReference Include="NavMeshComponents.csproj">
+      <Project>{e441783f-53d0-1653-46a1-a8eb57ab846f}</Project>
+      <Name>NavMeshComponents</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

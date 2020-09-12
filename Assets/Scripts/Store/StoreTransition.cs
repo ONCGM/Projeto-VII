@@ -1,18 +1,26 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using Game;
+using Town;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.Rendering.Universal;
 
 namespace Store {
+    /// <summary>
+    /// Transitions from store to town scene with a nice animation.
+    /// </summary>
     public class StoreTransition : MonoBehaviour {
         public int sceneIndex;
+        public string townSceneName = "Town";
         private Animator anim;
 
+        // Unity Events.
         private void Awake() {
             anim = GetComponent<Animator>();
             SceneManager.sceneLoaded += OnSceneLoaded;
+            GameMaster.Instance.SpawnInFrontOfStore = true;
         }
 
         private void OnSceneLoaded(Scene scene, LoadSceneMode mode) {
@@ -22,16 +30,27 @@ namespace Store {
             cameraData.cameraStack.Clear();
             cameraData.cameraStack.Add(gameObject.GetComponent<Camera>());
             anim.SetTrigger("Open");
+            
+            if(scene.Equals(SceneManager.GetSceneByName(townSceneName))) {
+                FindObjectOfType<PlayerSpawnPositionBasedOnLastScene>().UnlockPlayer();
+            }
         }
 
+        /// <summary>
+        /// Loads the next scene.
+        /// </summary>
         public void ChangeScene() {
             SceneManager.LoadScene(sceneIndex);
         }
 
+        /// <summary>
+        /// Triggers the destruction of this object.
+        /// </summary>
         public void SelfDestruct() {
             Destroy(gameObject);
         }
 
+        // Unsubscribes from events and clears camera stack.
         private void OnDestroy() {
             SceneManager.sceneLoaded -= OnSceneLoaded;
             GameObject.FindWithTag("MainCamera").GetComponent<Camera>().GetUniversalAdditionalCameraData().cameraStack

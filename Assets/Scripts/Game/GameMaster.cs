@@ -2,6 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using Entity.Player;
+using Ship;
 using UnityEngine;
 
 namespace Game {
@@ -100,6 +101,16 @@ namespace Game {
             }
         }
 
+        /// <summary>
+        /// Should the player spawn in front of the store or the port. 
+        /// </summary>
+        public bool SpawnInFrontOfStore { get; set; } = true;
+
+        /// <summary>
+        /// The current spawned ship in the game world.
+        /// </summary>
+        public ShipTravelController ShipTravel { get; set; }
+        
         /// <summary>
         /// Called whenever the PlayerStats are updated.
         /// </summary>

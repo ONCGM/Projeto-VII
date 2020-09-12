@@ -84,6 +84,11 @@ namespace Entity.Player {
             }
         }
 
+        /// <summary>
+        /// Allows the player to move or not.
+        /// </summary>
+        public bool CanMove { get; set; } = true;
+
         #pragma warning restore 0649
 
         #region Unity Events
@@ -138,7 +143,7 @@ namespace Entity.Player {
         private void GetInput() {
             movementScale = new Vector3(inputs.Player.Horizontal.ReadValue<float>(), 0f, inputs.Player.Vertical.ReadValue<float>());
 
-            if(movementScale.magnitude < minRotationInput) return;
+            if(movementScale.magnitude < minRotationInput || !CanMove) return;
             transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.LookRotation(movementScale), rotationSpeed);
         }
 
@@ -146,7 +151,7 @@ namespace Entity.Player {
         /// Moves the player based on input using the nav mesh agent.
         /// </summary>
         private void MovePlayer() {
-            if(agent.enabled) agent.Move(movementScale * (playerSpeed * Time.deltaTime));
+            if(agent.enabled && CanMove) agent.Move(movementScale * (playerSpeed * Time.deltaTime));
         }
 
         /// <summary>
