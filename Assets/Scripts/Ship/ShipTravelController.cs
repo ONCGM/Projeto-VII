@@ -167,6 +167,7 @@ namespace Ship {
         public void AtIslandArrival() {
             FindObjectOfType<PlayerSpawnPositionBasedOnLastScene>().UnlockPlayer();
             shipCamera.m_Priority = 9;
+            SceneManager.UnloadSceneAsync(travelSceneIndex);
         }
         
         #endregion
@@ -245,6 +246,8 @@ namespace Ship {
             townLight.GetComponent<Light>().enabled = true;
 
             townLight.transform.rotation = seaLight.transform.rotation;
+
+            GameMaster.Instance.SpawnInFrontOfStore = false;
             
             anim.SetTrigger(ArriveAtTown);
         }
@@ -255,6 +258,7 @@ namespace Ship {
         public void AtTownArrival() {
             FindObjectOfType<PlayerSpawnPositionBasedOnLastScene>().UnlockPlayer();
             shipCamera.m_Priority = 9;
+            SceneManager.UnloadSceneAsync(travelSceneIndex);
         }
         
         #endregion

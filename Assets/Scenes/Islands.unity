@@ -2269,6 +2269,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   shipPrefab: {fileID: 7148259464809809877, guid: 56d73c39c3e5e6a4d8229935c00d2042, type: 3}
   shipSpawnPosition: {fileID: 1999347854}
+  debriefCanvasPrefab: {fileID: 1752807947278221114, guid: e60c37fb5a4a9334c99c2c2175c0264d, type: 3}
   startedTransition: 0
 --- !u!1001 &1955358933
 PrefabInstance:
@@ -2402,7 +2403,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!114 &2066813454
 MonoBehaviour:
   m_ObjectHideFlags: 0

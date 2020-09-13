@@ -6,6 +6,7 @@ using Game;
 using Localization;
 using UI.Localization;
 using UnityEngine;
+using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
 namespace UI.Popups {
@@ -56,7 +57,7 @@ namespace UI.Popups {
         /// <summary>
         /// Animates the popup.
         /// </summary>
-        private void Start() {
+        private void AnimateIn() {
             transform.GetChild(0).localScale = Vector3.zero;
             transform.GetChild(0).DOScale(Vector3.one, popinAnimationDuration);
         }
@@ -89,6 +90,10 @@ namespace UI.Popups {
             }
 
             GameMaster.Instance.GameState = popupExecutionState;
+
+            GetComponentInChildren<EventSystem>().firstSelectedGameObject = buttons[0].gameObject;
+            
+            AnimateIn();
             
             StartCoroutine(nameof(PopupPauseRoutine));
         }

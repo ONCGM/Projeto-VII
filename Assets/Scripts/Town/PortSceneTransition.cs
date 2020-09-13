@@ -24,7 +24,7 @@ namespace Town {
         // Spawns a new ship if needed.
         private void Awake() {
             if(GameMaster.Instance.ShipTravel is null) {
-                GameMaster.Instance.ShipTravel = Instantiate(shipPrefab, shipSpawnPosition.position, Quaternion.identity).GetComponent<ShipTravelController>();
+                GameMaster.Instance.ShipTravel = Instantiate(shipPrefab, shipSpawnPosition.position, shipSpawnPosition.rotation).GetComponent<ShipTravelController>();
             }
 
             ship = GameMaster.Instance.ShipTravel;

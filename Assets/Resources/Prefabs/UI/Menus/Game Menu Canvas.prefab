@@ -1912,7 +1912,7 @@ GameObject:
   - component: {fileID: 508766818978919448}
   - component: {fileID: 3192969095197919011}
   - component: {fileID: 8042967715928421512}
-  m_Layer: 0
+  m_Layer: 5
   m_Name: EventSystem
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1945,7 +1945,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 76c392e42b5098c458856cdf6ecaaaa1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_FirstSelected: {fileID: 0}
+  m_FirstSelected: {fileID: 8384049595328923621}
   m_sendNavigationEvents: 1
   m_DragThreshold: 10
 --- !u!114 &8042967715928421512

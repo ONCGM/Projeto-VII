@@ -14,6 +14,9 @@ namespace Islands {
         [SerializeField] private GameObject shipPrefab;
         [SerializeField] private Transform shipSpawnPosition;
 
+        [Header("Debrief Canvas")] 
+        [SerializeField] private GameObject debriefCanvasPrefab;
+
         private ShipTravelController ship;
         
         // Transition.
@@ -35,7 +38,7 @@ namespace Islands {
         // starts the ship travel sequence and de-spawns the player. 
         private void OnTriggerEnter(Collider other) {
             if(!other.CompareTag("Player") || startedTransition) return;
-            ship.StartTravelToTown();
+            Instantiate(debriefCanvasPrefab);
             startedTransition = true;
         }
     }
