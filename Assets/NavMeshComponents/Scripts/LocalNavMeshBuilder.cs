@@ -19,9 +19,16 @@ public class LocalNavMeshBuilder : MonoBehaviour
     NavMeshDataInstance m_Instance;
     List<NavMeshBuildSource> m_Sources = new List<NavMeshBuildSource>();
 
+    private bool updateNavMesh = true;
+
+    public void StopNavMeshGeneration() {
+        updateNavMesh = false;
+        Destroy(this, 1f);
+    }
+    
     IEnumerator Start()
     {
-        while (true)
+        while (updateNavMesh)
         {
             UpdateNavMesh(true);
             yield return m_Operation;

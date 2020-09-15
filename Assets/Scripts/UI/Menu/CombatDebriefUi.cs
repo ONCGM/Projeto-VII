@@ -41,14 +41,14 @@ namespace UI.Menu {
         /// </summary>
         public void ReturnToTown() {
             GameMaster.Instance.ShipTravel.StartTravelToTown();
-            CloseCanvas();
+            CloseCanvas(ExecutionState.PopupPause);
         }
 
         /// <summary>
         /// Animates out the canvas and destroys it.
         /// </summary>
-        private void CloseCanvas() {
-            GameMaster.Instance.GameState = ExecutionState.Normal;
+        private void CloseCanvas(ExecutionState state = ExecutionState.Normal) {
+            GameMaster.Instance.GameState = state;
             DOTween.To(()=> canvasGroup.alpha, x=> canvasGroup.alpha = x, 0f, popinAnimationDuration).onComplete +=
                 () => {
                     Destroy(gameObject);

@@ -174,12 +174,21 @@ namespace Game {
     }
 
     /// <summary>
-    /// Defines the sizes of island for the island generator.
+    /// Defines the sizes of island for the island loader.
     /// Also synonym with the game difficulty.
     /// </summary>
     public enum IslandSizes {
         Small,
         Medium,
         Large
+    }
+    
+    /// <summary>
+    /// Defines the types of island in the game.
+    /// </summary>
+    public enum IslandType {
+        BrawlIsland,
+        TreasureIsland,
+        MerchantIsland
     }
 }

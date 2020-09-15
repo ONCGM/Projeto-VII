@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.Runtime.Remoting.Contexts;
 #if UNITY_EDITOR
 using UnityEditor;
 using UnityEditor.SceneManagement;
@@ -156,6 +157,7 @@ namespace UnityEngine.AI
             return buildSettings;
         }
 
+        [ContextMenu("Build")]
         public void BuildNavMesh()
         {
             var sources = CollectSources();

@@ -95,7 +95,8 @@ namespace Localization {
 
             return value;
         }
-
+        
+    #if UNITY_EDITOR
         /// <summary>
         /// Adds an entry to the localization file in the Portuguese language.
         /// </summary>
@@ -160,5 +161,7 @@ namespace Localization {
 
             return localizedPtBr;
         }
+        
+    #endif
     }
 }

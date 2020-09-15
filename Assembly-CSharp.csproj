@@ -65,6 +65,7 @@
      <Compile Include="Assets\Scripts\Entity\Enemies\Enemy.cs" />
      <Compile Include="Assets\Scripts\UI\Menu\MainMenuButtons.cs" />
      <Compile Include="Assets\Scripts\Entity\Enemies\Pirate.cs" />
+     <Compile Include="Assets\Scripts\UI\Popups\CanvasPopupLocationName.cs" />
      <Compile Include="Assets\Scripts\Entity\Enemies\EnemyEnums.cs" />
      <Compile Include="Assets\Scripts\UI\Popups\CanvasPopupDialog.cs" />
      <Compile Include="Assets\Scripts\Entity\EntityInterfaces.cs" />
@@ -77,6 +78,7 @@
      <Compile Include="Assets\Scripts\Store\StoreTransition.cs" />
      <Compile Include="Assets\Scripts\UI\PlayerStatsUI.cs" />
      <Compile Include="Assets\Scripts\UI\TabManager.cs" />
+     <Compile Include="Assets\Scripts\UI\MinimapUI.cs" />
      <Compile Include="Assets\Scripts\Ship\ShipTravelController.cs" />
      <Compile Include="Assets\Scripts\Game\GameMaster.cs" />
      <Compile Include="Assets\Scripts\UI\Localization\CSVLoader.cs" />
@@ -85,6 +87,7 @@
      <Compile Include="Assets\Scripts\Items\ItemDrop.cs" />
      <Compile Include="Assets\Scripts\Store\StoreEntrance.cs" />
      <Compile Include="Assets\Scripts\UI\OpenCloseGameMenu.cs" />
+     <Compile Include="Assets\Scripts\Islands\IslandLevelLoader.cs" />
      <Compile Include="Assets\Scripts\Entity\Entity.cs" />
      <Compile Include="Assets\Scripts\Entity\Player\EntityBullet.cs" />
      <Compile Include="Assets\Scripts\Entity\Player\PlayerStats.cs" />

@@ -55,6 +55,7 @@ namespace Ship {
         private static readonly int ArriveAtTown = Animator.StringToHash("ArriveAtTown");
         private static readonly string playerSettingsPath = "Scriptables/Player/Player_Upgrade_Settings";
         private PlayerUpgradeSettings upgradeSettings;
+        private IslandLevelLoader islandLoader;
 
         #pragma warning restore 0649
 
@@ -159,6 +160,9 @@ namespace Ship {
             islandLight.transform.rotation = seaLight.transform.rotation;
             
             anim.SetTrigger(ArriveAtIsland);
+            
+            islandLoader = FindObjectOfType<IslandLevelLoader>();
+            islandLoader.LoadIslands();
         }
 
         /// <summary>
@@ -168,6 +172,7 @@ namespace Ship {
             FindObjectOfType<PlayerSpawnPositionBasedOnLastScene>().UnlockPlayer();
             shipCamera.m_Priority = 9;
             SceneManager.UnloadSceneAsync(travelSceneIndex);
+            islandLoader.DisplayIslandType();
         }
         
         #endregion
@@ -223,6 +228,9 @@ namespace Ship {
 
             seaLight.transform.rotation = islandLight.transform.rotation;
             
+            islandLoader.UnloadIslands();
+            islandLoader = null;
+
             SceneManager.UnloadSceneAsync(islandsSceneIndex);
 
             StartCoroutine(nameof(LoadTown));

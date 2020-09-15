@@ -102,9 +102,10 @@ namespace Entity.Player {
             if(ReferenceEquals(swordCollider, null)) swordCollider = GetComponentInChildren<SphereCollider>();
             playerSpeed = (isInsideShop ? storeSpeed : worldSpeed);
             agent.speed = playerSpeed;
+            agent.autoTraverseOffMeshLink = false;
             inventory = new Inventory(playerInventorySize, new List<InventoryItemEntry>());
             GameMaster.OnGameExecutionStateUpdated += UpdatePlayerMovementToMatchGameState;
-            
+
             InvokeRepeating(nameof(RecoverStamina), 1f, 1f);
         }
 
