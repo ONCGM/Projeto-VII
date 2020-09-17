@@ -50,9 +50,9 @@
     <ImplicitlyExpandDesignTimeFacades>false</ImplicitlyExpandDesignTimeFacades>
   </PropertyGroup>
   <ItemGroup>
-     <Compile Include="C:\Users\OnCra\Desktop\UnityChanToonShaderVer2_Project-release-urp-2.2\UnityChanToonShaderVer2_Project-release-urp-2.2\Editor\CopyMaterialParameter.cs" />
-     <Compile Include="C:\Users\OnCra\Desktop\UnityChanToonShaderVer2_Project-release-urp-2.2\UnityChanToonShaderVer2_Project-release-urp-2.2\Editor\UniversalToonGUI.cs" />
-     <None Include="C:\Users\OnCra\Desktop\UnityChanToonShaderVer2_Project-release-urp-2.2\UnityChanToonShaderVer2_Project-release-urp-2.2\Editor\Unity.UniversalToonShader.Urp.Editor.asmdef" />
+     <Compile Include="UnityChanToonShaderVer2_Project-release-urp-2.2\Editor\UniversalToonGUI.cs" />
+     <Compile Include="UnityChanToonShaderVer2_Project-release-urp-2.2\Editor\CopyMaterialParameter.cs" />
+     <None Include="UnityChanToonShaderVer2_Project-release-urp-2.2\Editor\Unity.UniversalToonShader.Urp.Editor.asmdef" />
  <Reference Include="UnityEditor.UI">
  <HintPath>C:/Users/OnCra/Documents/Unity Projects/Projeto-VII/Library/ScriptAssemblies/UnityEditor.UI.dll</HintPath>
  </Reference>

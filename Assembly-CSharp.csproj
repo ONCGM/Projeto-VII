@@ -814,6 +814,10 @@
       <Project>{e441783f-53d0-1653-46a1-a8eb57ab846f}</Project>
       <Name>NavMeshComponents</Name>
     </ProjectReference>
+    <ProjectReference Include="Unity.UniversalToonShader.Urp.Editor.csproj">
+      <Project>{76fbcac1-356e-e3a9-ca13-f9eea90bc786}</Project>
+      <Name>Unity.UniversalToonShader.Urp.Editor</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it.
