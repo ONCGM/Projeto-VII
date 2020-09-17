@@ -52,6 +52,10 @@
   <ItemGroup>
      <Compile Include="Assets\Scripts\UI\Localization\Editor\LocalizerEditor.cs" />
      <Compile Include="Assets\Scripts\UI\Localization\Editor\LocalizedStringDrawer.cs" />
+     <Compile Include="Assets\Thirdparty\AllIn1SpriteShader\Editor\AllIn1SpriteShaderStencil.cs" />
+     <Compile Include="Assets\Thirdparty\AllIn1SpriteShader\Editor\AllIn1ShaderScriptEditor.cs" />
+     <Compile Include="Assets\Thirdparty\AllIn1SpriteShader\Editor\AllIn1SpriteShader.cs" />
+     <Compile Include="Assets\Thirdparty\AllIn1SpriteShader\Editor\AllIn1SpriteShaderLight.cs" />
  <Reference Include="UnityEditor.TestRunner">
  <HintPath>C:/Users/OnCra/Documents/Unity Projects/Projeto-VII/Library/ScriptAssemblies/UnityEditor.TestRunner.dll</HintPath>
  </Reference>

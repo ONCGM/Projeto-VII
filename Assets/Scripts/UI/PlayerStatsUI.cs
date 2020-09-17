@@ -55,7 +55,8 @@ namespace UI {
         private PlayerUpgradeSettings upgradeSettings;
         private WaitForSeconds waitForBarAnimationDelay;
         private WaitForFixedUpdate waitForBarAnimationFrame;
-        
+        private static readonly int HitEffectBlend = Shader.PropertyToID("_HitEffectBlend");
+
         #pragma warning restore 0649
         
         // Set up and events.
@@ -113,7 +114,8 @@ namespace UI {
             dayText.text = LocalizationSystem.CurrentLanguage == LocalizationSystem.Language.Japanese ? $"{currentDay} {dayLocalized}" : $"{dayLocalized} {currentDay}";
             timeOfDayText.text = LocalizationSystem.GetLocalizedValue(TimeOfDayLocalizationKeys[(int) GameMaster.Instance.CurrentTimeOfDay]);
 
-            
+            //TODO
+            staminaBackBar.material.SetFloat(HitEffectBlend, 1f);
             StartCoroutine(nameof(AnimateHealthBackBar));
             StartCoroutine(nameof(AnimateStaminaBackBar));
         }
@@ -144,7 +146,9 @@ namespace UI {
         /// </summary>
         private IEnumerator AnimateStaminaBackBar() {
             yield return waitForBarAnimationDelay;
-
+            var staminaBarMaterial = staminaBackBar.material;
+            staminaBarMaterial.SetFloat(HitEffectBlend, 1f);
+            
             if(staminaBar.rectTransform.sizeDelta.x > staminaBackBar.rectTransform.sizeDelta.x) {
                 staminaBackBar.rectTransform.SetSizeWithCurrentAnchors(RectTransform.Axis.Horizontal,
                                                                        Mathf.Lerp(0f, uiBarsWidth,Mathf.InverseLerp(0f,player.MaxStamina,player.Stamina)));
@@ -152,12 +156,17 @@ namespace UI {
             }
 
             var width = staminaBackBar.rectTransform.sizeDelta.x;
-            
+            DOTween.To(() => staminaBarMaterial.GetFloat(HitEffectBlend), 
+                       x => staminaBarMaterial.SetFloat(HitEffectBlend, x), 0f, 0.15f);
+
             while(staminaBackBar.rectTransform.sizeDelta.x > staminaBar.rectTransform.sizeDelta.x) {
                 width -= barAnimationSpeed;
                 staminaBackBar.rectTransform.SetSizeWithCurrentAnchors(RectTransform.Axis.Horizontal, width);
                 yield return waitForBarAnimationFrame;
             }
+            
+            
+            staminaBarMaterial.SetFloat("_HitEffectBlend", 1f);
         }
     }
 }
