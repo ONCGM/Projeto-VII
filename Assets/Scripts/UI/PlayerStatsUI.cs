@@ -36,7 +36,8 @@ namespace UI {
         
         // Components.
         private PlayerController player;
-        private CanvasGroup canvasGroup;
+        private CanvasGroup childCanvasGroup;
+        private CanvasGroup parentCanvasGroup;
         
         // Events.
         /// <summary>
@@ -62,7 +63,8 @@ namespace UI {
         // Set up and events.
         private void Awake() {
             player = FindObjectOfType<PlayerController>();
-            canvasGroup = GetComponentInChildren<CanvasGroup>();
+            childCanvasGroup = GetComponentInChildren<CanvasGroup>();
+            parentCanvasGroup = GetComponent<CanvasGroup>();
             upgradeSettings = Resources.Load<PlayerUpgradeSettings>(upgradeSettingsPath);
             waitForBarAnimationDelay = new WaitForSeconds(barAnimationDelay);
             waitForBarAnimationFrame = new WaitForFixedUpdate();
@@ -86,7 +88,15 @@ namespace UI {
         /// Animates UI fading in and out.
         /// </summary>
         private void FadeAnimation() {
-            DOTween.To(()=> canvasGroup.alpha, x=> canvasGroup.alpha = x, (GameMaster.Instance.GameMenuIsOpen ? 0f : 1f), fadeAnimationSpeed);
+            DOTween.To(()=> childCanvasGroup.alpha, x=> childCanvasGroup.alpha = x, (GameMaster.Instance.GameMenuIsOpen ? 0f : 1f), fadeAnimationSpeed);
+        }
+
+        /// <summary>
+        /// Toggles the visibility of the entire player canvas.
+        /// </summary>
+        /// <param name="state"> Set true to enable the canvas. </param>
+        public void ShowHideCanvas(bool state) {
+            DOTween.To(()=> parentCanvasGroup.alpha, x=> parentCanvasGroup.alpha = x, (state ? 1f : 0f), fadeAnimationSpeed);
         }
 
         /// <summary>

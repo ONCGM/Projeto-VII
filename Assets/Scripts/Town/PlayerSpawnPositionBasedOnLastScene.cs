@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using Entity.Player;
 using Game;
+using UI;
 using UnityEngine;
 using UnityEngine.AI;
 using UnityEngine.SceneManagement;
@@ -45,9 +46,19 @@ namespace Town {
         }
 
         /// <summary>
-        /// Unlocks the player controller and enables his graphics.
+        /// Unlocks the player controller and enables his graphics and UI.
         /// </summary>
-        public void UnlockPlayer() {
+        public void UnlockPlayer(bool updateSpawnPosition = false, bool toggleUI = true) {
+            if(updateSpawnPosition) {
+                player.transform.position = GameMaster.Instance.SpawnInFrontOfStore
+                                                ? storeSpawnPosition.position
+                                                : portSpawnPosition.position;
+            }
+
+            if(toggleUI) {
+                FindObjectOfType<PlayerStatsUI>().ShowHideCanvas(true);
+            }
+
             agent.enabled = true;
             player.CanMove = true;
             
@@ -60,7 +71,7 @@ namespace Town {
                 meshRenderer.enabled = true;
             }
 
-            Destroy(gameObject);
+            if(toggleUI) Destroy(gameObject);
         }
     }
 }

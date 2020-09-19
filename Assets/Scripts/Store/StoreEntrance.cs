@@ -2,6 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using Entity.Player;
+using UI;
 using UnityEngine;
 using UnityEngine.Rendering.Universal;
 using UnityEngine.SceneManagement;
@@ -24,6 +25,7 @@ namespace Store {
         #pragma warning restore 0649
         private void OnTriggerEnter(Collider other) {
             if(!other.CompareTag("Player") || startedTransition) return;
+            FindObjectOfType<PlayerStatsUI>().ShowHideCanvas(false);
             FindObjectOfType<PlayerController>().CanMove = false;
             GameObject transitionCamera = Instantiate(transitionPrefab);
             DontDestroyOnLoad(transitionCamera);

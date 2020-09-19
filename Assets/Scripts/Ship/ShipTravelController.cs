@@ -6,6 +6,7 @@ using Entity.Player;
 using Game;
 using Islands;
 using Town;
+using UI;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UI.Popups;
@@ -66,6 +67,14 @@ namespace Ship {
             DontDestroyOnLoad(gameObject);
             upgradeSettings = Resources.Load<PlayerUpgradeSettings>(playerSettingsPath);
             
+            // Toggle light if in town scene.
+            if(SceneManager.GetActiveScene().buildIndex == townSceneIndex) {
+                var townLight = GameObject.FindGameObjectWithTag(townLightTag);
+            
+                townLight.GetComponent<Light>().enabled = true;
+            }
+            
+            
             // Populate buttons.
             travelButtons.Add(new CanvasPopupDialog.ButtonSettings(smallIslandButtonKey, Normal, 0));
             travelButtons.Add(new CanvasPopupDialog.ButtonSettings(mediumIslandButtonKey, Normal, 1));
@@ -82,6 +91,7 @@ namespace Ship {
         public void StartTravelToIsland() {
             var popup = Instantiate(popupPrefab).GetComponent<CanvasPopupDialog>();
             var player = FindObjectOfType<PlayerController>();
+            FindObjectOfType<PlayerStatsUI>().ShowHideCanvas(false);
             var buttons = new List<CanvasPopupDialog.ButtonSettings>();
             var index = 0;
             
@@ -91,11 +101,10 @@ namespace Ship {
                     index++;
                 }
             }
-            
+
             buttons.Add(travelButtons[4]);
-            
-            popup.SetUpPopup( travelTitleKey, travelMessageKey, buttons,
-                              ExecutionState.PopupPause, TravelToIsland);
+            popup.SetUpPopup(travelTitleKey, travelMessageKey, buttons,
+                             ExecutionState.PopupPause, TravelToIsland);
         }
 
         /// <summary>
@@ -103,11 +112,12 @@ namespace Ship {
         /// </summary>
         private void TravelToIsland(int buttonIndex) {
             if(buttonIndex >= 4) {
+                FindObjectOfType<PlayerStatsUI>().ShowHideCanvas(true);
                 FindObjectOfType<PortSceneTransition>().startedTransition = false;
                 return;
             }
             
-            GameMaster.Instance.SelectedIslandSize = (IslandSizes) Mathf.Clamp(buttonIndex, 0, 2);
+            GameMaster.Instance.SelectedIslandSize = (IslandSizes) Mathf.Min(buttonIndex, 2);
             
             var components = GameObject.FindGameObjectsWithTag(playerComponentsTag);
             foreach(var component in components) {
@@ -185,6 +195,7 @@ namespace Ship {
         public void StartTravelToTown() {
             var popup = Instantiate(popupPrefab).GetComponent<CanvasPopupDialog>();
             var buttons = new List<CanvasPopupDialog.ButtonSettings>();
+            FindObjectOfType<PlayerStatsUI>().ShowHideCanvas(false);
             
             buttons.Add(travelButtons[3]);
             buttons.Add(travelButtons[4]);
@@ -198,6 +209,7 @@ namespace Ship {
         /// </summary>
         private void TravelToTown(int buttonIndex) {
             if(buttonIndex >= 4) {
+                FindObjectOfType<PlayerStatsUI>().ShowHideCanvas(true);
                 FindObjectOfType<IslandsSceneTransition>().startedTransition = false;
                 return;
             }
@@ -246,15 +258,15 @@ namespace Ship {
             while(!async.isDone) {
                 yield return waitAFrame;
             }
-            
+
             var seaLight = GameObject.FindGameObjectWithTag(seaLightTag);
             var townLight = GameObject.FindGameObjectWithTag(townLightTag);
-            
+    
             seaLight.GetComponent<Light>().enabled = false;
             townLight.GetComponent<Light>().enabled = true;
 
             townLight.transform.rotation = seaLight.transform.rotation;
-
+            
             GameMaster.Instance.SpawnInFrontOfStore = false;
             
             anim.SetTrigger(ArriveAtTown);
@@ -264,7 +276,7 @@ namespace Ship {
         /// Unlocks the player and stops the travel routine.
         /// </summary>
         public void AtTownArrival() {
-            FindObjectOfType<PlayerSpawnPositionBasedOnLastScene>().UnlockPlayer();
+            FindObjectOfType<PlayerSpawnPositionBasedOnLastScene>().UnlockPlayer(true);
             shipCamera.m_Priority = 9;
             SceneManager.UnloadSceneAsync(travelSceneIndex);
         }

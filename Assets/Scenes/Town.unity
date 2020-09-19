@@ -470,7 +470,7 @@ GameObject:
   - component: {fileID: 984221929}
   - component: {fileID: 984221928}
   m_Layer: 0
-  m_Name: Directional Light
+  m_Name: Directional Light (Disable after edit)
   m_TagString: Town Dir Light
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -483,7 +483,7 @@ Light:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 984221927}
-  m_Enabled: 1
+  m_Enabled: 0
   serializedVersion: 10
   m_Type: 1
   m_Shape: 0

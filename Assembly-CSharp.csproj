@@ -52,6 +52,7 @@
   <ItemGroup>
      <Compile Include="Assets\Scripts\UI\InventoryUI.cs" />
      <Compile Include="Assets\Scripts\Entity\Player\PlayerController.cs" />
+     <Compile Include="Assets\Thirdparty\AllIn1SpriteShader\Scripts\AllIn1ShaderWindow.cs" />
      <Compile Include="Assets\Scripts\UI\SmallItemUI.cs" />
      <Compile Include="Assets\Scripts\UI\ItemUI.cs" />
      <Compile Include="Assets\Scripts\Entity\Enemies\Critter.cs" />
@@ -65,6 +66,7 @@
      <Compile Include="Assets\Scripts\Entity\Enemies\Enemy.cs" />
      <Compile Include="Assets\Scripts\UI\Menu\MainMenuButtons.cs" />
      <Compile Include="Assets\Scripts\Entity\Enemies\Pirate.cs" />
+     <Compile Include="Assets\Thirdparty\AllIn1SpriteShader\Scripts\AllIn1Shader.cs" />
      <Compile Include="Assets\Scripts\UI\Popups\CanvasPopupLocationName.cs" />
      <Compile Include="Assets\Scripts\Entity\Enemies\EnemyEnums.cs" />
      <Compile Include="Assets\Scripts\UI\Popups\CanvasPopupDialog.cs" />
@@ -88,15 +90,13 @@
      <Compile Include="Assets\Scripts\Store\StoreEntrance.cs" />
      <Compile Include="Assets\Scripts\UI\OpenCloseGameMenu.cs" />
      <Compile Include="Assets\Scripts\Islands\IslandLevelLoader.cs" />
+     <Compile Include="Assets\Thirdparty\AllIn1SpriteShader\Scripts\SetAtlasUvs.cs" />
      <Compile Include="Assets\Scripts\Entity\Entity.cs" />
+     <Compile Include="Assets\Thirdparty\AllIn1SpriteShader\Scripts\RandomSeed.cs" />
      <Compile Include="Assets\Scripts\Entity\Player\EntityBullet.cs" />
      <Compile Include="Assets\Scripts\Entity\Player\PlayerStats.cs" />
      <Compile Include="Assets\Scripts\UI\DamageCanvas.cs" />
      <Compile Include="Assets\Scripts\Entity\Enemies\EnemyBullet.cs" />
-     <Compile Include="Assets\Thirdparty\AllIn1SpriteShader\Scripts\AllIn1ShaderWindow.cs" />
-     <Compile Include="Assets\Thirdparty\AllIn1SpriteShader\Scripts\AllIn1Shader.cs" />
-     <Compile Include="Assets\Thirdparty\AllIn1SpriteShader\Scripts\SetAtlasUvs.cs" />
-     <Compile Include="Assets\Thirdparty\AllIn1SpriteShader\Scripts\RandomSeed.cs" />
      <None Include="Assets\TextMesh Pro\Shaders\TMPro.cginc" />
      <None Include="Assets\TextMesh Pro\Shaders\TMP_SDF-Mobile Overlay.shader" />
      <None Include="Assets\Art\Font\LICENSE.txt" />
@@ -814,6 +814,10 @@
       <Project>{9b596ca2-7856-f05b-a4be-babd3277994a}</Project>
       <Name>Assembly-CSharp-firstpass</Name>
     </ProjectReference>
+    <ProjectReference Include="Unity.UniversalToonShader.Urp.Editor.csproj">
+      <Project>{76fbcac1-356e-e3a9-ca13-f9eea90bc786}</Project>
+      <Name>Unity.UniversalToonShader.Urp.Editor</Name>
+    </ProjectReference>
     <ProjectReference Include="NavMeshComponentsEditor.csproj">
       <Project>{b6cfd396-b0df-b562-5406-92c6a8b42560}</Project>
       <Name>NavMeshComponentsEditor</Name>
@@ -821,10 +825,6 @@
     <ProjectReference Include="NavMeshComponents.csproj">
       <Project>{e441783f-53d0-1653-46a1-a8eb57ab846f}</Project>
       <Name>NavMeshComponents</Name>
-    </ProjectReference>
-    <ProjectReference Include="Unity.UniversalToonShader.Urp.Editor.csproj">
-      <Project>{76fbcac1-356e-e3a9-ca13-f9eea90bc786}</Project>
-      <Name>Unity.UniversalToonShader.Urp.Editor</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

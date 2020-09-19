@@ -4,12 +4,12 @@ using System.Collections.Generic;
 using Entity.Enemies;
 using Game;
 using Items;
+using Localization;
 using UI;
 using UnityEngine;
-using UnityEngine.AI;
 using UnityEngine.InputSystem;
-using UnityEngine.InputSystem.Composites;
 using UnityEngine.SceneManagement;
+using Random = UnityEngine.Random;
 
 namespace Entity.Player {
     /// <summary>
@@ -58,6 +58,8 @@ namespace Entity.Player {
 
         // Input
         private ActionInputs inputs;
+        private Gamepad currentGamepad;
+        private WaitForSeconds waitTime = new WaitForSeconds(0f);
 
         private static readonly List<int> ComboAnim = new List<int> {
             Animator.StringToHash("Combo_0"),
@@ -97,6 +99,7 @@ namespace Entity.Player {
         protected override void Awake() {
             base.Awake();
             inputs = new ActionInputs();
+            currentGamepad = Gamepad.current;
             inputs.Player.Attack.performed += ComboAttack;
             inputs.Player.Special.performed += SpecialAttack;
             if(ReferenceEquals(swordCollider, null)) swordCollider = GetComponentInChildren<SphereCollider>();
@@ -167,6 +170,16 @@ namespace Entity.Player {
         }
 
         /// <summary>
+        /// Stops a controller from vibrating.
+        /// </summary>
+        /// <param name="time"> How long until vibration stops. Leave blank for immediately stopping it.</param>
+        private IEnumerator StopControllerVibration(float time = 0f) {
+            waitTime = new WaitForSeconds(time);
+            yield return waitTime;
+            currentGamepad.SetMotorSpeeds(0f, 0f);
+        }
+
+        /// <summary>
         /// Moves the player based on input using the nav mesh agent.
         /// </summary>
         private void MovePlayer() {
@@ -206,6 +219,9 @@ namespace Entity.Player {
                 bullet.InitialPosition = position;
             }
             
+            currentGamepad.SetMotorSpeeds(0.6f, 0.4f);
+            StartCoroutine(nameof(StopControllerVibration), 0.2f);
+            
             agent.enabled = true;
         }
 
@@ -215,7 +231,6 @@ namespace Entity.Player {
         private void ComboAttack(InputAction.CallbackContext callbackContext) {
             if(Stamina < 3) return;
             Stamina -= 3;
-            
             
             if(anim.GetCurrentAnimatorStateInfo(0).IsName("Idle")) {
                 comboNumber = 0;
@@ -244,11 +259,13 @@ namespace Entity.Player {
         /// Called by animation to trigger collision check.
         /// </summary>
         public void ComboAttackCollision() {
-            if(CheckCollisionSword(swordCollider)) {
-                //TODO: Play audio and effects.
-                Instantiate(DamageCanvasPrefab, transform.position, Quaternion.identity)
-                    .GetComponent<DamageCanvas>().damageValue = meleeDamage;
-            }
+            if(!CheckCollisionSword(swordCollider)) return;
+            //TODO: Play audio and effects.
+            Instantiate(DamageCanvasPrefab, transform.position, Quaternion.identity)
+                .GetComponent<DamageCanvas>().damageValue = meleeDamage;
+                
+            currentGamepad.SetMotorSpeeds(0.42f, 0.42f);
+            StartCoroutine(nameof(StopControllerVibration), 0.2f);
         }
         
         /// <summary>
