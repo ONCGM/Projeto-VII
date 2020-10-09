@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using Game;
 using Items;
 using UnityEngine;
 using UnityEngine.EventSystems;
@@ -44,14 +45,32 @@ namespace Entity.Enemies {
         /// Does the initial configuration of an enemy entity.
         /// </summary>
         protected virtual void SetEnemyValues() {
+            var canBeElite = GameMaster.Instance.PlayerStats.Level > settings.spawnEliteAfterLevel;
+            var isElite = (Random.value < settings.chanceToSpawnAsElite) && canBeElite;
+            var enemyLevel = Random.Range(GameMaster.Instance.PlayerStats.Level - settings.levelVariationBasedOnPlayerLevel, GameMaster.Instance.PlayerStats.Level + settings.levelVariationBasedOnPlayerLevel);
+            
             Health = settings.baseMaxHealth;
-            maxHealth = settings.baseMaxHealth;
+            MaxHealth = settings.baseMaxHealth;
             Stamina = settings.baseMaxStamina;
-            maxStamina = settings.baseMaxStamina;
-            maxLevel = settings.maxLevelCap;
-            movementSpeed = settings.baseMoveSpeed;
+            MaxStamina = settings.baseMaxStamina;
             primaryAttackDamage = settings.baseDamagePrimaryAttack;
             secondaryAttackDamage = settings.baseDamageSecondaryAttack;
+            
+            print($"{Health}, {MaxHealth}, {Stamina}, {MaxStamina}, {primaryAttackDamage}, {secondaryAttackDamage}");
+            
+            for(int i = 0; i < enemyLevel; i++) {    
+                Health = Mathf.CeilToInt(Health * settings.basicStatsMultiplier * (isElite ? settings.eliteStatsMultiplier : 1f));
+                MaxHealth = Mathf.CeilToInt(maxHealth * settings.basicStatsMultiplier * (isElite ? settings.eliteStatsMultiplier : 1f));
+                Stamina = Mathf.CeilToInt(Stamina * settings.basicStatsMultiplier * (isElite ? settings.eliteStatsMultiplier : 1f));
+                MaxStamina = Mathf.CeilToInt(maxStamina * settings.basicStatsMultiplier * (isElite ? settings.eliteStatsMultiplier : 1f));
+                primaryAttackDamage = Mathf.CeilToInt(primaryAttackDamage * settings.attackStatsMultiplier * (isElite ? settings.eliteStatsMultiplier : 1f));
+                secondaryAttackDamage = Mathf.CeilToInt(secondaryAttackDamage * settings.attackStatsMultiplier * (isElite ? settings.eliteStatsMultiplier : 1f));
+            }
+            
+            print($"{Health}, {MaxHealth}, {Stamina}, {MaxStamina}, {primaryAttackDamage}, {secondaryAttackDamage}");
+            
+            maxLevel = settings.maxLevelCap;
+            movementSpeed = settings.baseMoveSpeed;
             enemyType = settings.enemyType;
             chanceToDrop = settings.chanceToDropItem;
             itemsToDrop = settings.itemsToDrop;

@@ -117,7 +117,17 @@ MonoBehaviour:
   stamina: 10
   maxStamina: 10
   level: 0
+  maxLevel: 0
   experience: 0
+  coins: 0
+  playerTag: Player
+  playerLayer:
+    serializedVersion: 2
+    m_Bits: 10
+  settings: {fileID: 0}
+  chanceToDrop: 0.1
+  itemsToDrop: []
+  DamageCanvasPrefab: {fileID: 8168437462130401804, guid: 8bb4a911fd662ec4e80d3d9b635f6d3f, type: 3}
 --- !u!195 &3705584951524824814
 NavMeshAgent:
   m_ObjectHideFlags: 0
