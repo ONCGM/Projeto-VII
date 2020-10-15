@@ -46,8 +46,9 @@ namespace Entity {
         /// <summary>
         /// Deal damage to this entity.
         /// </summary>
-        /// <param name="amount"> Amount of damage to inflict.</param>
-        void Damage(int amount);
+        /// <param name="amount"> Amount of damage to inflict. </param>
+        /// <param name="dealer"> Entity who dealt the damage. </param>
+        void Damage(int amount, Entity dealer);
 
         /// <summary>
         /// Heal this entity.

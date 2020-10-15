@@ -21,14 +21,14 @@ namespace Entity.Enemies {
         
         protected override void SetEnemyValues() {
             base.SetEnemyValues();
-            rangedDamagePerBullet = settings.baseDamageSecondaryAttack;
+            rangedDamagePerBullet = settings.baseDamagePrimaryAttack;
         }
 
-        protected override void Move() {
-            agent.SetDestination(player.transform.position);
-            if(Vector3.Distance(transform.position, player.transform.position) < 1f) {
+        protected override void MoveTowardsEntity() {
+            agent.SetDestination(targetEntity.transform.position);
+            if(Vector3.Distance(transform.position, targetEntity.transform.position) < 1f) {
                 Attack();
-            } else if(Vector3.Distance(transform.position, player.transform.position) > 8f){
+            } else if(Vector3.Distance(transform.position, targetEntity.transform.position) > 8f){
                 if(Random.value < 0.01f && !inRoutine) StartCoroutine(nameof(AttackRanged));
             }
         }
@@ -55,6 +55,7 @@ namespace Entity.Enemies {
                 bullet.Damage = rangedDamagePerBullet;
                 bullet.MaxRange = rangedAttackMaxRange;
                 bullet.InitialPosition = position;
+                bullet.BulletOwner = this;
             }
             // ReSharper disable once Unity.InefficientPropertyAccess
             agent.speed = settings.baseMoveSpeed;

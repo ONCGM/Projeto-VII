@@ -81,7 +81,7 @@ namespace Entity {
         }
 
         // General methods.
-        public virtual void Damage(int amount) {
+        public virtual void Damage(int amount, Entity dealer) {
             Health -= amount;
             if(Health <= 0) Kill();
         }

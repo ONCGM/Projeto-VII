@@ -15,11 +15,11 @@ MonoBehaviour:
   baseMaxHealth: 27
   baseMaxStamina: 18
   baseMoveSpeed: 13
-  baseDamagePrimaryAttack: 18
-  baseDamageSecondaryAttack: 11
+  baseDamagePrimaryAttack: 11
+  attackingRangePrimaryAttack: 15
   maxLevelCap: 30
   enemyType: 1
-  basicStatsMultiplier: 1.1
+  basicStatsMultiplier: 1.07
   attackStatsMultiplier: 1.07
   eliteStatsMultiplier: 1.3
   levelVariationBasedOnPlayerLevel: 3
@@ -29,6 +29,7 @@ MonoBehaviour:
   isAggressive: 1
   attacksEntitiesWhoDamagedThisEntity: 1
   shouldPatrolWhenIdle: 1
+  patrolBackAndForth: 0
   spottingRange: 15
   spawnEliteAfterLevel: 20
   chanceToSpawnAsElite: 0.1

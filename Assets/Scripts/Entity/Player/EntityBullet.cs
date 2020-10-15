@@ -12,7 +12,7 @@ namespace Entity {
     [RequireComponent(typeof(Rigidbody), typeof(SphereCollider))]
     public class EntityBullet : MonoBehaviour {
         #pragma warning disable 0649
-        [Header("Damage ItemSettings")]
+        [Header("Damage Settings")]
         [SerializeField] private string tagToDamage = string.Empty;
         [SerializeField] private AnimationCurve damageLossOverDistance;
 
@@ -36,7 +36,14 @@ namespace Entity {
             get => maxRange;
             set => maxRange = value;
         }
-        
+
+        private Entity bulletOwner;
+
+        public Entity BulletOwner {
+            get => bulletOwner;
+            set => bulletOwner = value;
+        }
+
         private Vector3 initialPosition = Vector3.zero;
 
         public Vector3 InitialPosition {
@@ -47,23 +54,32 @@ namespace Entity {
         private Rigidbody rb;
         #pragma warning restore 0649
         
-        
+        /// <summary>
+        /// Sets up the class.
+        /// </summary>
         private void Awake() {
             rb = GetComponent<Rigidbody>();
             rb.AddForce(transform.forward * bulletInitialForce, ForceMode.Impulse);
             Destroy(gameObject, timeUntilSelfDestruction);
         }
 
+        /// <summary>
+        /// Updates methods.
+        /// </summary>
         private void LateUpdate() {
             CheckRange();
         }
 
+        /// <summary>
+        /// Check for traveled distance.
+        /// </summary>
         private void CheckRange() {
             if((initialPosition - transform.position).magnitude > maxRange) {
                 rb.constraints = RigidbodyConstraints.None;
             }
         }
 
+        // Check collisions.
         private void OnCollisionEnter(Collision other) {
             if(!other.gameObject.CompareTag(tagToDamage)) {
                 Destroy(gameObject);
@@ -75,11 +91,10 @@ namespace Entity {
                                                                                                    (initialPosition -
                                                                                                     transform.position)
                                                                                                    .magnitude))));
-            other.gameObject.GetComponent<IDamageable>().Damage(damageAmount);
+            other.gameObject.GetComponent<IDamageable>().Damage(damageAmount, BulletOwner);
 
             Instantiate(DamageCanvasPrefab, transform.position, Quaternion.identity).GetComponent<DamageCanvas>().damageValue = damageAmount;
-            
-            Debug.Log($"Hit {other.gameObject.name} for {damageAmount} damage.");
+
             Destroy(gameObject);
         }
     }

@@ -217,6 +217,7 @@ namespace Entity.Player {
                 bullet.Damage = rangedDamagePerBullet;
                 bullet.MaxRange = rangedAttackMaxRange;
                 bullet.InitialPosition = position;
+                bullet.BulletOwner = this;
             }
             
             currentGamepad.SetMotorSpeeds(0.6f, 0.4f);
@@ -281,7 +282,7 @@ namespace Entity.Player {
 
             foreach(var contact in contacts) {
                 if(!contact.gameObject.GetComponent<Enemy>()) continue;
-                contact.gameObject.GetComponent<Enemy>().Damage(damageAmount);
+                contact.gameObject.GetComponent<Enemy>().Damage(damageAmount, this);
                 hitAnEnemy = true;
             }
 

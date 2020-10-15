@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using Entity.Player;
 using Game;
 using Items;
 using UnityEngine;
@@ -14,30 +15,31 @@ namespace Entity.Enemies {
     /// </summary>
     public class Enemy : Entity {
         #pragma warning disable 0649
-        [Header("Player ItemSettings")]
-        [SerializeField] private string playerTag = "Player";
-        [SerializeField] private LayerMask playerLayer = 10;
+        [Header("Player Settings")]
+        [SerializeField] protected string playerTag = "Player";
+        [SerializeField] protected LayerMask playerLayer = 10;
 
-        [Header("Enemy ItemSettings")]
+        [Header("Enemy Settings")]
         [SerializeField] protected EnemySettings settings;
-        private float movementSpeed = 1f;
-        private int primaryAttackDamage = 1;
-        private int secondaryAttackDamage = 1;
-        private EnemyType enemyType;
+        protected float movementSpeed = 1f;
+        protected int primaryAttackDamage = 1;
+        protected EnemyType enemyType;
 
-        [Header("Loot ItemSettings")] 
-        [SerializeField, Range(0f, 1f)] private float chanceToDrop = 0.1f;
-        [SerializeField] private List<ItemSettings> itemsToDrop = new List<ItemSettings>();
+        [Header("Loot Settings")] 
+        [SerializeField, Range(0f, 1f)] protected float chanceToDrop = 0.1f;
+        [SerializeField] protected List<ItemSettings> itemsToDrop = new List<ItemSettings>();
         
-        protected GameObject player;
-        protected IDamageable playerDamageable;
-        [SerializeField] private GameObject DamageCanvasPrefab;
+        [Header("Other")]
+        [SerializeField] protected GameObject DamageCanvasPrefab;
+        
+        
+        // Movement action.
+        protected Action MoveEnemy;
+        protected Entity targetEntity;
         
         #pragma warning restore 0649
 
         protected virtual void Start() {
-            player = GameObject.FindWithTag("Player");
-            playerDamageable = player.GetComponent<IDamageable>();
             SetEnemyValues();
         }
 
@@ -54,52 +56,95 @@ namespace Entity.Enemies {
             Stamina = settings.baseMaxStamina;
             MaxStamina = settings.baseMaxStamina;
             primaryAttackDamage = settings.baseDamagePrimaryAttack;
-            secondaryAttackDamage = settings.baseDamageSecondaryAttack;
-            
-            print($"{Health}, {MaxHealth}, {Stamina}, {MaxStamina}, {primaryAttackDamage}, {secondaryAttackDamage}");
-            
+
             for(int i = 0; i < enemyLevel; i++) {    
-                Health = Mathf.CeilToInt(Health * settings.basicStatsMultiplier * (isElite ? settings.eliteStatsMultiplier : 1f));
-                MaxHealth = Mathf.CeilToInt(maxHealth * settings.basicStatsMultiplier * (isElite ? settings.eliteStatsMultiplier : 1f));
-                Stamina = Mathf.CeilToInt(Stamina * settings.basicStatsMultiplier * (isElite ? settings.eliteStatsMultiplier : 1f));
-                MaxStamina = Mathf.CeilToInt(maxStamina * settings.basicStatsMultiplier * (isElite ? settings.eliteStatsMultiplier : 1f));
-                primaryAttackDamage = Mathf.CeilToInt(primaryAttackDamage * settings.attackStatsMultiplier * (isElite ? settings.eliteStatsMultiplier : 1f));
-                secondaryAttackDamage = Mathf.CeilToInt(secondaryAttackDamage * settings.attackStatsMultiplier * (isElite ? settings.eliteStatsMultiplier : 1f));
+                Health = Mathf.CeilToInt(Health * settings.basicStatsMultiplier);
+                MaxHealth = Mathf.CeilToInt(MaxHealth * settings.basicStatsMultiplier);
+                Stamina = Mathf.CeilToInt(Stamina * settings.basicStatsMultiplier);
+                MaxStamina = Mathf.CeilToInt(MaxStamina * settings.basicStatsMultiplier);
+                primaryAttackDamage = Mathf.CeilToInt(primaryAttackDamage * settings.attackStatsMultiplier);
             }
             
-            print($"{Health}, {MaxHealth}, {Stamina}, {MaxStamina}, {primaryAttackDamage}, {secondaryAttackDamage}");
+            Health = Mathf.CeilToInt(Health * (isElite ? settings.eliteStatsMultiplier : 1f));
+            MaxHealth = Mathf.CeilToInt(MaxHealth * (isElite ? settings.eliteStatsMultiplier : 1f));
+            Stamina = Mathf.CeilToInt(Stamina * (isElite ? settings.eliteStatsMultiplier : 1f));
+            MaxStamina = Mathf.CeilToInt(MaxStamina * (isElite ? settings.eliteStatsMultiplier : 1f));
+            primaryAttackDamage = Mathf.CeilToInt(primaryAttackDamage * (isElite ? settings.eliteStatsMultiplier : 1f));
             
-            maxLevel = settings.maxLevelCap;
+            MaxLevel = settings.maxLevelCap;
             movementSpeed = settings.baseMoveSpeed;
             enemyType = settings.enemyType;
             chanceToDrop = settings.chanceToDropItem;
             itemsToDrop = settings.itemsToDrop;
+
+            MoveEnemy = settings.isAggressive ? (Action) MoveTowardsEntity : PatrolArea;
         }
 
-        // Calls other methods that need to be updated constantly.
-        protected virtual void FixedUpdate() {
-            Move();
-        }
-
+        // TODO Coroutine bounce for AI behaviour.
+        
         /// <summary>
         /// Moves the enemy entity. Uses a NavMeshAgent.
         /// </summary>
-        protected virtual void Move() {
-            agent.SetDestination(player.transform.position);
-            if(Vector3.Distance(transform.position, player.transform.position) < 1f) {
-                // TODO: Attack through collision.
+        protected virtual void MoveTowardsEntity() {
+            if(targetEntity.Equals(null)) {
+                CheckForPlayer();
+                return;
+            }
+            
+            agent.SetDestination(targetEntity.transform.position);
+            
+            if(Vector3.Distance(transform.position, targetEntity.transform.position) < settings.attackingRange) {
                 Attack();
             }
         }
+        
+        /// <summary>
+        /// Moves around in a certain pattern if not aggro.
+        /// </summary>
+        protected virtual void PatrolArea() {
+            // TODO patrol behaviour
+            
+            if(targetEntity.Equals(null) && settings.isAggressive) CheckForPlayer();
+            if(!targetEntity.Equals(null)) MoveEnemy = MoveTowardsEntity;
+        }
 
+        /// <summary>
+        /// Check if the player is in range of the enemy.
+        /// </summary>
+        protected virtual void CheckForPlayer() {
+            if(!settings.isAggressive) {
+                MoveEnemy = PatrolArea;
+                return;
+            }
+            
+            var results = new Collider[]{};
+            Physics.OverlapSphereNonAlloc(transform.position, settings.spottingRange, results, playerLayer.value);
+
+            foreach(var result in results) {
+                if(result.gameObject.GetComponent<PlayerController>() != null) {
+                    targetEntity = result.gameObject.GetComponent<PlayerController>();
+                    MoveEnemy = MoveTowardsEntity;
+                    return;
+                }
+            }
+            
+            targetEntity = null;
+            MoveEnemy = PatrolArea;
+        }
+        
         /// <summary>
         /// Attacks, will damage anything that is in front of the entity and in range.
         /// </summary>
         protected virtual void Attack() {
             // TODO: Extend damage to play animations, detect collision and damage other entities.
-            playerDamageable.Damage(primaryAttackDamage);
             Instantiate(DamageCanvasPrefab, transform.position, Quaternion.identity)
                 .GetComponent<DamageCanvas>().damageValue = primaryAttackDamage;
+        }
+
+        // Updated to enable infighting between enemies.
+        public override void Damage(int amount, Entity dealer) {
+            targetEntity = dealer;
+            base.Damage(amount, dealer);
         }
 
         public override void Kill() {

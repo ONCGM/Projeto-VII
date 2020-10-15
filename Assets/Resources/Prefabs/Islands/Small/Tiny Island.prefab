@@ -131,20 +131,24 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6baf9e8e28dc5d44590f4901fb759562, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  spawnEnemies: 0
+  spawnEnemies: 1
+  spawnPirateEnemiesAfterLevel: 5
+  minChanceOfSpawning: 0.3
+  maxChanceOfSpawning: 0.8
+  chanceOfSpawningPirate: 0.4
   enemySpawnPositions:
   - {fileID: 3346800686315248046}
   - {fileID: 601920476918387194}
   - {fileID: 3611849643824581457}
-  enemyPrefabs:
-  - {fileID: 3705584951524824787, guid: 8449759624c547b4dbc2fd3aaeeacbe9, type: 3}
-  - {fileID: 3705584951524824787, guid: 3e71a5f01ed53574fa0f5011e6349f1a, type: 3}
+  critterEnemyPrefab: {fileID: 3705584951524824787, guid: 8449759624c547b4dbc2fd3aaeeacbe9, type: 3}
+  pirateEnemyPrefab: {fileID: 3705584951524824787, guid: 3e71a5f01ed53574fa0f5011e6349f1a, type: 3}
   spawnLootBox: 0
   lootSpawnPositions:
   - {fileID: 8635012810923489006}
   - {fileID: 7402193373226575960}
   lootPrefabs:
   - {fileID: 7544617556613125104, guid: 1efbb2db66435784d8866bd90cf148a0, type: 3}
+  maxLevel: 30
 --- !u!1 &1234752815283651783
 GameObject:
   m_ObjectHideFlags: 0

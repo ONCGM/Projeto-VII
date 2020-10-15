@@ -14,7 +14,7 @@ namespace Entity.Enemies {
         [SerializeField] public int baseMaxStamina;
         [SerializeField, Range(0f, 25f)] public float baseMoveSpeed;
         [SerializeField] public int baseDamagePrimaryAttack;
-        [SerializeField] public int baseDamageSecondaryAttack;
+        [SerializeField] public int attackingRange;
         [SerializeField] public int maxLevelCap;
         [SerializeField] public EnemyType enemyType;
 
@@ -32,6 +32,7 @@ namespace Entity.Enemies {
         [SerializeField] public bool isAggressive;
         [SerializeField] public bool attacksEntitiesWhoDamagedThisEntity;
         [SerializeField] public bool shouldPatrolWhenIdle;
+        [SerializeField] public bool patrolBackAndForth;
         [SerializeField, Range(1f, 100f)] public float spottingRange;
 
         [Header("Elite Settings")] 
