@@ -1,10 +1,12 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using Entity.Player;
 using Game;
 using Items;
 using UnityEngine;
+using UnityEngine.AI;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
 using Random = UnityEngine.Random;
@@ -24,6 +26,9 @@ namespace Entity.Enemies {
         protected float movementSpeed = 1f;
         protected int primaryAttackDamage = 1;
         protected EnemyType enemyType;
+        [SerializeField, Range(0.01f, 1f)] protected float targetPositionUpdateInterval = 0.2f;
+        [SerializeField, Range(0.2f, 5f)] protected float patrollingPlayerSearchFrequency = 2f;
+        [SerializeField, Range(0.05f, 3f)] protected float patrollingTargetPositionTolerance = 0.3f;
 
         [Header("Loot Settings")] 
         [SerializeField, Range(0f, 1f)] protected float chanceToDrop = 0.1f;
@@ -33,9 +38,20 @@ namespace Entity.Enemies {
         [SerializeField] protected GameObject DamageCanvasPrefab;
         
         
-        // Movement action.
-        protected Action MoveEnemy;
+        // Movement related field and variables.
         protected Entity targetEntity;
+        protected Vector3 lastPatrolOffset;
+        protected bool isPatrolling;
+        protected bool isChasing;
+        protected bool isAttacking;
+        protected AiState currentState;
+
+        protected enum AiState {
+            Patrolling,
+            Chasing,
+            Attacking,
+            Idle
+        }
         
         #pragma warning restore 0649
 
@@ -77,43 +93,112 @@ namespace Entity.Enemies {
             chanceToDrop = settings.chanceToDropItem;
             itemsToDrop = settings.itemsToDrop;
 
-            MoveEnemy = settings.isAggressive ? (Action) MoveTowardsEntity : PatrolArea;
+            lastPatrolOffset = (settings.patrolBackAndForth ? (Random.value > 0.5f ? Vector3.forward : Vector3.right) * settings.patrollingRange :
+                                new Vector3(Random.Range(-settings.patrollingRange, settings.patrollingRange), 
+                                            0f, Random.Range(-settings.patrollingRange, settings.patrollingRange)));
+            
+            StartCoroutine(settings.isAggressive ? nameof(MoveTowardsEntity) : nameof(PatrolArea));
         }
-
-        // TODO Coroutine bounce for AI behaviour.
         
         /// <summary>
         /// Moves the enemy entity. Uses a NavMeshAgent.
         /// </summary>
-        protected virtual void MoveTowardsEntity() {
+        protected virtual IEnumerator MoveTowardsEntity() {
+            currentState = AiState.Chasing;
+            isChasing = true;
+            isAttacking = false;
+            isPatrolling = false;
+            
+            var waitForFrames = new WaitForSeconds(targetPositionUpdateInterval);
+            
             if(targetEntity.Equals(null)) {
-                CheckForPlayer();
-                return;
+                currentState = AiState.Idle;
+                isChasing = false;
+                SearchForPlayer();
+                yield break;
+            }
+
+            while(Vector3.Distance(transform.position, targetEntity.transform.position) > settings.attackingRange) {
+                agent.SetDestination(targetEntity.transform.position);
+                yield return waitForFrames;
+
+                if(Vector3.Distance(transform.position, targetEntity.transform.position) < settings.spottingRange) continue;
+                targetEntity = null;
+                currentState = AiState.Idle;
+                isChasing = false;
+                StartCoroutine(nameof(PatrolArea));
+                yield break;
             }
             
-            agent.SetDestination(targetEntity.transform.position);
-            
-            if(Vector3.Distance(transform.position, targetEntity.transform.position) < settings.attackingRange) {
-                Attack();
-            }
+            Attack();
         }
         
         /// <summary>
         /// Moves around in a certain pattern if not aggro.
         /// </summary>
-        protected virtual void PatrolArea() {
-            // TODO patrol behaviour
+        protected virtual IEnumerator PatrolArea() {
+            currentState = AiState.Patrolling;
+            isChasing = false;
+            isAttacking = false;
+            isPatrolling = true;
             
-            if(targetEntity.Equals(null) && settings.isAggressive) CheckForPlayer();
-            if(!targetEntity.Equals(null)) MoveEnemy = MoveTowardsEntity;
+            var waitForFrames = new WaitForSeconds(patrollingPlayerSearchFrequency);
+
+            agent.SetPath(GeneratePatrolPath());
+            
+            while(agent.remainingDistance > patrollingTargetPositionTolerance) {
+                SearchForPlayer();
+                yield return waitForFrames;
+            }
+
+            currentState = AiState.Idle;
+            isPatrolling = false;
+            SearchForPlayer();
+        }
+
+        private void OnDrawGizmos() {
+            Gizmos.color = Color.red;
+
+            if(!agent.hasPath) return;
+            
+            for(int i = 0; i < agent.path.corners.Length - 1; i++) {
+                Gizmos.DrawLine(agent.path.corners[i], agent.path.corners[i + 1]);
+            }
         }
 
         /// <summary>
+        /// Chooses a new patrolling path and checks if it is valid.
+        /// If it can't find a valid path, will default to returning a path
+        /// towards the nearest edge in the navigation mesh.
+        /// </summary>
+        protected virtual NavMeshPath GeneratePatrolPath() {
+            var path = new NavMeshPath();
+            
+            for(var i = (int) settings.patrollingRange; i > 1; i--) {
+                var patrolOffset = (settings.patrolBackAndForth ? 
+                                        (lastPatrolOffset.normalized * -1) * i :
+                                        new Vector3(Random.Range(-i, i), 0f, Random.Range(-i, i)));
+            
+                NavMesh.CalculatePath(transform.position, transform.position + patrolOffset, NavMesh.AllAreas, path);
+
+                if(path.status != NavMeshPathStatus.PathInvalid) {
+                    lastPatrolOffset = patrolOffset;
+                    return path;
+                }
+            }
+
+            agent.FindClosestEdge(out var hit);
+            NavMesh.CalculatePath(transform.position, hit.position, NavMesh.AllAreas, path);
+
+            return path;
+        }
+        
+        /// <summary>
         /// Check if the player is in range of the enemy.
         /// </summary>
-        protected virtual void CheckForPlayer() {
+        protected virtual void SearchForPlayer() {
             if(!settings.isAggressive) {
-                MoveEnemy = PatrolArea;
+                if(!isPatrolling) StartCoroutine(nameof(PatrolArea));
                 return;
             }
             
@@ -121,29 +206,38 @@ namespace Entity.Enemies {
             Physics.OverlapSphereNonAlloc(transform.position, settings.spottingRange, results, playerLayer.value);
 
             foreach(var result in results) {
-                if(result.gameObject.GetComponent<PlayerController>() != null) {
-                    targetEntity = result.gameObject.GetComponent<PlayerController>();
-                    MoveEnemy = MoveTowardsEntity;
-                    return;
-                }
+                if(result.gameObject.GetComponent<PlayerController>() == null) continue;
+                targetEntity = result.gameObject.GetComponent<PlayerController>();
+                if(!isChasing) StartCoroutine(nameof(MoveTowardsEntity));
+                return;
             }
             
             targetEntity = null;
-            MoveEnemy = PatrolArea;
+            if(!isPatrolling) StartCoroutine(nameof(PatrolArea));
         }
         
         /// <summary>
         /// Attacks, will damage anything that is in front of the entity and in range.
         /// </summary>
         protected virtual void Attack() {
+            currentState = AiState.Attacking;
+            isChasing = false;
+            isAttacking = true;
+            isPatrolling = false;
+            StopAllCoroutines();
+            
             // TODO: Extend damage to play animations, detect collision and damage other entities.
             Instantiate(DamageCanvasPrefab, transform.position, Quaternion.identity)
                 .GetComponent<DamageCanvas>().damageValue = primaryAttackDamage;
+
+            StartCoroutine(nameof(MoveTowardsEntity));
         }
 
         // Updated to enable infighting between enemies.
         public override void Damage(int amount, Entity dealer) {
-            targetEntity = dealer;
+            if(settings.attacksEntitiesWhoDamagedThisEntity) { targetEntity = dealer; } 
+            else if(dealer.gameObject.CompareTag(playerTag)) { targetEntity = dealer; }
+
             base.Damage(amount, dealer);
         }
 
@@ -160,9 +254,8 @@ namespace Entity.Enemies {
         /// </summary>
         protected virtual void GenerateDrop() {
             if(Random.value > settings.chanceToDropItem) return;
-            var selectedItem = itemsToDrop[Random.Range(0, itemsToDrop.Count)];
-            
-            // TODO: Check if item can spawn based on progression, if not, try again.
+            var availableItems = itemsToDrop.Where(itemSettings => GameMaster.Instance.PlayerStats.Level > itemSettings.minimumPlayerLevelToSpawn).ToList();
+            var selectedItem = availableItems[Random.Range(0, availableItems.Count)];
             
             Instantiate(selectedItem.itemPrefab, transform.position, Quaternion.identity).
                 GetComponent<ItemDrop>().SetItemBasedOnSettings(selectedItem);

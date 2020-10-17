@@ -113,6 +113,12 @@ namespace Game {
         public IslandSizes SelectedIslandSize { get; set; } = IslandSizes.Small; 
         
         /// <summary>
+        /// The current type of island by random choice. 
+        /// Set by the island level loader and used by the island scripts.
+        /// </summary>
+        public IslandType CurrentIslandType { get; set; } = IslandType.BrawlIsland;
+        
+        /// <summary>
         /// The current spawned ship in the game world.
         /// </summary>
         public ShipTravelController ShipTravel { get; set; }

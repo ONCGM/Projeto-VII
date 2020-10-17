@@ -25,9 +25,13 @@ namespace Islands {
         [SerializeField] private bool spawnLootBox;
         [SerializeField] private List<Transform> lootSpawnPositions = new List<Transform>();
         [SerializeField] private List<GameObject> lootPrefabs = new List<GameObject>();
+        [SerializeField, Range(0.01f, 1f)] private float chanceOfSpawningLoot = 0.4f;
 
         [Header("Player Settings")] 
         [SerializeField, Range(1, 45)] private int maxLevel = 30;
+        
+        // Other.
+        private int spawnedEnemyCount;
         
         #pragma warning restore 0649
         
@@ -50,21 +54,54 @@ namespace Islands {
                                            Mathf.InverseLerp(1, maxLevel, stats.Level));
 
             foreach(var spawnPos in enemySpawnPositions) {
-                if(Random.value > chanceToSpawn) { continue; }
-
-                var enemy = (stats.Level > spawnPirateEnemiesAfterLevel ?
-                                 (Random.value < chanceOfSpawningPirate ? pirateEnemyPrefab : critterEnemyPrefab)
-                                 : critterEnemyPrefab);
+                GameObject enemy;
                 
+                switch(GameMaster.Instance.CurrentIslandType) {
+                    case IslandType.BrawlIsland:
+                        enemy = (stats.Level > spawnPirateEnemiesAfterLevel ?
+                                     (Random.value < chanceOfSpawningPirate ? pirateEnemyPrefab : critterEnemyPrefab)
+                                     : critterEnemyPrefab);
+                        break;
+                    case IslandType.TreasureIsland:
+                        if(Random.value > chanceToSpawn) { continue; }
+                        enemy = (stats.Level > spawnPirateEnemiesAfterLevel ?
+                                         (Random.value <  Mathf.Min(chanceOfSpawningPirate * 2f, 1f) ? pirateEnemyPrefab : critterEnemyPrefab)
+                                         : critterEnemyPrefab);
+                        break;
+                    case IslandType.MerchantIsland:
+                        if(Random.value > chanceToSpawn) { continue; }
+                        enemy = (stats.Level > spawnPirateEnemiesAfterLevel ?
+                                         (Random.value < Mathf.Max(chanceOfSpawningPirate * 0.5f, 0.1f) ? pirateEnemyPrefab : critterEnemyPrefab)
+                                         : critterEnemyPrefab);
+                        break;
+                    default:
+                        enemy = (stats.Level > spawnPirateEnemiesAfterLevel ?
+                                     (Random.value < chanceOfSpawningPirate ? pirateEnemyPrefab : critterEnemyPrefab)
+                                     : critterEnemyPrefab);
+                        break;
+                }
+
                 Instantiate(enemy, spawnPos.position, spawnPos.rotation);
+                spawnedEnemyCount++;
             }
         }
 
         /// <summary>
-        /// Adds loots to the island based on current player level.
+        /// Adds loots to the islands.
         /// </summary>
         private void PopulateLoot() {
             if(!spawnLootBox) { return; }
+
+            if(GameMaster.Instance.CurrentIslandType == IslandType.TreasureIsland) {
+                foreach(var spawn in lootSpawnPositions) {
+                    Instantiate(lootPrefabs[Random.Range(0, lootPrefabs.Count)], spawn.position, spawn.rotation);
+                }
+            } else {
+                foreach(var spawn in lootSpawnPositions) {
+                    if(Random.value > chanceOfSpawningLoot) continue;
+                    Instantiate(lootPrefabs[Random.Range(0, lootPrefabs.Count)], spawn.position, spawn.rotation);
+                }
+            }
         }
     }
 }

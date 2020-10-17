@@ -53,7 +53,7 @@ namespace Entity {
         /// <summary>
         /// Heal this entity.
         /// </summary>
-        /// <param name="amount"> Amount of healing.</param>
+        /// <param name="amount"> Amount of healing. </param>
         void Heal(int amount);
 
         /// <summary>

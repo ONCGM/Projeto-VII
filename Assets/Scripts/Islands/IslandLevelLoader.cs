@@ -41,7 +41,9 @@ namespace Islands {
             var islandSize = GameMaster.Instance.SelectedIslandSize;
 
             CurrentIslandType = (IslandType) Random.Range(0, Enum.GetNames(typeof(IslandType)).Length);
-            
+
+            GameMaster.Instance.CurrentIslandType = CurrentIslandType;
+
             SceneManager.LoadSceneAsync(Mathf.Clamp(smallIslandIndex + (int) islandSize, smallIslandIndex, largeIslandIndex), LoadSceneMode.Additive);
         }
 

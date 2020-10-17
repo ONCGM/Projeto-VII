@@ -8,21 +8,20 @@ namespace Items {
     /// </summary>
     [CreateAssetMenu(fileName = "Item_Settings_", menuName = "Scriptable Objects/Item")]
     public class ItemSettings : ScriptableObject {
-        // TODO: Add lock based on progress, so only spawns after a certain amount of progress.
-        [Header("Drop ItemSettings")] 
+        [Header("Drop Settings")] 
         [SerializeField] public GameObject itemPrefab;
         [SerializeField] public GameObject itemModel;
+        [SerializeField] public int minimumPlayerLevelToSpawn;
 
-        [Header("Inventory ItemSettings")] 
-        [SerializeField]public int itemId;
+        [Header("Inventory Settings")] 
+        [SerializeField] public int itemId;
         [SerializeField] public string itemNameKey;
         [SerializeField] public string itemDescriptionKey;
         [SerializeField] public string itemEffects;
         [SerializeField, Range(1, 99)] public int maxStackQuantity;
         [SerializeField] public Sprite itemImage;
 
-        // TODO: Set price values for items.
-        [Header("Price ItemSettings")] 
+        [Header("Price Settings")] 
         [SerializeField] public int initialValue;
     }
 }

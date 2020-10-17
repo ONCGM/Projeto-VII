@@ -142,12 +142,13 @@ MonoBehaviour:
   - {fileID: 3611849643824581457}
   critterEnemyPrefab: {fileID: 3705584951524824787, guid: 8449759624c547b4dbc2fd3aaeeacbe9, type: 3}
   pirateEnemyPrefab: {fileID: 3705584951524824787, guid: 3e71a5f01ed53574fa0f5011e6349f1a, type: 3}
-  spawnLootBox: 0
+  spawnLootBox: 1
   lootSpawnPositions:
   - {fileID: 8635012810923489006}
   - {fileID: 7402193373226575960}
   lootPrefabs:
   - {fileID: 7544617556613125104, guid: 1efbb2db66435784d8866bd90cf148a0, type: 3}
+  chanceOfSpawningLoot: 0.6
   maxLevel: 30
 --- !u!1 &1234752815283651783
 GameObject:

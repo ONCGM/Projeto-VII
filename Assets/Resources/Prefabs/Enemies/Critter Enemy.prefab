@@ -221,6 +221,9 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 1024
   settings: {fileID: 11400000, guid: 1939d06c0fe00674c904c50edbff3a8b, type: 2}
+  targetPositionUpdateInterval: 0.2
+  patrollingPlayerSearchFrequency: 2
+  patrollingTargetPositionTolerance: 1
   chanceToDrop: 0.1
   itemsToDrop: []
   DamageCanvasPrefab: {fileID: 8168437462130401804, guid: 8bb4a911fd662ec4e80d3d9b635f6d3f, type: 3}
