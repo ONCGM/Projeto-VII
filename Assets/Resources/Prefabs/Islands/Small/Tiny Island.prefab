@@ -135,7 +135,7 @@ MonoBehaviour:
   spawnPirateEnemiesAfterLevel: 5
   minChanceOfSpawning: 0.3
   maxChanceOfSpawning: 0.8
-  chanceOfSpawningPirate: 0.4
+  chanceOfSpawningPirate: 0.3
   enemySpawnPositions:
   - {fileID: 3346800686315248046}
   - {fileID: 601920476918387194}
@@ -148,7 +148,7 @@ MonoBehaviour:
   - {fileID: 7402193373226575960}
   lootPrefabs:
   - {fileID: 7544617556613125104, guid: 1efbb2db66435784d8866bd90cf148a0, type: 3}
-  chanceOfSpawningLoot: 0.6
+  chanceOfSpawningLoot: 0.3
   maxLevel: 30
 --- !u!1 &1234752815283651783
 GameObject:

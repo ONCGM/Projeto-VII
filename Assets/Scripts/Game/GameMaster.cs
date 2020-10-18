@@ -57,7 +57,7 @@ namespace Game {
             }
         }
 
-        private PlayerStats playerStats;
+        private PlayerStats playerStats = new PlayerStats() { Level = 15 };
 
         /// <summary>
         /// Current stats of the player.

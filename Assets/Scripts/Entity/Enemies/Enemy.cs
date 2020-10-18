@@ -111,7 +111,7 @@ namespace Entity.Enemies {
             
             var waitForFrames = new WaitForSeconds(targetPositionUpdateInterval);
             
-            if(targetEntity.Equals(null)) {
+            if(targetEntity == null) {
                 currentState = AiState.Idle;
                 isChasing = false;
                 SearchForPlayer();
@@ -156,16 +156,23 @@ namespace Entity.Enemies {
             SearchForPlayer();
         }
 
+        #if UNITY_EDITOR
         private void OnDrawGizmos() {
-            Gizmos.color = Color.red;
-
+            Gizmos.color = targetEntity == null ? Color.red : Color.green;
+            
+            if(!Application.isPlaying) return;
             if(!agent.hasPath) return;
             
             for(int i = 0; i < agent.path.corners.Length - 1; i++) {
                 Gizmos.DrawLine(agent.path.corners[i], agent.path.corners[i + 1]);
             }
+            
+            Gizmos.color = Color.blue;
+            
+            Gizmos.DrawWireSphere(transform.position, settings.attackingRange);
         }
-
+        #endif
+        
         /// <summary>
         /// Chooses a new patrolling path and checks if it is valid.
         /// If it can't find a valid path, will default to returning a path

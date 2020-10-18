@@ -24,16 +24,17 @@ namespace Entity.Enemies {
             rangedDamagePerBullet = settings.baseDamagePrimaryAttack;
         }
 
-        protected override IEnumerator MoveTowardsEntity() {
-            agent.SetDestination(targetEntity.transform.position);
-            if(Vector3.Distance(transform.position, targetEntity.transform.position) < 1f) {
-                Attack();
-            } else if(Vector3.Distance(transform.position, targetEntity.transform.position) > 8f){
-                if(Random.value < 0.01f && !inRoutine) StartCoroutine(nameof(AttackRanged));
-            }
-            
-            yield break;
-        }
+        // protected override IEnumerator MoveTowardsEntity() {
+        //     agent.SetDestination(targetEntity.transform.position);
+        //     
+        //     if(Vector3.Distance(transform.position, targetEntity.transform.position) < 1f) {
+        //         Attack();
+        //     } else if(Vector3.Distance(transform.position, targetEntity.transform.position) > 8f){
+        //         if(Random.value < 0.01f && !inRoutine) StartCoroutine(nameof(AttackRanged));
+        //     }
+        //     
+        //     yield break;
+        // }
 
         /// <summary>
         /// Ranged attack coroutine. Allow the enemy to use a weapon a long ranges.

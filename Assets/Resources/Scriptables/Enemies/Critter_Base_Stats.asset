@@ -30,7 +30,7 @@ MonoBehaviour:
   attacksEntitiesWhoDamagedThisEntity: 1
   shouldPatrolWhenIdle: 1
   patrolBackAndForth: 0
-  patrollingRange: 5
-  spottingRange: 5
+  patrollingRange: 12
+  spottingRange: 6
   spawnEliteAfterLevel: 10
   chanceToSpawnAsElite: 0.2
