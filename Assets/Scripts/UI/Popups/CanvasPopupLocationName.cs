@@ -17,7 +17,6 @@ namespace UI.Popups {
         
         [Header("Settings")] 
         [SerializeField, Range(0.1f, 5f)] private float animationInTime = 1f;
-        [SerializeField, Range(0f, 100f)] private float animationInMovementAmount = 35f;
         [SerializeField, Range(0.1f, 5f)] private float animationOutDelayTime = 1f;
         [SerializeField, Range(0.1f, 5f)] private float animationOutTime = 2f;
         
@@ -55,7 +54,7 @@ namespace UI.Popups {
             } else {
                 textMesh.text = keys.Aggregate(string.Empty,
                                                (current, key) =>
-                                                   $"{current}{LocalizationSystem.GetLocalizedValue(key)}");
+                                                   $"{current} {LocalizationSystem.GetLocalizedValue(key)}");
             }
 
             AnimateIn();
@@ -64,12 +63,8 @@ namespace UI.Popups {
         /// <summary>
         /// Animates in the canvas, waits the specified time and then triggers the exit animation.
         /// </summary>
+        [ContextMenu("Test Animation")]
         private void AnimateIn() {
-            // ReSharper disable once Unity.InefficientPropertyAccess
-            transform.position = new Vector3(transform.position.x, transform.position.y - animationInMovementAmount, transform.position.z);
-
-            transform.DOMoveY(transform.position.y + animationInMovementAmount, animationInTime);
-
             DOVirtual.Float(0f, 1f, animationInTime, value => canvasGroup.alpha = value).onComplete += () => {
                 Invoke(nameof(AnimateOut), animationOutDelayTime);
             };

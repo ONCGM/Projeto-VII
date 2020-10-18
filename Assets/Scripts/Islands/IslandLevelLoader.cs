@@ -44,7 +44,9 @@ namespace Islands {
 
             GameMaster.Instance.CurrentIslandType = CurrentIslandType;
 
-            SceneManager.LoadSceneAsync(Mathf.Clamp(smallIslandIndex + (int) islandSize, smallIslandIndex, largeIslandIndex), LoadSceneMode.Additive);
+            var sceneId = Mathf.Clamp(smallIslandIndex + (int) islandSize, smallIslandIndex, largeIslandIndex);
+            SceneManager.SetActiveScene(SceneManager.GetSceneByBuildIndex(smallIslandIndex - 1));
+            SceneManager.LoadSceneAsync(sceneId, LoadSceneMode.Additive);
         }
 
         /// <summary>
@@ -83,7 +85,7 @@ namespace Islands {
             
             Instantiate(locationNameCanvasPrefab).GetComponent<CanvasPopupLocationName>().SetUpLocationCanvas(textKeys);
         }
-
+        
         /// <summary>
         /// Loads an island scene based on GameMaster settings.
         /// </summary>
