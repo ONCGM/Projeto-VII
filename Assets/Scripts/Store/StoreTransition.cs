@@ -15,6 +15,7 @@ namespace Store {
         public int sceneIndex;
         public string townSceneName = "Town";
         private Animator anim;
+        private static readonly int Open = Animator.StringToHash("Open");
 
         // Unity Events.
         private void Awake() {
@@ -29,7 +30,7 @@ namespace Store {
                                                        .GetUniversalAdditionalCameraData();
             cameraData.cameraStack.Clear();
             cameraData.cameraStack.Add(gameObject.GetComponent<Camera>());
-            anim.SetTrigger("Open");
+            anim.SetTrigger(Open);
             
             if(scene.Equals(SceneManager.GetSceneByName(townSceneName))) {
                 FindObjectOfType<PlayerSpawnPositionBasedOnLastScene>().UnlockPlayer(false,false);

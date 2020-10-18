@@ -353,7 +353,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3555962724994509049, guid: 07cf473303d2a8e4b8beac9eac9431a4, type: 3}
       propertyPath: rangedBulletsPerAttack
-      value: 3
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 3555962724994509049, guid: 07cf473303d2a8e4b8beac9eac9431a4, type: 3}
       propertyPath: bulletSpreadAngle

@@ -1,4 +1,4 @@
-﻿using System;
+﻿    using System;
 using System.Collections;
 using System.Collections.Generic;
 using Entity.Enemies;
@@ -83,7 +83,7 @@ namespace Entity.Player {
                 isInsideShop = value;
                 playerSpeed = (isInsideShop ? storeSpeed : worldSpeed);
                 if(agent != null) agent.speed = playerSpeed;
-                PlayerStatsUI.UpdateUiValues.Invoke();
+                PlayerStatsUI.UpdateUiValues?.Invoke();
             }
         }
 
@@ -91,6 +91,11 @@ namespace Entity.Player {
         /// Allows the player to move or not.
         /// </summary>
         public bool CanMove { get; set; } = true;
+
+        /// <summary>
+        /// The last enemy that dealt damage to the player.
+        /// </summary>
+        public Enemy LastEnemyToHitPlayer { get; set; }
 
         #pragma warning restore 0649
 
@@ -103,7 +108,6 @@ namespace Entity.Player {
             inputs.Player.Attack.performed += ComboAttack;
             inputs.Player.Special.performed += SpecialAttack;
             if(ReferenceEquals(swordCollider, null)) swordCollider = GetComponentInChildren<SphereCollider>();
-            playerSpeed = (isInsideShop ? storeSpeed : worldSpeed);
             agent.speed = playerSpeed;
             agent.autoTraverseOffMeshLink = false;
             inventory = new Inventory(playerInventorySize, new List<InventoryItemEntry>());
@@ -157,7 +161,15 @@ namespace Entity.Player {
         #region Entity Base Overrides
 
         public override void Kill() {
-            SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+            Debug.Log("DEAD!");
+            Health = MaxHealth;
+        }
+
+        public override void Damage(int amount, Entity dealer) {
+            currentGamepad.SetMotorSpeeds(0.8f, 0.8f);
+            StartCoroutine(nameof(StopControllerVibration), 0.2f);
+            if(dealer.GetComponent<Enemy>()) LastEnemyToHitPlayer = dealer.GetComponent<Enemy>();
+            base.Damage(amount, dealer);
         }
 
         #endregion
@@ -190,7 +202,7 @@ namespace Entity.Player {
         /// Player special attack. Fires a pistol.
         /// </summary>
         private void SpecialAttack(InputAction.CallbackContext callbackContext) {
-            if(Stamina < 3) return;
+            if(Stamina < 3 || isInsideShop) return;
             Stamina -= 4;
             if(anim.GetCurrentAnimatorStateInfo(0).IsName("Player_Attack_Special_Anim")) return;
             agent.enabled = false;
@@ -230,7 +242,7 @@ namespace Entity.Player {
         /// Player basic attack with three with combo.
         /// </summary>
         private void ComboAttack(InputAction.CallbackContext callbackContext) {
-            if(Stamina < 3) return;
+            if(Stamina < 3 || isInsideShop) return;
             Stamina -= 3;
             
             if(anim.GetCurrentAnimatorStateInfo(0).IsName("Idle")) {
@@ -276,9 +288,9 @@ namespace Entity.Player {
         private bool CheckCollisionSword(SphereCollider referenceSphere) {
             var hitAnEnemy = false;
             var damageAmount = Mathf.RoundToInt(meleeDamage * (1f + meleeDamageComboMultiplier * comboNumber));
-
-            var contacts = new Collider[]{};
-            Physics.OverlapSphereNonAlloc(referenceSphere.transform.position, referenceSphere.radius, contacts, enemyLayer, QueryTriggerInteraction.Ignore);
+            // ReSharper disable once Unity.PreferNonAllocApi
+            var contacts = Physics.OverlapSphere(referenceSphere.transform.position, referenceSphere.radius,
+                                                 enemyLayer, QueryTriggerInteraction.Collide);
 
             foreach(var contact in contacts) {
                 if(!contact.gameObject.GetComponent<Enemy>()) continue;

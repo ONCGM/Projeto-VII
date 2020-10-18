@@ -98,6 +98,8 @@
      <Compile Include="Assets\Scripts\Entity\Player\PlayerStats.cs" />
      <Compile Include="Assets\Scripts\Islands\IslandPopulator.cs" />
      <Compile Include="Assets\Scripts\UI\DamageCanvas.cs" />
+     <Compile Include="Assets\Scripts\Other\CustomEventTrigger.cs" />
+     <Compile Include="Assets\Scripts\UI\EnemyHealthBarUI.cs" />
      <None Include="Assets\TextMesh Pro\Shaders\TMPro.cginc" />
      <None Include="Assets\TextMesh Pro\Shaders\TMP_SDF-Mobile Overlay.shader" />
      <None Include="Assets\Art\Font\LICENSE.txt" />

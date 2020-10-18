@@ -5,6 +5,7 @@ using System.Linq;
 using Entity.Player;
 using Game;
 using Items;
+using UI;
 using UnityEngine;
 using UnityEngine.AI;
 using UnityEngine.EventSystems;
@@ -45,6 +46,18 @@ namespace Entity.Enemies {
         protected bool isChasing;
         protected bool isAttacking;
         protected AiState currentState;
+        
+        // Collider.
+        protected SphereCollider attackingCollider;
+        
+        // Anims.
+        private static readonly int AttackAnim = Animator.StringToHash("Attack");
+        private static readonly int DamagedAnim = Animator.StringToHash("Damaged");
+        private static readonly int DeadAnim = Animator.StringToHash("Dead");
+        private static readonly int SpeedAnim = Animator.StringToHash("Speed");
+        
+        // UI.
+        private EnemyHealthBarUI hpBarUI;
 
         protected enum AiState {
             Patrolling,
@@ -55,8 +68,15 @@ namespace Entity.Enemies {
         
         #pragma warning restore 0649
 
+        // Unity Events.
         protected virtual void Start() {
+            attackingCollider = GetComponentInChildren<SphereCollider>();
+            hpBarUI = GetComponentInChildren<EnemyHealthBarUI>();
             SetEnemyValues();
+        }
+
+        protected virtual void Update() {
+            anim.SetFloat(SpeedAnim, agent.velocity.magnitude);
         }
 
         /// <summary>
@@ -130,7 +150,11 @@ namespace Entity.Enemies {
                 yield break;
             }
             
-            Attack();
+            anim.SetTrigger(AttackAnim);
+            currentState = AiState.Attacking;
+            isChasing = false;
+            isAttacking = true;
+            isPatrolling = false;
         }
         
         /// <summary>
@@ -144,6 +168,7 @@ namespace Entity.Enemies {
             
             var waitForFrames = new WaitForSeconds(patrollingPlayerSearchFrequency);
 
+            if(agent == null) yield break;
             agent.SetPath(GeneratePatrolPath());
             
             while(agent.remainingDistance > patrollingTargetPositionTolerance) {
@@ -209,13 +234,15 @@ namespace Entity.Enemies {
                 return;
             }
             
-            var results = new Collider[]{};
-            Physics.OverlapSphereNonAlloc(transform.position, settings.spottingRange, results, playerLayer.value);
+            // ReSharper disable once Unity.PreferNonAllocApi
+            var results = Physics.OverlapSphere(transform.position, 
+                                                settings.spottingRange, playerLayer);
 
             foreach(var result in results) {
                 if(result.gameObject.GetComponent<PlayerController>() == null) continue;
                 targetEntity = result.gameObject.GetComponent<PlayerController>();
-                if(!isChasing) StartCoroutine(nameof(MoveTowardsEntity));
+                StopAllCoroutines();
+                StartCoroutine(nameof(MoveTowardsEntity));
                 return;
             }
             
@@ -226,34 +253,60 @@ namespace Entity.Enemies {
         /// <summary>
         /// Attacks, will damage anything that is in front of the entity and in range.
         /// </summary>
-        protected virtual void Attack() {
-            currentState = AiState.Attacking;
-            isChasing = false;
-            isAttacking = true;
-            isPatrolling = false;
+        public virtual void Attack() {
             StopAllCoroutines();
-            
-            // TODO: Extend damage to play animations, detect collision and damage other entities.
-            Instantiate(DamageCanvasPrefab, transform.position, Quaternion.identity)
-                .GetComponent<DamageCanvas>().damageValue = primaryAttackDamage;
 
+            if(CheckAttackCollision(attackingCollider)) {
+                // TODO: Extend damage to play animations, detect collision and damage other entities.
+                Instantiate(DamageCanvasPrefab, transform.position, Quaternion.identity)
+                    .GetComponent<DamageCanvas>().damageValue = primaryAttackDamage;
+            }
+
+            isAttacking = false;
+            currentState = AiState.Idle;
             StartCoroutine(nameof(MoveTowardsEntity));
+        }
+        
+        /// <summary>
+        /// Test collisions for melee hits.
+        /// </summary>
+        /// <param name="referenceSphere"> Weapon sphere collider. </param>
+        protected virtual bool CheckAttackCollision(SphereCollider referenceSphere) {
+            // ReSharper disable once Unity.PreferNonAllocApi
+            var contacts = Physics.OverlapSphere(referenceSphere.transform.position, referenceSphere.radius, 
+                                               Physics.AllLayers, QueryTriggerInteraction.Collide);
+            
+            foreach(var contact in contacts) {
+                if(!contact.gameObject.GetComponent<Entity>()) continue;
+                if(contact.gameObject.Equals(gameObject)) continue;
+                contact.gameObject.GetComponent<Entity>().Damage(primaryAttackDamage, this);
+                return true;
+            }
+
+            return false;
         }
 
         // Updated to enable infighting between enemies.
         public override void Damage(int amount, Entity dealer) {
-            if(settings.attacksEntitiesWhoDamagedThisEntity) { targetEntity = dealer; } 
-            else if(dealer.gameObject.CompareTag(playerTag)) { targetEntity = dealer; }
-
+            anim.SetTrigger(DamagedAnim);
             base.Damage(amount, dealer);
+            hpBarUI.UpdateUI();
+
+            if(!settings.attacksEntitiesWhoDamagedThisEntity && !dealer.gameObject.CompareTag(playerTag)) return;
+            targetEntity = dealer;
+            StopAllCoroutines();
+            StartCoroutine(nameof(MoveTowardsEntity));
         }
 
         public override void Kill() {
+            anim.SetTrigger(DeadAnim);
+            
             GenerateDrop();
-            
-            // TODO: Death Animation. 
-            
+
             Destroy(gameObject);
+            
+            hpBarUI.FadeOutAnimation();
+            hpBarUI.gameObject.transform.parent = null;
         }
 
         /// <summary>

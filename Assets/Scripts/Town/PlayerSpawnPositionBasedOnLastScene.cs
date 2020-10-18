@@ -31,6 +31,7 @@ namespace Town {
             agent = player.GetComponent<NavMeshAgent>();
             agent.enabled = false;
             player.CanMove = false;
+            player.IsInsideShop = false;
             
             meshRenderers.AddRange(player.GetComponentsInChildren<MeshRenderer>());
             foreach(var meshRenderer in meshRenderers) {
@@ -61,6 +62,7 @@ namespace Town {
 
             agent.enabled = true;
             player.CanMove = true;
+            player.IsInsideShop = false;
             
             foreach(var meshRenderer in meshRenderers) {
                 meshRenderer.enabled = true;

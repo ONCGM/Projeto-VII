@@ -6,9 +6,7 @@ using Entity.Player;
 using Game;
 using Localization;
 using TMPro;
-using UI.Localization;
 using UnityEngine;
-using UnityEngine.InputSystem;
 using UnityEngine.UI;
 
 namespace UI {
@@ -20,7 +18,7 @@ namespace UI {
         [Header("Settings")] 
         [SerializeField, Range(0.01f, 3f)] private float fadeAnimationSpeed = 0.7f;
         [SerializeField, Range(0.01f, 3f)] private float barAnimationDelay = 0.3f;
-        [SerializeField, Range(0.01f, 10f)] private float barAnimationSpeed = 15f;
+        [SerializeField, Range(0.01f, 30f)] private float barAnimationSpeed = 15f;
         [SerializeField] private float uiBarsWidth = 450;
 
         [Header("UI Components")] 
@@ -124,7 +122,6 @@ namespace UI {
             dayText.text = LocalizationSystem.CurrentLanguage == LocalizationSystem.Language.Japanese ? $"{currentDay} {dayLocalized}" : $"{dayLocalized} {currentDay}";
             timeOfDayText.text = LocalizationSystem.GetLocalizedValue(TimeOfDayLocalizationKeys[(int) GameMaster.Instance.CurrentTimeOfDay]);
 
-            //TODO
             staminaBackBar.material.SetFloat(HitEffectBlend, 1f);
             StartCoroutine(nameof(AnimateHealthBackBar));
             StartCoroutine(nameof(AnimateStaminaBackBar));
@@ -176,7 +173,7 @@ namespace UI {
             }
             
             
-            staminaBarMaterial.SetFloat("_HitEffectBlend", 1f);
+            staminaBarMaterial.SetFloat(HitEffectBlend, 1f);
         }
     }
 }

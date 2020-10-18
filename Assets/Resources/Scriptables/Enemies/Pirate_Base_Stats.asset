@@ -16,7 +16,7 @@ MonoBehaviour:
   baseMaxStamina: 18
   baseMoveSpeed: 13
   baseDamagePrimaryAttack: 11
-  attackingRange: 0
+  attackingRange: 20
   maxLevelCap: 30
   enemyType: 1
   basicStatsMultiplier: 1.07
@@ -31,6 +31,6 @@ MonoBehaviour:
   shouldPatrolWhenIdle: 1
   patrolBackAndForth: 0
   patrollingRange: 18
-  spottingRange: 15
+  spottingRange: 25
   spawnEliteAfterLevel: 20
   chanceToSpawnAsElite: 0.1

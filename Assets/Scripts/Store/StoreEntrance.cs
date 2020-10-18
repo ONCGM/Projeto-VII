@@ -23,6 +23,14 @@ namespace Store {
         private bool startedTransition;
 
         #pragma warning restore 0649
+        
+        // Set player speed;
+        private void Awake() {
+            FindObjectOfType<PlayerController>().IsInsideShop = true;
+        }
+
+
+        // Collision.
         private void OnTriggerEnter(Collider other) {
             if(!other.CompareTag("Player") || startedTransition) return;
             FindObjectOfType<PlayerStatsUI>().ShowHideCanvas(false);
