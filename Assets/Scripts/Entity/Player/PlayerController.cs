@@ -323,10 +323,10 @@ namespace Entity.Player {
         /// <param name="amount"> Amount of experience to add. </param>
         public void AddExperience(int amount) {
             var expToLevelUp = upgradeSettings.GetExperienceNeededForLevelUp(Level);
-
+            Experience += amount;
+                
             while(Experience >= expToLevelUp) {
-                // Level up.
-                var remainder = Experience - expToLevelUp;
+                Experience -= expToLevelUp;
                 Level++;
                 expToLevelUp = upgradeSettings.GetExperienceNeededForLevelUp(Level);
             }

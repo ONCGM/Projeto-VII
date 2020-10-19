@@ -62,6 +62,7 @@
      <Compile Include="Assets\Scripts\UI\Localization\LocalizationSystem.cs" />
      <Compile Include="Assets\Scripts\Game\LoadGameScene.cs" />
      <Compile Include="Assets\Scripts\Items\ItemSettings.cs" />
+     <Compile Include="Assets\Scripts\Other\CustomEventTrigger.cs" />
      <Compile Include="Assets\Scripts\Town\PortSceneTransition.cs" />
      <Compile Include="Assets\Scripts\Entity\Enemies\Enemy.cs" />
      <Compile Include="Assets\Scripts\UI\Menu\MainMenuButtons.cs" />
@@ -85,6 +86,7 @@
      <Compile Include="Assets\Scripts\Ship\ShipTravelController.cs" />
      <Compile Include="Assets\Scripts\Game\GameMaster.cs" />
      <Compile Include="Assets\Scripts\UI\Localization\CSVLoader.cs" />
+     <Compile Include="Assets\Scripts\UI\EnemyHealthBarUI.cs" />
      <Compile Include="Assets\Scripts\Items\InventoryItemEntry.cs" />
      <Compile Include="Assets\Scripts\UI\Menu\CombatDebriefUi.cs" />
      <Compile Include="Assets\Scripts\Items\ItemDrop.cs" />
@@ -98,8 +100,6 @@
      <Compile Include="Assets\Scripts\Entity\Player\PlayerStats.cs" />
      <Compile Include="Assets\Scripts\Islands\IslandPopulator.cs" />
      <Compile Include="Assets\Scripts\UI\DamageCanvas.cs" />
-     <Compile Include="Assets\Scripts\Other\CustomEventTrigger.cs" />
-     <Compile Include="Assets\Scripts\UI\EnemyHealthBarUI.cs" />
      <None Include="Assets\TextMesh Pro\Shaders\TMPro.cginc" />
      <None Include="Assets\TextMesh Pro\Shaders\TMP_SDF-Mobile Overlay.shader" />
      <None Include="Assets\Art\Font\LICENSE.txt" />
