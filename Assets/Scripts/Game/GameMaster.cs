@@ -2,6 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using Entity.Player;
+using Items;
 using Ship;
 using UnityEngine;
 
@@ -57,7 +58,13 @@ namespace Game {
             }
         }
 
-        private PlayerStats playerStats = new PlayerStats() { Level = 15 };
+        private PlayerStats playerStats = new PlayerStats() {
+            Health = 35, MaxHealth = 35, Stamina = 20, MaxStamina = 20,
+            MeleeDamage = 7, RangedDamage = 5, MovementSpeed = 15,
+            Level = 0, Experience = 0, TotalExperience = 0,
+            Coins = 0, CurrentInventory = new List<InventoryItemEntry>(),
+            CurrentUpgradeLevel = 0
+        };
 
         /// <summary>
         /// Current stats of the player.

@@ -29,6 +29,22 @@ namespace Entity.Player {
             get => maxStamina;
             set => maxStamina = value;
         }
+
+        public int MeleeDamage {
+            get => meleeDamage;
+            set => meleeDamage = value;
+        }
+
+        public int RangedDamage {
+            get => rangedDamage;
+            set => rangedDamage = value;
+        }
+
+        public int MovementSpeed {
+            get => movementSpeed;
+            set => movementSpeed = value;
+        }
+        
         public int Level {
             get => level;
             set => level = Mathf.Clamp(value, 0, 30);
@@ -61,10 +77,13 @@ namespace Entity.Player {
 
         [SerializeField]
         private int health, maxHealth, stamina, maxStamina,
-        level, experience, totalExperience, coins, currentUpgradeLevel;
+                    meleeDamage, rangedDamage, movementSpeed,
+                    level, experience, totalExperience, coins,
+                    currentUpgradeLevel;
         private List<InventoryItemEntry> currentInventory;
 
         public PlayerStats(int health, int maxHealth, int stamina, 
+                           int melee, int ranged, int movement,
                            int maxStamina, int lvl, int experience, int totalExperience,
                            int coins, List<InventoryItemEntry> currentInventory,
                            int currentUpgradeLvl) : this() {
@@ -72,12 +91,15 @@ namespace Entity.Player {
             MaxHealth = maxHealth;
             Stamina = stamina;
             MaxStamina = maxStamina;
+            MeleeDamage = melee;
+            RangedDamage = ranged;
+            MovementSpeed = movement;
             Level = lvl;
             Experience = experience;
+            TotalExperience = totalExperience;
             Coins = coins;
             CurrentInventory = currentInventory;
             CurrentUpgradeLevel = currentUpgradeLvl;
-            TotalExperience = totalExperience;
         }
     }
 }

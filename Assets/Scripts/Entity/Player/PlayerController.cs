@@ -16,8 +16,8 @@ namespace Entity.Player {
     public class PlayerController : Entity {
         #pragma warning disable 0649
         [Header("Movement")]
-        [SerializeField, Range(0f, 25f)] private float storeSpeed = 9f;
-        [SerializeField, Range(0f, 25f)] private float worldSpeed = 15f;
+        [SerializeField, Range(0f, 25f)] private float movementSpeed = 15f;
+        [SerializeField, Range(0f, 0.8f)] private float storeMovementSpeedReduction = 0.4f;
         [SerializeField, Range(0f, 2f)] private float rotationSpeed = 0.1f;
         [SerializeField, Range(0f, 2f)] private float minRotationInput = 0.075f;
         private float playerSpeed = 1f;
@@ -68,10 +68,29 @@ namespace Entity.Player {
         /// Is the player inside the shop? True for yes. 
         private bool isInsideShop;
         
-        [Header("Settings")]
+        [Header("Leveling Settings")]
         private const string upgradeSettingsPath = "Scriptables/Player/Player_Upgrade_Settings";
         [SerializeField] private PlayerUpgradeSettings upgradeSettings;
         
+        public override int Experience {
+            get => experience;
+            set {
+                experience = value;
+                PlayerStatsUI.UpdateUiValues?.Invoke();
+            }
+        }
+        
+        public override int Level {
+            get => level;
+            set {
+                level = value;
+                PlayerStatsUI.UpdateUiValues?.Invoke();
+            }
+        }
+        
+        // Which upgrades to use.
+        private int currentUpgrades = 0;
+
         [Header("Other")]
         [SerializeField] private GameObject DamageCanvasPrefab;
 
@@ -82,7 +101,7 @@ namespace Entity.Player {
             get => isInsideShop;
             set {
                 isInsideShop = value;
-                playerSpeed = (isInsideShop ? storeSpeed : worldSpeed);
+                playerSpeed = (isInsideShop ? movementSpeed - (movementSpeed * storeMovementSpeedReduction) : movementSpeed);
                 if(agent != null) agent.speed = playerSpeed;
                 PlayerStatsUI.UpdateUiValues?.Invoke();
             }
@@ -114,9 +133,9 @@ namespace Entity.Player {
             upgradeSettings = Resources.Load<PlayerUpgradeSettings>(upgradeSettingsPath);
             agent.speed = playerSpeed;
             agent.autoTraverseOffMeshLink = false;
-            inventory = new Inventory(playerInventorySize, new List<InventoryItemEntry>());
+            Inventory = new Inventory(playerInventorySize, new List<InventoryItemEntry>());
             GameMaster.OnGameExecutionStateUpdated += UpdatePlayerMovementToMatchGameState;
-
+            LoadGameMasterPlayerStats();
             InvokeRepeating(nameof(RecoverStamina), 1f, 1f);
         }
 
@@ -205,7 +224,7 @@ namespace Entity.Player {
         /// Recovers the player stamina at a steady rate.
         /// </summary>
         private void RecoverStamina() { 
-            Stamina = Mathf.Clamp(Stamina + 2, 0, maxStamina);
+            Stamina = Mathf.Clamp(Stamina + 2, 0, MaxStamina);
             PlayerStatsUI.UpdateUiValues.Invoke();
         }
         
@@ -214,8 +233,8 @@ namespace Entity.Player {
         /// </summary>
         private void SpecialAttack(InputAction.CallbackContext callbackContext) {
             if(Stamina < 3 || isInsideShop) return;
-            Stamina -= 4;
             if(anim.GetCurrentAnimatorStateInfo(0).IsName("Player_Attack_Special_Anim")) return;
+            Stamina -= 4;
             agent.enabled = false;
             anim.SetTrigger(SpecialAnim);
             PlayerStatsUI.UpdateUiValues.Invoke();
@@ -224,7 +243,7 @@ namespace Entity.Player {
         /// <summary>
         /// Called by animation to unlock player movement.
         /// </summary>
-        public void SpecialAttackRelease() {
+        public void SpecialAttackFire() {
             var angleOffsetPerBullet = bulletSpreadAngle / rangedBulletsPerAttack;
             var position = bulletSpawnPosition.position;
 
@@ -245,7 +264,12 @@ namespace Entity.Player {
             
             currentGamepad.SetMotorSpeeds(0.6f, 0.4f);
             StartCoroutine(nameof(StopControllerVibration), 0.2f);
-            
+        }
+        
+        /// <summary>
+        /// Called by animation to unlock player movement.
+        /// </summary>
+        public void SpecialAttackRelease() {
             agent.enabled = true;
         }
 
@@ -298,38 +322,123 @@ namespace Entity.Player {
         /// </summary>
         /// <param name="referenceSphere"> Weapon sphere collider. </param>
         private bool CheckCollisionSword(SphereCollider referenceSphere) {
-            var hitAnEnemy = false;
             var damageAmount = Mathf.RoundToInt(meleeDamage * (1f + meleeDamageComboMultiplier * comboNumber));
             // ReSharper disable once Unity.PreferNonAllocApi
             var contacts = Physics.OverlapSphere(referenceSphere.transform.position, referenceSphere.radius,
                                                  enemyLayer, QueryTriggerInteraction.Collide);
 
+            if(contacts.Length < 1) return false;
+            
             foreach(var contact in contacts) {
                 if(!contact.gameObject.GetComponent<Enemy>()) continue;
                 contact.gameObject.GetComponent<Enemy>().Damage(damageAmount, this);
-                hitAnEnemy = true;
+                return true;
             }
 
-            return hitAnEnemy;
+            return false;
         }
         
         #endregion
         
-        #region Level Management
+        #region Level, Data & Progression Management
 
+        /// <summary>
+        /// Updates the stats in the game master to reflect the player progression.
+        /// </summary>
+        public void UpdateGameMasterPlayerStats() {
+            var stats = new PlayerStats {
+                Health = Health,
+                MaxHealth = MaxHealth,
+                Stamina = Stamina,
+                MaxStamina = MaxStamina,
+                MeleeDamage = meleeDamage,
+                RangedDamage = rangedDamagePerBullet,
+                MovementSpeed = Mathf.RoundToInt(movementSpeed),
+                Level = Level,
+                Experience = Experience,
+                TotalExperience = upgradeSettings.GetExperienceNeededForLevelUp(Level) + Experience,
+                Coins = Coins,
+                CurrentInventory = Inventory.ItemsInInventory,
+                CurrentUpgradeLevel = 0
+            };
+
+            for(var i = 0; i < Level; i++) {
+                if(i % upgradeSettings.upgradeEveryHowManyLevels == 1) stats.CurrentUpgradeLevel++;
+            }
+            
+            GameMaster.Instance.PlayerStats = stats;
+        }
+        
+        /// <summary>
+        /// Updates the stats in the game master to reflect the player progression.
+        /// </summary>
+        public void LoadGameMasterPlayerStats() {
+            var stats = GameMaster.Instance.PlayerStats;
+            
+            Health = stats.Health;
+            MaxHealth = stats.MaxHealth;
+            Stamina = stats.Stamina;
+            MaxStamina = stats.MaxStamina;
+            meleeDamage = stats.MeleeDamage;
+            rangedDamagePerBullet = stats.RangedDamage;
+            movementSpeed = stats.MovementSpeed;
+            Level = stats.Level;
+            Experience = stats.Experience;
+            Coins = stats.Coins;
+            Inventory = new Inventory(playerInventorySize, stats.CurrentInventory);
+
+            currentUpgrades = stats.CurrentUpgradeLevel;
+            
+            ApplyLevelingUpgrades();
+        }
+        
         /// <summary>
         /// Adds experience to the player and trigger a level up if needed.
         /// </summary>
         /// <param name="amount"> Amount of experience to add. </param>
         public void AddExperience(int amount) {
+            if(Level >= MaxLevel) return;
+            
             var expToLevelUp = upgradeSettings.GetExperienceNeededForLevelUp(Level);
             Experience += amount;
                 
-            while(Experience >= expToLevelUp) {
+            while(Experience >= expToLevelUp && Level < MaxLevel) {
+                LevelUp();
                 Experience -= expToLevelUp;
-                Level++;
                 expToLevelUp = upgradeSettings.GetExperienceNeededForLevelUp(Level);
             }
+        }
+
+        /// <summary>
+        /// Levels the player up and triggers upgrades on player stats.
+        /// </summary>
+        private void LevelUp() {
+            Level++;
+            
+            if(Level % upgradeSettings.upgradeEveryHowManyLevels == 1) {
+                ApplyLevelingStats();
+                ApplyLevelingUpgrades();
+            }
+        }
+        
+        /// <summary>
+        /// Applies upgrades to the player's character basic stats.
+        /// </summary>
+        private void ApplyLevelingStats() {
+            MaxHealth = Mathf.RoundToInt(MaxHealth * upgradeSettings.statsMultiplier);
+            MaxStamina = Mathf.RoundToInt(MaxStamina * upgradeSettings.statsMultiplier);
+            meleeDamage = Mathf.RoundToInt(meleeDamage * upgradeSettings.statsMultiplier);
+            rangedDamagePerBullet = Mathf.RoundToInt(rangedDamagePerBullet * upgradeSettings.statsMultiplier);
+        }
+
+        /// <summary>
+        /// Applies upgrades to the player's character attack stats.
+        /// </summary>
+        private void ApplyLevelingUpgrades() {
+            meleeDamageComboMultiplier = upgradeSettings.meleeMultiplierUpgradeValues[currentUpgrades];
+            rangedBulletsPerAttack = upgradeSettings.bulletsPerShotUpgradeValues[currentUpgrades];
+            bulletSpreadAngle = upgradeSettings.bulletAngleUpgradeValues[currentUpgrades];
+            rangedAttackMaxRange = upgradeSettings.bulletRangeUpgradeValues[currentUpgrades];
         }
         
         #endregion

@@ -137,11 +137,11 @@ namespace Entity.Enemies {
                 SearchForPlayer();
                 yield break;
             }
-
-            agent.SetDestination(targetEntity.transform.position);
+            
+            if(agent != null && agent.isOnNavMesh) agent.SetDestination(targetEntity.transform.position);
             
             while(Vector3.Distance(transform.position, targetEntity.transform.position) > settings.attackingRange) {
-                agent.SetDestination(targetEntity.transform.position);
+                if(agent != null && agent.isOnNavMesh) agent.SetDestination(targetEntity.transform.position);
                 yield return waitForFrames;
 
                 if(Vector3.Distance(transform.position, targetEntity.transform.position) < settings.spottingRange) continue;

@@ -12,6 +12,7 @@ namespace Entity.Player {
         [SerializeField, Range(1, 30)] public int baseExperienceNeededForLevelUp;
         [SerializeField, Range(1f, 3f)] public float levelUpMultiplier;
         [SerializeField, Range(1, 10)] public int upgradeEveryHowManyLevels;
+        [SerializeField, Range(1f, 2f)] public float statsMultiplier;
         [SerializeField] public List<float> meleeMultiplierUpgradeValues = new List<float>();
         [SerializeField] public List<int> bulletsPerShotUpgradeValues = new List<int>();
         [SerializeField] public List<float> bulletAngleUpgradeValues = new List<float>();
