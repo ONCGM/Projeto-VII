@@ -78,10 +78,6 @@ namespace Items {
 
             player.Inventory.AddItemEntry(stats);
 
-            foreach(var item in player.Inventory.ItemsInInventory) {
-                Debug.Log(item.ItemSettings.itemNameKey);
-            }
-            
             // TODO: Add particles, sfx and effects.
             eventEmitter.Play();
             DOTween.Kill(this);

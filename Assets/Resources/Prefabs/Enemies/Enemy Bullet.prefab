@@ -47,6 +47,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b05c20dd1ba59ba4883763ec906d0e9a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  useTagToDamage: 0
   tagToDamage: Player
   damageLossOverDistance:
     serializedVersion: 2

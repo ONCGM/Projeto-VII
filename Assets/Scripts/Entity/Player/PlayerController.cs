@@ -1,14 +1,12 @@
-﻿    using System;
+﻿using System;
 using System.Collections;
 using System.Collections.Generic;
 using Entity.Enemies;
 using Game;
 using Items;
-using Localization;
 using UI;
 using UnityEngine;
 using UnityEngine.InputSystem;
-using UnityEngine.SceneManagement;
 using Random = UnityEngine.Random;
 
 namespace Entity.Player {
@@ -17,9 +15,8 @@ namespace Entity.Player {
     /// </summary>
     public class PlayerController : Entity {
         #pragma warning disable 0649
-        [Header("Movement")] [SerializeField, Range(0f, 25f)]
-        private float storeSpeed = 9f;
-
+        [Header("Movement")]
+        [SerializeField, Range(0f, 25f)] private float storeSpeed = 9f;
         [SerializeField, Range(0f, 25f)] private float worldSpeed = 15f;
         [SerializeField, Range(0f, 2f)] private float rotationSpeed = 0.1f;
         [SerializeField, Range(0f, 2f)] private float minRotationInput = 0.075f;
@@ -55,7 +52,6 @@ namespace Entity.Player {
             set => inventory = value;
         }
 
-
         // Input
         private ActionInputs inputs;
         private Gamepad currentGamepad;
@@ -71,7 +67,12 @@ namespace Entity.Player {
 
         /// Is the player inside the shop? True for yes. 
         private bool isInsideShop;
-
+        
+        [Header("Settings")]
+        private const string upgradeSettingsPath = "Scriptables/Player/Player_Upgrade_Settings";
+        [SerializeField] private PlayerUpgradeSettings upgradeSettings;
+        
+        [Header("Other")]
         [SerializeField] private GameObject DamageCanvasPrefab;
 
         /// <summary>
@@ -87,6 +88,8 @@ namespace Entity.Player {
             }
         }
 
+        // TODO set stats to be based on player settings and such.
+        
         /// <summary>
         /// Allows the player to move or not.
         /// </summary>
@@ -108,27 +111,13 @@ namespace Entity.Player {
             inputs.Player.Attack.performed += ComboAttack;
             inputs.Player.Special.performed += SpecialAttack;
             if(ReferenceEquals(swordCollider, null)) swordCollider = GetComponentInChildren<SphereCollider>();
+            upgradeSettings = Resources.Load<PlayerUpgradeSettings>(upgradeSettingsPath);
             agent.speed = playerSpeed;
             agent.autoTraverseOffMeshLink = false;
             inventory = new Inventory(playerInventorySize, new List<InventoryItemEntry>());
             GameMaster.OnGameExecutionStateUpdated += UpdatePlayerMovementToMatchGameState;
 
             InvokeRepeating(nameof(RecoverStamina), 1f, 1f);
-        }
-
-        /// <summary>
-        /// Sets the player movement state based on the game execution state.
-        /// </summary>
-        private void UpdatePlayerMovementToMatchGameState() {
-            CanMove = (GameMaster.Instance.GameState == ExecutionState.Normal);
-        }
-        
-        /// <summary>
-        /// Recovers the player stamina at a steady rate.
-        /// </summary>
-        private void RecoverStamina() { 
-            Stamina = Mathf.Clamp(Stamina + 2, 0, maxStamina);
-            PlayerStatsUI.UpdateUiValues.Invoke();
         }
 
         // OnEnable Unity Event, enables input.
@@ -143,6 +132,7 @@ namespace Entity.Player {
 
         // Unsubscribes from events.
         private void OnDestroy() {
+            // ReSharper disable once DelegateSubtraction
             GameMaster.OnGameExecutionStateUpdated -= UpdatePlayerMovementToMatchGameState;
         }
 
@@ -174,6 +164,15 @@ namespace Entity.Player {
 
         #endregion
         
+        #region Input & Movement
+        
+        /// <summary>
+        /// Sets the player movement state based on the game execution state.
+        /// </summary>
+        private void UpdatePlayerMovementToMatchGameState() {
+            CanMove = (GameMaster.Instance.GameState == ExecutionState.Normal);
+        }
+        
         private void GetInput() {
             movementScale = new Vector3(inputs.Player.Horizontal.ReadValue<float>(), 0f, inputs.Player.Vertical.ReadValue<float>());
 
@@ -197,7 +196,19 @@ namespace Entity.Player {
         private void MovePlayer() {
             if(agent.enabled && CanMove) agent.Move(movementScale * (playerSpeed * Time.deltaTime));
         }
+        
+        #endregion
+        
+        #region Attack
 
+        /// <summary>
+        /// Recovers the player stamina at a steady rate.
+        /// </summary>
+        private void RecoverStamina() { 
+            Stamina = Mathf.Clamp(Stamina + 2, 0, maxStamina);
+            PlayerStatsUI.UpdateUiValues.Invoke();
+        }
+        
         /// <summary>
         /// Player special attack. Fires a pistol.
         /// </summary>
@@ -275,7 +286,8 @@ namespace Entity.Player {
             if(!CheckCollisionSword(swordCollider)) return;
             //TODO: Play audio and effects.
             Instantiate(DamageCanvasPrefab, transform.position, Quaternion.identity)
-                .GetComponent<DamageCanvas>().damageValue = meleeDamage;
+                .GetComponent<DamageCanvas>().damageValue = 
+                Mathf.RoundToInt(meleeDamage * (1f + meleeDamageComboMultiplier * comboNumber));
                 
             currentGamepad.SetMotorSpeeds(0.42f, 0.42f);
             StartCoroutine(nameof(StopControllerVibration), 0.2f);
@@ -300,5 +312,26 @@ namespace Entity.Player {
 
             return hitAnEnemy;
         }
+        
+        #endregion
+        
+        #region Level Management
+
+        /// <summary>
+        /// Adds experience to the player and trigger a level up if needed.
+        /// </summary>
+        /// <param name="amount"> Amount of experience to add. </param>
+        public void AddExperience(int amount) {
+            var expToLevelUp = upgradeSettings.GetExperienceNeededForLevelUp(Level);
+
+            while(Experience >= expToLevelUp) {
+                // Level up.
+                var remainder = Experience - expToLevelUp;
+                Level++;
+                expToLevelUp = upgradeSettings.GetExperienceNeededForLevelUp(Level);
+            }
+        }
+        
+        #endregion
     }
 }

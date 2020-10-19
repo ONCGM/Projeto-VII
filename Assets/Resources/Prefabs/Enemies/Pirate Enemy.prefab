@@ -11,7 +11,6 @@ GameObject:
   - component: {fileID: 7660581917348954905}
   - component: {fileID: 6788081198332898179}
   - component: {fileID: 121008985469941600}
-  - component: {fileID: 505820132634825771}
   m_Layer: 17
   m_Name: Minimap Sphere
   m_TagString: Untagged
@@ -82,19 +81,6 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!135 &505820132634825771
-SphereCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2390674563632740112}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Radius: 0.5
-  m_Center: {x: 0, y: 0, z: 0}
 --- !u!1 &3457687962093714924
 GameObject:
   m_ObjectHideFlags: 0
@@ -252,7 +238,7 @@ MonoBehaviour:
   stamina: 1
   maxStamina: 1
   level: 1
-  maxLevel: 180
+  maxLevel: 30
   experience: 1
   coins: 0
   playerTag: Player
@@ -260,7 +246,7 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 1024
   settings: {fileID: 11400000, guid: c288be17c299454488341bf198e4d273, type: 2}
-  targetPositionUpdateInterval: 0.2
+  targetPositionUpdateInterval: 0.1
   patrollingPlayerSearchFrequency: 2
   patrollingTargetPositionTolerance: 0.3
   chanceToDrop: 0.1
@@ -283,7 +269,7 @@ NavMeshAgent:
   m_Speed: 3.5
   m_Acceleration: 8
   avoidancePriority: 50
-  m_AngularSpeed: 120
+  m_AngularSpeed: 270
   m_StoppingDistance: 0
   m_AutoTraverseOffMeshLink: 1
   m_AutoBraking: 1
@@ -398,6 +384,8 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 6631637937524945092}
+  - component: {fileID: 707207347462881884}
+  - component: {fileID: 4455759305530426792}
   m_Layer: 0
   m_Name: Redhead_Beard
   m_TagString: Untagged
@@ -420,6 +408,56 @@ Transform:
   m_Father: {fileID: 3705584951524824810}
   m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!95 &707207347462881884
+Animator:
+  serializedVersion: 3
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6288044592899943038}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 22100000, guid: be06db8a341187044a7195cd096cd7bf, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorControllerStateOnDisable: 0
+--- !u!114 &4455759305530426792
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6288044592899943038}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b947fa540fb82be44b54490fb30af46e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  customEvent:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 175860848465681301}
+        m_TargetAssemblyTypeName: Entity.Enemies.Pirate, Assembly-CSharp
+        m_MethodName: Attack
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+  triggerOnAwake: 0
+  triggerOnStart: 0
+  triggerOnCall: 1
+  repeatCount: 1
 --- !u!1001 &5462620784082157597
 PrefabInstance:
   m_ObjectHideFlags: 0

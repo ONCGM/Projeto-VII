@@ -12,7 +12,8 @@ namespace Entity {
     [RequireComponent(typeof(Rigidbody), typeof(SphereCollider))]
     public class EntityBullet : MonoBehaviour {
         #pragma warning disable 0649
-        [Header("Damage Settings")]
+        [Header("Damage Settings")] 
+        [SerializeField] private bool useTagToDamage = true;
         [SerializeField] private string tagToDamage = string.Empty;
         [SerializeField] private AnimationCurve damageLossOverDistance;
 
@@ -81,16 +82,23 @@ namespace Entity {
 
         // Check collisions.
         private void OnCollisionEnter(Collision other) {
-            if(!other.gameObject.CompareTag(tagToDamage)) {
-                Destroy(gameObject);
-                return;
+            if(useTagToDamage) {
+                if(!other.gameObject.CompareTag(tagToDamage)) {
+                    Destroy(gameObject);
+                    return;
+                }
+            } else {
+                if(!other.gameObject.GetComponent<Entity>() || other.gameObject.GetComponent<Entity>().Equals(bulletOwner)) {
+                    Destroy(gameObject);
+                    return;
+                }
             }
-            
+
             var damageAmount = Mathf.RoundToInt(damage *
                                                 (damageLossOverDistance.Evaluate(Mathf.InverseLerp(0f, maxRange,
-                                                                                                   (initialPosition -
-                                                                                                    transform.position)
-                                                                                                   .magnitude))));
+                                                        (initialPosition -
+                                                         transform.position)
+                                                        .magnitude))));
             other.gameObject.GetComponent<IDamageable>().Damage(damageAmount, BulletOwner);
 
             Instantiate(DamageCanvasPrefab, transform.position, Quaternion.identity).GetComponent<DamageCanvas>().damageValue = damageAmount;

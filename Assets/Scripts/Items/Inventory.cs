@@ -28,6 +28,7 @@ namespace Items {
         /// <param name="item"> Item to add.</param>
         /// <param name="amount"> How many to add.</param>
         public void AddItemEntry(InventoryItemEntry item, int amount = 1) {
+            // TODO proper item count
             while(amount > 0) {
                 if(ItemsInInventory.Exists(x => (x.ItemSettings.itemId == item.ItemSettings.itemId) &&
                                                 (x.Stack < item.ItemSettings.maxStackQuantity))) {

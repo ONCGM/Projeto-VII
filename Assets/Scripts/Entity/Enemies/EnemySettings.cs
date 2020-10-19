@@ -31,7 +31,6 @@ namespace Entity.Enemies {
         [Header("AI Settings")]
         [SerializeField] public bool isAggressive;
         [SerializeField] public bool attacksEntitiesWhoDamagedThisEntity;
-        [SerializeField] public bool shouldPatrolWhenIdle;
         [SerializeField] public bool patrolBackAndForth;
         [SerializeField, Range(1f, 20f)] public float patrollingRange;
         [SerializeField, Range(1f, 100f)] public float spottingRange;

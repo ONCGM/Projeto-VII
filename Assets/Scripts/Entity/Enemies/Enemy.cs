@@ -51,13 +51,13 @@ namespace Entity.Enemies {
         protected SphereCollider attackingCollider;
         
         // Anims.
-        private static readonly int AttackAnim = Animator.StringToHash("Attack");
-        private static readonly int DamagedAnim = Animator.StringToHash("Damaged");
-        private static readonly int DeadAnim = Animator.StringToHash("Dead");
-        private static readonly int SpeedAnim = Animator.StringToHash("Speed");
+        protected static readonly int AttackAnim = Animator.StringToHash("Attack");
+        protected static readonly int DamagedAnim = Animator.StringToHash("Damaged");
+        protected static readonly int DeadAnim = Animator.StringToHash("Dead");
+        protected static readonly int SpeedAnim = Animator.StringToHash("Speed");
         
         // UI.
-        private EnemyHealthBarUI hpBarUI;
+        protected EnemyHealthBarUI hpBarUI;
 
         protected enum AiState {
             Patrolling,
@@ -138,6 +138,8 @@ namespace Entity.Enemies {
                 yield break;
             }
 
+            agent.SetDestination(targetEntity.transform.position);
+            
             while(Vector3.Distance(transform.position, targetEntity.transform.position) > settings.attackingRange) {
                 agent.SetDestination(targetEntity.transform.position);
                 yield return waitForFrames;
@@ -181,23 +183,6 @@ namespace Entity.Enemies {
             SearchForPlayer();
         }
 
-        #if UNITY_EDITOR
-        private void OnDrawGizmos() {
-            Gizmos.color = targetEntity == null ? Color.red : Color.green;
-            
-            if(!Application.isPlaying) return;
-            if(!agent.hasPath) return;
-            
-            for(int i = 0; i < agent.path.corners.Length - 1; i++) {
-                Gizmos.DrawLine(agent.path.corners[i], agent.path.corners[i + 1]);
-            }
-            
-            Gizmos.color = Color.blue;
-            
-            Gizmos.DrawWireSphere(transform.position, settings.attackingRange);
-        }
-        #endif
-        
         /// <summary>
         /// Chooses a new patrolling path and checks if it is valid.
         /// If it can't find a valid path, will default to returning a path
@@ -257,7 +242,6 @@ namespace Entity.Enemies {
             StopAllCoroutines();
 
             if(CheckAttackCollision(attackingCollider)) {
-                // TODO: Extend damage to play animations, detect collision and damage other entities.
                 Instantiate(DamageCanvasPrefab, transform.position, Quaternion.identity)
                     .GetComponent<DamageCanvas>().damageValue = primaryAttackDamage;
             }
@@ -289,7 +273,13 @@ namespace Entity.Enemies {
         // Updated to enable infighting between enemies.
         public override void Damage(int amount, Entity dealer) {
             anim.SetTrigger(DamagedAnim);
-            base.Damage(amount, dealer);
+            Health -= amount;
+            if(Health <= 0) {
+                Kill();
+                if(dealer.CompareTag(playerTag)) 
+                    dealer.GetComponent<PlayerController>().AddExperience(AmountOfExperienceToDrop());
+            }
+
             hpBarUI.UpdateUI();
 
             if(!settings.attacksEntitiesWhoDamagedThisEntity && !dealer.gameObject.CompareTag(playerTag)) return;
@@ -320,5 +310,32 @@ namespace Entity.Enemies {
             Instantiate(selectedItem.itemPrefab, transform.position, Quaternion.identity).
                 GetComponent<ItemDrop>().SetItemBasedOnSettings(selectedItem);
         }
+        
+        
+        /// <summary>
+        /// Returns the experience amount to give to the player or killing entity.
+        /// </summary>
+        protected virtual int AmountOfExperienceToDrop() {
+            return Mathf.FloorToInt(MaxHealth + MaxStamina + 
+                                    primaryAttackDamage + movementSpeed +
+                                    (settings.spottingRange * 0.5f) / 5f);
+        }
+        
+        #if UNITY_EDITOR
+        private void OnDrawGizmos() {
+            Gizmos.color = targetEntity == null ? Color.red : Color.green;
+            
+            if(!Application.isPlaying) return;
+            if(!agent.hasPath) return;
+            
+            for(int i = 0; i < agent.path.corners.Length - 1; i++) {
+                Gizmos.DrawLine(agent.path.corners[i], agent.path.corners[i + 1]);
+            }
+            
+            Gizmos.color = Color.blue;
+            
+            Gizmos.DrawWireSphere(transform.position, settings.attackingRange);
+        }
+        #endif
     }
 }
