@@ -44,7 +44,9 @@ namespace Islands {
 
             GameMaster.Instance.CurrentIslandType = CurrentIslandType;
 
-            var sceneId = Mathf.Clamp(smallIslandIndex + (int) islandSize, smallIslandIndex, largeIslandIndex);
+            // TODO: Proper scenes
+            // var sceneId = Mathf.Clamp(smallIslandIndex + (int) islandSize, smallIslandIndex, largeIslandIndex);
+            var sceneId = smallIslandIndex;
             SceneManager.SetActiveScene(SceneManager.GetSceneByBuildIndex(smallIslandIndex - 1));
             SceneManager.LoadSceneAsync(sceneId, LoadSceneMode.Additive);
         }
