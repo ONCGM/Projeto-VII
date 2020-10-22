@@ -19,18 +19,28 @@ namespace Entity.Enemies {
         
         #pragma warning restore 0649
         
+        // Adds extra values needed for this enemy.
         protected override void SetEnemyValues() {
             base.SetEnemyValues();
-            rangedDamagePerBullet = settings.baseDamageSecondaryAttack;
+            rangedDamagePerBullet = settings.baseDamagePrimaryAttack;
         }
 
-        protected override void Move() {
-            agent.SetDestination(player.transform.position);
-            if(Vector3.Distance(transform.position, player.transform.position) < 1f) {
-                Attack();
-            } else if(Vector3.Distance(transform.position, player.transform.position) > 8f){
-                if(Random.value < 0.01f && !inRoutine) StartCoroutine(nameof(AttackRanged));
+        protected override IEnumerator MoveTowardsEntity() {
+            yield return base.MoveTowardsEntity();
+            
+            var waitForFrames = new WaitForSeconds(targetPositionUpdateInterval);
+
+            while(currentState == AiState.Attacking) {
+                agent.SetDestination(targetEntity.transform.position);
+                yield return waitForFrames;
             }
+            
+            SearchForPlayer();
+        }
+        
+        // Overrides base attack to instead attack with a ranged projectile.
+        public override void Attack() {
+            StartCoroutine(nameof(AttackRanged));
         }
 
         /// <summary>
@@ -38,8 +48,10 @@ namespace Entity.Enemies {
         /// </summary>
         private IEnumerator AttackRanged() {
             inRoutine = true;
-            agent.speed = settings.baseMoveSpeed * 0.025f;
-            yield return new WaitForSeconds(1f);
+            agent.speed = settings.baseMoveSpeed * 0.1f;
+
+            yield return new WaitUntil(() => !anim.GetCurrentAnimatorClipInfo(0)[0].clip.GetHashCode().Equals(AttackAnim));
+            
             var angleOffsetPerBullet = bulletSpreadAngle / rangedBulletsPerAttack;
             var position = bulletSpawnPosition.position;
 
@@ -55,10 +67,14 @@ namespace Entity.Enemies {
                 bullet.Damage = rangedDamagePerBullet;
                 bullet.MaxRange = rangedAttackMaxRange;
                 bullet.InitialPosition = position;
+                bullet.BulletOwner = this;
             }
+            
             // ReSharper disable once Unity.InefficientPropertyAccess
             agent.speed = settings.baseMoveSpeed;
             inRoutine = false;
+            isAttacking = false;
+            currentState = AiState.Chasing;
         }
     }
 }

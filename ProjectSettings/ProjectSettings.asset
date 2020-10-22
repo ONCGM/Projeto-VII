@@ -40,16 +40,12 @@ PlayerSettings:
     width: 1
     height: 1
   m_SplashScreenLogos:
-  - logo: {fileID: 21300000, guid: 68fad06308e25c34c8b792b4bf0d629f, type: 3}
-    duration: 2
-  - logo: {fileID: 21300000, guid: 3fd34c3bdf6a36f45b8379eb287d58ac, type: 3}
-    duration: 2
-  - logo: {fileID: 21300000, guid: a300abb905f065e498976e295ae576ea, type: 3}
-    duration: 2
-  - logo: {fileID: 21300000, guid: f154de395561265468235536fb6f7a33, type: 3}
-    duration: 2
   - logo: {fileID: 10404, guid: 0000000000000000e000000000000000, type: 0}
-    duration: 2
+    duration: 5
+  - logo: {fileID: 21300000, guid: f154de395561265468235536fb6f7a33, type: 3}
+    duration: 5
+  - logo: {fileID: 21300000, guid: 2abe0c4e1055cb64592328b9f58d571f, type: 3}
+    duration: 5
   m_VirtualRealitySplashScreen: {fileID: 0}
   m_HolographicTrackingLossScreen: {fileID: 0}
   defaultScreenWidth: 1920
@@ -670,7 +666,7 @@ PlayerSettings:
   cloudServicesEnabled:
     Analytics: 1
     Build: 0
-    Collab: 1
+    Collab: 0
     Game Performance: 0
     Purchasing: 0
     UNet: 1

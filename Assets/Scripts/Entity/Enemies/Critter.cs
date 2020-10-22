@@ -6,7 +6,5 @@ namespace Entity.Enemies {
     /// <summary>
     /// Critter Enemy class. Most basic enemy.
     /// </summary>
-    public class Critter : Enemy {
-        //
-    }
+    public class Critter : Enemy { }
 }

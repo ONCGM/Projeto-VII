@@ -15,6 +15,7 @@ MonoBehaviour:
   baseExperienceNeededForLevelUp: 12
   levelUpMultiplier: 1.99
   upgradeEveryHowManyLevels: 5
+  statsMultiplier: 1.1
   meleeMultiplierUpgradeValues:
   - 0.03
   - 0.07
@@ -23,7 +24,7 @@ MonoBehaviour:
   - 0.17
   - 0.2
   - 0.25
-  bulletsPerShotUpgradeValues: 00000000000000000300000003000000050000000500000007000000
+  bulletsPerShotUpgradeValues: 01000000010000000300000003000000050000000500000007000000
   bulletAngleUpgradeValues:
   - 65
   - 60
@@ -40,3 +41,4 @@ MonoBehaviour:
   - 16
   - 18
   - 20
+  islandSizeUnlocksAtLevel: 000000000a00000014000000

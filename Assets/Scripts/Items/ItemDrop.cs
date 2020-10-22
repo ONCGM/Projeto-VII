@@ -26,6 +26,7 @@ namespace Items {
         
         // Components
         private StudioEventEmitter eventEmitter;
+        protected bool hasSpawned;
 
         /// <summary>
         /// The item settings of this item.
@@ -43,12 +44,22 @@ namespace Items {
         protected virtual void Awake() {
              ItemIdleAnimation();
              eventEmitter = GetComponent<StudioEventEmitter>();
+             Invoke(nameof(CheckObjectSpawn), 1f);
+        }
+        
+        /// <summary>
+        /// Checks if it spawned the asset, in case a enemy forgot or this is a stage drop.
+        /// </summary>
+        protected virtual void CheckObjectSpawn() {
+            if(!hasSpawned) SetItemBasedOnSettings(settings);
         }
 
         /// <summary>
         /// Sets the item info and spawns it's 3D model.
         /// </summary>
         public void SetItemBasedOnSettings(ItemSettings itemSettings) {
+            if(hasSpawned) return;
+            
             settings = itemSettings;
 
             if(transform.childCount > 0) {
@@ -58,6 +69,8 @@ namespace Items {
             }
             
             Instantiate(settings.itemModel, transform);
+            
+            hasSpawned = true;
         }
 
         /// <summary>
@@ -78,10 +91,6 @@ namespace Items {
 
             player.Inventory.AddItemEntry(stats);
 
-            foreach(var item in player.Inventory.ItemsInInventory) {
-                Debug.Log(item.ItemSettings.itemNameKey);
-            }
-            
             // TODO: Add particles, sfx and effects.
             eventEmitter.Play();
             DOTween.Kill(this);

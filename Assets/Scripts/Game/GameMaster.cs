@@ -2,6 +2,8 @@
 using System.Collections;
 using System.Collections.Generic;
 using Entity.Player;
+using Items;
+using Ship;
 using UnityEngine;
 
 namespace Game {
@@ -37,7 +39,7 @@ namespace Game {
             get => gameState;
             set {
                 gameState = value;
-                OnGameStateUpdated?.Invoke();
+                OnGameExecutionStateUpdated?.Invoke();
                 Time.timeScale = gameState == ExecutionState.FullPause ? 0f : 1f;
             }
         }
@@ -56,7 +58,13 @@ namespace Game {
             }
         }
 
-        private PlayerStats playerStats;
+        private PlayerStats playerStats = new PlayerStats() {
+            Health = 35, MaxHealth = 35, Stamina = 20, MaxStamina = 20,
+            MeleeDamage = 7, RangedDamage = 5, MovementSpeed = 15,
+            Level = 0, Experience = 0, TotalExperience = 0,
+            Coins = 0, CurrentInventory = new List<InventoryItemEntry>(),
+            CurrentUpgradeLevel = 0
+        };
 
         /// <summary>
         /// Current stats of the player.
@@ -101,14 +109,36 @@ namespace Game {
         }
 
         /// <summary>
+        /// Should the player spawn in front of the store or the port. 
+        /// </summary>
+        public bool SpawnInFrontOfStore { get; set; } = true;
+
+        /// <summary>
+        /// The current selected size of island by the player choice. 
+        /// Set by the town travel popup and used by the island generator.
+        /// </summary>
+        public IslandSizes SelectedIslandSize { get; set; } = IslandSizes.Small; 
+        
+        /// <summary>
+        /// The current type of island by random choice. 
+        /// Set by the island level loader and used by the island scripts.
+        /// </summary>
+        public IslandType CurrentIslandType { get; set; } = IslandType.BrawlIsland;
+        
+        /// <summary>
+        /// The current spawned ship in the game world.
+        /// </summary>
+        public ShipTravelController ShipTravel { get; set; }
+        
+        /// <summary>
         /// Called whenever the PlayerStats are updated.
         /// </summary>
         public static Action OnPlayerStatsUpdated;
         
         /// <summary>
-        /// Called whenever the PlayerStats are updated.
+        /// Called whenever the game execution state is updated.
         /// </summary>
-        public static Action OnGameStateUpdated;
+        public static Action OnGameExecutionStateUpdated;
         
         /// <summary>
         /// Called whenever the game menu is open or closed.
@@ -129,7 +159,7 @@ namespace Game {
         /// Called when the last game day starts and ends.
         /// </summary>
         public static Action OnEndGameDayUpdate;
-        
+
         //TODO
         public object SaveData { get; private set; }
 
@@ -154,5 +184,24 @@ namespace Game {
         Night,
         Morning,
         Afternoon
+    }
+
+    /// <summary>
+    /// Defines the sizes of island for the island loader.
+    /// Also synonym with the game difficulty.
+    /// </summary>
+    public enum IslandSizes {
+        Small,
+        Medium,
+        Large
+    }
+    
+    /// <summary>
+    /// Defines the types of island in the game.
+    /// </summary>
+    public enum IslandType {
+        BrawlIsland,
+        TreasureIsland,
+        MerchantIsland
     }
 }

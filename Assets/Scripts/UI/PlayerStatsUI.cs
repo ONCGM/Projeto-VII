@@ -6,9 +6,7 @@ using Entity.Player;
 using Game;
 using Localization;
 using TMPro;
-using UI.Localization;
 using UnityEngine;
-using UnityEngine.InputSystem;
 using UnityEngine.UI;
 
 namespace UI {
@@ -20,7 +18,7 @@ namespace UI {
         [Header("Settings")] 
         [SerializeField, Range(0.01f, 3f)] private float fadeAnimationSpeed = 0.7f;
         [SerializeField, Range(0.01f, 3f)] private float barAnimationDelay = 0.3f;
-        [SerializeField, Range(0.01f, 10f)] private float barAnimationSpeed = 15f;
+        [SerializeField, Range(0.01f, 30f)] private float barAnimationSpeed = 15f;
         [SerializeField] private float uiBarsWidth = 450;
 
         [Header("UI Components")] 
@@ -36,7 +34,8 @@ namespace UI {
         
         // Components.
         private PlayerController player;
-        private CanvasGroup canvasGroup;
+        private CanvasGroup childCanvasGroup;
+        private CanvasGroup parentCanvasGroup;
         
         // Events.
         /// <summary>
@@ -55,13 +54,15 @@ namespace UI {
         private PlayerUpgradeSettings upgradeSettings;
         private WaitForSeconds waitForBarAnimationDelay;
         private WaitForFixedUpdate waitForBarAnimationFrame;
-        
+        private static readonly int HitEffectBlend = Shader.PropertyToID("_HitEffectBlend");
+
         #pragma warning restore 0649
         
         // Set up and events.
         private void Awake() {
             player = FindObjectOfType<PlayerController>();
-            canvasGroup = GetComponentInChildren<CanvasGroup>();
+            childCanvasGroup = GetComponentInChildren<CanvasGroup>();
+            parentCanvasGroup = GetComponent<CanvasGroup>();
             upgradeSettings = Resources.Load<PlayerUpgradeSettings>(upgradeSettingsPath);
             waitForBarAnimationDelay = new WaitForSeconds(barAnimationDelay);
             waitForBarAnimationFrame = new WaitForFixedUpdate();
@@ -85,7 +86,15 @@ namespace UI {
         /// Animates UI fading in and out.
         /// </summary>
         private void FadeAnimation() {
-            DOTween.To(()=> canvasGroup.alpha, x=> canvasGroup.alpha = x, (GameMaster.Instance.GameMenuIsOpen ? 0f : 1f), fadeAnimationSpeed);
+            DOTween.To(()=> childCanvasGroup.alpha, x=> childCanvasGroup.alpha = x, (GameMaster.Instance.GameMenuIsOpen ? 0f : 1f), fadeAnimationSpeed);
+        }
+
+        /// <summary>
+        /// Toggles the visibility of the entire player canvas.
+        /// </summary>
+        /// <param name="state"> Set true to enable the canvas. </param>
+        public void ShowHideCanvas(bool state) {
+            DOTween.To(()=> parentCanvasGroup.alpha, x=> parentCanvasGroup.alpha = x, (state ? 1f : 0f), fadeAnimationSpeed);
         }
 
         /// <summary>
@@ -113,7 +122,7 @@ namespace UI {
             dayText.text = LocalizationSystem.CurrentLanguage == LocalizationSystem.Language.Japanese ? $"{currentDay} {dayLocalized}" : $"{dayLocalized} {currentDay}";
             timeOfDayText.text = LocalizationSystem.GetLocalizedValue(TimeOfDayLocalizationKeys[(int) GameMaster.Instance.CurrentTimeOfDay]);
 
-            
+            staminaBackBar.material.SetFloat(HitEffectBlend, 1f);
             StartCoroutine(nameof(AnimateHealthBackBar));
             StartCoroutine(nameof(AnimateStaminaBackBar));
         }
@@ -144,7 +153,9 @@ namespace UI {
         /// </summary>
         private IEnumerator AnimateStaminaBackBar() {
             yield return waitForBarAnimationDelay;
-
+            var staminaBarMaterial = staminaBackBar.material;
+            staminaBarMaterial.SetFloat(HitEffectBlend, 1f);
+            
             if(staminaBar.rectTransform.sizeDelta.x > staminaBackBar.rectTransform.sizeDelta.x) {
                 staminaBackBar.rectTransform.SetSizeWithCurrentAnchors(RectTransform.Axis.Horizontal,
                                                                        Mathf.Lerp(0f, uiBarsWidth,Mathf.InverseLerp(0f,player.MaxStamina,player.Stamina)));
@@ -152,12 +163,17 @@ namespace UI {
             }
 
             var width = staminaBackBar.rectTransform.sizeDelta.x;
-            
+            DOTween.To(() => staminaBarMaterial.GetFloat(HitEffectBlend), 
+                       x => staminaBarMaterial.SetFloat(HitEffectBlend, x), 0f, 0.15f);
+
             while(staminaBackBar.rectTransform.sizeDelta.x > staminaBar.rectTransform.sizeDelta.x) {
                 width -= barAnimationSpeed;
                 staminaBackBar.rectTransform.SetSizeWithCurrentAnchors(RectTransform.Axis.Horizontal, width);
                 yield return waitForBarAnimationFrame;
             }
+            
+            
+            staminaBarMaterial.SetFloat(HitEffectBlend, 1f);
         }
     }
 }

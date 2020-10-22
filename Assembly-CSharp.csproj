@@ -52,6 +52,7 @@
   <ItemGroup>
      <Compile Include="Assets\Scripts\UI\InventoryUI.cs" />
      <Compile Include="Assets\Scripts\Entity\Player\PlayerController.cs" />
+     <Compile Include="Assets\Thirdparty\AllIn1SpriteShader\Scripts\AllIn1ShaderWindow.cs" />
      <Compile Include="Assets\Scripts\UI\SmallItemUI.cs" />
      <Compile Include="Assets\Scripts\UI\ItemUI.cs" />
      <Compile Include="Assets\Scripts\Entity\Enemies\Critter.cs" />
@@ -61,41 +62,54 @@
      <Compile Include="Assets\Scripts\UI\Localization\LocalizationSystem.cs" />
      <Compile Include="Assets\Scripts\Game\LoadGameScene.cs" />
      <Compile Include="Assets\Scripts\Items\ItemSettings.cs" />
+     <Compile Include="Assets\Scripts\Other\CustomEventTrigger.cs" />
      <Compile Include="Assets\Scripts\Town\PortSceneTransition.cs" />
      <Compile Include="Assets\Scripts\Entity\Enemies\Enemy.cs" />
      <Compile Include="Assets\Scripts\UI\Menu\MainMenuButtons.cs" />
      <Compile Include="Assets\Scripts\Entity\Enemies\Pirate.cs" />
+     <Compile Include="Assets\Thirdparty\AllIn1SpriteShader\Scripts\AllIn1Shader.cs" />
+     <Compile Include="Assets\Scripts\UI\Popups\CanvasPopupLocationName.cs" />
      <Compile Include="Assets\Scripts\Entity\Enemies\EnemyEnums.cs" />
      <Compile Include="Assets\Scripts\UI\Popups\CanvasPopupDialog.cs" />
      <Compile Include="Assets\Scripts\Entity\EntityInterfaces.cs" />
      <Compile Include="Assets\Scripts\Entity\Enemies\EnemySettings.cs" />
      <Compile Include="Assets\Scripts\GameInput\ActionInputs.cs" />
+     <Compile Include="Assets\Scripts\Islands\IslandSceneryObjectRandomizer.cs" />
+     <Compile Include="Assets\Scripts\Town\PlayerSpawnPositionBasedOnLastScene.cs" />
      <Compile Include="Assets\Scripts\UI\Tab.cs" />
      <Compile Include="Assets\Scripts\UI\Localization\LocalizedString.cs" />
      <Compile Include="Assets\Scripts\Items\Inventory.cs" />
      <Compile Include="Assets\Scripts\Store\StoreTransition.cs" />
      <Compile Include="Assets\Scripts\UI\PlayerStatsUI.cs" />
      <Compile Include="Assets\Scripts\UI\TabManager.cs" />
-     <Compile Include="Assets\Scripts\Ship\ShipTravelRoutine.cs" />
+     <Compile Include="Assets\Scripts\UI\MinimapUI.cs" />
+     <Compile Include="Assets\Scripts\Ship\ShipTravelController.cs" />
      <Compile Include="Assets\Scripts\Game\GameMaster.cs" />
      <Compile Include="Assets\Scripts\UI\Localization\CSVLoader.cs" />
+     <Compile Include="Assets\Scripts\UI\EnemyHealthBarUI.cs" />
      <Compile Include="Assets\Scripts\Items\InventoryItemEntry.cs" />
      <Compile Include="Assets\Scripts\UI\Menu\CombatDebriefUi.cs" />
      <Compile Include="Assets\Scripts\Items\ItemDrop.cs" />
      <Compile Include="Assets\Scripts\Store\StoreEntrance.cs" />
      <Compile Include="Assets\Scripts\UI\OpenCloseGameMenu.cs" />
+     <Compile Include="Assets\Scripts\Islands\IslandLevelLoader.cs" />
+     <Compile Include="Assets\Thirdparty\AllIn1SpriteShader\Scripts\SetAtlasUvs.cs" />
      <Compile Include="Assets\Scripts\Entity\Entity.cs" />
-     <Compile Include="Assets\Scripts\Entity\Player\EntityBullet.cs" />
+     <Compile Include="Assets\Thirdparty\AllIn1SpriteShader\Scripts\RandomSeed.cs" />
+     <Compile Include="Assets\Scripts\Entity\EntityBullet.cs" />
      <Compile Include="Assets\Scripts\Entity\Player\PlayerStats.cs" />
+     <Compile Include="Assets\Scripts\Islands\IslandPopulator.cs" />
      <Compile Include="Assets\Scripts\UI\DamageCanvas.cs" />
-     <Compile Include="Assets\Scripts\Entity\Enemies\EnemyBullet.cs" />
      <None Include="Assets\TextMesh Pro\Shaders\TMPro.cginc" />
      <None Include="Assets\TextMesh Pro\Shaders\TMP_SDF-Mobile Overlay.shader" />
+     <None Include="Assets\Scripts\Shaders\TextureMask.shader" />
      <None Include="Assets\Art\Font\LICENSE.txt" />
      <None Include="Assets\TextMesh Pro\Shaders\TMP_Bitmap.shader" />
+     <None Include="Assets\Thirdparty\AllIn1SpriteShader\Resources\AllIn1SpriteShader.shader" />
      <None Include="Assets\TextMesh Pro\Shaders\TMPro_Mobile.cginc" />
      <None Include="Assets\TextMesh Pro\Shaders\TMP_SDF SSD.shader" />
      <None Include="Assets\TextMesh Pro\Shaders\TMP_SDF-Surface-Mobile.shader" />
+     <None Include="Assets\Thirdparty\AllIn1SpriteShader\Resources\AllIn1SpriteShaderScrollView.shader" />
      <None Include="Assets\Art\Font\Unicode_Hex_Sets.txt" />
      <None Include="Assets\TextMesh Pro\Shaders\TMP_SDF-Surface.shader" />
      <None Include="Assets\TextMesh Pro\Sprites\EmojiOne Attribution.txt" />
@@ -106,12 +120,14 @@
      <None Include="Assets\TextMesh Pro\Shaders\TMPro_Properties.cginc" />
      <None Include="Assets\TextMesh Pro\Shaders\TMPro_Surface.cginc" />
      <None Include="Assets\TextMesh Pro\Resources\LineBreaking Following Characters.txt" />
+     <None Include="Assets\Thirdparty\AllIn1SpriteShader\Resources\AllIn1SpriteShaderLight.shader" />
      <None Include="Assets\TextMesh Pro\Shaders\TMP_SDF-Mobile Masking.shader" />
      <None Include="Assets\TextMesh Pro\Shaders\TMP_SDF Overlay.shader" />
      <None Include="Assets\TextMesh Pro\Shaders\TMP_Bitmap-Mobile.shader" />
      <None Include="Assets\TextMesh Pro\Fonts\LiberationSans - OFL.txt" />
      <None Include="Assets\TextMesh Pro\Shaders\TMP_SDF-Mobile.shader" />
      <None Include="Assets\TextMesh Pro\Shaders\TMP_Sprite.shader" />
+     <None Include="Assets\Thirdparty\AllIn1SpriteShader\Resources\AllIn1OneShaderFunctions.cginc" />
  <Reference Include="Unity.RenderPipeline.Universal.ShaderLibrary">
  <HintPath>C:/Users/OnCra/Documents/Unity Projects/Projeto-VII/Library/ScriptAssemblies/Unity.RenderPipeline.Universal.ShaderLibrary.dll</HintPath>
  </Reference>
@@ -801,6 +817,18 @@
     <ProjectReference Include="Assembly-CSharp-firstpass.csproj">
       <Project>{9b596ca2-7856-f05b-a4be-babd3277994a}</Project>
       <Name>Assembly-CSharp-firstpass</Name>
+    </ProjectReference>
+    <ProjectReference Include="Unity.UniversalToonShader.Urp.Editor.csproj">
+      <Project>{76fbcac1-356e-e3a9-ca13-f9eea90bc786}</Project>
+      <Name>Unity.UniversalToonShader.Urp.Editor</Name>
+    </ProjectReference>
+    <ProjectReference Include="NavMeshComponentsEditor.csproj">
+      <Project>{b6cfd396-b0df-b562-5406-92c6a8b42560}</Project>
+      <Name>NavMeshComponentsEditor</Name>
+    </ProjectReference>
+    <ProjectReference Include="NavMeshComponents.csproj">
+      <Project>{e441783f-53d0-1653-46a1-a8eb57ab846f}</Project>
+      <Name>NavMeshComponents</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

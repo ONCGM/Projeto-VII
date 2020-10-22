@@ -236,7 +236,6 @@ GameObject:
   m_Component:
   - component: {fileID: 4878149035720632735}
   - component: {fileID: 4878149035720632732}
-  - component: {fileID: 4878149035720632733}
   - component: {fileID: 4878149035720632730}
   - component: {fileID: 4878149035720632734}
   - component: {fileID: 5212375485620821195}
@@ -255,7 +254,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4878149035720632731}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -24.14, y: 16.96065, z: -6.1382303}
+  m_LocalPosition: {x: 0, y: 500, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 4878149034480041170}
@@ -305,14 +304,6 @@ Camera:
   m_OcclusionCulling: 1
   m_StereoConvergence: 10
   m_StereoSeparation: 0.022
---- !u!81 &4878149035720632733
-AudioListener:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4878149035720632731}
-  m_Enabled: 1
 --- !u!114 &4878149035720632730
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -335,7 +326,7 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 1
   m_VolumeTrigger: {fileID: 0}
-  m_RenderPostProcessing: 1
+  m_RenderPostProcessing: 0
   m_Antialiasing: 0
   m_AntialiasingQuality: 2
   m_StopNaN: 0
@@ -375,6 +366,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e9ce03a9df3238441aaf4144d804dca5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  sceneIndex: 0
+  townSceneName: Town
 --- !u!1 &4878149035776193343
 GameObject:
   m_ObjectHideFlags: 0

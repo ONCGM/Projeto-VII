@@ -8,7 +8,7 @@ namespace Entity {
     /// <summary>
     /// Base class for all entities in the game.
     /// </summary>
-    [RequireComponent(typeof(NavMeshAgent), typeof(Animator), typeof(CapsuleCollider))]
+    [RequireComponent(typeof(NavMeshAgent), typeof(CapsuleCollider))]
     public abstract class Entity : MonoBehaviour, IEntity, IDamageable {
         // Basic stats.
         [SerializeField] protected int health = 10;
@@ -77,11 +77,12 @@ namespace Entity {
         protected virtual void Awake() {
             agent = GetComponent<NavMeshAgent>();
             anim = GetComponent<Animator>();
+            if(anim == null) { anim = GetComponentInChildren<Animator>(); }
             capsuleCollider = GetComponent<CapsuleCollider>();
         }
 
         // General methods.
-        public virtual void Damage(int amount) {
+        public virtual void Damage(int amount, Entity dealer) {
             Health -= amount;
             if(Health <= 0) Kill();
         }
