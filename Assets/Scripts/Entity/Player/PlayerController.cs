@@ -7,6 +7,7 @@ using Items;
 using UI;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using UnityEngine.VFX;
 using Random = UnityEngine.Random;
 
 namespace Entity.Player {
@@ -57,13 +58,16 @@ namespace Entity.Player {
         private Gamepad currentGamepad;
         private WaitForSeconds waitTime = new WaitForSeconds(0f);
 
-        private static readonly List<int> ComboAnim = new List<int> {
+        private static readonly List<int> AnimCombo = new List<int> {
             Animator.StringToHash("Combo_0"),
             Animator.StringToHash("Combo_1"),
             Animator.StringToHash("Combo_2")
         };
 
-        private static readonly int SpecialAnim = Animator.StringToHash("Special");
+        private static readonly int AnimSpecial = Animator.StringToHash("Special");
+        private static readonly int AnimDead = Animator.StringToHash("Dead");
+        private static readonly int AnimDamaged = Animator.StringToHash("Damaged");
+        private static readonly int AnimSpeed = Animator.StringToHash("Speed");
 
         /// Is the player inside the shop? True for yes. 
         private bool isInsideShop;
@@ -118,6 +122,11 @@ namespace Entity.Player {
         /// The last enemy that dealt damage to the player.
         /// </summary>
         public Enemy LastEnemyToHitPlayer { get; set; }
+        
+        
+        [Header("VFX")]
+        [SerializeField] private VisualEffect swordSlash;
+
 
         #pragma warning restore 0649
 
@@ -171,12 +180,14 @@ namespace Entity.Player {
 
         public override void Kill() {
             Debug.Log("DEAD!");
+            anim.SetTrigger(AnimDead);
             Health = MaxHealth;
         }
 
         public override void Damage(int amount, Entity dealer) {
             currentGamepad.SetMotorSpeeds(0.8f, 0.8f);
             StartCoroutine(nameof(StopControllerVibration), 0.2f);
+            anim.SetTrigger(AnimDamaged);
             if(dealer.GetComponent<Enemy>()) LastEnemyToHitPlayer = dealer.GetComponent<Enemy>();
             base.Damage(amount, dealer);
         }
@@ -213,7 +224,10 @@ namespace Entity.Player {
         /// Moves the player based on input using the nav mesh agent.
         /// </summary>
         private void MovePlayer() {
-            if(agent.enabled && CanMove) agent.Move(movementScale * (playerSpeed * Time.deltaTime));
+            anim.SetFloat(AnimSpeed, 0f);
+            if(!agent.enabled || !CanMove) return; 
+            agent.Move(movementScale * (playerSpeed * Time.deltaTime));
+            anim.SetFloat(AnimSpeed, movementScale.magnitude);
         }
         
         #endregion
@@ -233,10 +247,10 @@ namespace Entity.Player {
         /// </summary>
         private void SpecialAttack(InputAction.CallbackContext callbackContext) {
             if(Stamina < 3 || isInsideShop) return;
-            if(anim.GetCurrentAnimatorStateInfo(0).IsName("Player_Attack_Special_Anim")) return;
+            if(anim.GetCurrentAnimatorStateInfo(1).IsName("Player_Attack_Special_Anim")) return;
             Stamina -= 4;
             agent.enabled = false;
-            anim.SetTrigger(SpecialAnim);
+            anim.SetTrigger(AnimSpecial);
             PlayerStatsUI.UpdateUiValues.Invoke();
         }
 
@@ -279,22 +293,23 @@ namespace Entity.Player {
         private void ComboAttack(InputAction.CallbackContext callbackContext) {
             if(Stamina < 3 || isInsideShop) return;
             Stamina -= 3;
+            swordSlash.SendEvent("OnPlay");
             
-            if(anim.GetCurrentAnimatorStateInfo(0).IsName("Idle")) {
+            if(anim.GetCurrentAnimatorStateInfo(1).IsName("Attack Idle")) {
                 comboNumber = 0;
-                anim.ResetTrigger(ComboAnim[0]);
-                anim.ResetTrigger(ComboAnim[1]);
-                anim.ResetTrigger(ComboAnim[2]);
+                anim.ResetTrigger(AnimCombo[0]);
+                anim.ResetTrigger(AnimCombo[1]);
+                anim.ResetTrigger(AnimCombo[2]);
             }
             
             if(comboNumber < 1) {
-                anim.SetTrigger(ComboAnim[comboNumber]);
+                anim.SetTrigger(AnimCombo[comboNumber]);
                 comboNumber++;
             } else if(comboNumber < 2) {
-                anim.SetTrigger(ComboAnim[comboNumber]);
+                anim.SetTrigger(AnimCombo[comboNumber]);
                 comboNumber++;
             }  else if(comboNumber < 3) {
-                anim.SetTrigger(ComboAnim[comboNumber]);
+                anim.SetTrigger(AnimCombo[comboNumber]);
                 comboNumber = 0;
             } else {
                 comboNumber = 0;
@@ -307,6 +322,7 @@ namespace Entity.Player {
         /// Called by animation to trigger collision check.
         /// </summary>
         public void ComboAttackCollision() {
+            swordSlash.SendEvent("OnStop");
             if(!CheckCollisionSword(swordCollider)) return;
             //TODO: Play audio and effects.
             Instantiate(DamageCanvasPrefab, transform.position, Quaternion.identity)
