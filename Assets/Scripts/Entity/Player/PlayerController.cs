@@ -185,8 +185,7 @@ namespace Entity.Player {
         }
 
         public override void Damage(int amount, Entity dealer) {
-            currentGamepad.SetMotorSpeeds(0.8f, 0.8f);
-            StartCoroutine(nameof(StopControllerVibration), 0.2f);
+            VibrateController(0.2f, 0.8f, 0.8f);
             anim.SetTrigger(AnimDamaged);
             if(dealer.GetComponent<Enemy>()) LastEnemyToHitPlayer = dealer.GetComponent<Enemy>();
             base.Damage(amount, dealer);
@@ -211,13 +210,24 @@ namespace Entity.Player {
         }
 
         /// <summary>
+        /// Vibrates the controller with the given parameters.
+        /// </summary>
+        /// <param name="time"> How long to vibrate the controller for. Defaults to 0.42 seconds.</param>
+        /// <param name="lowFreq"> Strong vibrations. Defaults to 0.3. </param>
+        /// <param name="highFreq"> Weak vibrations. Defaults to 0.5. </param>
+        private void VibrateController(float time = 0.42f, float lowFreq = 0.3f, float highFreq = 0.5f) {
+            currentGamepad?.SetMotorSpeeds(lowFreq, highFreq);
+            StartCoroutine(nameof(StopControllerVibration), time);
+        }
+        
+        /// <summary>
         /// Stops a controller from vibrating.
         /// </summary>
         /// <param name="time"> How long until vibration stops. Leave blank for immediately stopping it.</param>
         private IEnumerator StopControllerVibration(float time = 0f) {
             waitTime = new WaitForSeconds(time);
             yield return waitTime;
-            currentGamepad.SetMotorSpeeds(0f, 0f);
+            currentGamepad?.SetMotorSpeeds(0f, 0f);
         }
 
         /// <summary>
@@ -275,9 +285,8 @@ namespace Entity.Player {
                 bullet.InitialPosition = position;
                 bullet.BulletOwner = this;
             }
-            
-            currentGamepad.SetMotorSpeeds(0.6f, 0.4f);
-            StartCoroutine(nameof(StopControllerVibration), 0.2f);
+
+            VibrateController(0.2f, 0.6f, 0.4f);
         }
         
         /// <summary>
@@ -328,9 +337,8 @@ namespace Entity.Player {
             Instantiate(DamageCanvasPrefab, transform.position, Quaternion.identity)
                 .GetComponent<DamageCanvas>().damageValue = 
                 Mathf.RoundToInt(meleeDamage * (1f + meleeDamageComboMultiplier * comboNumber));
-                
-            currentGamepad.SetMotorSpeeds(0.42f, 0.42f);
-            StartCoroutine(nameof(StopControllerVibration), 0.2f);
+
+            VibrateController(0.2f, 0.42f, 0.42f); 
         }
         
         /// <summary>

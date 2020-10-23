@@ -170,10 +170,13 @@ namespace Entity.Enemies {
             
             var waitForFrames = new WaitForSeconds(patrollingPlayerSearchFrequency);
 
-            if(agent == null) yield break;
-            agent.SetPath(GeneratePatrolPath());
+            if(agent.isOnNavMesh) {
+                agent.SetPath(GeneratePatrolPath());
+            } else {
+                yield break;
+            }
             
-            while(agent.remainingDistance > patrollingTargetPositionTolerance) {
+            while(agent.isOnNavMesh && agent.remainingDistance > patrollingTargetPositionTolerance) {
                 SearchForPlayer();
                 yield return waitForFrames;
             }
@@ -214,6 +217,8 @@ namespace Entity.Enemies {
         /// Check if the player is in range of the enemy.
         /// </summary>
         protected virtual void SearchForPlayer() {
+            if(!agent.isOnNavMesh) return;
+            
             if(!settings.isAggressive) {
                 if(!isPatrolling) StartCoroutine(nameof(PatrolArea));
                 return;
@@ -274,6 +279,7 @@ namespace Entity.Enemies {
         public override void Damage(int amount, Entity dealer) {
             anim.SetTrigger(DamagedAnim);
             Health -= amount;
+            
             if(Health <= 0) {
                 Kill();
                 if(dealer.CompareTag(playerTag)) 
@@ -289,14 +295,23 @@ namespace Entity.Enemies {
         }
 
         public override void Kill() {
+            StopAllCoroutines();
+            
             anim.SetTrigger(DeadAnim);
+
+            foreach(var coll in GetComponents<Collider>()) {
+                coll.enabled = false;
+            }
+
+            agent.enabled = false;
+            
+            hpBarUI.FadeOutAnimation();
             
             GenerateDrop();
 
-            Destroy(gameObject);
-            
-            hpBarUI.FadeOutAnimation();
-            hpBarUI.gameObject.transform.parent = null;
+            //Destroy(gameObject);
+
+            //hpBarUI.gameObject.transform.parent = null;
         }
 
         /// <summary>
@@ -305,10 +320,17 @@ namespace Entity.Enemies {
         protected virtual void GenerateDrop() {
             if(Random.value > settings.chanceToDropItem) return;
             var availableItems = itemsToDrop.Where(itemSettings => GameMaster.Instance.PlayerStats.Level > itemSettings.minimumPlayerLevelToSpawn).ToList();
+
+            if(availableItems.Count < 1) {
+                // Change to drop coin
+                return;
+            }
+
             var selectedItem = availableItems[Random.Range(0, availableItems.Count)];
-            
-            Instantiate(selectedItem.itemPrefab, transform.position, Quaternion.identity).
-                GetComponent<ItemDrop>().SetItemBasedOnSettings(selectedItem);
+
+            if(selectedItem == null) return;
+                Instantiate(selectedItem.itemPrefab, transform.position, Quaternion.identity).GetComponent<ItemDrop>()
+                    .SetItemBasedOnSettings(selectedItem);
         }
         
         
