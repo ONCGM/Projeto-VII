@@ -22,14 +22,6 @@
                     "interactions": ""
                 },
                 {
-                    "name": "Run",
-                    "type": "Button",
-                    "id": "c3573caf-cdca-412d-a275-c4a4e4fc4fc4",
-                    "expectedControlType": "Button",
-                    "processors": "",
-                    "interactions": ""
-                },
-                {
                     "name": "Attack",
                     "type": "Button",
                     "id": "acad5bff-2f64-4f92-9cf0-7a5628e110ac",
@@ -164,28 +156,6 @@
                     "action": "Vertical",
                     "isComposite": false,
                     "isPartOfComposite": true
-                },
-                {
-                    "name": "",
-                    "id": "bbd79855-4c6b-46ca-b009-29aa2e7d6312",
-                    "path": "<Keyboard>/leftShift",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "",
-                    "action": "Run",
-                    "isComposite": false,
-                    "isPartOfComposite": false
-                },
-                {
-                    "name": "",
-                    "id": "2ee0ce1e-4122-4be4-a63a-638c89277aa1",
-                    "path": "<Gamepad>/buttonEast",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "",
-                    "action": "Run",
-                    "isComposite": false,
-                    "isPartOfComposite": false
                 },
                 {
                     "name": "",

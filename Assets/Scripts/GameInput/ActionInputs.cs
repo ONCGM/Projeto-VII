@@ -35,14 +35,6 @@ public class @ActionInputs : IInputActionCollection, IDisposable
                     ""interactions"": """"
                 },
                 {
-                    ""name"": ""Run"",
-                    ""type"": ""Button"",
-                    ""id"": ""c3573caf-cdca-412d-a275-c4a4e4fc4fc4"",
-                    ""expectedControlType"": ""Button"",
-                    ""processors"": """",
-                    ""interactions"": """"
-                },
-                {
                     ""name"": ""Attack"",
                     ""type"": ""Button"",
                     ""id"": ""acad5bff-2f64-4f92-9cf0-7a5628e110ac"",
@@ -180,28 +172,6 @@ public class @ActionInputs : IInputActionCollection, IDisposable
                 },
                 {
                     ""name"": """",
-                    ""id"": ""bbd79855-4c6b-46ca-b009-29aa2e7d6312"",
-                    ""path"": ""<Keyboard>/leftShift"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": """",
-                    ""action"": ""Run"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": false
-                },
-                {
-                    ""name"": """",
-                    ""id"": ""2ee0ce1e-4122-4be4-a63a-638c89277aa1"",
-                    ""path"": ""<Gamepad>/buttonEast"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": """",
-                    ""action"": ""Run"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": false
-                },
-                {
-                    ""name"": """",
                     ""id"": ""aa458275-2581-4f9b-b947-ce193a8639a7"",
                     ""path"": ""<Keyboard>/space"",
                     ""interactions"": """",
@@ -297,7 +267,6 @@ public class @ActionInputs : IInputActionCollection, IDisposable
         m_Player = asset.FindActionMap("Player", throwIfNotFound: true);
         m_Player_Horizontal = m_Player.FindAction("Horizontal", throwIfNotFound: true);
         m_Player_Vertical = m_Player.FindAction("Vertical", throwIfNotFound: true);
-        m_Player_Run = m_Player.FindAction("Run", throwIfNotFound: true);
         m_Player_Attack = m_Player.FindAction("Attack", throwIfNotFound: true);
         m_Player_Special = m_Player.FindAction("Special", throwIfNotFound: true);
         m_Player_Menu = m_Player.FindAction("Menu", throwIfNotFound: true);
@@ -352,7 +321,6 @@ public class @ActionInputs : IInputActionCollection, IDisposable
     private IPlayerActions m_PlayerActionsCallbackInterface;
     private readonly InputAction m_Player_Horizontal;
     private readonly InputAction m_Player_Vertical;
-    private readonly InputAction m_Player_Run;
     private readonly InputAction m_Player_Attack;
     private readonly InputAction m_Player_Special;
     private readonly InputAction m_Player_Menu;
@@ -362,7 +330,6 @@ public class @ActionInputs : IInputActionCollection, IDisposable
         public PlayerActions(@ActionInputs wrapper) { m_Wrapper = wrapper; }
         public InputAction @Horizontal => m_Wrapper.m_Player_Horizontal;
         public InputAction @Vertical => m_Wrapper.m_Player_Vertical;
-        public InputAction @Run => m_Wrapper.m_Player_Run;
         public InputAction @Attack => m_Wrapper.m_Player_Attack;
         public InputAction @Special => m_Wrapper.m_Player_Special;
         public InputAction @Menu => m_Wrapper.m_Player_Menu;
@@ -381,9 +348,6 @@ public class @ActionInputs : IInputActionCollection, IDisposable
                 @Vertical.started -= m_Wrapper.m_PlayerActionsCallbackInterface.OnVertical;
                 @Vertical.performed -= m_Wrapper.m_PlayerActionsCallbackInterface.OnVertical;
                 @Vertical.canceled -= m_Wrapper.m_PlayerActionsCallbackInterface.OnVertical;
-                @Run.started -= m_Wrapper.m_PlayerActionsCallbackInterface.OnRun;
-                @Run.performed -= m_Wrapper.m_PlayerActionsCallbackInterface.OnRun;
-                @Run.canceled -= m_Wrapper.m_PlayerActionsCallbackInterface.OnRun;
                 @Attack.started -= m_Wrapper.m_PlayerActionsCallbackInterface.OnAttack;
                 @Attack.performed -= m_Wrapper.m_PlayerActionsCallbackInterface.OnAttack;
                 @Attack.canceled -= m_Wrapper.m_PlayerActionsCallbackInterface.OnAttack;
@@ -403,9 +367,6 @@ public class @ActionInputs : IInputActionCollection, IDisposable
                 @Vertical.started += instance.OnVertical;
                 @Vertical.performed += instance.OnVertical;
                 @Vertical.canceled += instance.OnVertical;
-                @Run.started += instance.OnRun;
-                @Run.performed += instance.OnRun;
-                @Run.canceled += instance.OnRun;
                 @Attack.started += instance.OnAttack;
                 @Attack.performed += instance.OnAttack;
                 @Attack.canceled += instance.OnAttack;
@@ -432,7 +393,6 @@ public class @ActionInputs : IInputActionCollection, IDisposable
     {
         void OnHorizontal(InputAction.CallbackContext context);
         void OnVertical(InputAction.CallbackContext context);
-        void OnRun(InputAction.CallbackContext context);
         void OnAttack(InputAction.CallbackContext context);
         void OnSpecial(InputAction.CallbackContext context);
         void OnMenu(InputAction.CallbackContext context);
