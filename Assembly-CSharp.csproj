@@ -70,6 +70,7 @@
      <Compile Include="Assets\Thirdparty\AllIn1SpriteShader\Scripts\AllIn1Shader.cs" />
      <Compile Include="Assets\Scripts\UI\Popups\CanvasPopupLocationName.cs" />
      <Compile Include="Assets\Scripts\Entity\Enemies\EnemyEnums.cs" />
+     <Compile Include="Assets\Scripts\UI\Menu\UnlockContinueButton.cs" />
      <Compile Include="Assets\Scripts\UI\Popups\CanvasPopupDialog.cs" />
      <Compile Include="Assets\Scripts\Entity\EntityInterfaces.cs" />
      <Compile Include="Assets\Scripts\Entity\Enemies\EnemySettings.cs" />
