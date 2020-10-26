@@ -752,7 +752,7 @@ MonoBehaviour:
   m_BlendUpdateMethod: 1
   m_DefaultBlend:
     m_Style: 1
-    m_Time: 2
+    m_Time: 1
     m_CustomCurve:
       serializedVersion: 2
       m_Curve: []
@@ -1365,6 +1365,10 @@ PrefabInstance:
     - target: {fileID: 3260127211863811890, guid: 0fd4f69ca35196942ad5fd3b288ebbed, type: 3}
       propertyPath: m_SizeDelta.x
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3260127211922083124, guid: 0fd4f69ca35196942ad5fd3b288ebbed, type: 3}
+      propertyPath: creditsSceneIndex
+      value: 9
       objectReference: {fileID: 0}
     - target: {fileID: 3260127211922083126, guid: 0fd4f69ca35196942ad5fd3b288ebbed, type: 3}
       propertyPath: m_Name

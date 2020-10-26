@@ -7,6 +7,7 @@ using Game;
 using Islands;
 using Town;
 using UI;
+using UI.Menu;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UI.Popups;
@@ -81,6 +82,11 @@ namespace Ship {
             travelButtons.Add(new CanvasPopupDialog.ButtonSettings(largeIslandButtonKey, Normal, 2));
             travelButtons.Add(new CanvasPopupDialog.ButtonSettings(confirmButtonKey, StrongHighlight, 3));
             travelButtons.Add(new CanvasPopupDialog.ButtonSettings(cancelButtonKey, Highlight, 4));
+
+            GameCreditsController.OnCreditsOpen += () => {
+                GameMaster.Instance.ShipTravel = null;
+                Destroy(gameObject);
+            };
         }
 
         #region Travel to Islands

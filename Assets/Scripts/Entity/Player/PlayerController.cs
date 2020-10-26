@@ -198,7 +198,7 @@ namespace Entity.Player {
         /// <summary>
         /// Sets the player movement state based on the game execution state.
         /// </summary>
-        private void UpdatePlayerMovementToMatchGameState() {
+        private void UpdatePlayerMovementToMatchGameState(ExecutionState state) {
             CanMove = (GameMaster.Instance.GameState == ExecutionState.Normal);
         }
         
@@ -364,8 +364,15 @@ namespace Entity.Player {
         
         #endregion
         
-        #region Level, Data & Progression Management
+        #region Level, Coins, Data & Progression Management
 
+        /// <summary>
+        /// Adds coins to the player coin count.
+        /// </summary>
+        public void AddCoins(int amount) {
+            Coins += amount;
+        }
+        
         /// <summary>
         /// Updates the stats in the game master to reflect the player progression.
         /// </summary>

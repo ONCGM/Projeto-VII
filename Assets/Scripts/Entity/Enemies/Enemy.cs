@@ -72,7 +72,16 @@ namespace Entity.Enemies {
         protected virtual void Start() {
             attackingCollider = GetComponentInChildren<SphereCollider>();
             hpBarUI = GetComponentInChildren<EnemyHealthBarUI>();
+            GameMaster.OnGameExecutionStateUpdated += GameStateUpdated;
             SetEnemyValues();
+            InvokeRepeating(nameof(RecoverStamina), 1f, 1f);
+        }
+
+        /// <summary>
+        /// Recovers the enemy stamina.
+        /// </summary>
+        protected virtual void RecoverStamina() {
+            Stamina = Mathf.Clamp(Stamina + 2, 0, MaxStamina);
         }
 
         protected virtual void Update() {
@@ -101,16 +110,16 @@ namespace Entity.Enemies {
                 primaryAttackDamage = Mathf.CeilToInt(primaryAttackDamage * settings.attackStatsMultiplier);
             }
             
-            Health = Mathf.CeilToInt(Health * (isElite ? settings.eliteStatsMultiplier : 1f));
-            MaxHealth = Mathf.CeilToInt(MaxHealth * (isElite ? settings.eliteStatsMultiplier : 1f));
-            Stamina = Mathf.CeilToInt(Stamina * (isElite ? settings.eliteStatsMultiplier : 1f));
-            MaxStamina = Mathf.CeilToInt(MaxStamina * (isElite ? settings.eliteStatsMultiplier : 1f));
-            primaryAttackDamage = Mathf.CeilToInt(primaryAttackDamage * (isElite ? settings.eliteStatsMultiplier : 1f));
+            MaxHealth = Mathf.CeilToInt(Health * (isElite ? settings.eliteStatsMultiplier : 1f) * GameMaster.Instance.GameDifficulty);
+            Health = MaxHealth;
+            MaxStamina = Mathf.CeilToInt(MaxStamina * (isElite ? settings.eliteStatsMultiplier : 1f) * GameMaster.Instance.GameDifficulty);
+            Stamina = MaxStamina;
+            primaryAttackDamage = Mathf.CeilToInt(primaryAttackDamage * (isElite ? settings.eliteStatsMultiplier : 1f) * GameMaster.Instance.GameDifficulty);
             
             MaxLevel = settings.maxLevelCap;
             movementSpeed = settings.baseMoveSpeed;
             enemyType = settings.enemyType;
-            chanceToDrop = settings.chanceToDropItem;
+            chanceToDrop = settings.chanceToDropItem  * GameMaster.Instance.GameDifficultyReversed;
             itemsToDrop = settings.itemsToDrop;
 
             lastPatrolOffset = (settings.patrolBackAndForth ? (Random.value > 0.5f ? Vector3.forward : Vector3.right) * settings.patrollingRange :
@@ -244,6 +253,8 @@ namespace Entity.Enemies {
         /// Attacks, will damage anything that is in front of the entity and in range.
         /// </summary>
         public virtual void Attack() {
+            if(Stamina < 3) return;
+            Stamina -= 3;
             StopAllCoroutines();
 
             if(CheckAttackCollision(attackingCollider)) {
@@ -308,26 +319,31 @@ namespace Entity.Enemies {
             hpBarUI.FadeOutAnimation();
             
             GenerateDrop();
-
-            //Destroy(gameObject);
-
-            //hpBarUI.gameObject.transform.parent = null;
+            
+            // ReSharper disable once DelegateSubtraction
+            GameMaster.OnGameExecutionStateUpdated -= GameStateUpdated;
         }
 
         /// <summary>
         /// Chooses and spawns a drop based on player progression and random chance.
         /// </summary>
         protected virtual void GenerateDrop() {
+            // TODO: Set Coins based on economy.
             if(Random.value > settings.chanceToDropItem) return;
-            var availableItems = itemsToDrop.Where(itemSettings => GameMaster.Instance.PlayerStats.Level > itemSettings.minimumPlayerLevelToSpawn).ToList();
+            var availableItems = itemsToDrop.Where(itemSettings =>
+                                                       GameMaster.Instance.PlayerStats.Level >
+                                                       itemSettings.minimumPlayerLevelToSpawn).ToList();
 
             if(availableItems.Count < 1) {
-                // Change to drop coin
+                FindObjectOfType<PlayerController>()
+                    .AddCoins(Mathf.RoundToInt(Random.Range(1, 50) * GameMaster.Instance.GameDifficultyReversed));
                 return;
             }
 
             var selectedItem = availableItems[Random.Range(0, availableItems.Count)];
 
+            FindObjectOfType<PlayerController>()
+                .AddCoins(Mathf.RoundToInt(Random.Range(1, 25) * GameMaster.Instance.GameDifficultyReversed));
             if(selectedItem == null) return;
                 Instantiate(selectedItem.itemPrefab, transform.position, Quaternion.identity).GetComponent<ItemDrop>()
                     .SetItemBasedOnSettings(selectedItem);
@@ -338,9 +354,27 @@ namespace Entity.Enemies {
         /// Returns the experience amount to give to the player or killing entity.
         /// </summary>
         protected virtual int AmountOfExperienceToDrop() {
-            return Mathf.FloorToInt(MaxHealth + MaxStamina + 
+            return Mathf.FloorToInt((MaxHealth + MaxStamina + 
                                     primaryAttackDamage + movementSpeed +
-                                    (settings.spottingRange * 0.5f) / 5f);
+                                    (settings.spottingRange * 0.5f) / 5f) * 
+                                    GameMaster.Instance.GameDifficultyReversed);
+        }
+
+        /// <summary>
+        /// Follows the behaviour of the game state if it is changed.
+        /// </summary>
+        protected virtual void GameStateUpdated(ExecutionState state) {
+            switch(state) {
+                case ExecutionState.Normal:
+                    StartCoroutine(settings.isAggressive ? nameof(MoveTowardsEntity) : nameof(PatrolArea));
+                    break;
+                case ExecutionState.PopupPause:
+                    StopAllCoroutines();
+                    break;
+                case ExecutionState.FullPause:
+                    StopAllCoroutines();
+                    break;
+            }
         }
         
         #if UNITY_EDITOR

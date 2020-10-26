@@ -60,8 +60,10 @@
      <Compile Include="Assets\Scripts\Islands\IslandsSceneTransition.cs" />
      <Compile Include="Assets\Scripts\Entity\Player\PlayerUpgradeSettings.cs" />
      <Compile Include="Assets\Scripts\UI\Localization\LocalizationSystem.cs" />
+     <Compile Include="Assets\Scripts\Utility\Enums.cs" />
      <Compile Include="Assets\Scripts\Game\LoadGameScene.cs" />
      <Compile Include="Assets\Scripts\Items\ItemSettings.cs" />
+     <Compile Include="Assets\Scripts\Utility\SaveSystem.cs" />
      <Compile Include="Assets\Scripts\Other\CustomEventTrigger.cs" />
      <Compile Include="Assets\Scripts\Town\PortSceneTransition.cs" />
      <Compile Include="Assets\Scripts\Entity\Enemies\Enemy.cs" />
@@ -83,6 +85,7 @@
      <Compile Include="Assets\Scripts\Store\StoreTransition.cs" />
      <Compile Include="Assets\Scripts\UI\PlayerStatsUI.cs" />
      <Compile Include="Assets\Scripts\UI\TabManager.cs" />
+     <Compile Include="Assets\Scripts\Utility\SaveData.cs" />
      <Compile Include="Assets\Scripts\UI\MinimapUI.cs" />
      <Compile Include="Assets\Scripts\Ship\ShipTravelController.cs" />
      <Compile Include="Assets\Scripts\Game\GameMaster.cs" />
@@ -97,10 +100,12 @@
      <Compile Include="Assets\Thirdparty\AllIn1SpriteShader\Scripts\SetAtlasUvs.cs" />
      <Compile Include="Assets\Scripts\Entity\Entity.cs" />
      <Compile Include="Assets\Thirdparty\AllIn1SpriteShader\Scripts\RandomSeed.cs" />
+     <Compile Include="Assets\Scripts\Utility\SaveSystemSettings.cs" />
      <Compile Include="Assets\Scripts\Entity\EntityBullet.cs" />
      <Compile Include="Assets\Scripts\Entity\Player\PlayerStats.cs" />
      <Compile Include="Assets\Scripts\Islands\IslandPopulator.cs" />
      <Compile Include="Assets\Scripts\UI\DamageCanvas.cs" />
+     <Compile Include="Assets\Scripts\UI\Menu\GameCreditsController.cs" />
      <None Include="Assets\TextMesh Pro\Shaders\TMPro.cginc" />
      <None Include="Assets\TextMesh Pro\Shaders\TMP_SDF-Mobile Overlay.shader" />
      <None Include="Assets\Scripts\Shaders\TextureMask.shader" />

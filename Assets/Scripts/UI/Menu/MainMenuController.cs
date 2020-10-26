@@ -1,15 +1,19 @@
 ﻿using System.Collections.Generic;
 using Cinemachine;
 using DG.Tweening;
+using Entity.Player;
 using FMOD.Studio;
 using FMODUnity;
 using Game;
+using Items;
 using Localization;
 using UI.Localization;
 using UI.Popups;
 using UnityEngine;
 using UnityEngine.Rendering;
 using UnityEngine.SceneManagement;
+using UnityEngine.UI;
+using Utility;
 
 namespace UI.Menu {
     /// <summary>
@@ -35,8 +39,10 @@ namespace UI.Menu {
         [SerializeField] private CanvasGroup loadGameGroup,
                                              optionsMenuGroup;
         
-        [Header("Scene Indexes")] 
+        [Header("Scene Indexes")]
+        //[SerializeField] private int menuSceneIndex = 1;
         [SerializeField] private int gameSceneIndex = 2;
+        [SerializeField] private int creditsSceneIndex = 9;
         
         // [Header("Audio Settings")]
         private Bus masterBus;
@@ -64,9 +70,24 @@ namespace UI.Menu {
         [SerializeField] private LocalizedString quitMessageKey;
         private CanvasPopupDialog quitCurrentPopup;
 
+        [Header("UI Components Reference")]
+        [Header("Game Tab")]
+        [SerializeField] private Slider difficultySlider;
+        [SerializeField] private Image ptBrSelectionImage;
+        [SerializeField] private Image enSelectionImage;
+        [SerializeField] private Image jpSelectionImage;
+        [SerializeField] private Image fastGraphicsSelectionImage;
+        [SerializeField] private Image prettyGraphicsSelectionImage;
+        [SerializeField] private Image windowedSelectionImage;
+        [SerializeField] private Image fullscreenSelectionImage;
+        [Header("Audio Tab")]
+        [SerializeField] private Slider masterSlider;
+        [SerializeField] private Slider musicSlider;
+        [SerializeField] private Slider sfxSlider;
+
         #pragma warning restore 0649
         
-        #region Unity Events
+        #region Unity Events & Setup
         
         // Sets up the class and cameras to be in screen space.
         private void Awake() {
@@ -80,7 +101,27 @@ namespace UI.Menu {
             musicBus = RuntimeManager.GetBus("bus:/Master/Music");
             sfxBus = RuntimeManager.GetBus("bus:/Master/SFX");
 
-            // TODO: Link save with menu.
+            // Sync Saved Settings
+            SaveSystem.LoadedData = SaveSystem.LoadGameFile();
+            SyncUiWithSaveFile();
+        }
+
+        /// <summary>
+        /// Matches the state of the UI to be the same of the save file settings.
+        /// </summary>
+        private void SyncUiWithSaveFile() {
+            var data = SaveSystem.LoadedData;
+            difficultySlider.value = data.difficulty;
+            ptBrSelectionImage.enabled = (data.currentLanguage == LocalizationSystem.Language.Portuguese_Brazil);
+            enSelectionImage.enabled = (data.currentLanguage == LocalizationSystem.Language.English);
+            jpSelectionImage.enabled = (data.currentLanguage == LocalizationSystem.Language.Japanese);
+            fastGraphicsSelectionImage.enabled = !data.graphicsLevel;
+            prettyGraphicsSelectionImage.enabled = data.graphicsLevel;
+            windowedSelectionImage.enabled = !data.fullscreen;
+            fullscreenSelectionImage.enabled = data.fullscreen;
+            masterSlider.value = data.audioMasterVolume;
+            musicSlider.value = data.audioMusicVolume;
+            sfxSlider.value = data.audioSfxVolume;
         }
 
         #endregion
@@ -97,7 +138,7 @@ namespace UI.Menu {
             optionsMenuCanvas.enabled = true;
 
             DOTween.To(() => loadGameGroup.alpha, x => loadGameGroup.alpha = x, 0f, mainCanvasGroupFadeAnimationSpeed);
-            DOTween.To(()=> mainMenuGroup.alpha, x=> mainMenuGroup.alpha = x, 0f, mainCanvasGroupFadeAnimationSpeed).onComplete =
+            DOTween.To(() => mainMenuGroup.alpha, x=> mainMenuGroup.alpha = x, 0f, mainCanvasGroupFadeAnimationSpeed).onComplete =
                 () => {
                     DOTween.To(()=> optionsMenuGroup.alpha, x=> optionsMenuGroup.alpha = x, 1f, mainCanvasGroupFadeAnimationSpeed);
                     mainMenuCanvas.enabled = false;
@@ -152,7 +193,9 @@ namespace UI.Menu {
         /// Changes the difficulty of the game.
         /// </summary>
         public void ChangeDifficulty(float value) {
-            // TODO: Link with game master.
+            GameMaster.Instance.GameDifficulty = value;
+            SaveSystem.LoadedData.difficulty = value;
+            SaveSystem.SerializeToFile();
         }
 
         /// <summary>
@@ -160,8 +203,8 @@ namespace UI.Menu {
         /// </summary>
         public void ChangeLanguage(int value) {
             LocalizationSystem.CurrentLanguage = (LocalizationSystem.Language) Mathf.Clamp(value, 0, 2);
-            
-            // TODO: Update game settings with new language.
+            SaveSystem.LoadedData.currentLanguage = LocalizationSystem.CurrentLanguage;
+            SaveSystem.SerializeToFile();
         }
 
         /// <summary>
@@ -170,8 +213,8 @@ namespace UI.Menu {
         public void ChangeGraphicsQuality(bool value) {
             QualitySettings.SetQualityLevel(value ? 1 : 0, true);
             GraphicsSettings.renderPipelineAsset = value ? highSettingsRenderAsset : lowSettingsRenderAsset;
-            
-            // TODO: Update game settings.
+            SaveSystem.LoadedData.graphicsLevel = value;
+            SaveSystem.SerializeToFile();
         }
 
         /// <summary>
@@ -179,8 +222,8 @@ namespace UI.Menu {
         /// </summary>
         public void ToggleFullScreen(bool value) {
             Screen.fullScreenMode = value ? FullScreenMode.FullScreenWindow : FullScreenMode.Windowed;
-            
-            // TODO: Update game settings.
+            SaveSystem.LoadedData.fullscreen = value;
+            SaveSystem.SerializeToFile();
         }
         #endregion
 
@@ -190,8 +233,8 @@ namespace UI.Menu {
         /// </summary>
         public void UpdateMasterVolume(float value) {
             masterBus.setVolume(value);
-            
-            // TODO: Update game settings in save.
+            SaveSystem.LoadedData.audioMasterVolume = value;
+            SaveSystem.SerializeToFile();
         }
         
         /// <summary>
@@ -199,8 +242,8 @@ namespace UI.Menu {
         /// </summary>
         public void UpdateMusicVolume(float value) {
             musicBus.setVolume(value);
-            
-            // TODO: Update game settings in save.
+            SaveSystem.LoadedData.audioMusicVolume = value;
+            SaveSystem.SerializeToFile();
         }
         
         /// <summary>
@@ -208,8 +251,8 @@ namespace UI.Menu {
         /// </summary>
         public void UpdateSFXVolume(float value) {
             sfxBus.setVolume(value);
-            
-            // TODO: Update game settings in save.
+            SaveSystem.LoadedData.audioSfxVolume = value;
+            SaveSystem.SerializeToFile();
         }
 
         #endregion
@@ -218,7 +261,8 @@ namespace UI.Menu {
         /// Loads up the game credits sequence.
         /// </summary>
         public void StartCreditsSequence() {
-            // TODO: Set sequence to play.
+            GameMaster.Instance.GameSceneWasLoaded = false;
+            SceneManager.LoadSceneAsync(creditsSceneIndex, LoadSceneMode.Additive);
         }
         
         #endregion
@@ -228,7 +272,13 @@ namespace UI.Menu {
         /// Loads the game and uses current player save.
         /// </summary>
         public void ContinueGame() {
-            // TODO: Load previous game save.
+            GameMaster.Instance.SetSaveData(SaveSystem.LoadGameFile());
+            var data = GameMaster.Instance.MasterSaveData;
+            GameMaster.Instance.PlayerStats = data.currentPlayerStats;
+            GameMaster.Instance.GameDifficulty = data.difficulty;
+            GameMaster.Instance.CurrentGameDay = data.gameDay;
+            GameMaster.Instance.CurrentTimeOfDay = data.currentTimeOfDay;
+            // TODO: Transition.
             SceneManager.LoadScene(gameSceneIndex);
         }
         
@@ -248,10 +298,18 @@ namespace UI.Menu {
             var popup = Instantiate(popupPrefab).GetComponent<CanvasPopupDialog>();
             popup.SetUpPopup(newGameTitleKey.key, newGameMessageKey.key, buttons, ExecutionState.Normal, i => {
                 loadGameGroup.interactable = true;
-                if(i < 1) {
-                    SceneManager.LoadScene(gameSceneIndex);
-                    // TODO: Create a new save, delete old.
-                } 
+                if(i >= 1) return;
+                SaveSystem.LoadedData = new SaveData();
+                SaveSystem.SerializeToFile();
+                GameMaster.Instance.PlayerStats = new PlayerStats() {
+                    Health = 35, MaxHealth = 35, Stamina = 20, MaxStamina = 20,
+                    MeleeDamage = 7, RangedDamage = 5, MovementSpeed = 15,
+                    Level = 0, Experience = 0, TotalExperience = 0,
+                    Coins = 0, CurrentInventory = new List<InventoryItemEntry>(),
+                    CurrentUpgradeLevel = 0
+                };
+                SceneManager.LoadScene(gameSceneIndex);
+                // TODO: Transition.
             });
 
             newGameCurrentPopup = popup;

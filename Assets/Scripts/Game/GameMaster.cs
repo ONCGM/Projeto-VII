@@ -3,8 +3,10 @@ using System.Collections;
 using System.Collections.Generic;
 using Entity.Player;
 using Items;
+using JetBrains.Annotations;
 using Ship;
 using UnityEngine;
+using Utility;
 
 namespace Game {
     /// <summary>
@@ -39,7 +41,7 @@ namespace Game {
             get => gameState;
             set {
                 gameState = value;
-                OnGameExecutionStateUpdated?.Invoke();
+                OnGameExecutionStateUpdated?.Invoke(gameState);
                 Time.timeScale = gameState == ExecutionState.FullPause ? 0f : 1f;
             }
         }
@@ -103,10 +105,28 @@ namespace Game {
                 OnGameDayUpdate?.Invoke();
                 if(currentGameDay >= 30) {
                     // TODO: Add end game event.
+                    // TODO: GameSceneWasLoaded = true;
                     OnEndGameDayUpdate?.Invoke();
                 }
             }
         }
+
+        private float gameDifficulty = 1f;
+
+        /// <summary>
+        /// The current game difficulty.
+        /// </summary>
+        public float GameDifficulty {
+            get => gameDifficulty;
+            set => gameDifficulty = Mathf.Clamp(value, 0.5f, 1.5f);
+        }
+
+        /// <summary>
+        /// Returns the inverse of the current difficulty.
+        /// If its maxed out, will return minimum amount.
+        /// </summary>
+        public float GameDifficultyReversed => Mathf.Lerp(1.5f, 0.5f,
+                     Mathf.InverseLerp(0.5f, 1.5f, gameDifficulty));
 
         /// <summary>
         /// Should the player spawn in front of the store or the port. 
@@ -129,7 +149,12 @@ namespace Game {
         /// The current spawned ship in the game world.
         /// </summary>
         public ShipTravelController ShipTravel { get; set; }
-        
+
+        /// <summary>
+        /// Used in the credits scene, to go back to the correct place.
+        /// </summary>
+        public bool GameSceneWasLoaded { get; set; }
+
         /// <summary>
         /// Called whenever the PlayerStats are updated.
         /// </summary>
@@ -138,7 +163,7 @@ namespace Game {
         /// <summary>
         /// Called whenever the game execution state is updated.
         /// </summary>
-        public static Action OnGameExecutionStateUpdated;
+        public static Action<ExecutionState> OnGameExecutionStateUpdated;
         
         /// <summary>
         /// Called whenever the game menu is open or closed.
@@ -159,12 +184,14 @@ namespace Game {
         /// Called when the last game day starts and ends.
         /// </summary>
         public static Action OnEndGameDayUpdate;
+        
+        /// <summary>
+        /// The save date in use.
+        /// </summary>
+        public SaveData MasterSaveData { get; private set; }
 
-        //TODO
-        public object SaveData { get; private set; }
-
-        public void SetSaveData(object saveData) {
-            SaveData = saveData;
+        public void SetSaveData(SaveData save) {
+            MasterSaveData = save;
         }
     }
     
