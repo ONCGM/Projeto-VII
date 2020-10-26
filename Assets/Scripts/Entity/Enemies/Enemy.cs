@@ -289,7 +289,7 @@ namespace Entity.Enemies {
         // Updated to enable infighting between enemies.
         public override void Damage(int amount, Entity dealer) {
             anim.SetTrigger(DamagedAnim);
-            Health -= amount;
+            Health = Mathf.Max(Health - amount, 0);
             
             if(Health <= 0) {
                 Kill();
