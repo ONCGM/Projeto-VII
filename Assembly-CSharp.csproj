@@ -106,6 +106,8 @@
      <Compile Include="Assets\Scripts\Islands\IslandPopulator.cs" />
      <Compile Include="Assets\Scripts\UI\DamageCanvas.cs" />
      <Compile Include="Assets\Scripts\UI\Menu\GameCreditsController.cs" />
+     <Compile Include="Assets\Scripts\UI\Menu\LoadingScreenController.cs" />
+     <Compile Include="Assets\Scripts\Utility\SaveFileTagger.cs" />
      <None Include="Assets\TextMesh Pro\Shaders\TMPro.cginc" />
      <None Include="Assets\TextMesh Pro\Shaders\TMP_SDF-Mobile Overlay.shader" />
      <None Include="Assets\Scripts\Shaders\TextureMask.shader" />

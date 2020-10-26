@@ -24,8 +24,6 @@ namespace UI.Menu {
         [SerializeField] private RectTransform creditsHolderRect;
         private CanvasGroup creditsGroup;
         
-        // Events.
-        public static Action OnCreditsOpen;
         
         #pragma warning restore 0649
 
@@ -36,7 +34,7 @@ namespace UI.Menu {
 
             creditsHolderRect.DOLocalMoveY(creditsAnimationFinalPosition, creditsAnimationDuration).OnComplete(GoBackToLastScene).id = "credits";
 
-            OnCreditsOpen?.Invoke();
+            GameMaster.OnCreditsOpen?.Invoke();
             
             DOTween.To(() => creditsGroup.alpha, x => creditsGroup.alpha = x, 1f, fadeAnimationDuration).onComplete =
                 () => {

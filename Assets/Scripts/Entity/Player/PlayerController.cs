@@ -445,11 +445,10 @@ namespace Entity.Player {
         /// </summary>
         private void LevelUp() {
             Level++;
-            
-            if(Level % upgradeSettings.upgradeEveryHowManyLevels == 1) {
-                ApplyLevelingStats();
-                ApplyLevelingUpgrades();
-            }
+
+            if(Level % upgradeSettings.upgradeEveryHowManyLevels != 1) return;
+            ApplyLevelingStats();
+            ApplyLevelingUpgrades();
         }
         
         /// <summary>

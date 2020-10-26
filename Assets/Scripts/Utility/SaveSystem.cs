@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Runtime.Serialization.Formatters.Binary;
+using Game;
 using JetBrains.Annotations;
 using UnityEngine;
 
@@ -409,6 +410,8 @@ namespace Utility {
         /// </summary>
         /// <returns></returns>
         public static SaveData LoadGameFile() {
+            SearchForSaveFiles();
+            GameMaster.OnSaveDataUpdated?.Invoke();
             // Checks if there are any known saves.
             if(GameSaveInfo == null && AutoSaveInfo == null) {
                 Debug.Log("No saves or auto saves were found. Creating a new save file template.");
@@ -418,17 +421,19 @@ namespace Utility {
             }
         
             // Tries to get a game and auto save file.
-            FileInfo gameSave = null;
-            if(GameSaveInfo != null) gameSave = GameSaveInfo;
-
-            FileInfo autoSave = null;
-            if(AutoSaveInfo != null) autoSave = AutoSaveInfo;
-
             // Loads the most recent.
-            var saveFile = gameSave?.LastWriteTime > autoSave?.LastWriteTime ? gameSave : autoSave;
+            FileInfo saveFile;
+            
+            if(GameSaveInfo == null) {
+                saveFile = AutoSaveInfo;
+            } else if(AutoSaveInfo == null) {
+                saveFile = GameSaveInfo;
+            } else {
+                saveFile = GameSaveInfo?.LastWriteTime > AutoSaveInfo?.LastWriteTime ? GameSaveInfo : AutoSaveInfo;
+            }
             
             // Checks if it is valid.
-            if(ReferenceEquals(saveFile, null)) {
+            if(saveFile == null) {
                 Debug.Log("No save was found. Creating a new save file template.");
                 LoadedData = new SaveData();
                 SerializeToFile();
@@ -466,6 +471,7 @@ namespace Utility {
         /// </summary>
         /// <param name="path"> Path to the file directory. </param>
         public static SaveData LoadGameFile(string path) {
+            GameMaster.OnSaveDataUpdated?.Invoke();
             if(CheckForSaveFile(path)) {
                 LoadedDataInfo = new FileInfo(path);
             } else {

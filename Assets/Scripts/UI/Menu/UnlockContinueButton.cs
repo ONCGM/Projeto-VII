@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using Utility;
 
 namespace UI.Menu {
     /// <summary>
@@ -13,7 +14,7 @@ namespace UI.Menu {
         // Checks if the button should be unlocked
         private void Start() {
             continueButton = GetComponent<Button>();
-            continueButton.interactable = (true); // TODO: Add integration with save system.
+            continueButton.interactable = !SaveSystem.LoadedData.brandSpankingNewSave;
         }
     }
 }

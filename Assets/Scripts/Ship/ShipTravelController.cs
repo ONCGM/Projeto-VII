@@ -83,7 +83,12 @@ namespace Ship {
             travelButtons.Add(new CanvasPopupDialog.ButtonSettings(confirmButtonKey, StrongHighlight, 3));
             travelButtons.Add(new CanvasPopupDialog.ButtonSettings(cancelButtonKey, Highlight, 4));
 
-            GameCreditsController.OnCreditsOpen += () => {
+            GameMaster.OnCreditsOpen += () => {
+                GameMaster.Instance.ShipTravel = null;
+                Destroy(gameObject);
+            };
+            
+            GameMaster.OnReturnToMenu += () => {
                 GameMaster.Instance.ShipTravel = null;
                 Destroy(gameObject);
             };

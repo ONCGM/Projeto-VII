@@ -40,9 +40,9 @@ namespace UI.Menu {
                                              optionsMenuGroup;
         
         [Header("Scene Indexes")]
-        //[SerializeField] private int menuSceneIndex = 1;
-        [SerializeField] private int gameSceneIndex = 2;
+        //[SerializeField] private int gameSceneIndex = 2;
         [SerializeField] private int creditsSceneIndex = 9;
+        [SerializeField] private int loadingSceneIndex = 10;
         
         // [Header("Audio Settings")]
         private Bus masterBus;
@@ -278,8 +278,8 @@ namespace UI.Menu {
             GameMaster.Instance.GameDifficulty = data.difficulty;
             GameMaster.Instance.CurrentGameDay = data.gameDay;
             GameMaster.Instance.CurrentTimeOfDay = data.currentTimeOfDay;
-            // TODO: Transition.
-            SceneManager.LoadScene(gameSceneIndex);
+            GameMaster.Instance.GameSceneWasLoaded = false;
+            SceneManager.LoadSceneAsync(loadingSceneIndex, LoadSceneMode.Additive);
         }
         
         /// <summary>
@@ -287,9 +287,15 @@ namespace UI.Menu {
         /// </summary>
         public void CreateNewGame() {
             if(newGameCurrentPopup != null) { return; }
-
-            loadGameGroup.interactable = false;
             
+            loadGameGroup.interactable = false;
+
+            if(SaveSystem.LoadedData.brandSpankingNewSave) {
+                GameMaster.Instance.GameSceneWasLoaded = false;
+                SceneManager.LoadSceneAsync(loadingSceneIndex, LoadSceneMode.Additive);
+                return;
+            }
+
             var buttons = new List<CanvasPopupDialog.ButtonSettings>() {
                 new CanvasPopupDialog.ButtonSettings(confirmKey.key, CanvasPopupDialog.PopupButtonHighlight.StrongHighlight, 0),
                 new CanvasPopupDialog.ButtonSettings(cancelKey.key, CanvasPopupDialog.PopupButtonHighlight.Normal, 1)
@@ -299,6 +305,7 @@ namespace UI.Menu {
             popup.SetUpPopup(newGameTitleKey.key, newGameMessageKey.key, buttons, ExecutionState.Normal, i => {
                 loadGameGroup.interactable = true;
                 if(i >= 1) return;
+                loadGameGroup.interactable = false;
                 SaveSystem.LoadedData = new SaveData();
                 SaveSystem.SerializeToFile();
                 GameMaster.Instance.PlayerStats = new PlayerStats() {
@@ -308,8 +315,8 @@ namespace UI.Menu {
                     Coins = 0, CurrentInventory = new List<InventoryItemEntry>(),
                     CurrentUpgradeLevel = 0
                 };
-                SceneManager.LoadScene(gameSceneIndex);
-                // TODO: Transition.
+                GameMaster.Instance.GameSceneWasLoaded = false;
+                SceneManager.LoadSceneAsync(loadingSceneIndex, LoadSceneMode.Additive);
             });
 
             newGameCurrentPopup = popup;

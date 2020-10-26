@@ -89,7 +89,7 @@ namespace Game {
             get => currentTimeOfDay;
             set {
                 currentTimeOfDay = value;
-                OnGameTimeOfDayUpdated.Invoke();
+                OnGameTimeOfDayUpdated?.Invoke();
             }
         }
 
@@ -184,6 +184,21 @@ namespace Game {
         /// Called when the last game day starts and ends.
         /// </summary>
         public static Action OnEndGameDayUpdate;
+
+        /// <summary>
+        /// Invoked just before the menu scene starts to load when returning to the main menu.
+        /// </summary>
+        public static Action OnReturnToMenu;
+        
+        /// <summary>
+        /// Invoked just as the credits scene is loaded.
+        /// </summary>
+        public static Action OnCreditsOpen;
+
+        /// <summary>
+        /// Called when a save file is loaded.
+        /// </summary>
+        public static Action OnSaveDataUpdated;
         
         /// <summary>
         /// The save date in use.
@@ -192,6 +207,7 @@ namespace Game {
 
         public void SetSaveData(SaveData save) {
             MasterSaveData = save;
+            OnSaveDataUpdated?.Invoke();
         }
     }
     
