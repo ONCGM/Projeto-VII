@@ -47,7 +47,7 @@ namespace Entity {
             set => level = value;
         }
         
-        [SerializeField] protected int maxLevel = 0;
+        [SerializeField] protected int maxLevel = 30;
         public virtual int MaxLevel {
             get => maxLevel;
             set => maxLevel = value;

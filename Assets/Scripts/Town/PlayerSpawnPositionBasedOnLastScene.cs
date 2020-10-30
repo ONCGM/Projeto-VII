@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using Entity.Player;
 using Game;
+using Items;
 using UI;
 using UnityEngine;
 using UnityEngine.AI;
@@ -74,6 +75,8 @@ namespace Town {
             }
 
             if(toggleUI) Destroy(gameObject);
+            
+            player.PlayerIslandInventory = new Inventory(player.Inventory.InventorySize, new List<InventoryItemEntry>());
         }
     }
 }

@@ -5,6 +5,7 @@ using Cinemachine;
 using Entity.Player;
 using Game;
 using Islands;
+using Items;
 using Town;
 using UI;
 using UI.Menu;
@@ -129,7 +130,8 @@ namespace Ship {
             }
             
             GameMaster.Instance.SelectedIslandSize = (IslandSizes) Mathf.Min(buttonIndex, 2);
-            
+            GameMaster.Instance.PlayerStatsBeforeIsland = GameMaster.Instance.PlayerStats;
+
             var components = GameObject.FindGameObjectsWithTag(playerComponentsTag);
             foreach(var component in components) {
                 Destroy(component);
@@ -137,11 +139,11 @@ namespace Ship {
             
             // TODO: Serialize player stats and inventory before destroying it.
             
-            Destroy(GameObject.FindWithTag(playerTag));
+            Destroy(GameObject.FindWithTag(playerTag).gameObject);
             
             anim.SetTrigger(DepartToIsland);
             shipCamera.m_Priority = 12;
-            SceneManager.LoadScene(travelSceneIndex, LoadSceneMode.Additive);
+            SceneManager.LoadSceneAsync(travelSceneIndex, LoadSceneMode.Additive);
         }
 
         /// <summary>

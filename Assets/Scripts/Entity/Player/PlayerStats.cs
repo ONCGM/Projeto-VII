@@ -75,18 +75,23 @@ namespace Entity.Player {
             set => currentInventory = value;
         }
 
+        public int InventorySize {
+            get => inventorySize;
+            set => inventorySize = value;
+        }
+
         [SerializeField]
         private int health, maxHealth, stamina, maxStamina,
                     meleeDamage, rangedDamage, movementSpeed,
                     level, experience, totalExperience, coins,
-                    currentUpgradeLevel;
+                    currentUpgradeLevel, inventorySize;
         private List<InventoryItemEntry> currentInventory;
 
         public PlayerStats(int health, int maxHealth, int stamina, 
                            int melee, int ranged, int movement,
                            int maxStamina, int lvl, int experience, int totalExperience,
                            int coins, List<InventoryItemEntry> currentInventory,
-                           int currentUpgradeLvl) : this() {
+                           int inventorySize, int currentUpgradeLvl) : this() {
             Health = health;
             MaxHealth = maxHealth;
             Stamina = stamina;
@@ -99,6 +104,7 @@ namespace Entity.Player {
             TotalExperience = totalExperience;
             Coins = coins;
             CurrentInventory = currentInventory;
+            InventorySize = inventorySize;
             CurrentUpgradeLevel = currentUpgradeLvl;
         }
     }

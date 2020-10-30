@@ -2126,9 +2126,25 @@ PrefabInstance:
       propertyPath: m_AdditionalShaderChannelsFlag
       value: 25
       objectReference: {fileID: 0}
+    - target: {fileID: 746516348840554810, guid: 46c9e677923abcf4393d5dcfbf0aa8c7, type: 3}
+      propertyPath: m_RenderMode
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 746516348840554810, guid: 46c9e677923abcf4393d5dcfbf0aa8c7, type: 3}
+      propertyPath: m_Camera
+      value: 
+      objectReference: {fileID: 2105986402}
+    - target: {fileID: 746516348840554810, guid: 46c9e677923abcf4393d5dcfbf0aa8c7, type: 3}
+      propertyPath: m_PlaneDistance
+      value: 0.83
+      objectReference: {fileID: 0}
     - target: {fileID: 746516348840554813, guid: 46c9e677923abcf4393d5dcfbf0aa8c7, type: 3}
       propertyPath: m_Name
       value: Player Canvas
+      objectReference: {fileID: 0}
+    - target: {fileID: 1137220964951005917, guid: 46c9e677923abcf4393d5dcfbf0aa8c7, type: 3}
+      propertyPath: m_RootOrder
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 7937910691437932042, guid: 46c9e677923abcf4393d5dcfbf0aa8c7, type: 3}
       propertyPath: m_Alpha
@@ -2194,6 +2210,10 @@ PrefabInstance:
     - target: {fileID: 3555962724994509050, guid: 07cf473303d2a8e4b8beac9eac9431a4, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7221897437954194249, guid: 07cf473303d2a8e4b8beac9eac9431a4, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 07cf473303d2a8e4b8beac9eac9431a4, type: 3}

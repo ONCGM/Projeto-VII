@@ -1,5 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using System.Globalization;
+using DG.Tweening;
 using Items;
 using Localization;
 using TMPro;
@@ -27,11 +29,16 @@ namespace UI {
             if(amount is null) amount = transform.GetComponentInChildren<TMP_Text>();
         }
 
-        public void SetUpItemUi(InventoryItemEntry item) {
+        public void SetUpItemUi(InventoryItemEntry item, float animationTime) {
             itemInfo = item;
             
             icon.sprite = itemInfo.ItemSettings.itemImage;
-            amount.text = itemInfo.Stack.ToString();
+            
+            DOTween.To(x => amount.text = x.ToString(CultureInfo.InvariantCulture), 0, itemInfo.Stack, animationTime);
+
+            transform.localScale = Vector3.zero;
+
+            transform.DOScale(Vector3.one, animationTime);
         }
     }
 }

@@ -80,6 +80,11 @@ namespace Game {
             
         }
 
+        /// <summary>
+        /// Player stats when he arrived at island.
+        /// </summary>
+        public PlayerStats PlayerStatsBeforeIsland { get; set; }
+
         private TimeOfDay currentTimeOfDay = TimeOfDay.Morning;
 
         /// <summary>

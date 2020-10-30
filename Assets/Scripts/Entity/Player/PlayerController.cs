@@ -50,8 +50,12 @@ namespace Entity.Player {
         /// </summary>
         public Inventory Inventory {
             get => inventory;
-            set => inventory = value;
         }
+        
+        /// <summary>
+        /// Holds info on the items that the player got in the island trip.
+        /// </summary>
+        public Inventory PlayerIslandInventory { get; set; } 
 
         // Input
         private ActionInputs inputs;
@@ -110,8 +114,6 @@ namespace Entity.Player {
                 PlayerStatsUI.UpdateUiValues?.Invoke();
             }
         }
-
-        // TODO set stats to be based on player settings and such.
         
         /// <summary>
         /// Allows the player to move or not.
@@ -140,11 +142,13 @@ namespace Entity.Player {
             inputs.Player.Special.performed += SpecialAttack;
             if(ReferenceEquals(swordCollider, null)) swordCollider = GetComponentInChildren<SphereCollider>();
             upgradeSettings = Resources.Load<PlayerUpgradeSettings>(upgradeSettingsPath);
+            LoadGameMasterPlayerStats();
             agent.speed = playerSpeed;
             agent.autoTraverseOffMeshLink = false;
-            Inventory = new Inventory(playerInventorySize, new List<InventoryItemEntry>());
+            inventory = new Inventory(playerInventorySize, new List<InventoryItemEntry>());
+            inventory.OnInventoryUpdate.AddListener(UpdateGameMasterPlayerStats);
+            PlayerIslandInventory = new Inventory(playerInventorySize, new List<InventoryItemEntry>());
             GameMaster.OnGameExecutionStateUpdated += UpdatePlayerMovementToMatchGameState;
-            LoadGameMasterPlayerStats();
             InvokeRepeating(nameof(RecoverStamina), 1f, 1f);
         }
 
@@ -371,6 +375,7 @@ namespace Entity.Player {
         /// </summary>
         public void AddCoins(int amount) {
             Coins += amount;
+            UpdateGameMasterPlayerStats();
         }
         
         /// <summary>
@@ -389,7 +394,8 @@ namespace Entity.Player {
                 Experience = Experience,
                 TotalExperience = upgradeSettings.GetExperienceNeededForLevelUp(Level) + Experience,
                 Coins = Coins,
-                CurrentInventory = Inventory.ItemsInInventory,
+                CurrentInventory = inventory.ItemsInInventory,
+                InventorySize = playerInventorySize,
                 CurrentUpgradeLevel = 0
             };
 
@@ -416,7 +422,8 @@ namespace Entity.Player {
             Level = stats.Level;
             Experience = stats.Experience;
             Coins = stats.Coins;
-            Inventory = new Inventory(playerInventorySize, stats.CurrentInventory);
+            playerInventorySize = stats.InventorySize;
+            inventory = new Inventory(stats.InventorySize, stats.CurrentInventory);
 
             currentUpgrades = stats.CurrentUpgradeLevel;
             
@@ -438,6 +445,8 @@ namespace Entity.Player {
                 Experience -= expToLevelUp;
                 expToLevelUp = upgradeSettings.GetExperienceNeededForLevelUp(Level);
             }
+            
+            UpdateGameMasterPlayerStats();
         }
 
         /// <summary>
@@ -445,10 +454,12 @@ namespace Entity.Player {
         /// </summary>
         private void LevelUp() {
             Level++;
-
+            UpdateGameMasterPlayerStats();
+            
             if(Level % upgradeSettings.upgradeEveryHowManyLevels != 1) return;
             ApplyLevelingStats();
             ApplyLevelingUpgrades();
+            UpdateGameMasterPlayerStats();
         }
         
         /// <summary>
@@ -469,6 +480,8 @@ namespace Entity.Player {
             rangedBulletsPerAttack = upgradeSettings.bulletsPerShotUpgradeValues[currentUpgrades];
             bulletSpreadAngle = upgradeSettings.bulletAngleUpgradeValues[currentUpgrades];
             rangedAttackMaxRange = upgradeSettings.bulletRangeUpgradeValues[currentUpgrades];
+            playerInventorySize = upgradeSettings.inventorySizeUpgradeValues[currentUpgrades];
+            inventory.InventorySize = playerInventorySize;
         }
         
         #endregion

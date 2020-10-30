@@ -1,51 +1,11 @@
 fileFormatVersion: 2
-guid: 10e336573470fe849872188185c1c10f
+guid: 2db49eec3f8fb884eae969b283861039
 ModelImporter:
   serializedVersion: 20101
   internalIDToNameTable: []
-  externalObjects:
-  - first:
-      type: UnityEngine:Material
-      assembly: UnityEngine.CoreModule
-      name: Material #11
-    second: {fileID: 2100000, guid: 2643a9be97c0ad444bbc991d862a925a, type: 2}
-  - first:
-      type: UnityEngine:Material
-      assembly: UnityEngine.CoreModule
-      name: Material #12
-    second: {fileID: 2100000, guid: 3a0e651b367f23b4c9b2a3c348c22b15, type: 2}
-  - first:
-      type: UnityEngine:Material
-      assembly: UnityEngine.CoreModule
-      name: Material #13
-    second: {fileID: 2100000, guid: 4b901e558f2c09a43a5cea07e6b2ba03, type: 2}
-  - first:
-      type: UnityEngine:Material
-      assembly: UnityEngine.CoreModule
-      name: Material #14
-    second: {fileID: 2100000, guid: b3bcd1d8b45517e4a817fdbf3490f2d6, type: 2}
-  - first:
-      type: UnityEngine:Material
-      assembly: UnityEngine.CoreModule
-      name: Material #15
-    second: {fileID: 2100000, guid: e81957e619dfd6849be1b13bffd25d40, type: 2}
-  - first:
-      type: UnityEngine:Material
-      assembly: UnityEngine.CoreModule
-      name: Material #16
-    second: {fileID: 2100000, guid: ec4f9b94f66727b41ac9f297342bb66c, type: 2}
-  - first:
-      type: UnityEngine:Material
-      assembly: UnityEngine.CoreModule
-      name: Material #17
-    second: {fileID: 2100000, guid: 18170a8129949124f869d9ae703ce4a4, type: 2}
-  - first:
-      type: UnityEngine:Material
-      assembly: UnityEngine.CoreModule
-      name: Material #18
-    second: {fileID: 2100000, guid: 8dbbe92ce3cdefd42b11d3c77ac15924, type: 2}
+  externalObjects: {}
   materials:
-    materialImportMode: 1
+    materialImportMode: 0
     materialName: 0
     materialSearch: 1
     materialLocation: 1
@@ -79,15 +39,15 @@ ModelImporter:
     addColliders: 0
     useSRGBMaterialColor: 1
     sortHierarchyByName: 1
-    importVisibility: 1
+    importVisibility: 0
     importBlendShapes: 1
-    importCameras: 1
-    importLights: 1
+    importCameras: 0
+    importLights: 0
     fileIdsGeneration: 2
     swapUVChannels: 0
-    generateSecondaryUV: 1
+    generateSecondaryUV: 0
     useFileUnits: 1
-    keepQuads: 0
+    keepQuads: 1
     weldVertices: 1
     bakeAxisConversion: 0
     preserveHierarchy: 0
@@ -106,7 +66,7 @@ ModelImporter:
     useFileScale: 1
   tangentSpace:
     normalSmoothAngle: 60
-    normalImportMode: 0
+    normalImportMode: 1
     tangentImportMode: 3
     normalCalculationMode: 4
     legacyComputeAllNormalsFromSmoothingGroupsWhenMeshHasBlendShapes: 0

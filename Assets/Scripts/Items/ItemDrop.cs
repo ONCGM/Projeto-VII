@@ -6,6 +6,7 @@ using Entity;
 using Entity.Player;
 using UnityEngine;
 using FMODUnity;
+using Game;
 
 namespace Items {
     /// <summary>
@@ -61,12 +62,6 @@ namespace Items {
             if(hasSpawned) return;
             
             settings = itemSettings;
-
-            if(transform.childCount > 0) {
-                for(int i = 0; i < transform.childCount; i++) {
-                    Destroy(transform.GetChild(i));
-                }
-            }
             
             Instantiate(settings.itemModel, transform);
             
@@ -90,6 +85,7 @@ namespace Items {
             var stats = new InventoryItemEntry(settings, 1);
 
             player.Inventory.AddItemEntry(stats);
+            player.PlayerIslandInventory.AddItemEntry(stats);
 
             // TODO: Add particles, sfx and effects.
             eventEmitter.Play();

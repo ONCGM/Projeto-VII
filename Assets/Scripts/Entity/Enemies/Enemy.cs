@@ -320,6 +320,8 @@ namespace Entity.Enemies {
             
             GenerateDrop();
             
+            Destroy(transform.GetChild(0).gameObject);
+            
             // ReSharper disable once DelegateSubtraction
             GameMaster.OnGameExecutionStateUpdated -= GameStateUpdated;
         }
