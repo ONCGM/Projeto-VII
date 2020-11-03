@@ -110,7 +110,7 @@ namespace UI.Menu {
         /// Matches the state of the UI to be the same of the save file settings.
         /// </summary>
         private void SyncUiWithSaveFile() {
-            var data = SaveSystem.LoadedData;
+            var data = GameMaster.Instance.MasterSaveData;
             difficultySlider.value = data.difficulty;
             ptBrSelectionImage.enabled = (data.currentLanguage == LocalizationSystem.Language.Portuguese_Brazil);
             enSelectionImage.enabled = (data.currentLanguage == LocalizationSystem.Language.English);

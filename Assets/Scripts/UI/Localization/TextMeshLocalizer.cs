@@ -15,12 +15,15 @@ namespace UI.Localization {
         [SerializeField] private LocalizedString localizedText;
 
         // Components.
-        private TMP_Text textMesh;
-        
+        /// <summary>
+        /// The text mesh component of this localizer.
+        /// </summary>
+        public TMP_Text TextMeshComponent { get; private set; }
+
         // Sets up the component and loads the text.
         private void Awake() {
-            textMesh = GetComponent<TMP_Text>();
-            textMesh.text = localizedText.value;
+            TextMeshComponent = GetComponent<TMP_Text>();
+            TextMeshComponent.text = localizedText.value;
 
             LocalizationSystem.OnLanguageUpdate += UpdateText;
         }
@@ -29,7 +32,7 @@ namespace UI.Localization {
         /// Updates the text when the language has changed.
         /// </summary>
         private void UpdateText() {
-            textMesh.text = localizedText.value;
+            TextMeshComponent.text = localizedText.value;
         }
         
         /// <summary>
@@ -37,7 +40,7 @@ namespace UI.Localization {
         /// </summary>
         public void UpdateKey(string key) {
             localizedText = new LocalizedString(key);
-            textMesh.text = localizedText.value;
+            TextMeshComponent.text = localizedText.value;
         }
 
         // <summary>

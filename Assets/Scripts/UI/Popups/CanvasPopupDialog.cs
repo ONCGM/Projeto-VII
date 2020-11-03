@@ -99,6 +99,46 @@ namespace UI.Popups {
         }
 
         /// <summary>
+        /// Sets the popup to have the desired values. Use localization keys to get the text.
+        /// </summary>
+        /// <param name="titleKey"> Localization key of the title. </param>
+        /// <param name="messageKey"> Localization key of the message. </param>
+        /// <param name="additionalMessageKey"> Extra localization key for a second line message.</param>
+        /// <param name="buttonSettings"> Buttons of the popup. Max of 5 buttons.
+        /// Should follow order: Confirm, extras and then cancel.</param>
+        /// <param name="popupExecutionState"> Does the game need to be paused? </param>
+        /// <param name="callback"> Function to call when a button is pressed. </param>
+        public void SetUpPopup(string titleKey, string messageKey, string additionalMessageKey, List<ButtonSettings> buttonSettings,
+                               ExecutionState popupExecutionState, Action<int> callback) {
+            popupOpen = true;
+            titleText.UpdateKey(titleKey);
+            messageText.TextMeshComponent.text = 
+                $"{LocalizationSystem.GetLocalizedValue(messageKey)} " +
+                $"{Environment.NewLine} " +
+                $"{(string.IsNullOrWhiteSpace(additionalMessageKey) ? string.Empty : LocalizationSystem.GetLocalizedValue(additionalMessageKey))}";
+
+            buttons.Clear();
+
+            foreach(var settings in buttonSettings) {
+                var button = Instantiate(popupButtonPrefabs[(int) settings.highlightLevel], buttonParent).GetComponent<Button>();
+                
+                button.onClick.AddListener(() => callback(settings.id));
+                button.onClick.AddListener(() => popupOpen = false);
+                button.GetComponentInChildren<TextMeshLocalizer>().UpdateKey(settings.key);
+                
+                buttons.Add(button);
+            }
+
+            GameMaster.Instance.GameState = popupExecutionState;
+
+            GetComponentInChildren<EventSystem>().firstSelectedGameObject = buttons[0].gameObject;
+            
+            AnimateIn();
+            
+            StartCoroutine(nameof(PopupPauseRoutine));
+        }
+
+        /// <summary>
         /// Waits for a button to be pressed, disables all buttons and then resumes the game execution.
         /// </summary>
         private IEnumerator PopupPauseRoutine() {

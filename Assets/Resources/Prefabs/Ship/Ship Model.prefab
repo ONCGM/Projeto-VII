@@ -55,14 +55,24 @@ MonoBehaviour:
   townLightTag: Town Dir Light
   seaLightTag: Sea Dir Light
   islandLightTag: Island Dir Light
-  travelTitleKey: MENU_POPUP_TITLE_TRAVEL
-  travelMessageKey: MENU_POPUP_MESSAGE_TRAVEL_ISLAND
-  backToTownMessageKey: MENU_POPUP_MESSAGE_TRAVEL_TOWN
-  confirmButtonKey: MENU_LABEL_CONTINUE
-  cancelButtonKey: MENU_LABEL_CANCEL
-  smallIslandButtonKey: MENU_POPUP_BUTTON_SMALL_ISLAND
-  mediumIslandButtonKey: MENU_POPUP_BUTTON_MEDIUM_ISLAND
-  largeIslandButtonKey: MENU_POPUP_BUTTON_LARGE_ISLAND
+  travelTitleKey:
+    key: MENU_POPUP_TITLE_TRAVEL
+  travelMessageKey:
+    key: MENU_POPUP_MESSAGE_TRAVEL_ISLAND
+  timeAdvanceMessageKey:
+    key: MENU_POPUP_MESSAGE_TRAVEL_TIME
+  backToTownMessageKey:
+    key: MENU_POPUP_MESSAGE_TRAVEL_TOWN
+  confirmButtonKey:
+    key: MENU_LABEL_CONFIRM_BUTTON
+  cancelButtonKey:
+    key: MENU_LABEL_CANCEL
+  smallIslandButtonKey:
+    key: MENU_POPUP_BUTTON_SMALL_ISLAND
+  mediumIslandButtonKey:
+    key: MENU_POPUP_BUTTON_MEDIUM_ISLAND
+  largeIslandButtonKey:
+    key: MENU_POPUP_BUTTON_LARGE_ISLAND
   popupPrefab: {fileID: 3017782093125859472, guid: ff97a6ef454e32b498a293f927ae08a4, type: 3}
 --- !u!65 &7148259464809809878
 BoxCollider:

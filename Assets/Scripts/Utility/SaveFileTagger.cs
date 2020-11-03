@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using Game;
 using UnityEngine;
 
 namespace Utility {
@@ -12,6 +13,7 @@ namespace Utility {
         private void Awake() {
             SaveSystem.LoadedData.brandSpankingNewSave = false;
             SaveSystem.SerializeToFile();
+            GameMaster.OnGameSaved?.Invoke();
             Destroy(gameObject);
         }
     }

@@ -94,12 +94,20 @@ namespace Islands {
 
             if(GameMaster.Instance.CurrentIslandType == IslandType.TreasureIsland) {
                 foreach(var spawn in lootSpawnPositions) {
-                    Instantiate(lootPrefabs[Random.Range(0, lootPrefabs.Count)], spawn.position, spawn.rotation);
+                    var loot = Instantiate(lootPrefabs[Random.Range(0, lootPrefabs.Count)], spawn.position, spawn.rotation);
+                    var rotation = loot.transform.rotation;
+                    loot.transform.rotation = Quaternion.Euler(-180f, 
+                                                               rotation.eulerAngles.y,
+                                                               rotation.eulerAngles.z);
                 }
             } else {
                 foreach(var spawn in lootSpawnPositions) {
                     if(Random.value > chanceOfSpawningLoot) continue;
-                    Instantiate(lootPrefabs[Random.Range(0, lootPrefabs.Count)], spawn.position, spawn.rotation);
+                    var loot = Instantiate(lootPrefabs[Random.Range(0, lootPrefabs.Count)], spawn.position, spawn.rotation);
+                    var rotation = loot.transform.rotation;
+                    loot.transform.rotation = Quaternion.Euler(-180f, 
+                                                               rotation.eulerAngles.y,
+                                                               rotation.eulerAngles.z);
                 }
             }
         }

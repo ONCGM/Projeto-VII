@@ -25,9 +25,9 @@ namespace Store {
         }
 
         private void OnSceneLoaded(Scene scene, LoadSceneMode mode) {
-            UniversalAdditionalCameraData cameraData = GameObject
-                                                       .FindWithTag("MainCamera").GetComponent<Camera>()
-                                                       .GetUniversalAdditionalCameraData();
+            var cameraData = GameObject
+                             .FindWithTag("MainCamera").GetComponent<Camera>()
+                             .GetUniversalAdditionalCameraData();
             cameraData.cameraStack.Clear();
             cameraData.cameraStack.Add(gameObject.GetComponent<Camera>());
             anim.SetTrigger(Open);

@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using Entity.Player;
 using Items;
 using JetBrains.Annotations;
+using Localization;
 using Ship;
 using UnityEngine;
 using Utility;
@@ -18,7 +19,16 @@ namespace Game {
 
         static GameMaster() { }
 
-        private GameMaster() { }
+        private GameMaster() {
+            SaveSystem.LoadGameFile();
+            MasterSaveData = SaveSystem.LoadedData;
+            PlayerStats = MasterSaveData.currentPlayerStats;
+            currentGameDay = MasterSaveData.gameDay;
+            CurrentTimeOfDay = MasterSaveData.currentTimeOfDay;
+            DialogsCleared = MasterSaveData.dialogsCleared;
+            GameDifficulty = MasterSaveData.difficulty;
+            LocalizationSystem.CurrentLanguage = MasterSaveData.currentLanguage;
+        }
 
         /// <summary>
         /// The instance of this singleton.
@@ -84,6 +94,11 @@ namespace Game {
         /// Player stats when he arrived at island.
         /// </summary>
         public PlayerStats PlayerStatsBeforeIsland { get; set; }
+
+        /// <summary>
+        /// Important dialogs that the player has seen.
+        /// </summary>
+        public List<bool> DialogsCleared { get; set; } = new List<bool>();
 
         private TimeOfDay currentTimeOfDay = TimeOfDay.Morning;
 
@@ -160,6 +175,8 @@ namespace Game {
         /// </summary>
         public bool GameSceneWasLoaded { get; set; }
 
+        #region Actions
+        
         /// <summary>
         /// Called whenever the PlayerStats are updated.
         /// </summary>
@@ -204,17 +221,70 @@ namespace Game {
         /// Called when a save file is loaded.
         /// </summary>
         public static Action OnSaveDataUpdated;
+
+        /// <summary>
+        /// Called whenever the game is saved automatically.
+        /// </summary>
+        public static Action OnGameSaved;
+        
+        #endregion
+
+        #region Time Stuff
+
+        /// <summary>
+        /// Passes time by one period.
+        /// </summary>
+        public void AdvanceOneTimePeriod() {
+            // TODO: Lights
+            switch(CurrentTimeOfDay) {
+                case TimeOfDay.Night:
+                    CurrentGameDay++;
+                    currentTimeOfDay = TimeOfDay.Morning;
+                    break;
+                case TimeOfDay.Morning:
+                    currentTimeOfDay = TimeOfDay.Afternoon;
+                    break;
+                case TimeOfDay.Afternoon:
+                    currentTimeOfDay = TimeOfDay.Night;
+                    break;
+            }
+            
+            SaveGame();
+        }
+
+        #endregion
+        
+        #region Saving
         
         /// <summary>
         /// The save date in use.
         /// </summary>
         public SaveData MasterSaveData { get; private set; }
 
+        /// <summary>
+        /// Overrides save data.
+        /// </summary>
         public void SetSaveData(SaveData save) {
             MasterSaveData = save;
             OnSaveDataUpdated?.Invoke();
         }
+
+        /// <summary>
+        /// Save the game to a file.
+        /// </summary>
+        public void SaveGame() {
+            MasterSaveData.currentPlayerStats = PlayerStats;
+            MasterSaveData.gameDay = CurrentGameDay;
+            MasterSaveData.dialogsCleared = DialogsCleared;
+            SaveSystem.LoadedData = MasterSaveData;
+            SaveSystem.SerializeToFile();
+            OnGameSaved?.Invoke();
+        }
+        
+        #endregion
     }
+
+    #region Enums
     
     /// <summary>
     /// Current execution state of the game.
@@ -252,4 +322,6 @@ namespace Game {
         TreasureIsland,
         MerchantIsland
     }
+    
+    #endregion
 }

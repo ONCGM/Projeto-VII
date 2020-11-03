@@ -42,7 +42,7 @@ namespace Utility {
         /// <summary>
         /// List of all important dialogs. True if the player has seen them.
         /// </summary>
-        public bool[] dialogsCleared = new[] {false, false, false};
+        public List<bool> dialogsCleared = new List<bool>();
 
         /// <summary>
         /// The game difficulty set by the player.
@@ -78,11 +78,6 @@ namespace Utility {
         /// The audio mixer sfx channel volume.
         /// </summary>
         public float audioSfxVolume = 0f;
-
-        /// <summary>
-        /// The total amount of time the player spent playing the game.
-        /// </summary>
-        public float totalTimeInGame = 0f;
 
         /// <summary>
         /// Changed to false as soon as the player or the auto-save

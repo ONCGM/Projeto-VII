@@ -404,6 +404,8 @@ namespace Entity.Player {
             }
             
             GameMaster.Instance.PlayerStats = stats;
+            GameMaster.Instance.MasterSaveData.currentPlayerStats = stats;
+            GameMaster.Instance.SaveGame();
         }
         
         /// <summary>
