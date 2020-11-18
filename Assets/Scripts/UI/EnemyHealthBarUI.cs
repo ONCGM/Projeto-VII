@@ -45,8 +45,8 @@ namespace UI {
         }
 
         private void Start() {
-            canvas.worldCamera = GameObject.FindWithTag("MainCamera").GetComponent<Camera>();
             UpdateUI();
+            canvas.worldCamera = GameObject.FindWithTag("MainCamera").GetComponent<Camera>();
         }
 
         private void LateUpdate() {

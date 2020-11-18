@@ -43,8 +43,7 @@ namespace Items {
         /// Sets up the item and starts playing an animation.
         /// </summary>
         protected virtual void Awake() {
-             ItemIdleAnimation();
-             eventEmitter = GetComponent<StudioEventEmitter>();
+            eventEmitter = GetComponent<StudioEventEmitter>();
              Invoke(nameof(CheckObjectSpawn), 1f);
         }
         
@@ -63,9 +62,11 @@ namespace Items {
             
             settings = itemSettings;
             
-            Instantiate(settings.itemModel, transform);
+            Instantiate(settings.itemModel, transform.position, Quaternion.Euler(Vector3.zero), transform);
             
             hasSpawned = true;
+            
+            ItemIdleAnimation();
         }
 
         /// <summary>

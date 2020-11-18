@@ -38,7 +38,7 @@ namespace Islands {
         /// <summary>
         /// Calls the spawning methods.
         /// </summary>
-        private void Awake() {
+        private void Start() {
             PopulateEnemies();
             PopulateLoot();
         }
@@ -94,20 +94,12 @@ namespace Islands {
 
             if(GameMaster.Instance.CurrentIslandType == IslandType.TreasureIsland) {
                 foreach(var spawn in lootSpawnPositions) {
-                    var loot = Instantiate(lootPrefabs[Random.Range(0, lootPrefabs.Count)], spawn.position, spawn.rotation);
-                    var rotation = loot.transform.rotation;
-                    loot.transform.rotation = Quaternion.Euler(-180f, 
-                                                               rotation.eulerAngles.y,
-                                                               rotation.eulerAngles.z);
+                    Instantiate(lootPrefabs[Random.Range(0, lootPrefabs.Count)], spawn.position, Quaternion.Euler(Vector3.zero));
                 }
             } else {
                 foreach(var spawn in lootSpawnPositions) {
                     if(Random.value > chanceOfSpawningLoot) continue;
-                    var loot = Instantiate(lootPrefabs[Random.Range(0, lootPrefabs.Count)], spawn.position, spawn.rotation);
-                    var rotation = loot.transform.rotation;
-                    loot.transform.rotation = Quaternion.Euler(-180f, 
-                                                               rotation.eulerAngles.y,
-                                                               rotation.eulerAngles.z);
+                    Instantiate(lootPrefabs[Random.Range(0, lootPrefabs.Count)], spawn.position, Quaternion.Euler(Vector3.zero));
                 }
             }
         }
