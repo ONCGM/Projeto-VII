@@ -36,16 +36,16 @@ namespace Islands {
         /// </summary>
         private void Awake() {
             Spawned = Random.value < chanceToSpawn;
-            HasDependencies = spawnDependencies.Count <= 0;
+            HasDependencies = spawnDependencies.Count > 0;
             
             navObstacles = GetComponentsInChildren<NavMeshObstacle>().ToList();
 
             foreach(var obstacle in navObstacles) {
                 obstacle.enabled = !Spawned || HasDependencies;
             }
-            
-            if(Spawned && !HasDependencies) return;
-            
+
+            if(Spawned && !HasDependencies) return; 
+
             populators = GetComponentsInChildren<IslandPopulator>().ToList();
             foreach(var populator in populators) {
                 populator.enabled = false;
@@ -67,9 +67,9 @@ namespace Islands {
         /// Also enables other scripts to populate the islands.
         /// </summary>
         private void Start() {
-            if(!HasDependencies || !Spawned) return;
-
-            if(!spawnDependencies.TrueForAll(x => x.Spawned == true)) return;
+            if(!Spawned) return;
+            
+            if(!spawnDependencies.TrueForAll(x => x.Spawned)) return;
             
             foreach(var obstacle in navObstacles) {
                 obstacle.enabled = false;
