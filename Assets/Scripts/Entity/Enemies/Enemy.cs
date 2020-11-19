@@ -366,6 +366,8 @@ namespace Entity.Enemies {
         /// Follows the behaviour of the game state if it is changed.
         /// </summary>
         protected virtual void GameStateUpdated(ExecutionState state) {
+            if(this == null) return;
+            
             switch(state) {
                 case ExecutionState.Normal:
                     StartCoroutine(settings.isAggressive ? nameof(MoveTowardsEntity) : nameof(PatrolArea));
@@ -378,7 +380,12 @@ namespace Entity.Enemies {
                     break;
             }
         }
-        
+
+        /// <summary>
+        /// Unsubscribes from game master.
+        /// </summary>
+        private void OnDestroy() => GameMaster.OnGameExecutionStateUpdated -= GameStateUpdated;
+
         #if UNITY_EDITOR
         private void OnDrawGizmos() {
             Gizmos.color = targetEntity == null ? Color.red : Color.green;

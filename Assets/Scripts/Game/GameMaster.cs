@@ -123,9 +123,9 @@ namespace Game {
             set {
                 currentGameDay = value;
                 OnGameDayUpdate?.Invoke();
-                if(currentGameDay >= 30) {
+                if(currentGameDay >= 10) {
                     // TODO: Add end game event.
-                    // TODO: GameSceneWasLoaded = true;
+                    GameSceneWasLoaded = true;
                     OnEndGameDayUpdate?.Invoke();
                 }
             }
@@ -235,17 +235,16 @@ namespace Game {
         /// Passes time by one period.
         /// </summary>
         public void AdvanceOneTimePeriod() {
-            // TODO: Lights
             switch(CurrentTimeOfDay) {
-                case TimeOfDay.Night:
-                    CurrentGameDay++;
-                    currentTimeOfDay = TimeOfDay.Morning;
-                    break;
                 case TimeOfDay.Morning:
-                    currentTimeOfDay = TimeOfDay.Afternoon;
+                    CurrentTimeOfDay = TimeOfDay.Afternoon;
                     break;
                 case TimeOfDay.Afternoon:
-                    currentTimeOfDay = TimeOfDay.Night;
+                    CurrentTimeOfDay = TimeOfDay.Night;
+                    break;
+                case TimeOfDay.Night:
+                    CurrentTimeOfDay = TimeOfDay.Morning;
+                    CurrentGameDay++;
                     break;
             }
             
@@ -299,9 +298,9 @@ namespace Game {
     /// Defines the periods of the day used in the game.
     /// </summary>
     public enum TimeOfDay {
-        Night,
         Morning,
-        Afternoon
+        Afternoon,
+        Night
     }
 
     /// <summary>
