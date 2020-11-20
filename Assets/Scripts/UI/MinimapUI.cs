@@ -47,7 +47,7 @@ namespace UI {
         /// Call the update in the camera position.
         /// </summary>
         private void LateUpdate() {
-            if(updateMinimap) CameraFollowPlayer();
+            if(updateMinimap && player != null) CameraFollowPlayer();
         }
 
         /// <summary>

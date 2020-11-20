@@ -194,8 +194,8 @@ namespace UI.Menu {
         /// </summary>
         public void ChangeDifficulty(float value) {
             GameMaster.Instance.GameDifficulty = value;
-            SaveSystem.LoadedData.difficulty = value;
-            SaveSystem.SerializeToFile();
+            GameMaster.Instance.MasterSaveData.difficulty = value;
+            GameMaster.Instance.SaveGame();
         }
 
         /// <summary>
@@ -204,7 +204,7 @@ namespace UI.Menu {
         public void ChangeLanguage(int value) {
             LocalizationSystem.CurrentLanguage = (LocalizationSystem.Language) Mathf.Clamp(value, 0, 2);
             SaveSystem.LoadedData.currentLanguage = LocalizationSystem.CurrentLanguage;
-            SaveSystem.SerializeToFile();
+            GameMaster.Instance.SaveGame();
         }
 
         /// <summary>
@@ -214,7 +214,7 @@ namespace UI.Menu {
             QualitySettings.SetQualityLevel(value ? 1 : 0, true);
             GraphicsSettings.renderPipelineAsset = value ? highSettingsRenderAsset : lowSettingsRenderAsset;
             SaveSystem.LoadedData.graphicsLevel = value;
-            SaveSystem.SerializeToFile();
+            GameMaster.Instance.SaveGame();
         }
 
         /// <summary>
@@ -223,7 +223,7 @@ namespace UI.Menu {
         public void ToggleFullScreen(bool value) {
             Screen.fullScreenMode = value ? FullScreenMode.FullScreenWindow : FullScreenMode.Windowed;
             SaveSystem.LoadedData.fullscreen = value;
-            SaveSystem.SerializeToFile();
+            GameMaster.Instance.SaveGame();
         }
         #endregion
 
@@ -234,7 +234,7 @@ namespace UI.Menu {
         public void UpdateMasterVolume(float value) {
             masterBus.setVolume(value);
             SaveSystem.LoadedData.audioMasterVolume = value;
-            SaveSystem.SerializeToFile();
+            GameMaster.Instance.SaveGame();
         }
         
         /// <summary>
@@ -243,7 +243,7 @@ namespace UI.Menu {
         public void UpdateMusicVolume(float value) {
             musicBus.setVolume(value);
             SaveSystem.LoadedData.audioMusicVolume = value;
-            SaveSystem.SerializeToFile();
+            GameMaster.Instance.SaveGame();
         }
         
         /// <summary>
@@ -252,7 +252,7 @@ namespace UI.Menu {
         public void UpdateSFXVolume(float value) {
             sfxBus.setVolume(value);
             SaveSystem.LoadedData.audioSfxVolume = value;
-            SaveSystem.SerializeToFile();
+            GameMaster.Instance.SaveGame();
         }
 
         #endregion
@@ -307,7 +307,8 @@ namespace UI.Menu {
                 if(i >= 1) return;
                 loadGameGroup.interactable = false;
                 SaveSystem.LoadedData = new SaveData();
-                SaveSystem.SerializeToFile();
+                GameMaster.Instance.SetSaveData(new SaveData());
+                GameMaster.Instance.SaveGame();
                 GameMaster.Instance.PlayerStats = new PlayerStats() {
                     Health = 35, MaxHealth = 35, Stamina = 20, MaxStamina = 20,
                     MeleeDamage = 7, RangedDamage = 5, MovementSpeed = 15,

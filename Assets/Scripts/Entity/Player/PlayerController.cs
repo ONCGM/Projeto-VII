@@ -142,10 +142,11 @@ namespace Entity.Player {
             inputs.Player.Special.performed += SpecialAttack;
             if(ReferenceEquals(swordCollider, null)) swordCollider = GetComponentInChildren<SphereCollider>();
             upgradeSettings = Resources.Load<PlayerUpgradeSettings>(upgradeSettingsPath);
-            LoadGameMasterPlayerStats();
             agent.speed = playerSpeed;
             agent.autoTraverseOffMeshLink = false;
             inventory = new Inventory(playerInventorySize, new List<InventoryItemEntry>());
+            LoadGameMasterPlayerStats();
+            inventory.OnInventoryUpdate?.Invoke();
             inventory.OnInventoryUpdate.AddListener(UpdateGameMasterPlayerStats);
             PlayerIslandInventory = new Inventory(playerInventorySize, new List<InventoryItemEntry>());
             GameMaster.OnGameExecutionStateUpdated += UpdatePlayerMovementToMatchGameState;
@@ -425,7 +426,7 @@ namespace Entity.Player {
             Experience = stats.Experience;
             Coins = stats.Coins;
             playerInventorySize = stats.InventorySize;
-            inventory = new Inventory(stats.InventorySize, stats.CurrentInventory);
+            inventory.ItemsInInventory = new List<InventoryItemEntry>(stats.CurrentInventory);
 
             currentUpgrades = stats.CurrentUpgradeLevel;
             

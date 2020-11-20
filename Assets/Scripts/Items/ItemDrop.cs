@@ -89,9 +89,10 @@ namespace Items {
             player.PlayerIslandInventory.AddItemEntry(stats);
 
             // TODO: Add particles, sfx and effects.
-            eventEmitter.Play();
             DOTween.Kill(this);
             Destroy(gameObject);
+            
+            eventEmitter.Play();
         }
     }
 }

@@ -24,13 +24,13 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 648139901920755006}
-  m_LocalRotation: {x: 0.60876167, y: -0, z: -0, w: 0.79335326}
+  m_LocalRotation: {x: 0.5735764, y: 0, z: 0, w: 0.8191521}
   m_LocalPosition: {x: 0, y: 3, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 648139902465423693}
   m_RootOrder: 3
-  m_LocalEulerAnglesHint: {x: 75, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 70, y: 0, z: 0}
 --- !u!108 &648139901920755005
 Light:
   m_ObjectHideFlags: 0
@@ -43,7 +43,7 @@ Light:
   m_Type: 1
   m_Shape: 0
   m_Color: {r: 0.9198113, g: 1, b: 1, a: 1}
-  m_Intensity: 0.27
+  m_Intensity: 0.25
   m_Range: 10
   m_SpotAngle: 30
   m_InnerSpotAngle: 21.80208
@@ -141,6 +141,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   transitionTimeBetweenPositions: 5
   enableOnAwake: 1
+  scene: 0
 --- !u!1 &648139902625647406
 GameObject:
   m_ObjectHideFlags: 0
@@ -223,7 +224,7 @@ Light:
     serializedVersion: 2
     m_Bits: 4294967295
   m_RenderingLayerMask: 1
-  m_Lightmapping: 4
+  m_Lightmapping: 1
   m_LightShadowCasterMode: 0
   m_AreaSize: {x: 1, y: 1}
   m_BounceIntensity: 1
@@ -232,7 +233,7 @@ Light:
   m_BoundingSphereOverride: {x: 0, y: 0, z: 0, w: 0}
   m_UseBoundingSphereOverride: 0
   m_ShadowRadius: 0
-  m_ShadowAngle: 0
+  m_ShadowAngle: 20
 --- !u!1 &648139903461228780
 GameObject:
   m_ObjectHideFlags: 0
@@ -349,13 +350,13 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 648139903625685041}
-  m_LocalRotation: {x: 0.08784235, y: -0.6394232, z: 0.44065186, w: 0.62389714}
+  m_LocalRotation: {x: 0.15232159, y: -0.59006995, z: 0.50483024, w: 0.6113608}
   m_LocalPosition: {x: 0, y: 3, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 648139902465423693}
   m_RootOrder: 2
-  m_LocalEulerAnglesHint: {x: 137.69, y: -256.961, z: -143.729}
+  m_LocalEulerAnglesHint: {x: 128.554, y: -245.624, z: -135.41501}
 --- !u!108 &648139903625685040
 Light:
   m_ObjectHideFlags: 0

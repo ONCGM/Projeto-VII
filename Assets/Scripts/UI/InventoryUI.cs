@@ -24,10 +24,11 @@ namespace UI {
         /// Finds references and sets up the class.
         /// </summary>
         private void Start() {
-            if(player is null) player = GameObject.FindObjectOfType<PlayerController>();
+            if(player == null) player = GameObject.FindObjectOfType<PlayerController>();
             player.Inventory.OnInventoryUpdate.AddListener(UpdateItems);
+            UpdateItems();
         }
-
+        
         /// <summary>
         /// Updates the items in the ui.
         /// </summary>

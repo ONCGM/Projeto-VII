@@ -21,7 +21,7 @@ namespace Items {
         [SerializeField, Range(1, 99)] public int maxStackQuantity;
         [SerializeField] public Sprite itemImage;
 
-        [Header("Price Settings")] 
+        [Header("Price Settings")] // TODO: Game Economy. Basic as possible.
         [SerializeField] public int initialValue;
     }
 }

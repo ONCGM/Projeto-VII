@@ -11,9 +11,8 @@ namespace Utility {
     public class SaveFileTagger : MonoBehaviour {
         // Tags the file then self-destructs.
         private void Awake() {
-            SaveSystem.LoadedData.brandSpankingNewSave = false;
-            SaveSystem.SerializeToFile();
-            GameMaster.OnGameSaved?.Invoke();
+            GameMaster.Instance.MasterSaveData.brandSpankingNewSave = false;
+            GameMaster.Instance.SaveGame();
             Destroy(gameObject);
         }
     }

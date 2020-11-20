@@ -23,7 +23,7 @@ namespace Game {
             SaveSystem.LoadGameFile();
             MasterSaveData = SaveSystem.LoadedData;
             PlayerStats = MasterSaveData.currentPlayerStats;
-            currentGameDay = MasterSaveData.gameDay;
+            CurrentGameDay = MasterSaveData.gameDay;
             CurrentTimeOfDay = MasterSaveData.currentTimeOfDay;
             DialogsCleared = MasterSaveData.dialogsCleared;
             GameDifficulty = MasterSaveData.difficulty;

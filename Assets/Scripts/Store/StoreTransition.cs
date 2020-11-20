@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using Entity.Player;
 using Game;
 using Town;
 using UnityEngine;
@@ -35,6 +36,8 @@ namespace Store {
             if(scene.Equals(SceneManager.GetSceneByName(townSceneName))) {
                 FindObjectOfType<PlayerSpawnPositionBasedOnLastScene>().UnlockPlayer(false,false);
             }
+            
+            FindObjectOfType<PlayerController>().LoadGameMasterPlayerStats();
         }
 
         /// <summary>
@@ -48,8 +51,8 @@ namespace Store {
         /// Triggers the destruction of this object and unlocks the player controls.
         /// </summary>
         public void SelfDestruct() {
-            FindObjectOfType<PlayerSpawnPositionBasedOnLastScene>().UnlockPlayer();
             Destroy(gameObject);
+            FindObjectOfType<PlayerSpawnPositionBasedOnLastScene>()?.UnlockPlayer();
         }
 
         // Unsubscribes from events and clears camera stack.

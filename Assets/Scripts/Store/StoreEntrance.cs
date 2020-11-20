@@ -34,7 +34,9 @@ namespace Store {
         private void OnTriggerEnter(Collider other) {
             if(!other.CompareTag("Player") || startedTransition) return;
             FindObjectOfType<PlayerStatsUI>().ShowHideCanvas(false);
-            FindObjectOfType<PlayerController>().CanMove = false;
+            var player = FindObjectOfType<PlayerController>();
+            player.CanMove = false;
+            player.UpdateGameMasterPlayerStats();
             GameObject transitionCamera = Instantiate(transitionPrefab);
             DontDestroyOnLoad(transitionCamera);
             transitionCamera.GetComponent<StoreTransition>().sceneIndex = sceneIndex;

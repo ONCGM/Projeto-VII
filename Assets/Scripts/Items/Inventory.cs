@@ -12,14 +12,14 @@ namespace Items {
         // Fields and Properties.
         public int InventorySize { get; set; }
 
-        public List<InventoryItemEntry> ItemsInInventory { get; private set;}
+        public List<InventoryItemEntry> ItemsInInventory { get; set;}
         
         // Events.
         public UnityEvent OnInventoryUpdate = new UnityEvent();
 
         public Inventory(int inventorySize, List<InventoryItemEntry> items) {
             InventorySize = inventorySize;
-            ItemsInInventory = items;
+            ItemsInInventory = new List<InventoryItemEntry>(items); 
         }
 
         /// <summary>

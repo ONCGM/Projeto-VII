@@ -187,7 +187,7 @@ namespace UI.Menu {
                     break;
                 case LocalizationSystem.Language.Japanese:
                     upgradeText = player.Level >= player.MaxLevel ? $"{maxLevelKey.value} {levelKey.value}" :
-                                           $"{levelKey.value} {levelsRequired} {particleKey.value} {particleKey.value} {upgradeKey.value}";
+                                           $"{levelKey.value} {levelsRequired} {particleKey.value} {nextKey.value} {upgradeKey.value}";
                     break;
                 default:
                     upgradeText = player.Level >= player.MaxLevel ? $"{maxLevelKey.value} {levelKey.value}" :

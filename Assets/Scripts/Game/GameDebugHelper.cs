@@ -1,9 +1,11 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using DG.Tweening;
 using Entity.Player;
 using Items;
 using Localization;
+using TMPro;
 using UnityEngine;
 using Utility;
 
@@ -15,6 +17,12 @@ namespace Game {
         #pragma warning disable 0649
         private bool debugEnabled;
         private PlayerController player;
+        private CanvasGroup canvasGroup;
+
+        [Header("UI Components")] 
+        [SerializeField] private TMP_Text gameStateText;
+        [SerializeField] private TMP_Text languageText;
+        private float fadeAnimationSpeed = 0.5f;
         
         /// <summary>
         /// Is the debug menu currently enabled.
@@ -27,7 +35,13 @@ namespace Game {
 
         #region Unity Event Functions
 
-        #if UNITY_EDITOR || DEVELOPMENT_BUILD
+        /// <summary>
+        /// Sets up the class.
+        /// </summary>
+        private void Awake() {
+            canvasGroup = GetComponentInChildren<CanvasGroup>();
+        }
+
         /// <summary>
         /// Enables and disables the debug system.
         /// </summary>
@@ -35,15 +49,32 @@ namespace Game {
             if(Input.GetKeyDown(KeyCode.F1) && Input.GetKeyDown(KeyCode.Home)) {
                 debugEnabled = !debugEnabled;
                 Debug.Log($"Debug options are {(debugEnabled ? "enabled" : "disabled")}!");
+                DOTween.To(()=> canvasGroup.alpha, x=> canvasGroup.alpha = x, (debugEnabled ? 1f : 0f), fadeAnimationSpeed);
             }
+            
             if(!debugEnabled) return;
             LocalizationDebug();
             AddCoins();
             AddXp();
+            AddHealth();
             ResetStats();
+            AddInGameTime();
+            UpdateDebuggerUi();
         }
         
-        #endif
+        #endregion
+
+        #region Debug Debug.
+
+        /// <summary>
+        /// Updates the debugger UI.
+        /// </summary>
+        private void UpdateDebuggerUi() {
+            gameStateText.text = $"{GameMaster.Instance.GameState}";
+            languageText.text = $"{LocalizationSystem.CurrentLanguage}";
+        }
+        
+
         #endregion
 
         #region Localization Debug.
@@ -88,6 +119,22 @@ namespace Game {
         }
 
         /// <summary>
+        /// Adds or reduces health to the player.
+        /// </summary>
+        private void AddHealth() {
+            if(player == null) player = FindObjectOfType<PlayerController>();
+            var hp = player.Health;
+            if(Input.GetKeyDown(KeyCode.Alpha8)) player.Damage(-10, player);
+            if(Input.GetKeyDown(KeyCode.Alpha7)) player.Damage(10, player);
+            
+            if(hp != player.Health) Debug.Log($"Player HP changed by {player.Health - hp}.");
+        }
+        
+        #endregion
+
+        #region Game Debug.
+
+        /// <summary>
         /// Resets player save.
         /// </summary>
         private void ResetStats() {
@@ -103,13 +150,33 @@ namespace Game {
             
             player.LoadGameMasterPlayerStats();
 
-            SaveSystem.LoadedData.currentPlayerStats = GameMaster.Instance.PlayerStats;
+            SaveSystem.LoadedData = new SaveData();
+            GameMaster.Instance.SetSaveData(new SaveData());
             
-            SaveSystem.SerializeToFile();
+            GameMaster.Instance.SaveGame();
             
             Debug.LogWarning("Player Stats & Save Reset.");
         }
 
+        /// <summary>
+        /// Advances the in game clock.
+        /// </summary>
+        private void AddInGameTime() {
+            var day = GameMaster.Instance.CurrentGameDay;
+            var time = GameMaster.Instance.CurrentTimeOfDay;
+
+            if(Input.GetKeyDown(KeyCode.F10)) GameMaster.Instance.AdvanceOneTimePeriod();
+
+            if(Input.GetKeyDown(KeyCode.F11)) {
+                GameMaster.Instance.CurrentGameDay++;
+                GameMaster.Instance.CurrentTimeOfDay = TimeOfDay.Morning;
+            }
+            
+            if(day == GameMaster.Instance.CurrentGameDay && time == GameMaster.Instance.CurrentTimeOfDay) return;
+            Debug.Log($"The game time was day {day} in the {time}.");
+            Debug.Log($"The game time is now day {GameMaster.Instance.CurrentGameDay} in the {GameMaster.Instance.CurrentTimeOfDay}.");
+        }
+        
         #endregion
     }
 }

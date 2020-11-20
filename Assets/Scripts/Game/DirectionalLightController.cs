@@ -36,7 +36,8 @@ namespace Game {
         public enum LightScene {
             Town,
             Travel,
-            Island
+            Island,
+            Store
         }
         #pragma warning restore 0649
 
@@ -52,19 +53,21 @@ namespace Game {
             foreach(var directionalLight in directionalLights) {
                 directionalLight.enabled = false;
             }
-
             
-            // TODO: Update light color and intensity as well.
             mainLight = directionalLights[0];
             UpdateLightToCurrentTime(true);
             mainLight.enabled = enableOnAwake;
             GameMaster.OnGameTimeOfDayUpdated += UpdateLightToCurrentTime;
         }
-        
+
         /// <summary>
         /// Updates the light direction to reflect the time of day.
         /// </summary>
-        public void UpdateLightToCurrentTime() => mainLight.transform.DOLocalRotate(GetNextRotation().eulerAngles, transitionTimeBetweenPositions);
+        public void UpdateLightToCurrentTime() {
+            mainLight.transform.DOLocalRotate(GetLightRotation().eulerAngles, transitionTimeBetweenPositions);
+            mainLight.DOColor(GetLightColor(), transitionTimeBetweenPositions);
+            mainLight.DOIntensity(GetLightIntensity(), transitionTimeBetweenPositions);
+        }
 
         /// <summary>
         /// Updates the light direction to reflect the time of day.
@@ -73,16 +76,30 @@ namespace Game {
         /// False animates, true is instantaneous.</param>
         public void UpdateLightToCurrentTime(bool immediately) {
             if(immediately) {
-                mainLight.transform.rotation = GetNextRotation();
+                mainLight.transform.rotation = GetLightRotation();
+                mainLight.color = GetLightColor();
+                mainLight.intensity = GetLightIntensity();
             } else {
-                mainLight.transform.DOLocalRotate(GetNextRotation().eulerAngles, transitionTimeBetweenPositions);
+                mainLight.transform.DOLocalRotate(GetLightRotation().eulerAngles, transitionTimeBetweenPositions);
+                mainLight.DOColor(GetLightColor(), transitionTimeBetweenPositions);
+                mainLight.DOIntensity(GetLightIntensity(), transitionTimeBetweenPositions);
             }
         }
         
         /// <summary>
         /// Return the next rotation to use when transitioning game time.
         /// </summary>
-        private Quaternion GetNextRotation() => directionalLights[1 + (int) GameMaster.Instance.CurrentTimeOfDay].transform.rotation;
+        private Quaternion GetLightRotation() => directionalLights[1 + (int) GameMaster.Instance.CurrentTimeOfDay].transform.rotation;
+        
+        /// <summary>
+        /// Return the next color to use when transitioning game time.
+        /// </summary>
+        private Color GetLightColor() => directionalLights[1 + (int) GameMaster.Instance.CurrentTimeOfDay].color;
+        
+        /// <summary>
+        /// Return the next intensity to use when transitioning game time.
+        /// </summary>
+        private float GetLightIntensity() => directionalLights[1 + (int) GameMaster.Instance.CurrentTimeOfDay].intensity;
 
         /// <summary>
         /// Enables the light that this controller

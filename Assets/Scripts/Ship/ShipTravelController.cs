@@ -104,7 +104,7 @@ namespace Ship {
             // TODO: Add to late message and lock player from travelling.
             var popup = Instantiate(popupPrefab).GetComponent<CanvasPopupDialog>();
             var player = FindObjectOfType<PlayerController>();
-            FindObjectOfType<PlayerStatsUI>().ShowHideCanvas(false);
+            FindObjectOfType<PlayerStatsUI>().ShowHideCanvasKeepClock(false);
             var buttons = new List<CanvasPopupDialog.ButtonSettings>();
             var index = 0;
             
@@ -137,7 +137,7 @@ namespace Ship {
 
             var components = GameObject.FindGameObjectsWithTag(playerComponentsTag);
             foreach(var component in components) {
-                Destroy(component);
+                if(!component.GetComponent<PlayerStatsUI>()) Destroy(component);
             }
 
             var player = FindObjectOfType<PlayerController>();
@@ -153,6 +153,7 @@ namespace Ship {
         /// Unloads the town scene and changes active directional light.
         /// </summary>
         public void UnloadTown() {
+            FindObjectOfType<PlayerStatsUI>().ShowHideCanvas(false);
             var townLight = GameObject.FindGameObjectWithTag(townLightTag).GetComponent<DirectionalLightController>();
             var seaLight = GameObject.FindGameObjectWithTag(seaLightTag).GetComponent<DirectionalLightController>();
 
