@@ -58,7 +58,10 @@ namespace Ship {
         private static readonly int ArriveAtTown = Animator.StringToHash("ArriveAtTown");
         private static readonly string playerSettingsPath = "Scriptables/Player/Player_Upgrade_Settings";
         private PlayerUpgradeSettings upgradeSettings;
-        private IslandLevelLoader islandLoader;
+        /// <summary>
+        /// Island Loader Object.
+        /// </summary>
+        public IslandLevelLoader IslandLoader { get; set; }
 
         #pragma warning restore 0649
 
@@ -68,15 +71,7 @@ namespace Ship {
             shipCamera = GetComponentInChildren<CinemachineVirtualCamera>();
             DontDestroyOnLoad(gameObject);
             upgradeSettings = Resources.Load<PlayerUpgradeSettings>(playerSettingsPath);
-            
-            // Toggle light if in town scene.
-            if(SceneManager.GetActiveScene().buildIndex == townSceneIndex) {
-                var lightController = FindObjectOfType<DirectionalLightController>();
-                lightController.UpdateLightToCurrentTime(true);
-                lightController.EnableLights();
-            }
-            
-            
+
             // Populate buttons.
             travelButtons.Add(new CanvasPopupDialog.ButtonSettings(smallIslandButtonKey.key, Normal, 0));
             travelButtons.Add(new CanvasPopupDialog.ButtonSettings(mediumIslandButtonKey.key, Normal, 1));
@@ -154,42 +149,17 @@ namespace Ship {
         /// </summary>
         public void UnloadTown() {
             FindObjectOfType<PlayerStatsUI>().ShowHideCanvas(false);
-            var townLight = GameObject.FindGameObjectWithTag(townLightTag).GetComponent<DirectionalLightController>();
-            var seaLight = GameObject.FindGameObjectWithTag(seaLightTag).GetComponent<DirectionalLightController>();
-
-            townLight.DisableLights();
-            
-            seaLight.UpdateLightToCurrentTime();
-            seaLight.EnableLights();
-            
-            SceneManager.UnloadSceneAsync(townSceneIndex);
-
-            StartCoroutine(nameof(LoadIsland));
+            FindObjectOfType<ShipTravelLoadingController>().StartLoadingSequence(islandsSceneIndex);
         }
 
         /// <summary>
-        /// Loads the island scene.
+        /// Loads the islands scenes.
         /// </summary>
-        private IEnumerator LoadIsland() {
-            var async = SceneManager.LoadSceneAsync(islandsSceneIndex, LoadSceneMode.Additive);
-            var waitAFrame = new WaitForEndOfFrame();
-
-            while(!async.isDone) {
-                yield return waitAFrame;
-            }
-            
-            var seaLight = GameObject.FindGameObjectWithTag(seaLightTag).GetComponent<DirectionalLightController>();;
-            var islandLight = GameObject.FindGameObjectWithTag(islandLightTag).GetComponent<DirectionalLightController>();;
-            
-            seaLight.DisableLights();
-            
-            islandLight.UpdateLightToCurrentTime();
-            islandLight.EnableLights();
-
+        public void LoadIsland() {
             anim.SetTrigger(ArriveAtIsland);
             
-            islandLoader = FindObjectOfType<IslandLevelLoader>();
-            islandLoader.LoadIslands();
+            IslandLoader = FindObjectOfType<IslandLevelLoader>();
+            IslandLoader.LoadIslands();
         }
 
         /// <summary>
@@ -198,8 +168,7 @@ namespace Ship {
         public void AtIslandArrival() {
             FindObjectOfType<PlayerSpawnPositionBasedOnLastScene>().UnlockPlayer();
             shipCamera.m_Priority = 9;
-            SceneManager.UnloadSceneAsync(travelSceneIndex);
-            islandLoader.DisplayIslandType();
+            IslandLoader.DisplayIslandType();
         }
         
         #endregion
@@ -249,41 +218,13 @@ namespace Ship {
         /// Unloads the island scene and changes active directional light.
         /// </summary>
         public void UnloadIsland() {
-            var islandLight = GameObject.FindGameObjectWithTag(islandLightTag).GetComponent<DirectionalLightController>();
-            var seaLight = GameObject.FindGameObjectWithTag(seaLightTag).GetComponent<DirectionalLightController>();
-            
-            islandLight.DisableLights();
-            seaLight.UpdateLightToCurrentTime();
-            seaLight.EnableLights();
-
-            islandLoader.UnloadIslands();
-            islandLoader = null;
-
-            SceneManager.UnloadSceneAsync(islandsSceneIndex);
-
-            StartCoroutine(nameof(LoadTown));
+            FindObjectOfType<ShipTravelLoadingController>().StartLoadingSequence(townSceneIndex);
         }
 
         /// <summary>
         /// Loads the town scene.
         /// </summary>
-        private IEnumerator LoadTown() {
-            var async = SceneManager.LoadSceneAsync(townSceneIndex, LoadSceneMode.Additive);
-            var waitAFrame = new WaitForEndOfFrame();
-
-            while(!async.isDone) {
-                yield return waitAFrame;
-            }
-
-            var seaLight = GameObject.FindGameObjectWithTag(seaLightTag).GetComponent<DirectionalLightController>();
-            var townLight = GameObject.FindGameObjectWithTag(townLightTag).GetComponent<DirectionalLightController>();
-            
-            seaLight.DisableLights();
-            
-            townLight.UpdateLightToCurrentTime();
-            townLight.EnableLights();
-            
-            
+        public void LoadTown() {
             GameMaster.Instance.SpawnInFrontOfStore = false;
             
             anim.SetTrigger(ArriveAtTown);

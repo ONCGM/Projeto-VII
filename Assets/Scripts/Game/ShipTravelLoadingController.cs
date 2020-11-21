@@ -1,23 +1,21 @@
-﻿using System;
-using System.Collections;
+﻿using System.Collections;
 using System.Collections.Generic;
 using Audio;
+using DG.Tweening;
 using UnityEngine;
 using UnityEngine.SceneManagement;
-using DG.Tweening;
-using Game;
-using UnityEngine.UI;
 
-namespace UI.Menu {
+
+namespace Game {
     /// <summary>
-    /// Controls the loading screen behaviour.
+    /// Controls the ship travel loading screen behaviour.
     /// </summary>
-    public class LoadingScreenController : MonoBehaviour {
+    public class ShipTravelLoadingController : MonoBehaviour {
         #pragma warning disable 0649
         [Header("Settings")]
-        [SerializeField, Range(0, 12)] private int menuSceneIndex = 1;
-        [SerializeField, Range(0, 12)] private int gameSceneIndex = 2;
-        [SerializeField, Range(0, 12)] private int loadingSceneIndex = 10;
+        [SerializeField, Range(0, 12)] private int townSceneIndex = 3;
+        [SerializeField, Range(0, 12)] private int islandsSceneIndex = 5;
+        [SerializeField, Range(0, 12)] private int loadingSceneIndex = 4;
         [SerializeField, Range(0.5f, 10f)] private float loadingSceneDelay = 5f;
         [SerializeField, Range(0.5f, 10f)] private float fadeAnimationDuration = 3f;
         [SerializeField, Range(0.2f, 3f)] private float rotateAnimationDuration = 1f;
@@ -27,6 +25,7 @@ namespace UI.Menu {
         [Header("References")] 
         [SerializeField] private Transform loadingIconTransform;
         private CanvasGroup loadingGroup;
+        private bool loadingTown;
 
         #pragma warning restore 0649
 
@@ -45,11 +44,25 @@ namespace UI.Menu {
                         if(SceneManager.GetSceneByBuildIndex(i).isLoaded) SceneManager.UnloadSceneAsync(i);
                     }
                 } else {
-                    SceneManager.UnloadSceneAsync(menuSceneIndex);
+                    SceneManager.UnloadSceneAsync(townSceneIndex);
                 }
 
                 Invoke(nameof(LoadNextScene), loadingSceneDelay);
             };
+        }
+
+        /// <summary>
+        /// Triggers the loading screen animation.
+        /// </summary>
+        public void StartLoadingSequence(int sceneIndexToLoad) {
+            if(sceneIndexToLoad == townSceneIndex) {
+                loadingTown = true;
+            } else if(sceneIndexToLoad == islandsSceneIndex) {
+                loadingTown = false;
+            }
+
+            DOTween.To(() => loadingGroup.alpha, x => loadingGroup.alpha = x,
+                       1f, fadeAnimationDuration).onComplete = LoadNextScene;
         }
 
         /// <summary>
@@ -64,16 +77,19 @@ namespace UI.Menu {
         }
 
         /// <summary>
-        /// Loads the next scene based on the game master 'gameSceneWasLoaded';
+        /// Loads the next scene based on the parameters.
         /// </summary>
         public void LoadNextScene() {
-            if(GameMaster.Instance.GameSceneWasLoaded) {
-                GameMaster.OnReturnToMenu?.Invoke();
-                SceneManager.LoadSceneAsync(menuSceneIndex, LoadSceneMode.Additive);
+            if(loadingTown) {
+                SceneManager.LoadSceneAsync(townSceneIndex, LoadSceneMode.Additive);
+                SceneManager.UnloadSceneAsync(islandsSceneIndex);
+                GameMaster.Instance.ShipTravel.IslandLoader.UnloadIslands();
+                GameMaster.Instance.ShipTravel.IslandLoader = null;
                 return;
             }
             
-            SceneManager.LoadSceneAsync(gameSceneIndex, LoadSceneMode.Additive);
+            SceneManager.LoadSceneAsync(islandsSceneIndex, LoadSceneMode.Additive);
+            SceneManager.UnloadSceneAsync(townSceneIndex);
         }
 
         /// <summary>
@@ -81,7 +97,8 @@ namespace UI.Menu {
         /// </summary>
         private void OnSceneLoaded(Scene scene, LoadSceneMode loadMode) {
             if(scene.buildIndex == loadingSceneIndex) return;
-            if(scene.buildIndex == gameSceneIndex) FindObjectOfType<MainMenuMusicController>().TriggerMusicStop();
+            if(scene.buildIndex == islandsSceneIndex) GameMaster.Instance.ShipTravel.LoadIsland();
+            if(scene.buildIndex == townSceneIndex) GameMaster.Instance.ShipTravel.LoadTown();
             
             DOTween.To(() => loadingGroup.alpha, x => loadingGroup.alpha = x, 0f, fadeAnimationDuration).onComplete =
                 () => {
