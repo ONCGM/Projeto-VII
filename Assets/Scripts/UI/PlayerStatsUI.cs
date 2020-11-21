@@ -50,7 +50,7 @@ namespace UI {
             new Vector3(0f, 0f, 120f), new Vector3(0f, 0f, 240f), Vector3.zero
         };
         private static readonly List<string> TimeOfDayLocalizationKeys = new List<string> {
-            "CONTEXT_TIME_NIGHT","CONTEXT_TIME_MORNING","CONTEXT_TIME_AFTERNOON"
+            "CONTEXT_TIME_MORNING","CONTEXT_TIME_AFTERNOON", "CONTEXT_TIME_NIGHT"
         };
         private const string upgradeSettingsPath = "Scriptables/Player/Player_Upgrade_Settings";
         private PlayerUpgradeSettings upgradeSettings;

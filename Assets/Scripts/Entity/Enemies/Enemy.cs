@@ -46,6 +46,10 @@ namespace Entity.Enemies {
         protected bool isChasing;
         protected bool isAttacking;
         protected AiState currentState;
+        /// <summary>
+        /// Is this enemy dead.
+        /// </summary>
+        public bool IsDead { get; private set; } = false;
         
         // Collider.
         protected SphereCollider attackingCollider;
@@ -253,7 +257,7 @@ namespace Entity.Enemies {
         /// Attacks, will damage anything that is in front of the entity and in range.
         /// </summary>
         public virtual void Attack() {
-            if(Stamina < 3) return;
+            if(Stamina < 3 || IsDead) return;
             Stamina -= 3;
             StopAllCoroutines();
 
@@ -306,6 +310,7 @@ namespace Entity.Enemies {
         }
 
         public override void Kill() {
+            IsDead = true;
             StopAllCoroutines();
             
             anim.SetTrigger(DeadAnim);

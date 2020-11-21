@@ -39,7 +39,7 @@ namespace Entity.Enemies {
         
         // Overrides base attack to instead attack with a ranged projectile.
         public override void Attack() {
-            if(Stamina < 5) return;
+            if(Stamina < 5 || IsDead) return;
             Stamina -= 5;
             StartCoroutine(nameof(AttackRanged));
         }

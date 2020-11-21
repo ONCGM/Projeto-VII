@@ -29,5 +29,10 @@ namespace Store {
             FloorController.OnTriggerTravel?.Invoke();
             canTriggerTravel = false;
         }
+
+        // Clears the action.
+        private void OnDestroy() {
+            OnResetTriggerLock = null;
+        }
     }
 }

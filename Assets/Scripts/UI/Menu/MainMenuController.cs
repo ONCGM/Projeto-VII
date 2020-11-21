@@ -102,7 +102,6 @@ namespace UI.Menu {
             sfxBus = RuntimeManager.GetBus("bus:/Master/SFX");
 
             // Sync Saved Settings
-            SaveSystem.LoadedData = SaveSystem.LoadGameFile();
             SyncUiWithSaveFile();
         }
 
@@ -203,7 +202,7 @@ namespace UI.Menu {
         /// </summary>
         public void ChangeLanguage(int value) {
             LocalizationSystem.CurrentLanguage = (LocalizationSystem.Language) Mathf.Clamp(value, 0, 2);
-            SaveSystem.LoadedData.currentLanguage = LocalizationSystem.CurrentLanguage;
+            GameMaster.Instance.MasterSaveData.currentLanguage = LocalizationSystem.CurrentLanguage;
             GameMaster.Instance.SaveGame();
         }
 
@@ -213,7 +212,7 @@ namespace UI.Menu {
         public void ChangeGraphicsQuality(bool value) {
             QualitySettings.SetQualityLevel(value ? 1 : 0, true);
             GraphicsSettings.renderPipelineAsset = value ? highSettingsRenderAsset : lowSettingsRenderAsset;
-            SaveSystem.LoadedData.graphicsLevel = value;
+            GameMaster.Instance.MasterSaveData.graphicsLevel = value;
             GameMaster.Instance.SaveGame();
         }
 
@@ -222,7 +221,7 @@ namespace UI.Menu {
         /// </summary>
         public void ToggleFullScreen(bool value) {
             Screen.fullScreenMode = value ? FullScreenMode.FullScreenWindow : FullScreenMode.Windowed;
-            SaveSystem.LoadedData.fullscreen = value;
+            GameMaster.Instance.MasterSaveData.fullscreen = value;
             GameMaster.Instance.SaveGame();
         }
         #endregion
@@ -233,7 +232,7 @@ namespace UI.Menu {
         /// </summary>
         public void UpdateMasterVolume(float value) {
             masterBus.setVolume(value);
-            SaveSystem.LoadedData.audioMasterVolume = value;
+            GameMaster.Instance.MasterSaveData.audioMasterVolume = value;
             GameMaster.Instance.SaveGame();
         }
         
@@ -242,7 +241,7 @@ namespace UI.Menu {
         /// </summary>
         public void UpdateMusicVolume(float value) {
             musicBus.setVolume(value);
-            SaveSystem.LoadedData.audioMusicVolume = value;
+            GameMaster.Instance.MasterSaveData.audioMusicVolume = value;
             GameMaster.Instance.SaveGame();
         }
         
@@ -251,7 +250,7 @@ namespace UI.Menu {
         /// </summary>
         public void UpdateSFXVolume(float value) {
             sfxBus.setVolume(value);
-            SaveSystem.LoadedData.audioSfxVolume = value;
+            GameMaster.Instance.MasterSaveData.audioSfxVolume = value;
             GameMaster.Instance.SaveGame();
         }
 
@@ -290,7 +289,7 @@ namespace UI.Menu {
             
             loadGameGroup.interactable = false;
 
-            if(SaveSystem.LoadedData.brandSpankingNewSave) {
+            if(GameMaster.Instance.MasterSaveData.brandSpankingNewSave) {
                 GameMaster.Instance.GameSceneWasLoaded = false;
                 SceneManager.LoadSceneAsync(loadingSceneIndex, LoadSceneMode.Additive);
                 return;
@@ -316,6 +315,9 @@ namespace UI.Menu {
                     Coins = 0, CurrentInventory = new List<InventoryItemEntry>(),
                     CurrentUpgradeLevel = 0
                 };
+                GameMaster.Instance.DialogsCleared = new List<bool>();
+                GameMaster.Instance.CurrentGameDay = 1;
+                GameMaster.Instance.CurrentTimeOfDay = TimeOfDay.Morning;
                 GameMaster.Instance.GameSceneWasLoaded = false;
                 SceneManager.LoadSceneAsync(loadingSceneIndex, LoadSceneMode.Additive);
             });

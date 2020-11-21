@@ -108,8 +108,8 @@ NavMeshSettings:
     agentTypeID: 0
     agentRadius: 0.4
     agentHeight: 2
-    agentSlope: 35
-    agentClimb: 0.2
+    agentSlope: 5
+    agentClimb: 0.1
     ledgeDropHeight: 0
     maxJumpAcrossDistance: 0
     minRegionArea: 2
@@ -941,7 +941,7 @@ NavMeshObstacle:
   m_Enabled: 1
   serializedVersion: 3
   m_Shape: 1
-  m_Extents: {x: 500, y: 37.5, z: 500}
+  m_Extents: {x: 500, y: 39, z: 500}
   m_MoveThreshold: 0.1
   m_Carve: 1
   m_CarveOnlyStationary: 1
@@ -959,7 +959,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 35e95dc5ff2b64380880dd7ac5922847, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_Size: {x: 1000, y: 75, z: 1000}
+  m_Size: {x: 1000, y: 78, z: 1000}
   m_Center: {x: 500, y: 36, z: 500}
   m_Area: 1
   m_AffectedAgents: ffffffff
@@ -1858,7 +1858,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 8910246129103203825, guid: 415be70d647f61845ad5a646c57fd6d8, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 100
+      value: 42.4
       objectReference: {fileID: 0}
     - target: {fileID: 8910246129103203825, guid: 415be70d647f61845ad5a646c57fd6d8, type: 3}
       propertyPath: m_LocalPosition.y
@@ -1866,7 +1866,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8910246129103203825, guid: 415be70d647f61845ad5a646c57fd6d8, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 25
+      value: 7.1
       objectReference: {fileID: 0}
     - target: {fileID: 8910246129103203825, guid: 415be70d647f61845ad5a646c57fd6d8, type: 3}
       propertyPath: m_LocalRotation.x

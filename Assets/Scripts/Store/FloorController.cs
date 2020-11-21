@@ -98,5 +98,10 @@ namespace Store {
             player.GetComponent<NavMeshAgent>().enabled = true;
             FloorTravelTrigger.OnResetTriggerLock.Invoke();
         }
+        
+        // Clears the action.
+        private void OnDestroy() {
+            OnTriggerTravel = null;
+        }
     }
 }

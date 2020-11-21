@@ -67,17 +67,17 @@ namespace Utility {
         /// <summary>
         /// The audio mixer master channel volume. 
         /// </summary>
-        public float audioMasterVolume = 0f;
+        public float audioMasterVolume = 0.8f;
 
         /// <summary>
         /// The audio mixer music channel volume.
         /// </summary>
-        public float audioMusicVolume = 0f;
+        public float audioMusicVolume = 0.8f;
         
         /// <summary>
         /// The audio mixer sfx channel volume.
         /// </summary>
-        public float audioSfxVolume = 0f;
+        public float audioSfxVolume = 0.8f;
 
         /// <summary>
         /// Changed to false as soon as the player or the auto-save

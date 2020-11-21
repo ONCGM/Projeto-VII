@@ -67,6 +67,7 @@
      <Compile Include="Assets\Scripts\Other\CustomEventTrigger.cs" />
      <Compile Include="Assets\Scripts\Town\PortSceneTransition.cs" />
      <Compile Include="Assets\Scripts\Entity\Enemies\Enemy.cs" />
+     <Compile Include="Assets\Scripts\Store\FloorTravelTrigger.cs" />
      <Compile Include="Assets\Scripts\UI\Menu\MainMenuController.cs" />
      <Compile Include="Assets\Scripts\Entity\Enemies\Pirate.cs" />
      <Compile Include="Assets\Thirdparty\AllIn1SpriteShader\Scripts\AllIn1Shader.cs" />
@@ -78,6 +79,7 @@
      <Compile Include="Assets\Scripts\UI\Menu\LoadingScreenController.cs" />
      <Compile Include="Assets\Scripts\Entity\EntityInterfaces.cs" />
      <Compile Include="Assets\Scripts\UI\Menu\GameCreditsController.cs" />
+     <Compile Include="Assets\Scripts\Store\BedController.cs" />
      <Compile Include="Assets\Scripts\Entity\Enemies\EnemySettings.cs" />
      <Compile Include="Assets\Scripts\GameInput\ActionInputs.cs" />
      <Compile Include="Assets\Scripts\Islands\IslandSceneryObjectRandomizer.cs" />
@@ -100,6 +102,7 @@
      <Compile Include="Assets\Scripts\Items\InventoryItemEntry.cs" />
      <Compile Include="Assets\Scripts\UI\Menu\CombatDebriefUi.cs" />
      <Compile Include="Assets\Scripts\Items\ItemDrop.cs" />
+     <Compile Include="Assets\Scripts\Store\FloorController.cs" />
      <Compile Include="Assets\Scripts\Store\StoreEntrance.cs" />
      <Compile Include="Assets\Scripts\UI\OpenCloseGameMenu.cs" />
      <Compile Include="Assets\Scripts\Islands\IslandLevelLoader.cs" />
@@ -112,8 +115,7 @@
      <Compile Include="Assets\Scripts\Entity\Player\PlayerStats.cs" />
      <Compile Include="Assets\Scripts\Islands\IslandPopulator.cs" />
      <Compile Include="Assets\Scripts\UI\DamageCanvas.cs" />
-     <Compile Include="Assets\Scripts\Store\FloorController.cs" />
-     <Compile Include="Assets\Scripts\Store\FloorTravelTrigger.cs" />
+     <Compile Include="Assets\Scripts\Audio\MainMenuMusicController.cs" />
      <None Include="Assets\TextMesh Pro\Shaders\TMPro.cginc" />
      <None Include="Assets\TextMesh Pro\Shaders\TMP_SDF-Mobile Overlay.shader" />
      <None Include="Assets\Scripts\Shaders\TextureMask.shader" />

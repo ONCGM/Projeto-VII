@@ -163,8 +163,8 @@ MonoBehaviour:
   mainMenuGroup: {fileID: 3260127211427969221}
   loadGameGroup: {fileID: 3260127211408511591}
   optionsMenuGroup: {fileID: 3260127212362681759}
-  gameSceneIndex: 2
   creditsSceneIndex: 9
+  loadingSceneIndex: 10
   lowSettingsRenderAsset: {fileID: 11400000, guid: a31e9f9f9c9d4b9429ed0d1234e22103, type: 2}
   highSettingsRenderAsset: {fileID: 11400000, guid: 19ba41d7c0026c3459d37c2fe90c55a0, type: 2}
   popupPrefab: {fileID: 3017782093125859472, guid: ff97a6ef454e32b498a293f927ae08a4, type: 3}

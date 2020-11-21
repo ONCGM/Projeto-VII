@@ -149,7 +149,11 @@ namespace Game {
             };
             
             player.LoadGameMasterPlayerStats();
-
+            
+            GameMaster.Instance.DialogsCleared = new List<bool>();
+            GameMaster.Instance.CurrentGameDay = 1;
+            GameMaster.Instance.CurrentTimeOfDay = TimeOfDay.Morning;
+            
             SaveSystem.LoadedData = new SaveData();
             GameMaster.Instance.SetSaveData(new SaveData());
             
