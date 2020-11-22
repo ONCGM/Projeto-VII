@@ -30,11 +30,10 @@ namespace Entity.Enemies {
             var waitForFrames = new WaitForSeconds(targetPositionUpdateInterval);
 
             while(currentState == AiState.Attacking) {
-                agent.SetDestination(targetEntity.transform.position);
+                var difference = targetEntity.transform.position - transform.position;
+                agent.SetDestination(targetEntity.transform.position - difference.normalized);
                 yield return waitForFrames;
             }
-            
-            SearchForPlayer();
         }
         
         // Overrides base attack to instead attack with a ranged projectile.
@@ -74,6 +73,8 @@ namespace Entity.Enemies {
             agent.speed = settings.baseMoveSpeed;
             isAttacking = false;
             currentState = AiState.Chasing;
+
+            StartCoroutine(nameof(MoveTowardsEntity));
         }
     }
 }

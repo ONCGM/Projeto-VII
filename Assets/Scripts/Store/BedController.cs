@@ -47,8 +47,8 @@ namespace Store {
             canvasGroup = transform.parent.GetComponentInChildren<CanvasGroup>();
             canvasGroup.interactable = false;
             player = FindObjectOfType<PlayerController>();
-            sleepButtons.Add(new ButtonSettings(confirmKey.key, PopupButtonHighlight.Normal, 0));
-            sleepButtons.Add(new ButtonSettings(cancelKey.key, PopupButtonHighlight.Highlight, 1));
+            sleepButtons.Add(new ButtonSettings(confirmKey.key, PopupButtonHighlight.Highlight, 0));
+            sleepButtons.Add(new ButtonSettings(cancelKey.key, PopupButtonHighlight.Normal, 1));
         }
 
         // Collision Detection.

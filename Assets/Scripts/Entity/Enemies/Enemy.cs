@@ -183,20 +183,20 @@ namespace Entity.Enemies {
             
             var waitForFrames = new WaitForSeconds(patrollingPlayerSearchFrequency);
 
-            if(agent.isOnNavMesh) {
+            if(agent != null && agent.isOnNavMesh) {
                 agent.SetPath(GeneratePatrolPath());
             } else {
                 yield break;
             }
             
             while(agent.isOnNavMesh && agent.remainingDistance > patrollingTargetPositionTolerance) {
-                SearchForPlayer();
+                if(settings.isAggressive) SearchForPlayer();
                 yield return waitForFrames;
             }
 
             currentState = AiState.Idle;
             isPatrolling = false;
-            SearchForPlayer();
+            if(!settings.isAggressive) Invoke(nameof(SearchForPlayer), targetPositionUpdateInterval);
         }
 
         /// <summary>
@@ -230,10 +230,12 @@ namespace Entity.Enemies {
         /// Check if the player is in range of the enemy.
         /// </summary>
         protected virtual void SearchForPlayer() {
-            if(!agent.isOnNavMesh) return;
+            if(agent == null || !agent.isOnNavMesh || agent.enabled == false) return;
             
             if(!settings.isAggressive) {
-                if(!isPatrolling) StartCoroutine(nameof(PatrolArea));
+                if(isPatrolling) return;
+                StopAllCoroutines();
+                StartCoroutine(nameof(PatrolArea));
                 return;
             }
             
@@ -250,7 +252,9 @@ namespace Entity.Enemies {
             }
             
             targetEntity = null;
-            if(!isPatrolling) StartCoroutine(nameof(PatrolArea));
+            if(isPatrolling) return;
+            StopAllCoroutines();
+            StartCoroutine(nameof(PatrolArea));
         }
         
         /// <summary>
@@ -389,7 +393,10 @@ namespace Entity.Enemies {
         /// <summary>
         /// Unsubscribes from game master.
         /// </summary>
-        private void OnDestroy() => GameMaster.OnGameExecutionStateUpdated -= GameStateUpdated;
+        private void OnDestroy() {
+            GameMaster.OnGameExecutionStateUpdated -= GameStateUpdated;
+            StopAllCoroutines();
+        }
 
         #if UNITY_EDITOR
         private void OnDrawGizmos() {

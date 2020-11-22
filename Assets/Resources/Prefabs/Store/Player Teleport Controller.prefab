@@ -58,6 +58,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   playerTag: Player
+  canTriggerTravel: 1
 --- !u!1 &6042591353329715371
 GameObject:
   m_ObjectHideFlags: 0
@@ -69,7 +70,7 @@ GameObject:
   - component: {fileID: 6042591353329715368}
   - component: {fileID: 6042591353329715369}
   m_Layer: 0
-  m_Name: Player Teleport Positions
+  m_Name: Player Teleport Controller
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -103,7 +104,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e46a04fb2f244074b8e11b6f8b8745ac, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  displayPopupToChangeFloors: 1
+  displayPopupToChangeFirstFloor: 1
+  displayPopupToChangeSecondFloor: 0
   currentFloor: 0
   secondFloorCamera: {fileID: 0}
   firstFloorTeleportPosition: {fileID: 6042591354084013601}
@@ -237,6 +239,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   playerTag: Player
+  canTriggerTravel: 1
 --- !u!1 &6042591354293855921
 GameObject:
   m_ObjectHideFlags: 0

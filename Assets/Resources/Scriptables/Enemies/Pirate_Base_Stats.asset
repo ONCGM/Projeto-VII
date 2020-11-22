@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   baseMaxHealth: 27
   baseMaxStamina: 18
-  baseMoveSpeed: 13
+  baseMoveSpeed: 3
   baseDamagePrimaryAttack: 11
   attackingRange: 20
   maxLevelCap: 30
@@ -28,7 +28,6 @@ MonoBehaviour:
   - {fileID: 11400000, guid: e108f82e77cc9b6459fcd62a2e0c4691, type: 2}
   isAggressive: 1
   attacksEntitiesWhoDamagedThisEntity: 1
-  shouldPatrolWhenIdle: 1
   patrolBackAndForth: 0
   patrollingRange: 18
   spottingRange: 25

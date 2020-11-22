@@ -92,6 +92,7 @@
      <Compile Include="Assets\Scripts\Store\StoreTransition.cs" />
      <Compile Include="Assets\Scripts\UI\PlayerStatsUI.cs" />
      <Compile Include="Assets\Scripts\UI\TabManager.cs" />
+     <Compile Include="Assets\Scripts\Game\ShipTravelLoadingController.cs" />
      <Compile Include="Assets\Scripts\Utility\SaveData.cs" />
      <Compile Include="Assets\Scripts\UI\MinimapUI.cs" />
      <Compile Include="Assets\Scripts\Ship\ShipTravelController.cs" />
@@ -116,7 +117,6 @@
      <Compile Include="Assets\Scripts\Islands\IslandPopulator.cs" />
      <Compile Include="Assets\Scripts\UI\DamageCanvas.cs" />
      <Compile Include="Assets\Scripts\Audio\MainMenuMusicController.cs" />
-     <Compile Include="Assets\Scripts\Game\ShipTravelLoadingController.cs" />
      <None Include="Assets\TextMesh Pro\Shaders\TMPro.cginc" />
      <None Include="Assets\TextMesh Pro\Shaders\TMP_SDF-Mobile Overlay.shader" />
      <None Include="Assets\Scripts\Shaders\TextureMask.shader" />

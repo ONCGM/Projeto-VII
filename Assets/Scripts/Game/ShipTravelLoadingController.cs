@@ -26,6 +26,7 @@ namespace Game {
         [SerializeField] private Transform loadingIconTransform;
         private CanvasGroup loadingGroup;
         private bool loadingTown;
+        private bool triggeredRemoval;
 
         #pragma warning restore 0649
 
@@ -33,28 +34,14 @@ namespace Game {
         private void Awake() {
             loadingGroup = GetComponent<CanvasGroup>();
             SceneManager.sceneLoaded += OnSceneLoaded;
-
-            AnimateLoadingIcon();
-            
-            DOTween.To(() => loadingGroup.alpha, x => loadingGroup.alpha = x,
-                       1f, fadeAnimationDuration).onComplete = () => {
-                if(GameMaster.Instance.GameSceneWasLoaded) {
-                    for(var i = 0; i < SceneManager.sceneCountInBuildSettings; i++) {
-                        if(i == loadingSceneIndex) continue;
-                        if(SceneManager.GetSceneByBuildIndex(i).isLoaded) SceneManager.UnloadSceneAsync(i);
-                    }
-                } else {
-                    SceneManager.UnloadSceneAsync(townSceneIndex);
-                }
-
-                Invoke(nameof(LoadNextScene), loadingSceneDelay);
-            };
         }
 
         /// <summary>
         /// Triggers the loading screen animation.
         /// </summary>
         public void StartLoadingSequence(int sceneIndexToLoad) {
+            AnimateLoadingIcon();
+            
             if(sceneIndexToLoad == townSceneIndex) {
                 loadingTown = true;
             } else if(sceneIndexToLoad == islandsSceneIndex) {
@@ -82,9 +69,9 @@ namespace Game {
         public void LoadNextScene() {
             if(loadingTown) {
                 SceneManager.LoadSceneAsync(townSceneIndex, LoadSceneMode.Additive);
-                SceneManager.UnloadSceneAsync(islandsSceneIndex);
                 GameMaster.Instance.ShipTravel.IslandLoader.UnloadIslands();
                 GameMaster.Instance.ShipTravel.IslandLoader = null;
+                SceneManager.UnloadSceneAsync(islandsSceneIndex);
                 return;
             }
             
@@ -99,11 +86,24 @@ namespace Game {
             if(scene.buildIndex == loadingSceneIndex) return;
             if(scene.buildIndex == islandsSceneIndex) GameMaster.Instance.ShipTravel.LoadIsland();
             if(scene.buildIndex == townSceneIndex) GameMaster.Instance.ShipTravel.LoadTown();
-            
-            DOTween.To(() => loadingGroup.alpha, x => loadingGroup.alpha = x, 0f, fadeAnimationDuration).onComplete =
+
+            if(!triggeredRemoval) RemoveLoadingOverlay();
+        }
+        
+        /// <summary>
+        /// Removes the loading scene and overlay.
+        /// </summary>
+        private void RemoveLoadingOverlay() {
+            triggeredRemoval = true;
+            DOTween.To(() => loadingGroup.alpha, x => loadingGroup.alpha = x,
+                       0.999f, fadeAnimationDuration * 0.4f).onComplete =
                 () => {
-                    SceneManager.UnloadSceneAsync(loadingSceneIndex);
-                    DOTween.Kill(loadingIconTransform);
+                    DOTween.To(() => loadingGroup.alpha, x => loadingGroup.alpha = x, 
+                               0f, fadeAnimationDuration).onComplete =
+                        () => {
+                            SceneManager.UnloadSceneAsync(loadingSceneIndex);
+                            DOTween.Kill(loadingIconTransform);
+                        };
                 };
         }
     }

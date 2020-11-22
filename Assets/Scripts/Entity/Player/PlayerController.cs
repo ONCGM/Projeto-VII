@@ -254,7 +254,7 @@ namespace Entity.Player {
         /// </summary>
         private void RecoverStamina() { 
             Stamina = Mathf.Clamp(Stamina + 2, 0, MaxStamina);
-            PlayerStatsUI.UpdateUiValues.Invoke();
+            PlayerStatsUI.UpdateUiValues?.Invoke();
         }
         
         /// <summary>

@@ -117,9 +117,14 @@ namespace UI {
         /// Updates all UI values.
         /// </summary>
         private void UpdateUi() {
-            timeNeedlePointer.transform.rotation = 
-                Quaternion.Euler(ClockRotations[(int) GameMaster.Instance.CurrentTimeOfDay]);
-            
+            if(timeNeedlePointer != null && timeNeedlePointer.transform.rotation !=
+               Quaternion.Euler(ClockRotations[(int) GameMaster.Instance.CurrentTimeOfDay])) {
+                timeNeedlePointer.transform.DORotate(Quaternion
+                                                     .Euler(ClockRotations[(int) GameMaster.Instance.CurrentTimeOfDay])
+                                                     .eulerAngles,
+                                                     fadeAnimationSpeed * 2f);
+            }
+
             var dayLocalized = LocalizationSystem.GetLocalizedValue("CONTEXT_TIME_DAY");
             var currentDay = GameMaster.Instance.CurrentGameDay;
             dayText.text = LocalizationSystem.CurrentLanguage == LocalizationSystem.Language.Japanese ? $"{currentDay} {dayLocalized}" : $"{dayLocalized} {currentDay}";

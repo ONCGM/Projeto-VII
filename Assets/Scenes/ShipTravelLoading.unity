@@ -414,6 +414,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 4107834649820313587, guid: dca70ecbed4575e4a9ddc74b24d31eba, type: 3}
+      propertyPath: loadingSceneDelay
+      value: 2
+      objectReference: {fileID: 0}
     - target: {fileID: 4107834649820313588, guid: dca70ecbed4575e4a9ddc74b24d31eba, type: 3}
       propertyPath: m_Name
       value: Loading Canvas

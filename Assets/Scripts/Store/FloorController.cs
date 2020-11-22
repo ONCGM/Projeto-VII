@@ -17,7 +17,8 @@ namespace Store {
     public class FloorController : MonoBehaviour {
         #pragma warning disable 0649
         [Header("Settings")]
-        [SerializeField] private bool displayPopupToChangeFloors;
+        [SerializeField] private bool displayPopupToChangeFirstFloor;
+        [SerializeField] private bool displayPopupToChangeSecondFloor;
         [SerializeField] private int currentFloor = 0;
         
         [Header("Cameras")]
@@ -54,18 +55,40 @@ namespace Store {
             player = FindObjectOfType<PlayerController>();
             travelButtons.Add(new ButtonSettings(confirmKey.key, PopupButtonHighlight.Normal, 0));
             travelButtons.Add(new ButtonSettings(cancelKey.key, PopupButtonHighlight.Highlight, 1));
-            OnTriggerTravel += displayPopupToChangeFloors ? 
-                                   (Action) StartTeleportToNextFloor : TeleportPlayerToNextFloor;
+            OnTriggerTravel += StartTeleportToNextFloor;
         }
         
         /// <summary>
         /// Opens a popup to teleport the player to the other floor.
         /// </summary>
         private void StartTeleportToNextFloor() {
-            if(popupDialog != null) return; 
-                
+            if(displayPopupToChangeFirstFloor && displayPopupToChangeSecondFloor) {
+                DisplayPopupToChangeFloors();
+            } else {
+                switch(currentFloor) {
+                    case 0 when !displayPopupToChangeFirstFloor:
+                        TeleportPlayerToNextFloor();
+                        break;
+                    case 0 when displayPopupToChangeFirstFloor:
+                        DisplayPopupToChangeFloors();
+                        break;
+                    default: {
+                        if(currentFloor > 0 && !displayPopupToChangeSecondFloor) TeleportPlayerToNextFloor();
+                        else if(currentFloor > 0 && displayPopupToChangeSecondFloor) DisplayPopupToChangeFloors();
+                        break;
+                    }
+                }
+            }
+        }
+
+        /// <summary>
+        /// Opens the popup to change floors.
+        /// </summary>
+        private void DisplayPopupToChangeFloors() {
+            if(popupDialog != null) return;
+
             popupDialog = Instantiate(popupPrefab).GetComponent<CanvasPopupDialog>();
-            
+
             popupDialog.SetUpPopup(titleKey.key, messageKey.key, travelButtons, ExecutionState.PopupPause, i => {
                 if(i <= 0) TeleportPlayerToNextFloor();
                 else FloorTravelTrigger.OnResetTriggerLock.Invoke();
