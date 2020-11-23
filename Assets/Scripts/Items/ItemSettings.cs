@@ -23,5 +23,6 @@ namespace Items {
 
         [Header("Price Settings")] // TODO: Game Economy. Basic as possible.
         [SerializeField] public int initialValue;
+        [SerializeField, Range(0.01f, 1f)] public float itemRarity;
     }
 }

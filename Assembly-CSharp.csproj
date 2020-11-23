@@ -51,6 +51,7 @@
   </PropertyGroup>
   <ItemGroup>
      <Compile Include="Assets\Scripts\UI\InventoryUI.cs" />
+     <Compile Include="Assets\Scripts\Town\TownLighthouse.cs" />
      <Compile Include="Assets\Scripts\Entity\Player\PlayerController.cs" />
      <Compile Include="Assets\Thirdparty\AllIn1SpriteShader\Scripts\AllIn1ShaderWindow.cs" />
      <Compile Include="Assets\Scripts\UI\SmallItemUI.cs" />
@@ -119,7 +120,7 @@
      <Compile Include="Assets\Scripts\Islands\IslandPopulator.cs" />
      <Compile Include="Assets\Scripts\UI\DamageCanvas.cs" />
      <Compile Include="Assets\Scripts\Audio\MainMenuMusicController.cs" />
-     <Compile Include="Assets\Scripts\Town\TownLighthouse.cs" />
+     <Compile Include="Assets\Scripts\Other\SaveTextureAsIcon.cs" />
      <None Include="Assets\TextMesh Pro\Shaders\TMPro.cginc" />
      <None Include="Assets\TextMesh Pro\Shaders\TMP_SDF-Mobile Overlay.shader" />
      <None Include="Assets\Scripts\Shaders\TextureMask.shader" />
