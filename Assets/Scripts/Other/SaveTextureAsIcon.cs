@@ -8,6 +8,7 @@ namespace Other {
     /// Saves a camera render texture as an image.
     /// </summary>
     public class SaveTextureAsIcon : MonoBehaviour {
+        #if UNITY_EDITOR
         [SerializeField] private string texName = "";
         [SerializeField] private int width = 512;
         [SerializeField] private int height = 512;
@@ -52,5 +53,6 @@ namespace Other {
             File.WriteAllBytes((Application.dataPath + "/Art/Sprites/Icon/" + texName + loopCount + ".png"), texBytes);
             print((Application.dataPath + "/Art/Sprites/Icon/" + texName + loopCount + ".png"));
         }
+        #endif
     }
 }

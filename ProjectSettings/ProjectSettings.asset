@@ -42,10 +42,12 @@ PlayerSettings:
   m_SplashScreenLogos:
   - logo: {fileID: 10404, guid: 0000000000000000e000000000000000, type: 0}
     duration: 5
-  - logo: {fileID: 21300000, guid: f154de395561265468235536fb6f7a33, type: 3}
+  - logo: {fileID: 21300000, guid: 43a4aaa1a7de1ef43ac402e1097885dd, type: 3}
     duration: 5
   - logo: {fileID: 21300000, guid: 2abe0c4e1055cb64592328b9f58d571f, type: 3}
-    duration: 5
+    duration: 2
+  - logo: {fileID: 21300000, guid: 8af2f254eed724248b9b65b3cbe91fba, type: 3}
+    duration: 2
   m_VirtualRealitySplashScreen: {fileID: 0}
   m_HolographicTrackingLossScreen: {fileID: 0}
   defaultScreenWidth: 1920
@@ -86,7 +88,7 @@ PlayerSettings:
   submitAnalytics: 1
   usePlayerLog: 1
   bakeCollisionMeshes: 0
-  forceSingleInstance: 0
+  forceSingleInstance: 1
   useFlipModelSwapchain: 1
   resizableWindow: 1
   useMacAppStoreValidation: 0
@@ -129,7 +131,7 @@ PlayerSettings:
     16:10: 1
     16:9: 1
     Others: 1
-  bundleVersion: 0.1
+  bundleVersion: 1.0
   preloadedAssets:
   - {fileID: 11400000, guid: 42ec8b8536279ef4189f6e80251b3797, type: 2}
   metroInputSource: 0
@@ -271,7 +273,14 @@ PlayerSettings:
   AndroidMinifyDebug: 0
   AndroidValidateAppBundleSize: 1
   AndroidAppBundleSizeToValidate: 100
-  m_BuildTargetIcons: []
+  m_BuildTargetIcons:
+  - m_BuildTarget: 
+    m_Icons:
+    - serializedVersion: 2
+      m_Icon: {fileID: 2800000, guid: 1adffc53bc30a544f89001a9cb490694, type: 3}
+      m_Width: 128
+      m_Height: 128
+      m_Kind: 0
   m_BuildTargetPlatformIcons: []
   m_BuildTargetBatching:
   - m_BuildTarget: Standalone
@@ -616,7 +625,7 @@ PlayerSettings:
   metroCertificateNotAfter: 0000000000000000
   metroApplicationDescription: Template_Lightweight
   wsaImages: {}
-  metroTileShortName: 
+  metroTileShortName: A Buccaneer's Shop
   metroTileShowName: 0
   metroMediumTileShowName: 0
   metroLargeTileShowName: 0
