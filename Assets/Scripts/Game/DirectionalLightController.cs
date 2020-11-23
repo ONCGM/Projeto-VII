@@ -57,7 +57,7 @@ namespace Game {
             mainLight = directionalLights[0];
             UpdateLightToCurrentTime(true);
             mainLight.enabled = enableOnAwake;
-            GameMaster.OnGameTimeOfDayUpdated += UpdateLightToCurrentTime;
+            GameMaster.OnTimeOfDayUpdated += UpdateLightToCurrentTime;
         }
 
         /// <summary>
@@ -121,7 +121,7 @@ namespace Game {
 
         // Unsubscribes from game master events.
         private void OnDestroy() {
-            GameMaster.OnGameTimeOfDayUpdated -= UpdateLightToCurrentTime;
+            GameMaster.OnTimeOfDayUpdated -= UpdateLightToCurrentTime;
         }
     }
 }

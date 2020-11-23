@@ -109,7 +109,7 @@ namespace Game {
             get => currentTimeOfDay;
             set {
                 currentTimeOfDay = value;
-                OnGameTimeOfDayUpdated?.Invoke();
+                OnTimeOfDayUpdated?.Invoke();
             }
         }
 
@@ -195,7 +195,7 @@ namespace Game {
         /// <summary>
         /// Called whenever the in game time changes.
         /// </summary>
-        public static Action OnGameTimeOfDayUpdated;
+        public static Action OnTimeOfDayUpdated;
 
         /// <summary>
         /// Called whenever a in game day passes.

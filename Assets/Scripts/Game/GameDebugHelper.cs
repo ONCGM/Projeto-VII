@@ -169,7 +169,7 @@ namespace Game {
             var day = GameMaster.Instance.CurrentGameDay;
             var time = GameMaster.Instance.CurrentTimeOfDay;
 
-            if(Input.GetKeyDown(KeyCode.F10)) GameMaster.Instance.AdvanceOneTimePeriod();
+            if(Input.GetKeyDown(KeyCode.F8)) GameMaster.Instance.AdvanceOneTimePeriod();
 
             if(Input.GetKeyDown(KeyCode.F11)) {
                 GameMaster.Instance.CurrentGameDay++;

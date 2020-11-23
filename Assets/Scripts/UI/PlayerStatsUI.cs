@@ -68,7 +68,7 @@ namespace UI {
             waitForBarAnimationDelay = new WaitForSeconds(barAnimationDelay);
             waitForBarAnimationFrame = new WaitForFixedUpdate();
             GameMaster.OnGameMenuUpdated += FadeAnimation;
-            GameMaster.OnGameTimeOfDayUpdated += UpdateUiValues;
+            GameMaster.OnTimeOfDayUpdated += UpdateUiValues;
             GameMaster.OnGameDayUpdate += UpdateUiValues;
             GameMaster.OnPlayerStatsUpdated += UpdateUiValues;
             UpdateUiValues += UpdateUi;
@@ -77,7 +77,7 @@ namespace UI {
 
         private void OnDestroy() {
             GameMaster.OnGameMenuUpdated -= FadeAnimation;
-            GameMaster.OnGameTimeOfDayUpdated -= UpdateUiValues;
+            GameMaster.OnTimeOfDayUpdated -= UpdateUiValues;
             GameMaster.OnPlayerStatsUpdated -= UpdateUiValues;
             GameMaster.OnGameDayUpdate -= UpdateUiValues;
             UpdateUiValues = null;
