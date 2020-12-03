@@ -91,6 +91,7 @@
      <Compile Include="Assets\Scripts\Islands\IslandRandomizer.cs" />
      <Compile Include="Assets\Scripts\UI\Tab.cs" />
      <Compile Include="Assets\Scripts\UI\Localization\LocalizedString.cs" />
+     <Compile Include="Assets\Scripts\Other\SaveTextureAsIcon.cs" />
      <Compile Include="Assets\Scripts\Items\Inventory.cs" />
      <Compile Include="Assets\Scripts\Store\StoreTransition.cs" />
      <Compile Include="Assets\Scripts\UI\PlayerStatsUI.cs" />
@@ -120,7 +121,6 @@
      <Compile Include="Assets\Scripts\Islands\IslandPopulator.cs" />
      <Compile Include="Assets\Scripts\UI\DamageCanvas.cs" />
      <Compile Include="Assets\Scripts\Audio\MainMenuMusicController.cs" />
-     <Compile Include="Assets\Scripts\Other\SaveTextureAsIcon.cs" />
      <None Include="Assets\TextMesh Pro\Shaders\TMPro.cginc" />
      <None Include="Assets\TextMesh Pro\Shaders\TMP_SDF-Mobile Overlay.shader" />
      <None Include="Assets\Scripts\Shaders\TextureMask.shader" />

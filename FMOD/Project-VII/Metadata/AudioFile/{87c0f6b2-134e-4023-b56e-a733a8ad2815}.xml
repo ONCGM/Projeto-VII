@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<objects serializationModel="Studio.02.00.00">
+	<object class="AudioFile" id="{87c0f6b2-134e-4023-b56e-a733a8ad2815}">
+		<property name="assetPath">
+			<value>SFX/Gunfire/ES_Gun Powder Bag 1 - SFX Producer.mp3</value>
+		</property>
+		<property name="frequencyInKHz">
+			<value>48</value>
+		</property>
+		<property name="channelCount">
+			<value>2</value>
+		</property>
+		<property name="length">
+			<value>0.55200000000000005</value>
+		</property>
+		<relationship name="masterAssetFolder">
+			<destination>{2ca4e725-4807-4703-9138-2d4fd006a6b9}</destination>
+		</relationship>
+	</object>
+</objects>

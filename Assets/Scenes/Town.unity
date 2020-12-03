@@ -1764,7 +1764,7 @@ GameObject:
   - component: {fileID: 1893864486}
   m_Layer: 0
   m_Name: Terrain Main Island
-  m_TagString: Untagged
+  m_TagString: Sand
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 4294967295
@@ -3309,6 +3309,10 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8384049594918128865, guid: 54d24528ca8842e4c8bce0c2addc3a9d, type: 3}
       propertyPath: m_SizeDelta.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8384049594918128865, guid: 54d24528ca8842e4c8bce0c2addc3a9d, type: 3}
+      propertyPath: m_AnchoredPosition.y
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8384049595328923620, guid: 54d24528ca8842e4c8bce0c2addc3a9d, type: 3}

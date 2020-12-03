@@ -2,6 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using Entity.Enemies;
+using FMODUnity;
 using Game;
 using Items;
 using UI;
@@ -98,7 +99,31 @@ namespace Entity.Player {
         
         // Which upgrades to use.
         private int currentUpgrades = 0;
+        
+        // Sound Stuff
+        // Dictionary for the different sound values.
+        public enum footstepSound { SAND, WOOD }
+        // Current type of ground the player is stepping on.
+        private footstepSound currentTypeOfGround = footstepSound.WOOD;
 
+        // The EventEmitter variable for the player sounds.
+        [Header("Sound emitters.")]
+        [SerializeField] private StudioEventEmitter playerFootstepEmitter;
+        
+        [Header("Sound Events")]
+        [SerializeField, EventRef] private string footstepEvent;
+        [SerializeField, EventRef] private string specialAttackEvent;
+        [SerializeField, EventRef] private string meleeSwingEvent;
+        [SerializeField, EventRef] private string meleeHitEvent;
+
+        [Header("Sound Parameters")] 
+        [SerializeField, ParamRef] private string footstepParam = "GroundType";
+        [SerializeField] private string sandTag = "Sand";
+        [SerializeField] private string woodTag = "Wood";
+        
+        // How far under the player should we check for the ground.
+        [SerializeField] private Vector3 groundDistance = new Vector3(0f, 1f, 0f);
+        
         [Header("Other")]
         [SerializeField] private GameObject DamageCanvasPrefab;
 
@@ -290,7 +315,8 @@ namespace Entity.Player {
                 bullet.InitialPosition = position;
                 bullet.BulletOwner = this;
             }
-
+            
+            PlaySfx(specialAttackEvent);
             VibrateController(0.2f, 0.6f, 0.4f);
         }
         
@@ -308,6 +334,7 @@ namespace Entity.Player {
             if(Stamina < 3 || isInsideShop) return;
             Stamina -= 3;
             swordSlash.SendEvent("OnPlay");
+            PlaySfx(meleeSwingEvent);
             
             if(anim.GetCurrentAnimatorStateInfo(1).IsName("Attack Idle")) {
                 comboNumber = 0;
@@ -338,7 +365,8 @@ namespace Entity.Player {
         public void ComboAttackCollision() {
             swordSlash.SendEvent("OnStop");
             if(!CheckCollisionSword(swordCollider)) return;
-            //TODO: Play audio and effects.
+            //TODO: Play effects.
+            PlaySfx(meleeHitEvent);
             Instantiate(DamageCanvasPrefab, transform.position, Quaternion.identity)
                 .GetComponent<DamageCanvas>().damageValue = 
                 Mathf.RoundToInt(meleeDamage * (1f + meleeDamageComboMultiplier * comboNumber));
@@ -487,6 +515,50 @@ namespace Entity.Player {
             inventory.InventorySize = playerInventorySize;
         }
         
+        #endregion
+        
+        #region Sound
+        
+        /// <summary>
+        /// Plays a sound attached to the player position.
+        /// </summary>
+        /// <param name="soundEvent"> Event to play. </param>
+        public void PlaySfx(string soundEvent) => RuntimeManager.PlayOneShotAttached(soundEvent, gameObject);
+
+        /// <summary>
+        ///  Plays footstep sound.
+        /// </summary>
+        public void PlayFootstep() {
+            CheckGround();
+            
+            if(playerFootstepEmitter.Event != null) {
+                playerFootstepEmitter.Play();
+                playerFootstepEmitter.EventInstance.setParameterByName(footstepParam, (int) currentTypeOfGround);
+            } else {
+                if(!string.IsNullOrEmpty(footstepEvent)) {
+                    playerFootstepEmitter.Event = footstepEvent;
+                    playerFootstepEmitter.Play();
+                    playerFootstepEmitter.EventInstance.setParameterByName(footstepParam, (int) currentTypeOfGround);
+                }
+            }
+        }
+
+        // Sets the current type of ground.
+        public void SetCurrentGround(footstepSound type) => currentTypeOfGround = type;
+        
+        // Checks what kind of ground it is.
+        public void CheckGround() {
+            Physics.Linecast((transform.position + groundDistance / 2), transform.position - groundDistance, out var hitInfo);
+        
+            // Sets ground type for footstep sound.
+            if(hitInfo.collider == null) return;
+            
+            if(hitInfo.collider.gameObject.CompareTag(sandTag)) {
+                SetCurrentGround(footstepSound.SAND);
+            } else if(hitInfo.collider.gameObject.CompareTag(woodTag)) {
+                SetCurrentGround(footstepSound.WOOD);
+            }
+        }
         #endregion
     }
 }

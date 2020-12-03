@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<objects serializationModel="Studio.02.00.00">
+	<object class="AudioFile" id="{f78d201c-c8e0-4897-abf2-5c5b5ccf2a10}">
+		<property name="assetPath">
+			<value>SFX/Impacts/ES_Pillow Fluff Hit 1 - SFX Producer.mp3</value>
+		</property>
+		<property name="frequencyInKHz">
+			<value>48</value>
+		</property>
+		<property name="channelCount">
+			<value>2</value>
+		</property>
+		<property name="length">
+			<value>0.23999999999999999</value>
+		</property>
+		<relationship name="masterAssetFolder">
+			<destination>{2ca4e725-4807-4703-9138-2d4fd006a6b9}</destination>
+		</relationship>
+	</object>
+</objects>

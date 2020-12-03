@@ -25,10 +25,15 @@ MonoBehaviour:
   levelVariationBasedOnPlayerLevel: 2
   chanceToDropItem: 0.5
   itemsToDrop:
-  - {fileID: 11400000, guid: e108f82e77cc9b6459fcd62a2e0c4691, type: 2}
+  - {fileID: 11400000, guid: ced609e0e9bc860448619cc4d9986bc8, type: 2}
+  - {fileID: 11400000, guid: 7e1f0179a7c8b004294ab1f660759ae0, type: 2}
+  - {fileID: 11400000, guid: 8c54860c6686c324b8a7c24367c444f8, type: 2}
+  - {fileID: 11400000, guid: ed6775c184a6a8144a9286c841b310b0, type: 2}
+  - {fileID: 11400000, guid: f89fd15cf456b034dbbafa43ec32e23c, type: 2}
+  - {fileID: 11400000, guid: 1ff067c18be213c4583a1cb957f38d13, type: 2}
+  - {fileID: 11400000, guid: ea8dd9079a416ec4e8f03096a6f82386, type: 2}
   isAggressive: 0
   attacksEntitiesWhoDamagedThisEntity: 1
-  shouldPatrolWhenIdle: 1
   patrolBackAndForth: 0
   patrollingRange: 12
   spottingRange: 12

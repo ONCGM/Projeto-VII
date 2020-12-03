@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<objects serializationModel="Studio.02.00.00">
+	<object class="ParameterPreset" id="{749d3853-37c0-475d-9468-d8270b1f5a3a}">
+		<property name="name">
+			<value>Beach_Volume</value>
+		</property>
+		<relationship name="folder">
+			<destination>{76e53bb8-6a9e-42fd-a305-0c601e7d2577}</destination>
+		</relationship>
+		<relationship name="parameter">
+			<destination>{cc5b4f25-87e0-40aa-92cf-416f9e2d332e}</destination>
+		</relationship>
+	</object>
+	<object class="GameParameter" id="{cc5b4f25-87e0-40aa-92cf-416f9e2d332e}">
+		<property name="initialValue">
+			<value>1</value>
+		</property>
+	</object>
+</objects>

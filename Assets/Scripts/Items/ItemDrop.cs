@@ -1,6 +1,6 @@
-﻿using System;
-using System.Collections;
+﻿using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using DG.Tweening;
 using Entity;
 using Entity.Player;
@@ -21,6 +21,7 @@ namespace Items {
 
         [Header("Item ItemSettings")] 
         [SerializeField] private ItemSettings settings;
+        [SerializeField] private List<ItemSettings> itemList = new List<ItemSettings>();
 
         [Header("Collision ItemSettings")]
         [SerializeField] private string playerTag = "Player";
@@ -44,14 +45,31 @@ namespace Items {
         /// </summary>
         protected virtual void Awake() {
             eventEmitter = GetComponent<StudioEventEmitter>();
-             Invoke(nameof(CheckObjectSpawn), 1f);
+            Invoke(nameof(CheckObjectSpawn), 1f);
         }
         
         /// <summary>
         /// Checks if it spawned the asset, in case a enemy forgot or this is a stage drop.
         /// </summary>
         protected virtual void CheckObjectSpawn() {
-            if(!hasSpawned) SetItemBasedOnSettings(settings);
+            if(hasSpawned) return;
+            var items = itemList.FindAll(x => x.minimumPlayerLevelToSpawn < GameMaster.Instance.PlayerStats.Level);
+            
+            if(items.Count < 1) {
+                Destroy(gameObject);
+                return;
+            }
+
+            var rng = Random.value;
+            var possibleItems = items.FindAll(itemSettings => itemSettings.itemRarity > rng);
+            
+            if(possibleItems.Count < 1) {
+                Destroy(gameObject);
+                return;
+            }
+            
+            settings = possibleItems[Random.Range(0, possibleItems.Count)];
+            SetItemBasedOnSettings(settings);
         }
 
         /// <summary>

@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   itemPrefab: {fileID: 7544617556613125104, guid: 1efbb2db66435784d8866bd90cf148a0, type: 3}
   itemModel: {fileID: 8913448247219037676, guid: b64dfbe1227f3d04e9b4fe44ad7d6b68, type: 3}
-  minimumPlayerLevelToSpawn: 4
+  minimumPlayerLevelToSpawn: 20
   itemId: 11
   itemNameKey: Item_Name_Plushie
   itemDescriptionKey: Item_Desc_Plushie

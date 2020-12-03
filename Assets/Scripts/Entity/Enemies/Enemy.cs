@@ -341,9 +341,9 @@ namespace Entity.Enemies {
         protected virtual void GenerateDrop() {
             // TODO: Set Coins based on economy.
             if(Random.value > settings.chanceToDropItem) return;
-            var availableItems = itemsToDrop.Where(itemSettings =>
-                                                       GameMaster.Instance.PlayerStats.Level >
-                                                       itemSettings.minimumPlayerLevelToSpawn).ToList();
+            var availableItems = itemsToDrop.FindAll(itemSettings =>
+                                                         GameMaster.Instance.PlayerStats.Level >
+                                                         itemSettings.minimumPlayerLevelToSpawn);
 
             if(availableItems.Count < 1) {
                 FindObjectOfType<PlayerController>()
@@ -351,7 +351,10 @@ namespace Entity.Enemies {
                 return;
             }
 
-            var selectedItem = availableItems[Random.Range(0, availableItems.Count)];
+
+            var rng = Random.value;
+            var possibleItems = availableItems.FindAll(itemSettings => itemSettings.itemRarity > rng);
+            var selectedItem = possibleItems[Random.Range(0, possibleItems.Count)];
 
             FindObjectOfType<PlayerController>()
                 .AddCoins(Mathf.RoundToInt(Random.Range(1, 25) * GameMaster.Instance.GameDifficultyReversed));

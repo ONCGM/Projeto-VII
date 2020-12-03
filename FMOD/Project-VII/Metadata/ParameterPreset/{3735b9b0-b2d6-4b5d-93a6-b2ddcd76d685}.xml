@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<objects serializationModel="Studio.02.00.00">
+	<object class="ParameterPreset" id="{3735b9b0-b2d6-4b5d-93a6-b2ddcd76d685}">
+		<property name="name">
+			<value>Adventure_Island_Stage</value>
+		</property>
+		<relationship name="folder">
+			<destination>{76e53bb8-6a9e-42fd-a305-0c601e7d2577}</destination>
+		</relationship>
+		<relationship name="parameter">
+			<destination>{43b362a6-38c7-4a7f-a705-274eaa4288ec}</destination>
+		</relationship>
+	</object>
+	<object class="GameParameter" id="{43b362a6-38c7-4a7f-a705-274eaa4288ec}">
+		<property name="maximum">
+			<value>6</value>
+		</property>
+		<property name="initialValue">
+			<value>0</value>
+		</property>
+	</object>
+</objects>

@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<objects serializationModel="Studio.02.00.00">
+	<object class="ParameterPreset" id="{625faba4-4feb-4c99-8b79-e3dd3f0c4744}">
+		<property name="name">
+			<value>Beach_Stage</value>
+		</property>
+		<relationship name="folder">
+			<destination>{76e53bb8-6a9e-42fd-a305-0c601e7d2577}</destination>
+		</relationship>
+		<relationship name="parameter">
+			<destination>{bb460021-2320-4ecf-8d1e-ad536cd446f3}</destination>
+		</relationship>
+	</object>
+	<object class="GameParameter" id="{bb460021-2320-4ecf-8d1e-ad536cd446f3}">
+		<property name="maximum">
+			<value>3</value>
+		</property>
+		<property name="initialValue">
+			<value>0</value>
+		</property>
+	</object>
+</objects>
