@@ -354,10 +354,14 @@ namespace Entity.Enemies {
 
             var rng = Random.value;
             var possibleItems = availableItems.FindAll(itemSettings => itemSettings.itemRarity > rng);
-            var selectedItem = possibleItems[Random.Range(0, possibleItems.Count)];
+            possibleItems = new List<ItemSettings>(possibleItems.OrderBy(x => x.itemRarity));
+            var selectedItem = rng > 0.5f ? possibleItems?.First() : possibleItems[Random.Range(0, possibleItems.Count)];
 
-            FindObjectOfType<PlayerController>()
-                .AddCoins(Mathf.RoundToInt(Random.Range(1, 25) * GameMaster.Instance.GameDifficultyReversed));
+            if(availableItems.Count < 1) {
+                FindObjectOfType<PlayerController>()
+                    .AddCoins(Mathf.RoundToInt(Random.Range(1, 25) * GameMaster.Instance.GameDifficultyReversed));
+            }
+
             if(selectedItem == null) return;
                 Instantiate(selectedItem.itemPrefab, transform.position, Quaternion.identity).GetComponent<ItemDrop>()
                     .SetItemBasedOnSettings(selectedItem);
