@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using Entity.Player;
 using Items;
@@ -28,12 +29,12 @@ namespace UI {
             player.Inventory.OnInventoryUpdate.AddListener(UpdateItems);
             UpdateItems();
         }
-        
+
         /// <summary>
         /// Updates the items in the ui.
         /// </summary>
         private void UpdateItems() {
-            for(int i = 0; i < transform.childCount; i++) {
+            for(var i = 0; i < transform.childCount; i++) {
                 Destroy(transform.GetChild(i).gameObject);
             }
 

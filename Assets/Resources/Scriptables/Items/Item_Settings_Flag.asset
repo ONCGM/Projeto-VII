@@ -19,7 +19,9 @@ MonoBehaviour:
   itemNameKey: Item_Name_Flag
   itemDescriptionKey: Item_Desc_Flag
   itemEffects: Item_Effects_Flag
-  maxStackQuantity: 10
+  maxStackQuantity: 1
   itemImage: {fileID: 21300000, guid: ec3e37883454ca542962f0c3a6c1ca4f, type: 3}
   initialValue: 20
   itemRarity: 0.3
+  hasEffect: 0
+  effectAmount: 0

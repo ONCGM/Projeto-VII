@@ -19,7 +19,9 @@ MonoBehaviour:
   itemNameKey: Item_Name_Sword
   itemDescriptionKey: Item_Desc_Sword
   itemEffects: Item_Effects_Sword
-  maxStackQuantity: 3
+  maxStackQuantity: 1
   itemImage: {fileID: 21300000, guid: dae286545384a7144980db542bf786f9, type: 3}
   initialValue: 189
   itemRarity: 0.4
+  hasEffect: 0
+  effectAmount: 0

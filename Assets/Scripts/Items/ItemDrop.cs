@@ -53,7 +53,7 @@ namespace Items {
         /// </summary>
         protected virtual void CheckObjectSpawn() {
             if(hasSpawned) return;
-            var items = itemList.FindAll(x => x.minimumPlayerLevelToSpawn < GameMaster.Instance.PlayerStats.Level);
+            var items = itemList.Where(x => GameMaster.Instance.PlayerStats.Level >= x.minimumPlayerLevelToSpawn).ToList();
             
             if(items.Count < 1) {
                 Destroy(gameObject);
@@ -61,7 +61,7 @@ namespace Items {
             }
 
             var rng = Random.value;
-            var possibleItems = items.FindAll(itemSettings => itemSettings.itemRarity > rng);
+            var possibleItems = items.Where(x => x.itemRarity >= rng).ToList();
             
             if(possibleItems.Count < 1) {
                 Destroy(gameObject);
@@ -101,16 +101,17 @@ namespace Items {
             if(!other.CompareTag(playerTag)) return;
             if(!other.GetComponent<PlayerController>()) return;
             var player = other.GetComponent<PlayerController>();
-            var stats = new InventoryItemEntry(settings, 1);
-
-            player.Inventory.AddItemEntry(stats);
-            player.PlayerIslandInventory.AddItemEntry(stats);
+            var stats = new InventoryItemEntry(settings);
+            
+            var successfullyAdded = player.Inventory.AddItemEntry(stats, 1);
+            player.PlayerIslandInventory.AddItemEntry(stats, 1, false);
 
             // TODO: Add particles, sfx and effects.
-            DOTween.Kill(this);
-            Destroy(gameObject);
+            if(!successfullyAdded) return;
             
+            DOTween.Kill(this);
             eventEmitter.Play();
+            Destroy(gameObject);
         }
     }
 }

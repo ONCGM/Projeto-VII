@@ -30,7 +30,7 @@ namespace Ship {
         [Header("Settings")]
         [SerializeField] private string playerComponentsTag = "Player Components";
         // [SerializeField] private string playerTag = "Player";
-        [SerializeField] private string townLightTag, seaLightTag, islandLightTag;
+        // [SerializeField] private string townLightTag, seaLightTag, islandLightTag;
 
         [Header("Localization")] 
         [SerializeField] private LocalizedString travelTitleKey;
@@ -108,7 +108,6 @@ namespace Ship {
         /// Start the travel routine to the islands.
         /// </summary>
         public void StartTravelToIsland() {
-            // TODO: Add to late message and lock player from travelling.
             var popup = Instantiate(popupPrefab).GetComponent<CanvasPopupDialog>();
             var player = FindObjectOfType<PlayerController>();
             FindObjectOfType<PlayerStatsUI>().ShowHideCanvasKeepClock(false);

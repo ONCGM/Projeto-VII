@@ -342,7 +342,7 @@ namespace Entity.Enemies {
             // TODO: Set Coins based on economy.
             if(Random.value > settings.chanceToDropItem) return;
             var availableItems = itemsToDrop.FindAll(itemSettings =>
-                                                         GameMaster.Instance.PlayerStats.Level >
+                                                         GameMaster.Instance.PlayerStats.Level >=
                                                          itemSettings.minimumPlayerLevelToSpawn);
 
             if(availableItems.Count < 1) {
@@ -353,9 +353,9 @@ namespace Entity.Enemies {
 
 
             var rng = Random.value;
-            var possibleItems = availableItems.FindAll(itemSettings => itemSettings.itemRarity > rng);
+            var possibleItems = availableItems.FindAll(itemSettings => itemSettings.itemRarity >= rng);
             possibleItems = new List<ItemSettings>(possibleItems.OrderBy(x => x.itemRarity));
-            var selectedItem = rng > 0.5f ? possibleItems?.First() : possibleItems[Random.Range(0, possibleItems.Count)];
+            var selectedItem = rng >= 0.5f ? possibleItems?.First() : possibleItems[Random.Range(0, possibleItems.Count)];
 
             if(availableItems.Count < 1) {
                 FindObjectOfType<PlayerController>()

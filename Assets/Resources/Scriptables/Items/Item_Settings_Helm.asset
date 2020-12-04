@@ -19,7 +19,9 @@ MonoBehaviour:
   itemNameKey: Item_Name_Helm
   itemDescriptionKey: Item_Desc_Helm
   itemEffects: Item_Effects_Helm
-  maxStackQuantity: 2
+  maxStackQuantity: 1
   itemImage: {fileID: 21300000, guid: 9530a1501888d924894cde938cea976b, type: 3}
   initialValue: 75
   itemRarity: 0.5
+  hasEffect: 0
+  effectAmount: 0

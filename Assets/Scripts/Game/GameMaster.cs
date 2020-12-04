@@ -73,7 +73,7 @@ namespace Game {
         private PlayerStats playerStats = new PlayerStats() {
             Health = 35, MaxHealth = 35, Stamina = 20, MaxStamina = 20,
             MeleeDamage = 7, RangedDamage = 5, MovementSpeed = 15,
-            Level = 15, Experience = 0, TotalExperience = 0,
+            Level = 1, Experience = 0, TotalExperience = 0,
             Coins = 0, CurrentInventory = new List<InventoryItemEntry>(),
             CurrentUpgradeLevel = 0
         };

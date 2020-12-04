@@ -19,7 +19,9 @@ MonoBehaviour:
   itemNameKey: Item_Name_Plushie
   itemDescriptionKey: Item_Desc_Plushie
   itemEffects: Item_Effects_Plushie
-  maxStackQuantity: 3
+  maxStackQuantity: 1
   itemImage: {fileID: 21300000, guid: de98ad294b135a04fb08f18331df396c, type: 3}
   initialValue: 115
   itemRarity: 0.7
+  hasEffect: 0
+  effectAmount: 0

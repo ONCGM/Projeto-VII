@@ -19,7 +19,9 @@ MonoBehaviour:
   itemNameKey: Item_Name_Tentacle
   itemDescriptionKey: Item_Desc_Tentacle
   itemEffects: Item_Effects_Tentacle
-  maxStackQuantity: 5
+  maxStackQuantity: 1
   itemImage: {fileID: 21300000, guid: 9171994ed535b3a47b1f0fab54f17db8, type: 3}
   initialValue: 100
   itemRarity: 0.35
+  hasEffect: 0
+  effectAmount: 0

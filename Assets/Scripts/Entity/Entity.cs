@@ -15,7 +15,7 @@ namespace Entity {
         [SerializeField] protected int maxHealth = 10;
         public virtual int Health {
             get => health;
-            set => health = value;
+            set => health = Mathf.Clamp(value, 0, MaxHealth);
         }
         
         /// <summary>
@@ -30,7 +30,7 @@ namespace Entity {
         [SerializeField] protected int maxStamina = 10;
         public virtual int Stamina {
             get => stamina;
-            set => stamina = value;
+            set => stamina = Mathf.Clamp(value, 0, MaxStamina);
         }
         
         /// <summary>

@@ -9,7 +9,7 @@ namespace Store {
     /// </summary>
     public class StoreCanvasTrigger : MonoBehaviour {
         #pragma warning disable 0649
-        [Header("Settings")] [SerializeField] private bool canOpen;
+        [Header("Settings")] [SerializeField] private bool canOpen = true;
         [SerializeField] private string playerTag = "Player";
         private StoreController controller; 
         

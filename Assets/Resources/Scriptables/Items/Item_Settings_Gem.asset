@@ -19,7 +19,9 @@ MonoBehaviour:
   itemNameKey: Item_Name_Gem
   itemDescriptionKey: Item_Desc_Gem
   itemEffects: Item_Effects_Gem
-  maxStackQuantity: 10
+  maxStackQuantity: 1
   itemImage: {fileID: 21300000, guid: 37dc1b07228676b4d821842c40a90d65, type: 3}
   initialValue: 500
   itemRarity: 0.1
+  hasEffect: 0
+  effectAmount: 0

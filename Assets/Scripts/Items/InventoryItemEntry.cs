@@ -17,7 +17,7 @@ namespace Items {
         /// </summary>
         public int Stack { get; private set; }
         
-        public InventoryItemEntry(ItemSettings itemSettings, int stack) {
+        public InventoryItemEntry(ItemSettings itemSettings, int stack = 1) {
             Stack = stack;
             ItemSettings = itemSettings;
         }

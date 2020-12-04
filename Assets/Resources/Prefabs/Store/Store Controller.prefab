@@ -1,5 +1,35 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
+--- !u!1 &6478706743147135348
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 6196706771092219032}
+  m_Layer: 0
+  m_Name: Clerk Position
+  m_TagString: Untagged
+  m_Icon: {fileID: 8418204508859773708, guid: 0000000000000000d000000000000000, type: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &6196706771092219032
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6478706743147135348}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 7346824944463505898}
+  m_RootOrder: 1
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &7346824944463505897
 GameObject:
   m_ObjectHideFlags: 0
@@ -29,6 +59,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 7346824944533001100}
+  - {fileID: 6196706771092219032}
   - {fileID: 7346824944077783817}
   m_Father: {fileID: 0}
   m_RootOrder: 0
@@ -47,6 +78,32 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   player: {fileID: 0}
   mainCanvasGroup: {fileID: 7346824944077783813}
+  playerInventoryParent: {fileID: 7346824944565229440}
+  storeInventoryParent: {fileID: 7346824945382406936}
+  fadeAnimationTime: 1
+  clerkPosition: {fileID: 6196706771092219032}
+  storeInventorySize: 9
+  priceMarkup: 0.5
+  openStoreTitleKey:
+    key: placeholder
+  openStoreMessageKey:
+    key: placeholder
+  timeAdvanceMessageKey:
+    key: placeholder
+  confirmButtonKey:
+    key: MENU_LABEL_CONFIRM_BUTTON
+  cancelButtonKey:
+    key: MENU_LABEL_CANCEL
+  cantOpenAtNightTitleKey:
+    key: placeholder
+  cantOpenAtNightMessageKey:
+    key: placeholder
+  cantOpenWithoutItemsTitleKey:
+    key: placeholder
+  cantOpenWithoutItemsMessageKey:
+    key: placeholder
+  popupPrefab: {fileID: 3017782093125859472, guid: ff97a6ef454e32b498a293f927ae08a4, type: 3}
+  itemPrefab: {fileID: 6051722543644622443, guid: 02d67b2339c2f9d408cc7a3aead63b60, type: 3}
 --- !u!1 &7346824944533000307
 GameObject:
   m_ObjectHideFlags: 0
@@ -104,7 +161,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e9ad1583497d19046bceb56e6fb17089, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  canOpen: 0
+  canOpen: 1
   playerTag: Player
 --- !u!1001 &6236829030292051615
 PrefabInstance:
@@ -113,6 +170,34 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 7346824944463505898}
     m_Modifications:
+    - target: {fileID: 1064082697773049077, guid: 9f33dad55bc844c4c8659f10de24b40c, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1064082697773049077, guid: 9f33dad55bc844c4c8659f10de24b40c, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Mode
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1064082697773049077, guid: 9f33dad55bc844c4c8659f10de24b40c, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_CallState
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 1064082697773049077, guid: 9f33dad55bc844c4c8659f10de24b40c, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 4333030613534174688}
+    - target: {fileID: 1064082697773049077, guid: 9f33dad55bc844c4c8659f10de24b40c, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
+      value: Store.StoreController, Assembly-CSharp
+      objectReference: {fileID: 0}
+    - target: {fileID: 1064082697773049077, guid: 9f33dad55bc844c4c8659f10de24b40c, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: OpenStore
+      objectReference: {fileID: 0}
+    - target: {fileID: 1064082697773049077, guid: 9f33dad55bc844c4c8659f10de24b40c, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
+      value: UnityEngine.Object, UnityEngine
+      objectReference: {fileID: 0}
     - target: {fileID: 3708855759064472237, guid: 9f33dad55bc844c4c8659f10de24b40c, type: 3}
       propertyPath: m_AnchorMin.y
       value: 0
@@ -136,6 +221,14 @@ PrefabInstance:
     - target: {fileID: 3708855759064472237, guid: 9f33dad55bc844c4c8659f10de24b40c, type: 3}
       propertyPath: m_SizeDelta.y
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3708855759213817216, guid: 9f33dad55bc844c4c8659f10de24b40c, type: 3}
+      propertyPath: m_Name
+      value: Store Items
+      objectReference: {fileID: 0}
+    - target: {fileID: 3708855760179740952, guid: 9f33dad55bc844c4c8659f10de24b40c, type: 3}
+      propertyPath: m_Name
+      value: Player Items
       objectReference: {fileID: 0}
     - target: {fileID: 3708855760243904167, guid: 9f33dad55bc844c4c8659f10de24b40c, type: 3}
       propertyPath: m_AnchorMin.y
@@ -215,7 +308,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3708855760535066006, guid: 9f33dad55bc844c4c8659f10de24b40c, type: 3}
       propertyPath: m_RootOrder
-      value: 1
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 3708855760535066006, guid: 9f33dad55bc844c4c8659f10de24b40c, type: 3}
       propertyPath: m_LocalEulerAnglesHint.x
@@ -297,6 +390,34 @@ PrefabInstance:
       propertyPath: m_SizeDelta.y
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 4533217792058250132, guid: 9f33dad55bc844c4c8659f10de24b40c, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4533217792058250132, guid: 9f33dad55bc844c4c8659f10de24b40c, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Mode
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4533217792058250132, guid: 9f33dad55bc844c4c8659f10de24b40c, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_CallState
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 4533217792058250132, guid: 9f33dad55bc844c4c8659f10de24b40c, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 4333030613534174688}
+    - target: {fileID: 4533217792058250132, guid: 9f33dad55bc844c4c8659f10de24b40c, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
+      value: Store.StoreController, Assembly-CSharp
+      objectReference: {fileID: 0}
+    - target: {fileID: 4533217792058250132, guid: 9f33dad55bc844c4c8659f10de24b40c, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: HideStoreUi
+      objectReference: {fileID: 0}
+    - target: {fileID: 4533217792058250132, guid: 9f33dad55bc844c4c8659f10de24b40c, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
+      value: UnityEngine.Object, UnityEngine
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 9f33dad55bc844c4c8659f10de24b40c, type: 3}
 --- !u!224 &7346824944077783817 stripped
@@ -307,5 +428,15 @@ RectTransform:
 --- !u!225 &7346824944077783813 stripped
 CanvasGroup:
   m_CorrespondingSourceObject: {fileID: 3708855760535066010, guid: 9f33dad55bc844c4c8659f10de24b40c, type: 3}
+  m_PrefabInstance: {fileID: 6236829030292051615}
+  m_PrefabAsset: {fileID: 0}
+--- !u!224 &7346824944565229440 stripped
+RectTransform:
+  m_CorrespondingSourceObject: {fileID: 3708855760179740959, guid: 9f33dad55bc844c4c8659f10de24b40c, type: 3}
+  m_PrefabInstance: {fileID: 6236829030292051615}
+  m_PrefabAsset: {fileID: 0}
+--- !u!224 &7346824945382406936 stripped
+RectTransform:
+  m_CorrespondingSourceObject: {fileID: 3708855759213817223, guid: 9f33dad55bc844c4c8659f10de24b40c, type: 3}
   m_PrefabInstance: {fileID: 6236829030292051615}
   m_PrefabAsset: {fileID: 0}

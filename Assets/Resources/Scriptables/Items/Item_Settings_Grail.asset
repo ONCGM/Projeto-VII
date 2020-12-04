@@ -19,7 +19,9 @@ MonoBehaviour:
   itemNameKey: Item_Name_Grail
   itemDescriptionKey: Item_Desc_Grail
   itemEffects: Item_Effects_Grail
-  maxStackQuantity: 3
+  maxStackQuantity: 1
   itemImage: {fileID: 21300000, guid: 5f21c881021cd4c41be192621b5f4581, type: 3}
   initialValue: 212
   itemRarity: 0.2
+  hasEffect: 0
+  effectAmount: 0

@@ -19,7 +19,9 @@ MonoBehaviour:
   itemNameKey: Item_Name_Rum
   itemDescriptionKey: Item_Desc_Rum
   itemEffects: Item_Effects_Rum
-  maxStackQuantity: 10
+  maxStackQuantity: 1
   itemImage: {fileID: 21300000, guid: 9579523eb4d60d94d981c326b035f39e, type: 3}
   initialValue: 165
   itemRarity: 0.6
+  hasEffect: 1
+  effectAmount: 20

@@ -44,7 +44,7 @@ namespace Entity.Player {
 
         [Header("Inventory")] [SerializeField] private int playerInventorySize = 10;
 
-        private Inventory inventory;
+        [SerializeField] private Inventory inventory;
 
         /// <summary>
         /// The player's inventory.
@@ -107,7 +107,7 @@ namespace Entity.Player {
         private footstepSound currentTypeOfGround = footstepSound.WOOD;
 
         // The EventEmitter variable for the player sounds.
-        [Header("Sound emitters.")]
+        [Header("Sound Emitters")]
         [SerializeField] private StudioEventEmitter playerFootstepEmitter;
         
         [Header("Sound Events")]
@@ -209,9 +209,8 @@ namespace Entity.Player {
         #region Entity Base Overrides
 
         public override void Kill() {
-            Debug.Log("DEAD!");
             anim.SetTrigger(AnimDead);
-            Health = MaxHealth;
+            // TODO Restart at shop.
         }
 
         public override void Damage(int amount, Entity dealer) {
@@ -455,6 +454,7 @@ namespace Entity.Player {
             Coins = stats.Coins;
             playerInventorySize = stats.InventorySize;
             inventory.ItemsInInventory = new List<InventoryItemEntry>(stats.CurrentInventory);
+            inventory.OnInventoryUpdate?.Invoke();
 
             currentUpgrades = stats.CurrentUpgradeLevel;
             

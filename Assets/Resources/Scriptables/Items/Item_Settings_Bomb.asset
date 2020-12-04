@@ -19,7 +19,9 @@ MonoBehaviour:
   itemNameKey: Item_Name_Bomb
   itemDescriptionKey: Item_Desc_Bomb
   itemEffects: Item_Effects_Bomb
-  maxStackQuantity: 5
+  maxStackQuantity: 1
   itemImage: {fileID: 21300000, guid: e77b4530065deb04d9b3338fc114a0a3, type: 3}
   initialValue: 250
   itemRarity: 0.7
+  hasEffect: 0
+  effectAmount: 0

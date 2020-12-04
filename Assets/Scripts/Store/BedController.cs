@@ -100,6 +100,7 @@ namespace Store {
                     agent.enabled = false;
                     player.transform.position = wakeUpPosition.position;
                     player.transform.rotation = wakeUpPosition.rotation;
+                    player.Health = player.MaxHealth;
                     GameMaster.Instance.SaveGame();
                     
                     DOTween.To(() => canvasGroup.alpha,
