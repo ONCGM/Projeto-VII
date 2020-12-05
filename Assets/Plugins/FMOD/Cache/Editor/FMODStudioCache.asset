@@ -85,12 +85,12 @@ MonoBehaviour:
   Path: event:/SFX/Enemies_Events/Enemy_Pirate_Walk
   guid: 00ed09be69093646bd10213623d97ab6
   Banks:
-  - {fileID: 5697184557779946841}
+  - {fileID: 5725341265327651071}
   IsStream: 0
   Is3D: 1
   IsOneShot: 1
   Parameters:
-  - {fileID: 537526438857363451}
+  - {fileID: -628118619620453740}
   MinDistance: 1
   MaxDistance: 20
   Length: 360
@@ -110,7 +110,7 @@ MonoBehaviour:
   Min: 0
   Max: 3
   Default: 0
-  Exists: 1
+  Exists: 0
 --- !u!114 &-9058901591885987365
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -233,7 +233,7 @@ MonoBehaviour:
   Min: 0
   Max: 3
   Default: 0
-  Exists: 1
+  Exists: 0
 --- !u!114 &-8252226818108923545
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -343,6 +343,23 @@ MonoBehaviour:
   Max: 1
   Default: 1
   Exists: 0
+--- !u!114 &-7981563569026253132
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fecb8ef7f94ca804a8ab72049b86782e, type: 3}
+  m_Name: parameter:/Enemy_Pirate_Hurt/GroundType
+  m_EditorClassIdentifier: 
+  Name: GroundType
+  Min: 0
+  Max: 2
+  Default: 0
+  Exists: 1
 --- !u!114 &-7783590361192781664
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -395,6 +412,23 @@ MonoBehaviour:
   LoadResult: 0
   FileSizes: []
   Exists: 0
+--- !u!114 &-7587499154775040594
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fecb8ef7f94ca804a8ab72049b86782e, type: 3}
+  m_Name: parameter:/Adventure_Island_Music/Fade_Out
+  m_EditorClassIdentifier: 
+  Name: Fade_Out
+  Min: 0
+  Max: 1
+  Default: 0
+  Exists: 1
 --- !u!114 &-7258629647592710020
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -410,7 +444,7 @@ MonoBehaviour:
   Path: event:/SFX/Gameplay_Events/Boat_Bell
   guid: 5fd9faca4e950042a397ac08765074be
   Banks:
-  - {fileID: 5697184557779946841}
+  - {fileID: 5725341265327651071}
   IsStream: 0
   Is3D: 1
   IsOneShot: 1
@@ -664,6 +698,23 @@ MonoBehaviour:
   MinDistance: 1
   MaxDistance: 5
   Length: 1718
+--- !u!114 &-6296082283562142824
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fecb8ef7f94ca804a8ab72049b86782e, type: 3}
+  m_Name: parameter:/Store_Music/Store_Stage
+  m_EditorClassIdentifier: 
+  Name: Store_Stage
+  Min: 0
+  Max: 3
+  Default: 0
+  Exists: 1
 --- !u!114 &-6258200360710965685
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -732,7 +783,7 @@ MonoBehaviour:
   Path: event:/SFX/Enemies_Events/Enemy_Pirate_Attack_Ranged
   guid: b9db15421ebe6f46a9ba87bd9ca9ba38
   Banks:
-  - {fileID: 5697184557779946841}
+  - {fileID: 5725341265327651071}
   IsStream: 0
   Is3D: 1
   IsOneShot: 1
@@ -935,7 +986,7 @@ MonoBehaviour:
   Min: 0
   Max: 6
   Default: 0
-  Exists: 1
+  Exists: 0
 --- !u!114 &-5281613501747750096
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1441,7 +1492,7 @@ MonoBehaviour:
   Min: 0
   Max: 3
   Default: 0
-  Exists: 1
+  Exists: 0
 --- !u!114 &-4116070193605538840
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1474,12 +1525,12 @@ MonoBehaviour:
   Path: event:/SFX/Player_Events/Player_Walk
   guid: 87e40b44f9a7e641b7c039dd4e053db2
   Banks:
-  - {fileID: 5697184557779946841}
+  - {fileID: 5725341265327651071}
   IsStream: 0
   Is3D: 0
   IsOneShot: 1
   Parameters:
-  - {fileID: 7801074481633385950}
+  - {fileID: 8511580797940129819}
   MinDistance: 0
   MaxDistance: 0
   Length: 420
@@ -1498,7 +1549,7 @@ MonoBehaviour:
   Path: event:/SFX/Enemies_Events/Enemy_Critter_Attack
   guid: 4dba61afd6cf3f4fac1e2e6e048c884a
   Banks:
-  - {fileID: 5697184557779946841}
+  - {fileID: 5725341265327651071}
   IsStream: 0
   Is3D: 1
   IsOneShot: 1
@@ -1506,6 +1557,23 @@ MonoBehaviour:
   MinDistance: 1
   MaxDistance: 20
   Length: 448
+--- !u!114 &-3867982020337024199
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fecb8ef7f94ca804a8ab72049b86782e, type: 3}
+  m_Name: parameter:/Store_Music/Fade_Out
+  m_EditorClassIdentifier: 
+  Name: Fade_Out
+  Min: 0
+  Max: 1
+  Default: 0
+  Exists: 1
 --- !u!114 &-3712917091715476535
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1608,12 +1676,12 @@ MonoBehaviour:
   Path: event:/SFX/Enemies_Events/Enemy_Critter_Death
   guid: 3daa6036b76eef4faef47073268400c6
   Banks:
-  - {fileID: 5697184557779946841}
+  - {fileID: 5725341265327651071}
   IsStream: 0
   Is3D: 1
   IsOneShot: 1
   Parameters:
-  - {fileID: 5258381491925506708}
+  - {fileID: -2151399447110379169}
   MinDistance: 1
   MaxDistance: 10
   Length: 480
@@ -1687,6 +1755,23 @@ MonoBehaviour:
   LoadResult: 0
   FileSizes: []
   Exists: 0
+--- !u!114 &-3078182806122265884
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fecb8ef7f94ca804a8ab72049b86782e, type: 3}
+  m_Name: parameter:/Beach_Waves/Beach_Stage
+  m_EditorClassIdentifier: 
+  Name: Beach_Stage
+  Min: 0
+  Max: 3
+  Default: 0
+  Exists: 1
 --- !u!114 &-2894865917603068543
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1806,7 +1891,7 @@ MonoBehaviour:
   Path: event:/SFX/Ambience_Events/Boat_Waves
   guid: 03d867774e64ee4d9181b19d989bd9b5
   Banks:
-  - {fileID: 5697184557779946841}
+  - {fileID: 5725341265327651071}
   IsStream: 1
   Is3D: 1
   IsOneShot: 1
@@ -1924,6 +2009,23 @@ MonoBehaviour:
   MinDistance: 1
   MaxDistance: 20
   Length: 0
+--- !u!114 &-2151399447110379169
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fecb8ef7f94ca804a8ab72049b86782e, type: 3}
+  m_Name: parameter:/Enemy_Critter_Death/GroundType
+  m_EditorClassIdentifier: 
+  Name: GroundType
+  Min: 0
+  Max: 2
+  Default: 0
+  Exists: 1
 --- !u!114 &-2069895282113942136
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1939,13 +2041,13 @@ MonoBehaviour:
   Path: event:/SFX/Ambience_Events/Beach_Waves
   guid: fe23b33a4b05c64e8addcfa95fa354f5
   Banks:
-  - {fileID: 5697184557779946841}
+  - {fileID: 5725341265327651071}
   IsStream: 1
   Is3D: 1
   IsOneShot: 1
   Parameters:
-  - {fileID: 7110717879450681554}
-  - {fileID: 1478260994083276029}
+  - {fileID: 8845171034736133557}
+  - {fileID: -3078182806122265884}
   MinDistance: 0
   MaxDistance: 0
   Length: 60000
@@ -2307,6 +2409,23 @@ MonoBehaviour:
   - Name: 
     Value: 1242
   Exists: 1
+--- !u!114 &-815038227635309656
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fecb8ef7f94ca804a8ab72049b86782e, type: 3}
+  m_Name: parameter:/Enemy_Pirate_Death/GroundType
+  m_EditorClassIdentifier: 
+  Name: GroundType
+  Min: 0
+  Max: 2
+  Default: 0
+  Exists: 1
 --- !u!114 &-789759626475891150
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2342,6 +2461,40 @@ MonoBehaviour:
   Max: 1
   Default: 1
   Exists: 0
+--- !u!114 &-635256314511757233
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fecb8ef7f94ca804a8ab72049b86782e, type: 3}
+  m_Name: parameter:/Main_Menu_Music/Fade_Out
+  m_EditorClassIdentifier: 
+  Name: Fade_Out
+  Min: 0
+  Max: 1
+  Default: 0
+  Exists: 1
+--- !u!114 &-628118619620453740
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fecb8ef7f94ca804a8ab72049b86782e, type: 3}
+  m_Name: parameter:/Enemy_Pirate_Walk/GroundType
+  m_EditorClassIdentifier: 
+  Name: GroundType
+  Min: 0
+  Max: 2
+  Default: 0
+  Exists: 1
 --- !u!114 &-517798051386505383
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2502,7 +2655,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   EditorBanks:
   - {fileID: 533199520094832040}
-  - {fileID: 5697184557779946841}
+  - {fileID: 5725341265327651071}
   EditorEvents:
   - {fileID: 5129976697344622242}
   - {fileID: -3966827957850778671}
@@ -2525,10 +2678,10 @@ MonoBehaviour:
   - {fileID: -2069895282113942136}
   EditorParameters: []
   MasterBanks:
-  - {fileID: 5697184557779946841}
+  - {fileID: 5725341265327651071}
   StringsBanks:
   - {fileID: 533199520094832040}
-  stringsBankWriteTime: 637426279257543464
+  stringsBankWriteTime: 637427272932825880
   cacheVersion: 3
 --- !u!114 &51799581311487465
 MonoBehaviour:
@@ -2604,7 +2757,7 @@ MonoBehaviour:
   Min: 0
   Max: 1
   Default: 0
-  Exists: 1
+  Exists: 0
 --- !u!114 &386791182227613333
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2620,12 +2773,12 @@ MonoBehaviour:
   Path: event:/SFX/Enemies_Events/Enemy_Pirate_Death
   guid: 61359f0dc57f7d4fbecbf9dd89da44d4
   Banks:
-  - {fileID: 5697184557779946841}
+  - {fileID: 5725341265327651071}
   IsStream: 0
   Is3D: 1
   IsOneShot: 1
   Parameters:
-  - {fileID: 2353585433801811753}
+  - {fileID: -815038227635309656}
   MinDistance: 1
   MaxDistance: 20
   Length: 950
@@ -2660,7 +2813,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Path: FMOD/Project-VII/Build/Desktop/Master.strings.bank
   SubDir: 
-  lastModified: 637426279257543464
+  lastModified: 637427272932825880
   LoadResult: 0
   FileSizes:
   - Name: Desktop
@@ -2681,6 +2834,23 @@ MonoBehaviour:
   Name: GroundType
   Min: 0
   Max: 2
+  Default: 0
+  Exists: 0
+--- !u!114 &568156046702501004
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fecb8ef7f94ca804a8ab72049b86782e, type: 3}
+  m_Name: parameter:/Home_Island_Music/Home_Island_Stage
+  m_EditorClassIdentifier: 
+  Name: Home_Island_Stage
+  Min: 0
+  Max: 3
   Default: 0
   Exists: 1
 --- !u!114 &663421363251183384
@@ -2891,7 +3061,7 @@ MonoBehaviour:
   Min: 0
   Max: 3
   Default: 0
-  Exists: 1
+  Exists: 0
 --- !u!114 &1506855173034335744
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3056,7 +3226,7 @@ MonoBehaviour:
   Min: 0
   Max: 1
   Default: 0
-  Exists: 1
+  Exists: 0
 --- !u!114 &2095275085189156147
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3074,6 +3244,23 @@ MonoBehaviour:
   Max: 1
   Default: 0
   Exists: 0
+--- !u!114 &2166043967754655228
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fecb8ef7f94ca804a8ab72049b86782e, type: 3}
+  m_Name: parameter:/Enemy_Critter_Walk/GroundType
+  m_EditorClassIdentifier: 
+  Name: GroundType
+  Min: 0
+  Max: 2
+  Default: 0
+  Exists: 1
 --- !u!114 &2177236583908548898
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3125,7 +3312,7 @@ MonoBehaviour:
   Min: 0
   Max: 2
   Default: 0
-  Exists: 1
+  Exists: 0
 --- !u!114 &2425151468387884099
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3181,13 +3368,13 @@ MonoBehaviour:
   Path: event:/Music/Adventure_Island_Music
   guid: 82df069c23e6b34aba7b85b71c8da96e
   Banks:
-  - {fileID: 5697184557779946841}
+  - {fileID: 5725341265327651071}
   IsStream: 1
   Is3D: 0
   IsOneShot: 0
   Parameters:
-  - {fileID: -5304567323478940674}
-  - {fileID: 5453579360700649849}
+  - {fileID: 7965204747339860313}
+  - {fileID: -7587499154775040594}
   MinDistance: 0
   MaxDistance: 0
   Length: 160416
@@ -3224,7 +3411,7 @@ MonoBehaviour:
   Min: 0
   Max: 2
   Default: 0
-  Exists: 1
+  Exists: 0
 --- !u!114 &2878207311078981129
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3445,6 +3632,23 @@ MonoBehaviour:
   Max: 6
   Default: 0
   Exists: 0
+--- !u!114 &3423729914930262874
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fecb8ef7f94ca804a8ab72049b86782e, type: 3}
+  m_Name: parameter:/Home_Island_Music/Fade_Out
+  m_EditorClassIdentifier: 
+  Name: Fade_Out
+  Min: 0
+  Max: 1
+  Default: 0
+  Exists: 1
 --- !u!114 &3470479574428657990
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3548,7 +3752,7 @@ MonoBehaviour:
   Path: event:/SFX/Player_Events/Player_Attack_Melee_Hit
   guid: fa37e26fd3fd284bbff38496b57da202
   Banks:
-  - {fileID: 5697184557779946841}
+  - {fileID: 5725341265327651071}
   IsStream: 0
   Is3D: 0
   IsOneShot: 1
@@ -3624,7 +3828,7 @@ MonoBehaviour:
   Min: 0
   Max: 2
   Default: 0
-  Exists: 1
+  Exists: 0
 --- !u!114 &4400943149684608832
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3657,7 +3861,7 @@ MonoBehaviour:
   Path: event:/SFX/Player_Events/Player_Attack_Melee_Swoosh
   guid: 0fdcf26d058efc45ba5e5acc0e620f7e
   Banks:
-  - {fileID: 5697184557779946841}
+  - {fileID: 5725341265327651071}
   IsStream: 0
   Is3D: 0
   IsOneShot: 1
@@ -3786,7 +3990,7 @@ MonoBehaviour:
   Path: event:/SFX/Player_Events/Player_Attack_Special
   guid: 3720a8c4f941af40880dae03e66a27f4
   Banks:
-  - {fileID: 5697184557779946841}
+  - {fileID: 5725341265327651071}
   IsStream: 0
   Is3D: 0
   IsOneShot: 1
@@ -3844,12 +4048,12 @@ MonoBehaviour:
   Path: event:/SFX/Enemies_Events/Enemy_Pirate_Hurt
   guid: 266a8dfd1237dc4d9b56dc5188d45caa
   Banks:
-  - {fileID: 5697184557779946841}
+  - {fileID: 5725341265327651071}
   IsStream: 0
   Is3D: 1
   IsOneShot: 1
   Parameters:
-  - {fileID: 4396267138587456225}
+  - {fileID: -7981563569026253132}
   MinDistance: 1
   MaxDistance: 20
   Length: 350
@@ -3869,6 +4073,23 @@ MonoBehaviour:
   Min: 0
   Max: 2
   Default: 0
+  Exists: 0
+--- !u!114 &5297011511166517293
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fecb8ef7f94ca804a8ab72049b86782e, type: 3}
+  m_Name: parameter:/Main_Menu_Music/Main_Menu_Stage
+  m_EditorClassIdentifier: 
+  Name: Main_Menu_Stage
+  Min: 0
+  Max: 3
+  Default: 0
   Exists: 1
 --- !u!114 &5453579360700649849
 MonoBehaviour:
@@ -3886,7 +4107,7 @@ MonoBehaviour:
   Min: 0
   Max: 1
   Default: 0
-  Exists: 1
+  Exists: 0
 --- !u!114 &5560644454996337837
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3961,6 +4182,24 @@ MonoBehaviour:
   lastModified: 637426279257483324
   LoadResult: 0
   FileSizes: []
+  Exists: 0
+--- !u!114 &5725341265327651071
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c18180ecb35941f4682ae60107b85b7c, type: 3}
+  m_Name: bank:/Master.bank
+  m_EditorClassIdentifier: 
+  Path: FMOD/Project-VII/Build/Desktop/Master.bank
+  SubDir: 
+  lastModified: 637427272932775664
+  LoadResult: 0
+  FileSizes: []
   Exists: 1
 --- !u!114 &5857625448121789502
 MonoBehaviour:
@@ -3995,7 +4234,7 @@ MonoBehaviour:
   Path: event:/SFX/Gameplay_Events/Item_Pickup
   guid: 5596f497ce5ede4ba14114418929e4a9
   Banks:
-  - {fileID: 5697184557779946841}
+  - {fileID: 5725341265327651071}
   IsStream: 0
   Is3D: 1
   IsOneShot: 1
@@ -4120,13 +4359,13 @@ MonoBehaviour:
   Path: event:/Music/Home_Island_Music
   guid: 4cbb447ee36fbe409359c23882aff100
   Banks:
-  - {fileID: 5697184557779946841}
+  - {fileID: 5725341265327651071}
   IsStream: 1
   Is3D: 0
   IsOneShot: 0
   Parameters:
-  - {fileID: -8286163255495217434}
-  - {fileID: 2048594934763137986}
+  - {fileID: 568156046702501004}
+  - {fileID: 3423729914930262874}
   MinDistance: 0
   MaxDistance: 0
   Length: 120000
@@ -4163,13 +4402,13 @@ MonoBehaviour:
   Path: event:/Music/Store_Music
   guid: 58d67c315d2cfc4a961ae04391367279
   Banks:
-  - {fileID: 5697184557779946841}
+  - {fileID: 5725341265327651071}
   IsStream: 1
   Is3D: 0
   IsOneShot: 0
   Parameters:
-  - {fileID: -9089538681483196984}
-  - {fileID: 6973584159656333772}
+  - {fileID: -6296082283562142824}
+  - {fileID: -3867982020337024199}
   MinDistance: 0
   MaxDistance: 0
   Length: 130000
@@ -4260,7 +4499,7 @@ MonoBehaviour:
   Min: 0
   Max: 1
   Default: 0
-  Exists: 1
+  Exists: 0
 --- !u!114 &6978410009767240223
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4329,7 +4568,7 @@ MonoBehaviour:
   Min: 0
   Max: 1
   Default: 1
-  Exists: 1
+  Exists: 0
 --- !u!114 &7152693295566781850
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4445,12 +4684,12 @@ MonoBehaviour:
   Path: event:/SFX/Enemies_Events/Enemy_Critter_Walk
   guid: e79f8022933cfa4482d2ca89ea580f69
   Banks:
-  - {fileID: 5697184557779946841}
+  - {fileID: 5725341265327651071}
   IsStream: 0
   Is3D: 1
   IsOneShot: 1
   Parameters:
-  - {fileID: 2732699224811468426}
+  - {fileID: 2166043967754655228}
   MinDistance: 1
   MaxDistance: 10
   Length: 100
@@ -4539,7 +4778,7 @@ MonoBehaviour:
   Min: 0
   Max: 2
   Default: 0
-  Exists: 1
+  Exists: 0
 --- !u!114 &7830312170845007100
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4615,6 +4854,23 @@ MonoBehaviour:
   Max: 3
   Default: 0
   Exists: 0
+--- !u!114 &7965204747339860313
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fecb8ef7f94ca804a8ab72049b86782e, type: 3}
+  m_Name: parameter:/Adventure_Island_Music/Adventure_Island_Stage
+  m_EditorClassIdentifier: 
+  Name: Adventure_Island_Stage
+  Min: 0
+  Max: 6
+  Default: 0
+  Exists: 1
 --- !u!114 &8217269884168361994
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4656,6 +4912,23 @@ MonoBehaviour:
   LoadResult: 0
   FileSizes: []
   Exists: 0
+--- !u!114 &8511580797940129819
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fecb8ef7f94ca804a8ab72049b86782e, type: 3}
+  m_Name: parameter:/Player_Walk/GroundType
+  m_EditorClassIdentifier: 
+  Name: GroundType
+  Min: 0
+  Max: 2
+  Default: 0
+  Exists: 1
 --- !u!114 &8573760444326029085
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4712,13 +4985,13 @@ MonoBehaviour:
   Path: event:/Music/Main_Menu_Music
   guid: c1d086a31cd0eb42bc6b30034ad630bf
   Banks:
-  - {fileID: 5697184557779946841}
+  - {fileID: 5725341265327651071}
   IsStream: 1
   Is3D: 0
   IsOneShot: 0
   Parameters:
-  - {fileID: 349113180316464528}
-  - {fileID: -4122855195548194944}
+  - {fileID: -635256314511757233}
+  - {fileID: 5297011511166517293}
   MinDistance: 0
   MaxDistance: 0
   Length: 126432
@@ -4781,6 +5054,23 @@ MonoBehaviour:
   LoadResult: 0
   FileSizes: []
   Exists: 0
+--- !u!114 &8845171034736133557
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fecb8ef7f94ca804a8ab72049b86782e, type: 3}
+  m_Name: parameter:/Beach_Waves/Beach_Volume
+  m_EditorClassIdentifier: 
+  Name: Beach_Volume
+  Min: 0
+  Max: 1
+  Default: 1
+  Exists: 1
 --- !u!114 &8964686331414147539
 MonoBehaviour:
   m_ObjectHideFlags: 0
