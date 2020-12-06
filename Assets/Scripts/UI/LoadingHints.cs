@@ -11,6 +11,7 @@ namespace UI {
     /// Displays some loading hints to help the players.
     /// </summary>
     public class LoadingHints : MonoBehaviour {
+        #pragma warning disable 0649
         [Header("Localization")] 
         [SerializeField] private LocalizedString objectiveKey;
         [SerializeField] private List<LocalizedString> loadingHintKeys = new List<LocalizedString>();
@@ -26,6 +27,7 @@ namespace UI {
 
         private WaitForSeconds waitFrame;
         private WaitForSeconds waitForHint;
+        #pragma warning restore 0649
         
         // Sets up the class.
         private void Awake() {

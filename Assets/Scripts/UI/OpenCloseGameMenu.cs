@@ -13,6 +13,7 @@ namespace UI {
     /// </summary>
     [RequireComponent(typeof(Canvas))]
     public class OpenCloseGameMenu : MonoBehaviour {
+        #pragma warning disable 0649
         [Header("Settings")] 
         [SerializeField, Range(0.01f, 3f)] private float fadeAnimationSpeed = 0.7f;
         [SerializeField] private GameObject firstSelected;
@@ -22,6 +23,8 @@ namespace UI {
         private bool isOpen { get; set; }
         private Canvas gameMenuCanvas;
         private CanvasGroup canvasGroup;
+        
+        #pragma warning restore 0649
 
         private void Awake() {
             inputs = new ActionInputs();

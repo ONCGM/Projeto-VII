@@ -10,6 +10,7 @@ using TMPro;
 using UI.Localization;
 using UnityEngine;
 using UnityEngine.EventSystems;
+using UnityEngine.InputSystem.UI;
 
 namespace UI.Menu {
     /// <summary>
@@ -93,10 +94,21 @@ namespace UI.Menu {
         /// Animates out the canvas and destroys it.
         /// </summary>
         private void CloseCanvas(ExecutionState state = ExecutionState.Normal) {
+            foreach(var inputModule in FindObjectsOfType<InputSystemUIInputModule>()) {
+                inputModule.enabled = false;
+                inputModule.UpdateModule();
+                inputModule.enabled = true;
+            }
+            
             GameMaster.Instance.GameState = state;
             DOTween.To(()=> canvasGroup.alpha, x=> canvasGroup.alpha = x, 0f, popinAnimationDuration).onComplete +=
                 () => {
                     Destroy(gameObject);
+                    foreach(var inputModule in FindObjectsOfType<InputSystemUIInputModule>()) {
+                        inputModule.enabled = false;
+                        inputModule.UpdateModule();
+                        inputModule.enabled = true;
+                    }
                 };
         }
 
@@ -104,11 +116,23 @@ namespace UI.Menu {
         /// Unlocks the buttons after animation.
         /// </summary>
         private void UnlockButtons() {
+            foreach(var inputModule in FindObjectsOfType<InputSystemUIInputModule>()) {
+                inputModule.enabled = false;
+                inputModule.UpdateModule();
+                inputModule.enabled = true;
+            }
+            
             DOTween.To(x => buttonsGroup.alpha = x, 0f, 1f, popinAnimationDuration).onComplete = () => {
                 buttonsGroup.interactable = true;
                 
                 foreach(var eventSystem in FindObjectsOfType<EventSystem>()) {
                     eventSystem.SetSelectedGameObject(firstSelected);
+                }
+
+                foreach(var inputModule in FindObjectsOfType<InputSystemUIInputModule>()) {
+                    inputModule.enabled = false;
+                    inputModule.UpdateModule();
+                    inputModule.enabled = true;
                 }
             };
         }

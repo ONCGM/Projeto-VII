@@ -12,6 +12,7 @@ namespace Items {
     /// </summary>
     [System.Serializable]
     public class Inventory {
+        #pragma warning disable 0649
         // Fields and Properties.
         public int InventorySize { get; set; }
 
@@ -30,6 +31,8 @@ namespace Items {
         // Events.
         public UnityEvent OnInventoryUpdate = new UnityEvent();
 
+        #pragma warning restore 0649
+        
         public Inventory(int inventorySize, List<InventoryItemEntry> items) {
             InventorySize = inventorySize;
             ItemsInInventory = new List<InventoryItemEntry>(items);

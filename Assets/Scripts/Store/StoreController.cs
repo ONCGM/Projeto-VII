@@ -352,7 +352,7 @@ namespace Store {
             
             UpdateItemDisplays();
             
-            DOTween.To(() => mainCanvasGroup.alpha, x => mainCanvasGroup.alpha = x, 1f, fadeAnimationTime)
+            DOTween.To(() => mainCanvasGroup.alpha, x => mainCanvasGroup.alpha = x, 1f, fadeAnimationTime * 0.5f)
                    .onComplete = () => {
                 player.CanMoveOverride = false;
                 player.GetComponent<NavMeshAgent>().enabled = false;
@@ -389,6 +389,9 @@ namespace Store {
             DOTween.To(x => priceText.text = Mathf.RoundToInt(x).ToString(CultureInfo.InvariantCulture), int.Parse(priceText.text), totalPrice, Time.deltaTime * 2f);
         }
 
+        /// <summary>
+        /// Adds an item to the store inventory and removes it from the player's.
+        /// </summary>
         private void AddToStoreInventory(InventoryItemEntry itemEntry) {
             if(StoreInventory.ItemsInInventory.Count >= storeInventorySize) return;
             StoreInventory.AddItemEntry(itemEntry);
@@ -396,6 +399,9 @@ namespace Store {
             UpdateItemDisplays();
         }
         
+        /// <summary>
+        /// Removes an item from the store inventory and adds it to the player's.
+        /// </summary>
         private void RemoveFromStoreInventory(InventoryItemEntry itemEntry) {
             if(PlayerDuplicateInventory.ItemsInInventory.Count >= PlayerDuplicateInventory.InventorySize) return;
             PlayerDuplicateInventory.AddItemEntry(itemEntry);
@@ -407,10 +413,12 @@ namespace Store {
         /// Hides the store UI and allows the player to move again.
         /// </summary>
         public void HideStoreUi(bool unlockPlayer = true) {
-            DOTween.To(() => mainCanvasGroup.alpha, x => mainCanvasGroup.alpha = x, 0f, fadeAnimationTime);
-            player.GetComponent<NavMeshAgent>().enabled = unlockPlayer;
-            player.CanMoveOverride = unlockPlayer;
-            if(unlockPlayer) canvasTrigger.ResetTrigger();
+            DOTween.To(() => mainCanvasGroup.alpha, x => mainCanvasGroup.alpha = x, 0f, fadeAnimationTime).onComplete +=
+                () => {
+                    player.GetComponent<NavMeshAgent>().enabled = unlockPlayer;
+                    player.CanMoveOverride = unlockPlayer;
+                    if(unlockPlayer) canvasTrigger.ResetTrigger();
+                };
         }
         
         #endregion
