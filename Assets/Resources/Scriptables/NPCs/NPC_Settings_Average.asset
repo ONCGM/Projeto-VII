@@ -16,7 +16,7 @@ MonoBehaviour:
   basicStatsMultiplier: 1.05
   levelVariationBasedOnPlayerLevel: 5
   howManyItemsToBrowse: 3
-  chanceToBuySomething: 0.8
+  chanceToBuySomething: 0.6
   npcsVariationsToUse:
   - {fileID: 4183022347136945761, guid: de967b4cb88fcd24989078b91311a7a4, type: 3}
   - {fileID: 7167756977951031862, guid: a51e4e29dad10394691f7bd252397fbb, type: 3}

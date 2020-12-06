@@ -1,19 +1,15 @@
 ﻿using System;
 using System.Collections;
-using System.Collections.Generic;
 using System.Globalization;
-using System.Linq;
 using DG.Tweening;
 using Entity.Player;
 using Game;
 using Islands;
-using Items;
 using Localization;
 using TMPro;
 using UI.Localization;
 using UnityEngine;
 using UnityEngine.EventSystems;
-using UnityEngine.UI;
 
 namespace UI.Menu {
     /// <summary>

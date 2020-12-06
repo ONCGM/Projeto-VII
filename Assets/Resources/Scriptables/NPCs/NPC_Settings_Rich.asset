@@ -15,8 +15,8 @@ MonoBehaviour:
   amountOfCoins: 300
   basicStatsMultiplier: 1.05
   levelVariationBasedOnPlayerLevel: 3
-  howManyItemsToViewBeforeBuying: 5
-  chanceToBuySomething: 0.5
+  howManyItemsToBrowse: 5
+  chanceToBuySomething: 0.55
   npcsVariationsToUse:
   - {fileID: 7167756977951031862, guid: c7e625c6fa84c0a43841a68b8fc40876, type: 3}
   - {fileID: 7167756977951031862, guid: c1a45b17616f36449804166f640fc866, type: 3}

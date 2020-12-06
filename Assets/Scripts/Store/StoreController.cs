@@ -1,18 +1,22 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using DG.Tweening;
 using Entity.NPC;
 using Entity.Player;
 using Game;
 using Items;
+using TMPro;
 using UI;
 using UI.Localization;
 using UI.Popups;
+using Unity.Mathematics;
 using UnityEngine;
 using UnityEngine.AI;
 using UnityEngine.EventSystems;
+using UnityEngine.UI;
 using Random = UnityEngine.Random;
 
 namespace Store {
@@ -24,21 +28,28 @@ namespace Store {
         [Header("References")] 
         [SerializeField] private PlayerController player;
         [SerializeField] private CanvasGroup mainCanvasGroup;
-        [SerializeField] private Transform playerInventoryParent, storeInventoryParent;
+        [SerializeField] private Transform playerInventoryParent, 
+                                           storeInventoryParent, 
+                                           coinsSpawnPoint;
+        [SerializeField] public Transform itemPurchasePosition;
         [SerializeField] private List<Transform> itemSpawnPoints = new List<Transform>();
         [SerializeField] public List<Transform> npcSpawnPoints = new List<Transform>();
         [SerializeField] public List<Transform> npcBuyWaypoints = new List<Transform>();
         [SerializeField] public List<Transform> npcPayWaypoints = new List<Transform>();
         [SerializeField] public List<Transform> npcRandomWaypoints = new List<Transform>();
         [SerializeField] private GameObject firstSelected;
+        [SerializeField] private TMP_Text priceText;
+        [SerializeField] private Slider priceSlider;
         [Header("Settings")]
         [SerializeField, Range(0.1f, 5f)] private float fadeAnimationTime = 1f;
         [SerializeField] private Transform clerkPosition;
+        [SerializeField, Range(0.1f, 5f)] private float coinSpawnVariation = 2f;
         [SerializeField, Range(1, 9)] private int storeInventorySize = 9;
-        [SerializeField, Range(0.1f, 1f)] private float priceMarkup = 0.5f;
+        [SerializeField, Range(0.1f, 2f)] private float priceMarkup = 1f;
         [SerializeField, Range(1, 12)] private int maxSpawnedNpcs = 10;
         [SerializeField] private List<NpcStats> npcStats = new List<NpcStats>();
         [SerializeField, Range(1f, 100f)] private float npcSpawnFrequency = 15f; 
+        
         [Header("Localization")] 
         [SerializeField] private LocalizedString openStoreTitleKey;
 
@@ -57,8 +68,14 @@ namespace Store {
         
         [Header("Prefabs")] 
         [SerializeField] private GameObject popupPrefab;
+        [SerializeField] private GameObject reportPrefab;
         [SerializeField] private GameObject itemPrefab;
         [SerializeField] private GameObject tableItemPrefab;
+
+        [SerializeField] private GameObject coinPrefab,
+                                            coinStackPrefab,
+                                            coinMountainPrefab;
+            
         
         // Components.
         private StoreCanvasTrigger canvasTrigger;
@@ -75,10 +92,12 @@ namespace Store {
         /// The store inventory and the items that the player wants to sell.
         /// </summary>
         public Inventory StoreInventory { get; set; }
-
-        private List<InventoryItemEntry> soldItems = new List<InventoryItemEntry>();
-
         public List<ItemStore> ItemsToSell { get; set; } = new List<ItemStore>();
+        
+        /// <summary>
+        /// How many coins made last round.
+        /// </summary>
+        public int ProfitFromLastSale { get; private set; }
 
         /// <summary>
         /// Creates a duplicate of the player inventory,
@@ -90,13 +109,8 @@ namespace Store {
 
         public float PriceMarkup {
             get => priceMarkup;
-            set => priceMarkup = Mathf.Clamp(value, 0.1f, 1f);
+            set => priceMarkup = Mathf.Clamp(value, 0.1f, 2f);
         }
-
-        /// <summary>
-        /// Updates the price markup that the player has selected.
-        /// </summary>
-        public void SetPriceMarkup(float value) => PriceMarkup = value;
         #pragma warning restore 0649
 
         // Gets references and shit.
@@ -111,7 +125,6 @@ namespace Store {
             };
             
             StoreInventory = new Inventory(storeInventorySize, new List<InventoryItemEntry>());
-            soldItems =  new List<InventoryItemEntry>();
         }
 
         #region Store Control
@@ -161,10 +174,23 @@ namespace Store {
             SpawnItemInTables();
             StartCoroutine(nameof(SpawnNPCs));
             StoreOpen = true;
+            ProfitFromLastSale = 0;
+            RemoveCoinsDisplay();
 
             foreach(var itemUI in FindObjectsOfType<ItemUI>()) {
                 itemUI.LockButtons(StoreOpen);
             }
+            
+            InvokeRepeating(nameof(CheckForItemsToSell), 3f, 0.5f);
+        }
+
+        /// <summary>
+        /// Checks to see if all items have been sold.
+        /// </summary>
+        private void CheckForItemsToSell() {
+            if(ItemsToSell.Count >= 1 || spawnedNpcs.Count >= 1) return;
+            Instantiate(reportPrefab);
+            CancelInvoke(nameof(CheckForItemsToSell));
         }
 
         /// <summary>
@@ -184,6 +210,17 @@ namespace Store {
                 ItemsToSell.Add(item);
             }
         }
+        
+        /// <summary>
+        /// Updates the price markup.
+        /// </summary>
+        public void SetPriceMarkup(float value) {
+            PriceMarkup = value;
+
+            var totalPrice = StoreInventory.ItemsInInventory.Sum(x => x.ItemSettings.initialValue * priceMarkup);
+
+            DOTween.To(x => priceText.text = Mathf.RoundToInt(x).ToString(CultureInfo.InvariantCulture), int.Parse(priceText.text), totalPrice, Time.deltaTime);
+        }
 
         /// <summary>
         /// Ends the store sequence.
@@ -191,21 +228,52 @@ namespace Store {
         /// the npcs and their behaviour leaving the store.
         /// </summary>
         public void CloseStore() {
-            foreach(var itemEntry in StoreInventory.ItemsInInventory) {
-                player.Inventory.RemoveItemEntry(itemEntry);
-            }
-            
             StopAllCoroutines();
             
             GameMaster.Instance.SaveGame();
-            soldItems = new List<InventoryItemEntry>();
             StoreOpen = false;
 
             foreach(var itemUI in FindObjectsOfType<ItemUI>()) {
                 itemUI.LockButtons(StoreOpen);
             }
-            // TODO: Show report.
-            // TODO: Unlock Player After Report
+            
+            StoreInventory = new Inventory(storeInventorySize, new List<InventoryItemEntry>());
+            
+            player.CanMoveOverride = true;
+            player.GetComponent<NavMeshAgent>().enabled = true;
+            canvasTrigger.ResetTrigger();
+        }
+
+        /// <summary>
+        /// Adds more coins to the stack.
+        /// </summary>
+        private void AddCoinsToDisplay(int amount) {
+            var position = coinsSpawnPoint.position + 
+                           new Vector3(Random.Range(-coinSpawnVariation, coinSpawnVariation),
+                                       Random.Range(0f, coinSpawnVariation), Random.Range(-coinSpawnVariation, coinSpawnVariation));
+
+            var rotation = Quaternion.Euler(0f, Random.Range(0f, 270f), 0f);
+            
+            if(amount < 100) {
+                Instantiate(coinPrefab, position, rotation, coinsSpawnPoint);
+                return;
+            }
+            
+            if(amount < 500) {
+                Instantiate(coinStackPrefab, position, rotation, coinsSpawnPoint);
+                return;
+            }
+            
+            Instantiate(coinMountainPrefab, position, rotation, coinsSpawnPoint);
+        }
+        
+        /// <summary>
+        /// Adds more coins to the stack.
+        /// </summary>
+        private void RemoveCoinsDisplay() {
+            for(var i = 0; i < coinsSpawnPoint.childCount; i++) {
+                Destroy(coinsSpawnPoint.GetChild(0).gameObject);
+            }
         }
 
         #endregion
@@ -250,9 +318,10 @@ namespace Store {
         /// </summary>
         public int BuyItem(ItemStore item) {
             var itemToRemove = new InventoryItemEntry(item.Settings);
-            StoreInventory.RemoveItemEntry(itemToRemove);
             player.Inventory.RemoveItemEntry(itemToRemove);
             player.AddCoins(item.Price);
+            ProfitFromLastSale += item.Price;
+            AddCoinsToDisplay(item.Price);
             return item.Price;
         }
 
@@ -275,6 +344,8 @@ namespace Store {
             PlayerDuplicateInventory = new Inventory(player.Inventory.InventorySize, player.Inventory.ItemsInInventory);
             StoreInventory = new Inventory(storeInventorySize, new List<InventoryItemEntry>());
             
+            priceSlider.maxValue = (Mathf.InverseLerp(1, player.MaxLevel, player.Level) * 0.7f) + 1.3f;
+
             foreach(var eventSystem in FindObjectsOfType<EventSystem>()) {
                 eventSystem.SetSelectedGameObject(firstSelected);
             }
@@ -312,6 +383,10 @@ namespace Store {
                 var item = Instantiate(itemPrefab, storeInventoryParent).GetComponent<SmallItemUIButton>();
                 item.SetUpItemUi(itemEntry, 0f, () => RemoveFromStoreInventory(itemEntry));
             }
+            
+            var totalPrice = StoreInventory.ItemsInInventory.Sum(x => x.ItemSettings.initialValue * priceMarkup);
+
+            DOTween.To(x => priceText.text = Mathf.RoundToInt(x).ToString(CultureInfo.InvariantCulture), int.Parse(priceText.text), totalPrice, Time.deltaTime * 2f);
         }
 
         private void AddToStoreInventory(InventoryItemEntry itemEntry) {

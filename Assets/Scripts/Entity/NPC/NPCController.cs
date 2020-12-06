@@ -29,6 +29,11 @@ namespace Entity.NPC {
         /// The stats of this npc.
         /// </summary>
         public NpcStats Stats { get; set; }
+        
+        /// <summary>
+        /// Has this npc bought an item.
+        /// </summary>
+        public bool HasBoughtAnItem { get; private set; }
 
         private StoreController store;
         private static readonly int Speed = Animator.StringToHash("Speed");
@@ -54,7 +59,7 @@ namespace Entity.NPC {
             npcBuyWaypoints = store.npcBuyWaypoints;
             npcPayWaypoints = store.npcPayWaypoints;
             npcRandomWaypoints = store.npcRandomWaypoints;
-            waitUntilPathComplete = new WaitUntil(() => agent.remainingDistance < 0.3f);
+            waitUntilPathComplete = new WaitUntil(() => Vector3.Distance(agent.destination, agent.transform.position) < 0.25f);
             waitOnPurchase = new WaitForSeconds(buyAnimationWait);
         }
 
@@ -91,54 +96,82 @@ namespace Entity.NPC {
         /// </summary>
         private IEnumerator NpcAi() {
             var purchaseTries = Mathf.RoundToInt(Random.Range((Stats.howManyItemsToBrowse - Stats.howManyItemsToBrowse * 0.5f), (Stats.howManyItemsToBrowse + 1)));
+            SetDestinationToWaypoint(npcRandomWaypoints[Random.Range(0, npcRandomWaypoints.Count)]);
 
             for(var i = 0; i < purchaseTries; i++) {
-                if(Stats.chanceToBuySomething > Random.value) {
+                if(HasBoughtAnItem) break;
+                
+                if(Stats.chanceToBuySomething >= Random.value) {
                     var itemToBuy = store.PickItem(Coins);
 
                     if(itemToBuy != null) {
-                        SetDestinationToWaypoint(itemToBuy.itemWaypoint);
+                        StartCoroutine(PurchaseItem(itemToBuy));
+                        HasBoughtAnItem = true;
                         
-                        yield return waitUntilPathComplete;
-                        
-                        anim.SetTrigger(Think);
-                        yield return waitOnPurchase;
-                        
-                        anim.SetTrigger(Grab);
-                        itemToBuy.transform.parent = carryPosition;
-                        itemToBuy.transform.localPosition = Vector3.zero;
-                        SetDestinationToWaypoint(npcBuyWaypoints[Random.Range(0, npcPayWaypoints.Count)]);
-
-                        yield return waitUntilPathComplete;
-
-                        store.BuyItem(itemToBuy);
-                        anim.SetTrigger(Drop);
-                        
-                        yield return waitOnPurchase;
-
-                        if(Coins >= minimumCoinsToStay) continue;
-                        SetDestinationToWaypoint(store.npcSpawnPoints[Random.Range(0, store.npcSpawnPoints.Count)]);
-                        yield return waitUntilPathComplete;
-                        store.RemoveNpc(this);
-                    } else {
-                        SetDestinationToWaypoint(npcRandomWaypoints[Random.Range(0, npcRandomWaypoints.Count)]);
-                        yield return waitUntilPathComplete;
-                        
-                        anim.SetTrigger(Think);
-                        yield return waitOnPurchase;
+                        yield break;
                     }
-                } else {
-                    SetDestinationToWaypoint(npcRandomWaypoints[Random.Range(0, npcRandomWaypoints.Count)]);
-                    
-                    yield return waitUntilPathComplete;
-                    
-                    anim.SetTrigger(Think);
-                    yield return waitOnPurchase;
                 }
+
+                SetDestinationToWaypoint(npcRandomWaypoints[Random.Range(0, npcRandomWaypoints.Count)]);
+                    
+                yield return waitUntilPathComplete;
+                    
+                anim.SetTrigger(Think);
+                    
+                yield return waitOnPurchase;
             }
+            
+            if(HasBoughtAnItem) yield break;
             
             SetDestinationToWaypoint(store.npcSpawnPoints[Random.Range(0, store.npcSpawnPoints.Count)]);
             yield return waitUntilPathComplete;
+            store.RemoveNpc(this);
+        }
+
+        /// <summary>
+        /// Buys an item.
+        /// </summary>
+        private IEnumerator PurchaseItem(ItemStore item) {
+            if(HasBoughtAnItem) yield break;
+            
+            SetDestinationToWaypoint(item.itemWaypoint);
+                        
+            yield return waitUntilPathComplete;
+            
+            anim.SetTrigger(Think);
+            
+            yield return waitOnPurchase;
+            
+            anim.SetTrigger(Grab);
+            
+            yield return waitOnPurchase;
+                    
+            item.transform.parent = carryPosition;
+            item.transform.localPosition = Vector3.zero;
+            SetDestinationToWaypoint(npcPayWaypoints[Random.Range(0, npcPayWaypoints.Count)]);
+
+            yield return new WaitUntil(() => Vector3.Distance(agent.destination, agent.transform.position) < 0.2f);
+            
+            yield return waitOnPurchase;
+            
+            anim.SetTrigger(Drop);
+            item.transform.position = store.itemPurchasePosition.position;
+            
+            yield return waitOnPurchase;
+
+            store.BuyItem(item);
+
+            yield return waitOnPurchase;
+            
+            anim.SetTrigger(Grab);
+            item.transform.localPosition = Vector3.zero;
+            
+            yield return waitOnPurchase;
+
+            SetDestinationToWaypoint(store.npcSpawnPoints[Random.Range(0, store.npcSpawnPoints.Count)]);
+            
+            yield return waitUntilPathComplete;
+            
             store.RemoveNpc(this);
         }
 
