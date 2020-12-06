@@ -144,8 +144,9 @@ namespace UI {
             healthText.text = $"{player.Health} / {player.MaxHealth}";
             staminaText.text = $"{player.Stamina} / {player.MaxStamina}";
             levelText.text = (player.Level >= player.MaxLevel ? LocalizationSystem.GetLocalizedValue("CONTEXT_GAMBLING_MAX") : player.Level.ToString());
-            coinsText.text = $"{LocalizationSystem.GetLocalizedValue("CONTEXT_METAL_COIN")} {player.Coins}";
             
+            DOTween.To(x => coinsText.text = $"{Mathf.RoundToInt(x).ToString()}", int.Parse(coinsText.text), player.Coins, fadeAnimationSpeed * 0.5f);
+
             staminaBackBar.material.SetFloat(HitEffectBlend, 1f);
             StartCoroutine(nameof(AnimateHealthBackBar));
             StartCoroutine(nameof(AnimateStaminaBackBar));

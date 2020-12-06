@@ -12,6 +12,7 @@ using Localization;
 using TMPro;
 using UI.Localization;
 using UnityEngine;
+using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
 namespace UI.Menu {
@@ -41,6 +42,7 @@ namespace UI.Menu {
         [SerializeField, Range(0.1f, 3f)] private float popinAnimationDuration = 0.75f;
         [SerializeField, Range(0.1f, 3f)] private float itemInAnimationDuration = 0.15f;
         [SerializeField, Range(0.1f, 3f)] private float statsAnimationDuration = 0.55f;
+        [SerializeField] private GameObject firstSelected;
         
         [Header("Player Settings")]
         private const string upgradeSettingsPath = "Scriptables/Player/Player_Upgrade_Settings";
@@ -108,6 +110,10 @@ namespace UI.Menu {
         private void UnlockButtons() {
             DOTween.To(x => buttonsGroup.alpha = x, 0f, 1f, popinAnimationDuration).onComplete = () => {
                 buttonsGroup.interactable = true;
+                
+                foreach(var eventSystem in FindObjectsOfType<EventSystem>()) {
+                    eventSystem.SetSelectedGameObject(firstSelected);
+                }
             };
         }
         

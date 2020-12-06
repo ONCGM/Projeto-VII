@@ -152,7 +152,7 @@ GameObject:
   - component: {fileID: 3555962724994509045}
   - component: {fileID: 3555962724994509055}
   - component: {fileID: 3555962724994509048}
-  - component: {fileID: 1691873392339889571}
+  - component: {fileID: 80896340409164619}
   m_Layer: 10
   m_Name: Player
   m_TagString: Player
@@ -282,7 +282,7 @@ NavMeshAgent:
   m_BaseOffset: 1
   m_WalkableMask: 5
   m_ObstacleAvoidanceType: 4
---- !u!95 &1691873392339889571
+--- !u!95 &80896340409164619
 Animator:
   serializedVersion: 3
   m_ObjectHideFlags: 0
@@ -522,6 +522,31 @@ MonoBehaviour:
   OverrideAttenuation: 0
   OverrideMinDistance: 1
   OverrideMaxDistance: 50
+--- !u!135 &7823315981700445031
+SphereCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8039971997652806348}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Radius: 0.5
+  m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &6938425944826268316
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8039971997652806348}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1af2446688a1a06429c1d50b6245e1dd, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &4976095037623183888
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -597,6 +622,10 @@ PrefabInstance:
       propertyPath: m_Materials.Array.data[0]
       value: 
       objectReference: {fileID: 2100000, guid: d9fcb841d90aed04ca16eb3d5bb42dd0, type: 2}
+    - target: {fileID: 3070632499663323356, guid: 74f934864f9f73e40a8f384089b7b0ff, type: 3}
+      propertyPath: m_Layer
+      value: 18
+      objectReference: {fileID: 0}
     - target: {fileID: 6892896660990180513, guid: 74f934864f9f73e40a8f384089b7b0ff, type: 3}
       propertyPath: m_Materials.Array.data[0]
       value: 
@@ -630,5 +659,10 @@ Transform:
 --- !u!4 &4951882435400537351 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -9100021380252516585, guid: 74f934864f9f73e40a8f384089b7b0ff, type: 3}
+  m_PrefabInstance: {fileID: 4976095037623183888}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &8039971997652806348 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 3070632499663323356, guid: 74f934864f9f73e40a8f384089b7b0ff, type: 3}
   m_PrefabInstance: {fileID: 4976095037623183888}
   m_PrefabAsset: {fileID: 0}

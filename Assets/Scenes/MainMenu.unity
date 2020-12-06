@@ -557,6 +557,11 @@ PrefabInstance:
     - {fileID: 8326205576525477007, guid: 56d73c39c3e5e6a4d8229935c00d2042, type: 3}
     - {fileID: 7148259465278347024, guid: 56d73c39c3e5e6a4d8229935c00d2042, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: 56d73c39c3e5e6a4d8229935c00d2042, type: 3}
+--- !u!1 &1090391459 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 3260127211402342661, guid: 0fd4f69ca35196942ad5fd3b288ebbed, type: 3}
+  m_PrefabInstance: {fileID: 3260127213040952466}
+  m_PrefabAsset: {fileID: 0}
 --- !u!114 &1120971174 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 3260127211922083124, guid: 0fd4f69ca35196942ad5fd3b288ebbed, type: 3}
@@ -1003,16 +1008,24 @@ MonoBehaviour:
   m_GameObject: {fileID: 2132548185}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4f231c4fb786f3946a6b90b886c48677, type: 3}
+  m_Script: {fileID: 11500000, guid: 01614664b831546d2ae94a42149d80ac, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_HorizontalAxis: Horizontal
-  m_VerticalAxis: Vertical
-  m_SubmitButton: Submit
-  m_CancelButton: Cancel
-  m_InputActionsPerSecond: 10
-  m_RepeatDelay: 0.5
-  m_ForceModuleActive: 0
+  m_MoveRepeatDelay: 0.5
+  m_MoveRepeatRate: 0.1
+  m_ActionsAsset: {fileID: -944628639613478452, guid: ca9f5fa95ffab41fb9a615ab714db018, type: 3}
+  m_PointAction: {fileID: 1054132383583890850, guid: ca9f5fa95ffab41fb9a615ab714db018, type: 3}
+  m_MoveAction: {fileID: 3710738434707379630, guid: ca9f5fa95ffab41fb9a615ab714db018, type: 3}
+  m_SubmitAction: {fileID: 2064916234097673511, guid: ca9f5fa95ffab41fb9a615ab714db018, type: 3}
+  m_CancelAction: {fileID: -1967631576421560919, guid: ca9f5fa95ffab41fb9a615ab714db018, type: 3}
+  m_LeftClickAction: {fileID: 8056856818456041789, guid: ca9f5fa95ffab41fb9a615ab714db018, type: 3}
+  m_MiddleClickAction: {fileID: 3279352641294131588, guid: ca9f5fa95ffab41fb9a615ab714db018, type: 3}
+  m_RightClickAction: {fileID: 3837173908680883260, guid: ca9f5fa95ffab41fb9a615ab714db018, type: 3}
+  m_ScrollWheelAction: {fileID: 4502412055082496612, guid: ca9f5fa95ffab41fb9a615ab714db018, type: 3}
+  m_TrackedDevicePositionAction: {fileID: 4754684134866288074, guid: ca9f5fa95ffab41fb9a615ab714db018, type: 3}
+  m_TrackedDeviceOrientationAction: {fileID: 1025543830046995696, guid: ca9f5fa95ffab41fb9a615ab714db018, type: 3}
+  m_DeselectOnBackgroundClick: 0
+  m_PointerBehavior: 0
 --- !u!114 &2132548187
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1025,7 +1038,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 76c392e42b5098c458856cdf6ecaaaa1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_FirstSelected: {fileID: 0}
+  m_FirstSelected: {fileID: 1090391459}
   m_sendNavigationEvents: 1
   m_DragThreshold: 10
 --- !u!4 &2132548188
@@ -1115,6 +1128,10 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1116350063421552601, guid: 0fd4f69ca35196942ad5fd3b288ebbed, type: 3}
       propertyPath: m_SizeDelta.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1764073761290879066, guid: 0fd4f69ca35196942ad5fd3b288ebbed, type: 3}
+      propertyPath: m_Enabled
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 2094430937571013368, guid: 0fd4f69ca35196942ad5fd3b288ebbed, type: 3}
@@ -1865,6 +1882,18 @@ PrefabInstance:
       propertyPath: mainCanvasGroupFadeAnimationSpeed
       value: 1.3
       objectReference: {fileID: 0}
+    - target: {fileID: 3260127211922083124, guid: 0fd4f69ca35196942ad5fd3b288ebbed, type: 3}
+      propertyPath: mainMenuInputSystem
+      value: 
+      objectReference: {fileID: 2132548186}
+    - target: {fileID: 3260127211922083124, guid: 0fd4f69ca35196942ad5fd3b288ebbed, type: 3}
+      propertyPath: mainMenuEventSystem
+      value: 
+      objectReference: {fileID: 2132548187}
+    - target: {fileID: 3260127211922083124, guid: 0fd4f69ca35196942ad5fd3b288ebbed, type: 3}
+      propertyPath: eventSystem
+      value: 
+      objectReference: {fileID: 2132548187}
     - target: {fileID: 3260127211922083126, guid: 0fd4f69ca35196942ad5fd3b288ebbed, type: 3}
       propertyPath: m_Name
       value: Main Menu Controller
@@ -3417,6 +3446,10 @@ PrefabInstance:
       propertyPath: m_AnchorMax.y
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 3547632087114589520, guid: 0fd4f69ca35196942ad5fd3b288ebbed, type: 3}
+      propertyPath: m_Enabled
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 3931408527806474026, guid: 0fd4f69ca35196942ad5fd3b288ebbed, type: 3}
       propertyPath: m_AnchorMin.y
       value: 0
@@ -3463,6 +3496,18 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4440428395115115329, guid: 0fd4f69ca35196942ad5fd3b288ebbed, type: 3}
       propertyPath: m_SizeDelta.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4464820111474900479, guid: 0fd4f69ca35196942ad5fd3b288ebbed, type: 3}
+      propertyPath: m_DeselectOnBackgroundClick
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4464820111474900479, guid: 0fd4f69ca35196942ad5fd3b288ebbed, type: 3}
+      propertyPath: m_Enabled
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4920142278010752567, guid: 0fd4f69ca35196942ad5fd3b288ebbed, type: 3}
+      propertyPath: m_Enabled
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 5663762425751688139, guid: 0fd4f69ca35196942ad5fd3b288ebbed, type: 3}

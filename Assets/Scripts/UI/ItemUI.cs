@@ -50,5 +50,13 @@ namespace UI {
             
             discard.onClick.AddListener(item.ItemSettings.DropItem);
         }
+
+        /// <summary>
+        /// Locks the buttons on the ui.
+        /// </summary>
+        public void LockButtons(bool state) {
+            if(consume != null) consume.interactable = !state;
+            if(discard != null) discard.interactable = !state;
+        }
     }
 }

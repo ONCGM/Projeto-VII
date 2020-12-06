@@ -98,7 +98,9 @@ namespace Entity.Enemies {
         protected virtual void SetEnemyValues() {
             var canBeElite = GameMaster.Instance.PlayerStats.Level > settings.spawnEliteAfterLevel;
             var isElite = (Random.value < settings.chanceToSpawnAsElite) && canBeElite;
-            var enemyLevel = Random.Range(GameMaster.Instance.PlayerStats.Level - settings.levelVariationBasedOnPlayerLevel, GameMaster.Instance.PlayerStats.Level + settings.levelVariationBasedOnPlayerLevel);
+            var enemyLevel = Mathf.Max(Random.Range(GameMaster.Instance.PlayerStats.Level - settings.levelVariationBasedOnPlayerLevel, 
+                                                    GameMaster.Instance.PlayerStats.Level + settings.levelVariationBasedOnPlayerLevel), 1);
+            Level = enemyLevel;
             
             Health = settings.baseMaxHealth;
             MaxHealth = settings.baseMaxHealth;
@@ -106,7 +108,7 @@ namespace Entity.Enemies {
             MaxStamina = settings.baseMaxStamina;
             primaryAttackDamage = settings.baseDamagePrimaryAttack;
 
-            for(int i = 0; i < enemyLevel; i++) {    
+            for(var i = 0; i < enemyLevel; i++) {    
                 Health = Mathf.CeilToInt(Health * settings.basicStatsMultiplier);
                 MaxHealth = Mathf.CeilToInt(MaxHealth * settings.basicStatsMultiplier);
                 Stamina = Mathf.CeilToInt(Stamina * settings.basicStatsMultiplier);

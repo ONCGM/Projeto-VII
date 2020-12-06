@@ -72,6 +72,7 @@
      <Compile Include="Assets\Scripts\Entity\Enemies\Enemy.cs" />
      <Compile Include="Assets\Scripts\Store\FloorTravelTrigger.cs" />
      <Compile Include="Assets\Scripts\UI\Menu\MainMenuController.cs" />
+     <Compile Include="Assets\Scripts\Entity\NPC\NpcStats.cs" />
      <Compile Include="Assets\Scripts\Entity\Enemies\Pirate.cs" />
      <Compile Include="Assets\Thirdparty\AllIn1SpriteShader\Scripts\AllIn1Shader.cs" />
      <Compile Include="Assets\Scripts\Game\GameDebugHelper.cs" />
@@ -86,6 +87,7 @@
      <Compile Include="Assets\Scripts\Store\BedController.cs" />
      <Compile Include="Assets\Scripts\Entity\Enemies\EnemySettings.cs" />
      <Compile Include="Assets\Scripts\GameInput\ActionInputs.cs" />
+     <Compile Include="Assets\Scripts\Entity\NPC\NpcController.cs" />
      <Compile Include="Assets\Scripts\Islands\IslandSceneryObjectRandomizer.cs" />
      <Compile Include="Assets\Scripts\Town\PlayerSpawnPositionBasedOnLastScene.cs" />
      <Compile Include="Assets\Scripts\Utility\SaveFileTagger.cs" />
@@ -123,6 +125,7 @@
      <Compile Include="Assets\Scripts\Islands\IslandPopulator.cs" />
      <Compile Include="Assets\Scripts\UI\DamageCanvas.cs" />
      <Compile Include="Assets\Scripts\Audio\MainMenuMusicController.cs" />
+     <Compile Include="Assets\Scripts\Items\ItemStore.cs" />
      <None Include="Assets\TextMesh Pro\Shaders\TMPro.cginc" />
      <None Include="Assets\TextMesh Pro\Shaders\TMP_SDF-Mobile Overlay.shader" />
      <None Include="Assets\Scripts\Shaders\TextureMask.shader" />

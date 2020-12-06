@@ -8,7 +8,7 @@ using UnityEngine.Events;
 
 namespace Items {
     /// <summary>
-    /// Class for holding items. Used by the player and the store.
+    /// Class for holding items. Used by the player, npcs and the store.
     /// </summary>
     [System.Serializable]
     public class Inventory {

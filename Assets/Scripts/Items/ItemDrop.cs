@@ -15,15 +15,15 @@ namespace Items {
     [RequireComponent( typeof(StudioEventEmitter), typeof(Collider))]
     public class ItemDrop : MonoBehaviour {
         #pragma warning disable 0649
-        [Header("Animation Item Settings")]
+        [Header("Animation Settings")]
         [SerializeField, Range(0.1f, 3f)] private float jumpHeight = 0.75f;
         [SerializeField, Range(0.1f, 5f)] private float jumpTime = 1.5f;
 
-        [Header("Item ItemSettings")] 
+        [Header("Item Settings")] 
         [SerializeField] private ItemSettings settings;
         [SerializeField] private List<ItemSettings> itemList = new List<ItemSettings>();
 
-        [Header("Collision ItemSettings")]
+        [Header("Collision Settings")]
         [SerializeField] private string playerTag = "Player";
         
         // Components

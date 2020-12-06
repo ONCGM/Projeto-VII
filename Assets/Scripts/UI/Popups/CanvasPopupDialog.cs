@@ -5,6 +5,7 @@ using DG.Tweening;
 using Game;
 using Localization;
 using UI.Localization;
+using UI.Menu;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
@@ -131,7 +132,10 @@ namespace UI.Popups {
 
             GameMaster.Instance.GameState = popupExecutionState;
 
-            GetComponentInChildren<EventSystem>().firstSelectedGameObject = buttons[0].gameObject;
+            foreach(var eventSystem in FindObjectsOfType<EventSystem>()) {
+                eventSystem.SetSelectedGameObject(buttons[0].gameObject);
+                eventSystem.UpdateModules();
+            }
             
             AnimateIn();
             
@@ -159,6 +163,7 @@ namespace UI.Popups {
         /// Closes the popup with an animation and then tags it for destruction.
         /// </summary>
         private void ClosePopup() {
+            if(FindObjectOfType<MainMenuController>()) FindObjectOfType<MainMenuController>().SetEventSystem();
             GameMaster.Instance.GameState = ExecutionState.Normal;
             transform.GetChild(0).DOScale(Vector3.zero, popinAnimationDuration * .7f).onComplete += () => { Destroy(gameObject);};
         }

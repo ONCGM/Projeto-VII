@@ -144,6 +144,11 @@ namespace Entity.Player {
         /// Allows the player to move or not.
         /// </summary>
         public bool CanMove { get; set; } = true;
+        
+        /// <summary>
+        /// Overrides the ability of the player to move or not.
+        /// </summary>
+        public bool CanMoveOverride { get; set; } = true;
 
         /// <summary>
         /// The last enemy that dealt damage to the player.
@@ -234,7 +239,7 @@ namespace Entity.Player {
         private void GetInput() {
             movementScale = new Vector3(inputs.Player.Horizontal.ReadValue<float>(), 0f, inputs.Player.Vertical.ReadValue<float>());
 
-            if(movementScale.magnitude < minRotationInput || !CanMove) return;
+            if(movementScale.magnitude < minRotationInput || !CanMove || !CanMoveOverride) return;
             transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.LookRotation(movementScale), rotationSpeed);
         }
 
@@ -264,7 +269,7 @@ namespace Entity.Player {
         /// </summary>
         private void MovePlayer() {
             anim.SetFloat(AnimSpeed, 0f);
-            if(!agent.enabled || !CanMove) return; 
+            if(!agent.enabled || !CanMove || !CanMoveOverride) return; 
             agent.Move(movementScale * (playerSpeed * Time.deltaTime));
             anim.SetFloat(AnimSpeed, movementScale.magnitude);
         }
@@ -386,8 +391,9 @@ namespace Entity.Player {
             if(contacts.Length < 1) return false;
             
             foreach(var contact in contacts) {
-                if(!contact.gameObject.GetComponent<Enemy>()) continue;
-                contact.gameObject.GetComponent<Enemy>().Damage(damageAmount, this);
+                if(!contact.gameObject.GetComponent<Entity>()) continue;
+                if(contact.gameObject.GetComponent<PlayerController>()) continue;
+                contact.gameObject.GetComponent<Entity>().Damage(damageAmount, this);
                 return true;
             }
 

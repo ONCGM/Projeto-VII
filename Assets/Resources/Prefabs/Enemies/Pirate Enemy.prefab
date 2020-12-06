@@ -362,6 +362,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Enemy Health Canvas
       objectReference: {fileID: 0}
+    - target: {fileID: 8646466352429154482, guid: 2e3ff02269ef4024a8f49b1a3bc6346f, type: 3}
+      propertyPath: m_fontSize
+      value: 0.5
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 2e3ff02269ef4024a8f49b1a3bc6346f, type: 3}
 --- !u!224 &5997724502307749765 stripped
@@ -428,6 +432,10 @@ PrefabInstance:
       propertyPath: m_Materials.Array.data[0]
       value: 
       objectReference: {fileID: 2100000, guid: 1435416c115dbb34cae48a66d3581532, type: 2}
+    - target: {fileID: 3070632499663323356, guid: a5468f61530b8204d95bc0a7bb33f0b7, type: 3}
+      propertyPath: m_Layer
+      value: 18
+      objectReference: {fileID: 0}
     - target: {fileID: 5866666021909216657, guid: a5468f61530b8204d95bc0a7bb33f0b7, type: 3}
       propertyPath: m_Controller
       value: 

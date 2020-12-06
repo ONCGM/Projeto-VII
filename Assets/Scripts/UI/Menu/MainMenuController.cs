@@ -10,6 +10,7 @@ using Localization;
 using UI.Localization;
 using UI.Popups;
 using UnityEngine;
+using UnityEngine.EventSystems;
 using UnityEngine.Rendering;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
@@ -38,7 +39,7 @@ namespace UI.Menu {
         [SerializeField] private CanvasGroup mainMenuGroup;
         [SerializeField] private CanvasGroup loadGameGroup,
                                              optionsMenuGroup;
-        
+
         [Header("Scene Indexes")]
         //[SerializeField] private int gameSceneIndex = 2;
         [SerializeField] private int creditsSceneIndex = 9;
@@ -71,6 +72,9 @@ namespace UI.Menu {
         private CanvasPopupDialog quitCurrentPopup;
 
         [Header("UI Components Reference")]
+        [SerializeField] private EventSystem eventSystem;
+        [SerializeField] private GameObject selectedButtonMainMenu;
+        [SerializeField] private GameObject selectedButtonOptions, selectedButtonLoadGame;
         [Header("Game Tab")]
         [SerializeField] private Slider difficultySlider;
         [SerializeField] private Image ptBrSelectionImage;
@@ -84,6 +88,7 @@ namespace UI.Menu {
         [SerializeField] private Slider masterSlider;
         [SerializeField] private Slider musicSlider;
         [SerializeField] private Slider sfxSlider;
+        [SerializeField] private StudioEventEmitter masterEmitter, sfxEmitter;
 
         #pragma warning restore 0649
         
@@ -135,7 +140,8 @@ namespace UI.Menu {
             loadGameCamera.enabled = false;
             optionsMenuCamera.enabled = true;
             optionsMenuCanvas.enabled = true;
-
+            eventSystem.SetSelectedGameObject(selectedButtonOptions);
+            
             DOTween.To(() => loadGameGroup.alpha, x => loadGameGroup.alpha = x, 0f, mainCanvasGroupFadeAnimationSpeed);
             DOTween.To(() => mainMenuGroup.alpha, x=> mainMenuGroup.alpha = x, 0f, mainCanvasGroupFadeAnimationSpeed).onComplete =
                 () => {
@@ -153,6 +159,7 @@ namespace UI.Menu {
             optionsMenuCamera.enabled = false;
             loadGameCamera.enabled = true;
             loadGameCanvas.enabled = true;
+            eventSystem.SetSelectedGameObject(selectedButtonLoadGame);
 
             DOTween.To(() => optionsMenuGroup.alpha, x => optionsMenuGroup.alpha = x, 0f, mainCanvasGroupFadeAnimationSpeed);
             DOTween.To(() => mainMenuGroup.alpha, x => mainMenuGroup.alpha = x, 0f, mainCanvasGroupFadeAnimationSpeed).onComplete =
@@ -171,6 +178,7 @@ namespace UI.Menu {
             loadGameCamera.enabled = false;
             mainMenuCamera.enabled = true;
             mainMenuCanvas.enabled = true;
+            eventSystem.SetSelectedGameObject(selectedButtonMainMenu);
 
             DOTween.To(() => optionsMenuGroup.alpha, x => optionsMenuGroup.alpha = x, 0f, mainCanvasGroupFadeAnimationSpeed);
             DOTween.To(() => loadGameGroup.alpha, x => loadGameGroup.alpha = x, 0f, mainCanvasGroupFadeAnimationSpeed).onComplete =
@@ -179,6 +187,15 @@ namespace UI.Menu {
                     loadGameCanvas.enabled = false;
                     optionsMenuCanvas.enabled = false; 
                 };
+        }
+
+        /// <summary>
+        /// Sets the selection on event system.
+        /// </summary>
+        public void SetEventSystem() {
+            if(mainMenuCamera.enabled) eventSystem.SetSelectedGameObject(selectedButtonMainMenu);
+            if(optionsMenuCamera.enabled) eventSystem.SetSelectedGameObject(selectedButtonOptions);
+            if(loadGameCamera.enabled) eventSystem.SetSelectedGameObject(selectedButtonLoadGame);
         }
         
         #endregion
@@ -232,6 +249,7 @@ namespace UI.Menu {
         /// </summary>
         public void UpdateMasterVolume(float value) {
             masterBus.setVolume(value);
+            if(!masterEmitter.IsPlaying() && Time.timeSinceLevelLoad > 3f) masterEmitter.Play();
             GameMaster.Instance.MasterSaveData.audioMasterVolume = value;
             GameMaster.Instance.SaveGame();
         }
@@ -250,6 +268,7 @@ namespace UI.Menu {
         /// </summary>
         public void UpdateSFXVolume(float value) {
             sfxBus.setVolume(value);
+            if(!sfxEmitter.IsPlaying() && Time.timeSinceLevelLoad > 3f) sfxEmitter.Play();
             GameMaster.Instance.MasterSaveData.audioSfxVolume = value;
             GameMaster.Instance.SaveGame();
         }
