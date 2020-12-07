@@ -7,6 +7,7 @@ using DG.Tweening;
 using Entity.Player;
 using Game;
 using Islands;
+using Items;
 using Localization;
 using Store;
 using TMPro;
@@ -106,10 +107,10 @@ namespace UI.Menu {
         /// the items in the UI.
         /// </summary>
         private IEnumerator FillItemSlots() {
-            var itemEntries = store.StoreInventory.ItemsInInventory;
+            var itemEntries = store.SoldItems;
 
             foreach(var itemEntry in itemEntries) {
-                Instantiate(itemPrefab, itemListParent).GetComponent<SmallItemUI>().SetUpItemUi(itemEntry, itemInAnimationDuration);
+                Instantiate(itemPrefab, itemListParent).GetComponent<SmallItemUI>().SetUpItemUi(new InventoryItemEntry(itemEntry), itemInAnimationDuration);
                 yield return waitForItem;
             }
             

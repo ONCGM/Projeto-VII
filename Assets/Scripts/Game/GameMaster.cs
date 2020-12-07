@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using Entity.Player;
 using Items;
 using JetBrains.Annotations;
@@ -20,9 +21,12 @@ namespace Game {
         static GameMaster() { }
 
         private GameMaster() {
+            ItemConverter = Resources.Load<ItemIdToItemEntry>(ItemConverterPath);
+            SavingIconPrefab = Resources.Load<GameObject>(SavingIconPath);
             SaveSystem.LoadGameFile();
             MasterSaveData = SaveSystem.LoadedData;
             PlayerStats = MasterSaveData.currentPlayerStats;
+            playerStats.CurrentInventory = ItemConverter.ReturnEntriesFromIds(MasterSaveData.currentInventoryIds);
             CurrentGameDay = MasterSaveData.gameDay;
             CurrentTimeOfDay = MasterSaveData.currentTimeOfDay;
             DialogsCleared = MasterSaveData.dialogsCleared;
@@ -176,7 +180,7 @@ namespace Game {
         public bool GameSceneWasLoaded { get; set; }
 
         #region Actions
-        
+
         /// <summary>
         /// Called whenever the PlayerStats are updated.
         /// </summary>
@@ -261,6 +265,36 @@ namespace Game {
         public SaveData MasterSaveData { get; private set; }
 
         /// <summary>
+        /// Path to the item converter scriptable object.
+        /// </summary>
+        public string ItemConverterPath = "Scriptables/Items/Item_Converter";
+
+        /// <summary>
+        /// Converts items and ids for serializing.
+        /// </summary>
+        public ItemIdToItemEntry ItemConverter { get; private set; }
+
+        /// <summary>
+        /// Path to the saving icon prefab object.
+        /// </summary>
+        public string SavingIconPath = "Prefabs/UI/Saving Icon Canvas";
+        
+        /// <summary>
+        /// The saving icon prefab.
+        /// </summary>
+        public GameObject SavingIconPrefab { get; private set; }
+
+        /// <summary>
+        /// Last time that the game was saved.
+        /// </summary>
+        private float lastTimeOfSave = 0f;
+        
+        /// <summary>
+        /// How often to save.
+        /// </summary>
+        private const float delayBetweenSaves = 45f;
+
+        /// <summary>
         /// Overrides save data.
         /// </summary>
         public void SetSaveData(SaveData save) {
@@ -275,9 +309,13 @@ namespace Game {
             MasterSaveData.currentPlayerStats = PlayerStats;
             MasterSaveData.gameDay = CurrentGameDay;
             MasterSaveData.dialogsCleared = DialogsCleared;
+            MasterSaveData.currentInventoryIds = ItemIdToItemEntry.ReturnIdsFromEntries(MasterSaveData.currentPlayerStats.CurrentInventory);
             SaveSystem.LoadedData = MasterSaveData;
+
+            if(Time.time < lastTimeOfSave + delayBetweenSaves) return;
             SaveSystem.SerializeToFile();
             OnGameSaved?.Invoke();
+            GameObject.Instantiate(SavingIconPrefab);
         }
         
         #endregion

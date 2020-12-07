@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using Game;
 using UnityEngine;
 using UnityEngine.UI;
 using Utility;
@@ -14,7 +15,7 @@ namespace UI.Menu {
         // Checks if the button should be unlocked
         private void Start() {
             continueButton = GetComponent<Button>();
-            continueButton.interactable = !SaveSystem.LoadedData.brandSpankingNewSave;
+            continueButton.interactable = !GameMaster.Instance.MasterSaveData.brandSpankingNewSave;
         }
     }
 }

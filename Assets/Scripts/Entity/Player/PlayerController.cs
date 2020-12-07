@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using Entity.Enemies;
 using FMODUnity;
 using Game;
@@ -215,7 +216,7 @@ namespace Entity.Player {
 
         public override void Kill() {
             anim.SetTrigger(AnimDead);
-            // TODO Restart at shop.
+            // TODO Restart at current scene.
         }
 
         public override void Damage(int amount, Entity dealer) {
@@ -282,7 +283,7 @@ namespace Entity.Player {
         /// Recovers the player stamina at a steady rate.
         /// </summary>
         private void RecoverStamina() { 
-            Stamina = Mathf.Clamp(Stamina + 2, 0, MaxStamina);
+            Stamina = Mathf.Clamp(Stamina + 1, 0, MaxStamina);
             PlayerStatsUI.UpdateUiValues?.Invoke();
         }
         
@@ -295,7 +296,7 @@ namespace Entity.Player {
             Stamina -= 4;
             agent.enabled = false;
             anim.SetTrigger(AnimSpecial);
-            PlayerStatsUI.UpdateUiValues.Invoke();
+            PlayerStatsUI.UpdateUiValues?.Invoke();
         }
 
         /// <summary>
@@ -360,7 +361,7 @@ namespace Entity.Player {
                 comboNumber = 0;
             }
             
-            PlayerStatsUI.UpdateUiValues.Invoke();
+            PlayerStatsUI.UpdateUiValues?.Invoke();
         }
         
         /// <summary>
@@ -428,7 +429,7 @@ namespace Entity.Player {
                 Experience = Experience,
                 TotalExperience = upgradeSettings.GetExperienceNeededForLevelUp(Level) + Experience,
                 Coins = Coins,
-                CurrentInventory = inventory.ItemsInInventory,
+                CurrentInventory = Inventory.ItemsInInventory,
                 InventorySize = playerInventorySize,
                 CurrentUpgradeLevel = 0
             };
@@ -439,7 +440,6 @@ namespace Entity.Player {
             
             GameMaster.Instance.PlayerStats = stats;
             GameMaster.Instance.MasterSaveData.currentPlayerStats = stats;
-            GameMaster.Instance.SaveGame();
         }
         
         /// <summary>
@@ -460,6 +460,7 @@ namespace Entity.Player {
             Coins = stats.Coins;
             playerInventorySize = stats.InventorySize;
             inventory.ItemsInInventory = new List<InventoryItemEntry>(stats.CurrentInventory);
+
             inventory.OnInventoryUpdate?.Invoke();
 
             currentUpgrades = stats.CurrentUpgradeLevel;

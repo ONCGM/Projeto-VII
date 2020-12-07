@@ -111,7 +111,7 @@ namespace Entity.NPC {
                 noMoneyPopup.SetUpPopup(cantBuyWithoutCoinsTitleKey.key, cantBuyWithoutCoinsMessageKey.key, 
                                       new List<CanvasPopupDialog.ButtonSettings>{
                                           new CanvasPopupDialog.ButtonSettings(confirmButtonKey.key, CanvasPopupDialog.PopupButtonHighlight.Normal, 0)
-                                      }, ExecutionState.PopupPause, i => { HideUi(); });
+                                      }, ExecutionState.PopupPause, i => { CancelPurchase(); HideUi(); });
                 return;
             }
 

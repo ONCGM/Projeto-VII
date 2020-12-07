@@ -8,6 +8,7 @@ using UI.Localization;
 using UI.Menu;
 using UnityEngine;
 using UnityEngine.EventSystems;
+using UnityEngine.InputSystem.UI;
 using UnityEngine.UI;
 
 namespace UI.Popups {
@@ -60,7 +61,19 @@ namespace UI.Popups {
         /// </summary>
         private void AnimateIn() {
             transform.GetChild(0).localScale = Vector3.zero;
-            transform.GetChild(0).DOScale(Vector3.one, popinAnimationDuration);
+            transform.GetChild(0).DOScale(Vector3.one, popinAnimationDuration).onComplete += () => {
+                foreach(var eventSystem in FindObjectsOfType<EventSystem>()) {
+                    eventSystem.UpdateModules();
+                    eventSystem.SetSelectedGameObject(buttons[0].gameObject);
+                    eventSystem.UpdateModules();
+                }
+                
+                foreach(var inputModule in FindObjectsOfType<InputSystemUIInputModule>()) {
+                    inputModule.enabled = false;
+                    inputModule.UpdateModule();
+                    inputModule.enabled = true;
+                }
+            };
         }
 
         /// <summary>
@@ -92,8 +105,6 @@ namespace UI.Popups {
 
             GameMaster.Instance.GameState = popupExecutionState;
 
-            GetComponentInChildren<EventSystem>().firstSelectedGameObject = buttons[0].gameObject;
-            
             AnimateIn();
             
             StartCoroutine(nameof(PopupPauseRoutine));
@@ -132,11 +143,6 @@ namespace UI.Popups {
 
             GameMaster.Instance.GameState = popupExecutionState;
 
-            foreach(var eventSystem in FindObjectsOfType<EventSystem>()) {
-                eventSystem.SetSelectedGameObject(buttons[0].gameObject);
-                eventSystem.UpdateModules();
-            }
-            
             AnimateIn();
             
             StartCoroutine(nameof(PopupPauseRoutine));

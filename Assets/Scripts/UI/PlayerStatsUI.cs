@@ -130,7 +130,10 @@ namespace UI {
             dayText.text = LocalizationSystem.CurrentLanguage == LocalizationSystem.Language.Japanese ? $"{currentDay} {dayLocalized}" : $"{dayLocalized} {currentDay}";
             timeOfDayText.text = LocalizationSystem.GetLocalizedValue(TimeOfDayLocalizationKeys[(int) GameMaster.Instance.CurrentTimeOfDay]);
             
-            if(player == null) return;
+            if(player == null) {
+                player = FindObjectOfType<PlayerController>();
+                return;
+            }
             
             healthBar.rectTransform.SetSizeWithCurrentAnchors(RectTransform.Axis.Horizontal, 
                 Mathf.Lerp(0f, uiBarsWidth,Mathf.InverseLerp(0f, player.MaxHealth, player.Health)));

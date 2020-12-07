@@ -22,7 +22,7 @@ namespace Items {
         [SerializeField, Range(1, 99)] public int maxStackQuantity;
         [SerializeField] public Sprite itemImage;
 
-        [Header("Price Settings")] // TODO: Game Economy. Basic as possible.
+        [Header("Price Settings")] 
         [SerializeField] public int initialValue;
         [SerializeField, Range(0.01f, 1f)] public float itemRarity;
 

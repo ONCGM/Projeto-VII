@@ -43,8 +43,8 @@ namespace Islands {
             if(hasLoadedIslands) return;
             var islandSize = GameMaster.Instance.SelectedIslandSize;
 
-            //CurrentIslandType = (IslandType) Random.Range(0, Enum.GetNames(typeof(IslandType)).Length);
-            CurrentIslandType = IslandType.MerchantIsland;
+            CurrentIslandType = (IslandType) Random.Range(0, Enum.GetNames(typeof(IslandType)).Length);
+            
             GameMaster.Instance.CurrentIslandType = CurrentIslandType;
             
             var sceneId = Mathf.Clamp(smallIslandIndex + (int) islandSize, smallIslandIndex, largeIslandIndex);

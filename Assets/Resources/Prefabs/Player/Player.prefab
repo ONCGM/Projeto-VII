@@ -189,11 +189,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: abd30120a5220364c95490d4bc58e217, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  health: 10
-  maxHealth: 10
+  health: 35
+  maxHealth: 35
   stamina: 10
   maxStamina: 10
-  level: 0
+  level: 1
   maxLevel: 30
   experience: 0
   coins: 0

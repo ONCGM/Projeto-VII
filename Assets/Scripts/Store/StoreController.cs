@@ -40,6 +40,7 @@ namespace Store {
         [SerializeField] private GameObject firstSelected;
         [SerializeField] private TMP_Text priceText;
         [SerializeField] private Slider priceSlider;
+        [SerializeField] private CloseStoreUI closeStoreUI;
         [Header("Settings")]
         [SerializeField, Range(0.1f, 5f)] private float fadeAnimationTime = 1f;
         [SerializeField] private Transform clerkPosition;
@@ -79,8 +80,8 @@ namespace Store {
         
         // Components.
         private StoreCanvasTrigger canvasTrigger;
-        
-        private List<NpcController> spawnedNpcs = new List<NpcController>();
+
+        public List<NpcController> SpawnedNpcs { get; private set; }  = new List<NpcController>();
         private WaitForSeconds spawnWait;
         /// <summary>
         /// Is the store open?
@@ -93,7 +94,9 @@ namespace Store {
         /// </summary>
         public Inventory StoreInventory { get; set; }
         public List<ItemStore> ItemsToSell { get; set; } = new List<ItemStore>();
-        
+
+        public List<ItemSettings> SoldItems { get; private set; } = new List<ItemSettings>();
+
         /// <summary>
         /// How many coins made last round.
         /// </summary>
@@ -125,6 +128,7 @@ namespace Store {
             };
             
             StoreInventory = new Inventory(storeInventorySize, new List<InventoryItemEntry>());
+            SoldItems = new List<ItemSettings>();
         }
 
         #region Store Control
@@ -175,7 +179,9 @@ namespace Store {
             StartCoroutine(nameof(SpawnNPCs));
             StoreOpen = true;
             ProfitFromLastSale = 0;
+            SoldItems = new List<ItemSettings>();
             RemoveCoinsDisplay();
+            closeStoreUI.DisplayUi();
 
             foreach(var itemUI in FindObjectsOfType<ItemUI>()) {
                 itemUI.LockButtons(StoreOpen);
@@ -188,7 +194,8 @@ namespace Store {
         /// Checks to see if all items have been sold.
         /// </summary>
         private void CheckForItemsToSell() {
-            if(ItemsToSell.Count >= 1 || spawnedNpcs.Count >= 1) return;
+            if(ItemsToSell.Count >= 1 || SpawnedNpcs.Count >= 1) return;
+            if(closeStoreUI.IsOpen) closeStoreUI.HideUi();
             Instantiate(reportPrefab);
             CancelInvoke(nameof(CheckForItemsToSell));
         }
@@ -245,6 +252,23 @@ namespace Store {
         }
 
         /// <summary>
+        /// Closes the store early. By player choice.
+        /// </summary>
+        public void CloseEarly() {
+            Instantiate(reportPrefab);
+            CancelInvoke(nameof(CheckForItemsToSell));
+            foreach(var npc in SpawnedNpcs) {
+                npc.LeaveStore();
+            }
+
+            foreach(var spawnPoint in itemSpawnPoints) {
+                for(var i = 0; i < spawnPoint.childCount; i++) {
+                       Destroy(spawnPoint.GetChild(i).gameObject); 
+                }
+            }
+        }
+
+        /// <summary>
         /// Adds more coins to the stack.
         /// </summary>
         private void AddCoinsToDisplay(int amount) {
@@ -287,7 +311,7 @@ namespace Store {
             var maxNpcSpawn = ItemsToSell.Count * 2;
             
             while(ItemsToSell.Count > 0) {
-                if(spawnedNpcs.Count >= maxNpcSpawn || spawnedNpcs.Count >= maxSpawnedNpcs) continue;
+                if(SpawnedNpcs.Count >= maxNpcSpawn || SpawnedNpcs.Count >= maxSpawnedNpcs) continue;
                 
                 var npc = GameMaster.Instance.PlayerStats.Level > 10 ? npcStats[Random.Range(0, npcStats.Count)] : npcStats[Random.Range(0, 1)];
                 var npcController = Instantiate(npc.npcsVariationsToUse[Random.Range(0, npc.npcsVariationsToUse.Count)],
@@ -296,7 +320,7 @@ namespace Store {
 
                 npcController.Stats = npc;
                 npcController.SetNpcsValuesBasedOnStats();
-                spawnedNpcs.Add(npcController);
+                SpawnedNpcs.Add(npcController);
 
                 yield return spawnWait;
             }
@@ -309,6 +333,7 @@ namespace Store {
             var hasItem = ItemsToSell.Any(x => x.Price <= amountOfMoneyToSpend);
             if(!hasItem) return null;
             var item = ItemsToSell.First(x => x.Price * priceMarkup <= amountOfMoneyToSpend);
+            if(item == null) return null;
             ItemsToSell.Remove(item);
             return item;
         }
@@ -322,6 +347,7 @@ namespace Store {
             player.AddCoins(item.Price);
             ProfitFromLastSale += item.Price;
             AddCoinsToDisplay(item.Price);
+            SoldItems.Add(item.Settings);
             return item.Price;
         }
 
@@ -329,8 +355,8 @@ namespace Store {
         /// Removes a npc from the game and list of npcs.
         /// </summary>
         public void RemoveNpc(NpcController controller) {
-            spawnedNpcs.Remove(controller);
-            spawnedNpcs.TrimExcess();
+            SpawnedNpcs.Remove(controller);
+            SpawnedNpcs.TrimExcess();
             controller.Kill();
         }
 

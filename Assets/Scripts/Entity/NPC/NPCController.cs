@@ -33,7 +33,8 @@ namespace Entity.NPC {
         /// <summary>
         /// Has this npc bought an item.
         /// </summary>
-        public bool HasBoughtAnItem { get; private set; }
+        public bool HasChosenAnItem { get; private set; }
+        public bool HasPaidForItem { get; private set; }
 
         private StoreController store;
         private static readonly int Speed = Animator.StringToHash("Speed");
@@ -46,9 +47,9 @@ namespace Entity.NPC {
         private WaitForSeconds waitOnPurchase;
 
         /// <summary>
-        /// The npc inventory.
+        /// The npc chosen item.
         /// </summary>
-        public Inventory NpcInventory { get; set; }
+        public ItemStore ChosenItem { get; set; }
 
         #pragma warning restore 0649
 
@@ -99,14 +100,14 @@ namespace Entity.NPC {
             SetDestinationToWaypoint(npcRandomWaypoints[Random.Range(0, npcRandomWaypoints.Count)]);
 
             for(var i = 0; i < purchaseTries; i++) {
-                if(HasBoughtAnItem) break;
+                if(HasChosenAnItem) break;
                 
                 if(Stats.chanceToBuySomething >= Random.value) {
-                    var itemToBuy = store.PickItem(Coins);
+                    ChosenItem = store.PickItem(Coins);
 
-                    if(itemToBuy != null) {
-                        StartCoroutine(PurchaseItem(itemToBuy));
-                        HasBoughtAnItem = true;
+                    if(ChosenItem != null) {
+                        StartCoroutine(PurchaseItem(ChosenItem));
+                        HasChosenAnItem = true;
                         
                         yield break;
                     }
@@ -121,7 +122,7 @@ namespace Entity.NPC {
                 yield return waitOnPurchase;
             }
             
-            if(HasBoughtAnItem) yield break;
+            if(HasChosenAnItem) yield break;
             
             SetDestinationToWaypoint(store.npcSpawnPoints[Random.Range(0, store.npcSpawnPoints.Count)]);
             yield return waitUntilPathComplete;
@@ -132,7 +133,7 @@ namespace Entity.NPC {
         /// Buys an item.
         /// </summary>
         private IEnumerator PurchaseItem(ItemStore item) {
-            if(HasBoughtAnItem) yield break;
+            if(HasChosenAnItem) yield break;
             
             SetDestinationToWaypoint(item.itemWaypoint);
                         
@@ -159,7 +160,8 @@ namespace Entity.NPC {
             
             yield return waitOnPurchase;
 
-            store.BuyItem(item);
+            Coins -= store.BuyItem(item);
+            HasPaidForItem = true;
 
             yield return waitOnPurchase;
             
@@ -168,11 +170,7 @@ namespace Entity.NPC {
             
             yield return waitOnPurchase;
 
-            SetDestinationToWaypoint(store.npcSpawnPoints[Random.Range(0, store.npcSpawnPoints.Count)]);
-            
-            yield return waitUntilPathComplete;
-            
-            store.RemoveNpc(this);
+            StartCoroutine(nameof(GoToExit));
         }
 
         #region Overrides
@@ -196,5 +194,20 @@ namespace Entity.NPC {
         }
 
         #endregion
+
+        /// <summary>
+        /// Leaves the store.
+        /// </summary>
+        public void LeaveStore() {
+            if(HasPaidForItem) return;
+            StopAllCoroutines();
+            
+            if(HasChosenAnItem) {
+                anim.SetTrigger(Drop);
+                ChosenItem.transform.position = store.itemPurchasePosition.position;
+            }
+            
+            StartCoroutine(nameof(GoToExit));
+        }
     }
 }

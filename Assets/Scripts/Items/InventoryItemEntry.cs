@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -6,6 +7,7 @@ namespace Items {
     /// <summary>
     /// Holds info on an item in the player inventory.
     /// </summary>
+    [Serializable]
     public struct InventoryItemEntry {
         /// <summary>
         /// What item is this.

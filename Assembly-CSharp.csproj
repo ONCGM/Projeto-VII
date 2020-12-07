@@ -130,6 +130,9 @@
      <Compile Include="Assets\Scripts\UI\LoadingHints.cs" />
      <Compile Include="Assets\Scripts\Entity\NPC\MerchantNPC.cs" />
      <Compile Include="Assets\Scripts\UI\Menu\GameMenuController.cs" />
+     <Compile Include="Assets\Scripts\UI\CloseStoreUI.cs" />
+     <Compile Include="Assets\Scripts\Utility\ItemIdToItemEntry.cs" />
+     <Compile Include="Assets\Scripts\UI\SavingUiCanvas.cs" />
      <None Include="Assets\TextMesh Pro\Shaders\TMPro.cginc" />
      <None Include="Assets\TextMesh Pro\Shaders\TMP_SDF-Mobile Overlay.shader" />
      <None Include="Assets\Scripts\Shaders\TextureMask.shader" />

@@ -180,29 +180,29 @@ namespace Utility {
             CreateDirectory();
             
             // Query files by extension.
-            IEnumerable<FileInfo> fileQueryBinary = directory
-                                              .EnumerateFiles()
-                                              .Where(file => file.Extension == GetFileExtension())
-                                              .OrderByDescending(file => file.LastWriteTime);
+            // IEnumerable<FileInfo> fileQueryBinary = directory
+            //                                   .EnumerateFiles()
+            //                                   .Where(file => file.Extension == GetFileExtension())
+            //                                   .OrderByDescending(file => file.LastWriteTime);
             IEnumerable<FileInfo> fileQueryJson = directory
                                               .EnumerateFiles()
                                               .Where(file => file.Extension == JsonFileExtension )
                                               .OrderByDescending(file => file.LastWriteTime);
             
             // Check if the files are readable, and if so, separate manual saves from auto saves.
-            foreach(var file in fileQueryBinary) {
-                if(ReferenceEquals(DeserializeBinaryGameFile(file.Open(FileMode.Open)), null)) continue;
-
-                if(file.Name.Contains(settings.autoSavePrefix)) {
-                    AutoSaveInfo = file;
-                    AutoSaveData = DeserializeBinaryGameFile(file.Open(FileMode.Open));
-                    break;
-                } else {
-                    GameSaveInfo = file;
-                    GameSave = DeserializeBinaryGameFile(file.Open(FileMode.Open));
-                    break;
-                }
-            }
+            // foreach(var file in fileQueryBinary) {
+            //     if(ReferenceEquals(DeserializeBinaryGameFile(file.Open(FileMode.Open)), null)) continue;
+            //
+            //     if(file.Name.Contains(settings.autoSavePrefix)) {
+            //         AutoSaveInfo = file;
+            //         AutoSaveData = DeserializeBinaryGameFile(file.Open(FileMode.Open));
+            //         break;
+            //     } else {
+            //         GameSaveInfo = file;
+            //         GameSave = DeserializeBinaryGameFile(file.Open(FileMode.Open));
+            //         break;
+            //     }
+            // }
             
             // Check if the files are readable, and if so, separate manual saves from auto saves.
             foreach(var file in fileQueryJson) {
@@ -334,7 +334,7 @@ namespace Utility {
             
             // Creates the formatter.
             var formatter = new BinaryFormatter();
-            var stream = new FileStream(string.Concat(info.FullName, info.Extension), FileMode.Create);
+            var stream = new FileStream(info.FullName, FileMode.Create);
             
             // Serializes the file and closes the stream.
             formatter.Serialize(stream, data);

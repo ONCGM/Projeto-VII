@@ -43,7 +43,6 @@ namespace UI.Menu {
         /// </summary>
         public void SaveGame() {
             GameMaster.Instance.SaveGame();
-            
             // TODO POPUP
         }
 

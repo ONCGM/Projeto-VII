@@ -23,7 +23,7 @@ namespace Items {
         private const string inventoryFullMessageKey = "placeholder";
         private const string okKey = "placeholder";
         private List<CanvasPopupDialog.ButtonSettings> buttons = new List<CanvasPopupDialog.ButtonSettings>();
-        private const string popUpPrefabPath = "Resources/Prefabs/UI/Popups/Pop-Up Canvas";
+        private const string popUpPrefabPath = "Prefabs/UI/Popups/Pop-Up Canvas";
         private GameObject popupPrefab;
         private CanvasPopupDialog popupDialog;
         private bool configured;
@@ -54,10 +54,10 @@ namespace Items {
         /// </summary>
         private void FullInventoryPopup() {
             if(popupDialog != null) return;
-            //SetUpPopup();
-            //popupDialog = GameObject.Instantiate(popupPrefab).GetComponent<CanvasPopupDialog>();
-            //popupDialog.SetUpPopup(inventoryFullTitleKey, inventoryFullMessageKey, 
-                                   //buttons, ExecutionState.PopupPause, i => { });
+            SetUpPopup();
+            popupDialog = GameObject.Instantiate(popupPrefab).GetComponent<CanvasPopupDialog>();
+            popupDialog.SetUpPopup(inventoryFullTitleKey, inventoryFullMessageKey, 
+                                   buttons, ExecutionState.PopupPause, i => { });
         }
 
         /// <summary>
