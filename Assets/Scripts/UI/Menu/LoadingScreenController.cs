@@ -81,7 +81,7 @@ namespace UI.Menu {
         /// </summary>
         private void OnSceneLoaded(Scene scene, LoadSceneMode loadMode) {
             if(scene.buildIndex == loadingSceneIndex) return;
-            if(scene.buildIndex == gameSceneIndex) FindObjectOfType<MainMenuMusicController>().TriggerMusicStop();
+            if(scene.buildIndex == gameSceneIndex) FindObjectOfType<MainMenuMusicController>()?.TriggerMusicStop();
             
             DOTween.To(() => loadingGroup.alpha, x => loadingGroup.alpha = x, 0f, fadeAnimationDuration).onComplete =
                 () => {

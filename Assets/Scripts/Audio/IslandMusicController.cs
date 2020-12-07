@@ -68,7 +68,7 @@ namespace Audio {
             Physics.SphereCastNonAlloc(transform.position, enemyDetectionRadius, Vector3.one, results, Mathf.Infinity, enemyLayer);
 
 
-            enemyCount = results.ToList<RaycastHit>().FindAll(x => x.transform.gameObject.GetComponent<Enemy>()).Count;
+            enemyCount = results.ToList<RaycastHit>().FindAll(x => x.transform.gameObject.GetComponent<Enemy>().IsDead == false).Count;
 
             if(enemyCount <= 0) {
                 SetMusicStage(0f);

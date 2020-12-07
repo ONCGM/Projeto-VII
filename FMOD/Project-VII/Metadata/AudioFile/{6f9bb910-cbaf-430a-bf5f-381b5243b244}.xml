@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<objects serializationModel="Studio.02.00.00">
+	<object class="AudioFile" id="{6f9bb910-cbaf-430a-bf5f-381b5243b244}">
+		<property name="assetPath">
+			<value>SFX/Foley/ES_Coins Plastic Bag - SFX Producer.mp3</value>
+		</property>
+		<property name="isStreaming">
+			<value>true</value>
+		</property>
+		<property name="frequencyInKHz">
+			<value>48</value>
+		</property>
+		<property name="channelCount">
+			<value>2</value>
+		</property>
+		<property name="length">
+			<value>1.0800000000000001</value>
+		</property>
+		<relationship name="masterAssetFolder">
+			<destination>{2ca4e725-4807-4703-9138-2d4fd006a6b9}</destination>
+		</relationship>
+	</object>
+</objects>

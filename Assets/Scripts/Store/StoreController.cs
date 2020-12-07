@@ -6,6 +6,7 @@ using System.Linq;
 using DG.Tweening;
 using Entity.NPC;
 using Entity.Player;
+using FMODUnity;
 using Game;
 using Items;
 using TMPro;
@@ -49,7 +50,11 @@ namespace Store {
         [SerializeField, Range(0.1f, 2f)] private float priceMarkup = 1f;
         [SerializeField, Range(1, 12)] private int maxSpawnedNpcs = 10;
         [SerializeField] private List<NpcStats> npcStats = new List<NpcStats>();
-        [SerializeField, Range(1f, 100f)] private float npcSpawnFrequency = 15f; 
+        [SerializeField, Range(1f, 100f)] private float npcSpawnFrequency = 15f;
+        [Header("Audio Settings")]
+        [SerializeField, EventRef] private string storeOpenEvent;
+        [SerializeField, EventRef] private string coinsPurchaseEvent;
+        private StudioEventEmitter eventEmitter;
         
         [Header("Localization")] 
         [SerializeField] private LocalizedString openStoreTitleKey;
@@ -118,6 +123,7 @@ namespace Store {
 
         // Gets references and shit.
         private void Awake() {
+            eventEmitter = GetComponentInChildren<StudioEventEmitter>();
             player = FindObjectOfType<PlayerController>();
             canvasTrigger = GetComponentInChildren<StoreCanvasTrigger>();
             spawnWait = new WaitForSeconds(npcSpawnFrequency);
@@ -172,6 +178,8 @@ namespace Store {
         /// </summary>
         private void OpenStore() {
             GameMaster.Instance.AdvanceOneTimePeriod();
+            eventEmitter.Event = storeOpenEvent;
+            eventEmitter.Play();
             HideStoreUi(false);
             SpawnItemInTables();
             StartCoroutine(nameof(SpawnNPCs));
@@ -270,6 +278,9 @@ namespace Store {
         /// Adds more coins to the stack.
         /// </summary>
         private void AddCoinsToDisplay(int amount) {
+            eventEmitter.Event = coinsPurchaseEvent;
+            
+            
             var position = coinsSpawnPoint.position + 
                            new Vector3(Random.Range(-coinSpawnVariation, coinSpawnVariation),
                                        Random.Range(0f, coinSpawnVariation), Random.Range(-coinSpawnVariation, coinSpawnVariation));
@@ -278,15 +289,21 @@ namespace Store {
             
             if(amount < 100) {
                 Instantiate(coinPrefab, position, rotation, coinsSpawnPoint);
+                eventEmitter.SetParameter("Purchase_Size", 0f);
+                eventEmitter.Play();
                 return;
             }
             
             if(amount < 500) {
                 Instantiate(coinStackPrefab, position, rotation, coinsSpawnPoint);
+                eventEmitter.SetParameter("Purchase_Size", 1f);
+                eventEmitter.Play();
                 return;
             }
-            
+
             Instantiate(coinMountainPrefab, position, rotation, coinsSpawnPoint);
+            eventEmitter.SetParameter("Purchase_Size", 2f);
+            eventEmitter.Play();
         }
         
         /// <summary>

@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<objects serializationModel="Studio.02.00.00">
+	<object class="AudioFile" id="{42e78004-2b71-443f-a845-fb52ac2c2e99}">
+		<property name="assetPath">
+			<value>SFX/Foley/ES_Coins Drop Multiple 4 - SFX Producer.mp3</value>
+		</property>
+		<property name="isStreaming">
+			<value>true</value>
+		</property>
+		<property name="frequencyInKHz">
+			<value>48</value>
+		</property>
+		<property name="channelCount">
+			<value>2</value>
+		</property>
+		<property name="length">
+			<value>2.0880000000000001</value>
+		</property>
+		<relationship name="masterAssetFolder">
+			<destination>{2ca4e725-4807-4703-9138-2d4fd006a6b9}</destination>
+		</relationship>
+	</object>
+</objects>

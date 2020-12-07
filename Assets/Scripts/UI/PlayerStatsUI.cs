@@ -80,6 +80,7 @@ namespace UI {
             GameMaster.OnTimeOfDayUpdated -= UpdateUiValues;
             GameMaster.OnPlayerStatsUpdated -= UpdateUiValues;
             GameMaster.OnGameDayUpdate -= UpdateUiValues;
+            StopAllCoroutines();
             UpdateUiValues = null;
         }
 

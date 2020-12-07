@@ -5,7 +5,7 @@
 			<value>Beach_Waves</value>
 		</property>
 		<property name="outputFormat">
-			<value>1</value>
+			<value>2</value>
 		</property>
 		<relationship name="folder">
 			<destination>{60cc9aa0-3b22-495c-a65d-34462ee617ce}</destination>
@@ -407,6 +407,7 @@
 	<object class="MixerBusEffectChain" id="{053f4f99-bcff-49d4-94bd-17603f0b0c1b}">
 		<relationship name="effects">
 			<destination>{58d5ea9f-ad48-4535-9790-991e863ec08b}</destination>
+			<destination>{ed1e1b32-30b4-4ab3-b48a-dbd4f6aae152}</destination>
 		</relationship>
 	</object>
 	<object class="MixerBusPanner" id="{f146b3e2-e52f-4345-a459-12667276d37c}" />
@@ -570,6 +571,14 @@
 		</relationship>
 	</object>
 	<object class="MixerBusFader" id="{58d5ea9f-ad48-4535-9790-991e863ec08b}" />
+	<object class="SpatialiserEffect" id="{ed1e1b32-30b4-4ab3-b48a-dbd4f6aae152}">
+		<property name="distanceRolloffType">
+			<value>1</value>
+		</property>
+		<property name="maximumDistance">
+			<value>1000</value>
+		</property>
+	</object>
 	<object class="AutomationPoint" id="{9cb4788e-3283-4d87-97ad-46a8ee5d8bec}">
 		<property name="position">
 			<value>58</value>

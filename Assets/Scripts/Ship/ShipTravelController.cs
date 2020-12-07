@@ -182,6 +182,8 @@ namespace Ship {
         /// Loads the islands scenes.
         /// </summary>
         public void LoadIsland() {
+            FindObjectOfType<WavesAmbienceController>().TriggerEventStop();
+            
             anim.SetTrigger(ArriveAtIsland);
             
             IslandLoader = FindObjectOfType<IslandLevelLoader>();
@@ -233,7 +235,7 @@ namespace Ship {
             }
             
             if(eventWavesEmitter != null) eventWavesEmitter.Play();
-            
+
             var player = FindObjectOfType<PlayerController>();
             player.UpdateGameMasterPlayerStats();
             Destroy(player.gameObject);
@@ -248,6 +250,7 @@ namespace Ship {
         /// </summary>
         public void UnloadIsland() {
             FindObjectOfType<IslandMusicController>().TriggerMusicStop();
+            FindObjectOfType<WavesAmbienceController>().TriggerEventStop();
             FindObjectOfType<ShipTravelLoadingController>().StartLoadingSequence(townSceneIndex);
         }
 

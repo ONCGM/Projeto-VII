@@ -2,16 +2,13 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Globalization;
-using System.Runtime.Remoting;
 using DG.Tweening;
 using Entity.Player;
+using FMODUnity;
 using Game;
-using Islands;
 using Items;
-using Localization;
 using Store;
 using TMPro;
-using UI.Localization;
 using UnityEngine;
 using UnityEngine.EventSystems;
 
@@ -39,6 +36,7 @@ namespace UI.Menu {
         
         // Components.
         private CanvasGroup canvasGroup;
+        private StudioEventEmitter eventEmitter;
         
         // Yields.
         private WaitForEndOfFrame waitFrame;
@@ -52,6 +50,7 @@ namespace UI.Menu {
         
         // Animates in the canvas and sets up the values.
         private void Awake() {
+            eventEmitter = GetComponentInChildren<StudioEventEmitter>();
             canvasGroup = GetComponent<CanvasGroup>();
             canvasGroup.alpha = 0f;
             GameMaster.Instance.GameState = ExecutionState.PopupPause;
@@ -131,9 +130,11 @@ namespace UI.Menu {
             var coinDifference = store.ProfitFromLastSale;
 
             DOTween.To(x => coinsText.text = Mathf.RoundToInt(x).ToString(CultureInfo.InvariantCulture), 0, player.Coins, statsAnimationDuration);
+            eventEmitter.Play();
             yield return waitForStats;
             
             DOTween.To(x => coinsText.text = $"{player.Coins} (+{Mathf.RoundToInt(x)})", 0, coinDifference, statsAnimationDuration);
+            eventEmitter.Play();
             yield return waitForStats;
 
             // Buttons.
