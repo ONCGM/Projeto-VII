@@ -103,11 +103,12 @@ namespace Store {
                     player.Health = player.MaxHealth;
                     GameMaster.Instance.SaveGame();
                     
+                    agent.enabled = enabled;
+                    
                     DOTween.To(() => canvasGroup.alpha,
                                x => canvasGroup.alpha = x,
                                0f, fadeAnimationTime * 0.5f).onComplete = () => {
                         canTriggerSleep = true;
-                        agent.enabled = enabled;
                     };
                 };
         }

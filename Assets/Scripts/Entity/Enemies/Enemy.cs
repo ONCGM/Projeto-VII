@@ -28,7 +28,7 @@ namespace Entity.Enemies {
         [SerializeField] protected EnemySettings settings;
         protected float movementSpeed = 1f;
         protected int primaryAttackDamage = 1;
-        protected EnemyType enemyType;
+        [SerializeField] public EnemyType enemyType;
         [SerializeField, Range(0.01f, 1f)] protected float targetPositionUpdateInterval = 0.2f;
         [SerializeField, Range(0.2f, 5f)] protected float patrollingPlayerSearchFrequency = 2f;
         [SerializeField, Range(0.05f, 3f)] protected float patrollingTargetPositionTolerance = 0.3f;

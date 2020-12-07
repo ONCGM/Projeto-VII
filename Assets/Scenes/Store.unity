@@ -3542,7 +3542,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 76c392e42b5098c458856cdf6ecaaaa1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_FirstSelected: {fileID: 0}
+  m_FirstSelected: {fileID: 1272366491}
   m_sendNavigationEvents: 1
   m_DragThreshold: 10
 --- !u!4 &876914681
@@ -4690,6 +4690,11 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1260167307}
   m_Mesh: {fileID: 4853158631765926052, guid: ab71299f9c6d1044482147bfd5630641, type: 3}
+--- !u!1 &1272366491 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 6996279134225223384, guid: 54d24528ca8842e4c8bce0c2addc3a9d, type: 3}
+  m_PrefabInstance: {fileID: 805769036}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1290619584
 GameObject:
   m_ObjectHideFlags: 0

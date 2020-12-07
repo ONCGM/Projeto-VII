@@ -73,6 +73,8 @@ namespace UI {
             GameMaster.OnPlayerStatsUpdated += UpdateUiValues;
             UpdateUiValues += UpdateUi;
             UpdateUiValues?.Invoke();
+            
+            InvokeRepeating(nameof(UpdateUi), 1f, 1f);
         }
 
         private void OnDestroy() {
@@ -81,6 +83,7 @@ namespace UI {
             GameMaster.OnPlayerStatsUpdated -= UpdateUiValues;
             GameMaster.OnGameDayUpdate -= UpdateUiValues;
             StopAllCoroutines();
+            CancelInvoke(nameof(UpdateUi));
             UpdateUiValues = null;
         }
 

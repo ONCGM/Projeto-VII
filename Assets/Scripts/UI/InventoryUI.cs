@@ -28,12 +28,23 @@ namespace UI {
             if(player == null) player = GameObject.FindObjectOfType<PlayerController>();
             player.Inventory.OnInventoryUpdate.AddListener(UpdateItems);
             UpdateItems();
+            
+            InvokeRepeating(nameof(UpdateItems), 2f, 5f);
         }
+
+        // Cancel invoke.
+        private void OnDestroy() => CancelInvoke(nameof(UpdateItems));
 
         /// <summary>
         /// Updates the items in the ui.
         /// </summary>
         private void UpdateItems() {
+            if(player == null) {
+                player = GameObject.FindObjectOfType<PlayerController>();
+                player.Inventory.OnInventoryUpdate.AddListener(UpdateItems);
+                return;
+            }
+
             for(var i = 0; i < transform.childCount; i++) {
                 Destroy(transform.GetChild(i).gameObject);
             }

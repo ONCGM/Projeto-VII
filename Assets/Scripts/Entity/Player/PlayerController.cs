@@ -6,6 +6,7 @@ using Entity.Enemies;
 using FMODUnity;
 using Game;
 using Items;
+using Town;
 using UI;
 using UnityEngine;
 using UnityEngine.InputSystem;
@@ -128,6 +129,7 @@ namespace Entity.Player {
         
         [Header("Other")]
         [SerializeField] private GameObject DamageCanvasPrefab;
+        [SerializeField] private GameObject deathCanvasPrefab;
 
         /// <summary>
         /// Is the player inside the shop? True for yes.
@@ -184,6 +186,16 @@ namespace Entity.Player {
             InvokeRepeating(nameof(RecoverStamina), 1f, 1f);
         }
 
+        // "Respawns" the player.
+        public void ResetPlayer() {
+            anim.StopPlayback();
+            anim.StartPlayback();
+            Health = maxHealth;
+            CanMoveOverride = true;
+            CanMove = true;
+            transform.position = FindObjectOfType<PlayerSpawnPositionBasedOnLastScene>().portSpawnPosition.position;
+        }
+
         // OnEnable Unity Event, enables input.
         private void OnEnable() {
             inputs.Enable();
@@ -214,9 +226,18 @@ namespace Entity.Player {
 
         #region Entity Base Overrides
 
+        /// <summary>
+        /// Opens the death canvas.
+        /// </summary>
+        public void DisplayDeathCanvas() {
+            Instantiate(deathCanvasPrefab);
+        }
+        
         public override void Kill() {
             anim.SetTrigger(AnimDead);
-            // TODO Restart at current scene.
+            CanMoveOverride = false;
+            GameMaster.Instance.MasterSaveData.playerDeathCount++;
+            GameMaster.Instance.SaveGame();
         }
 
         public override void Damage(int amount, Entity dealer) {

@@ -137,6 +137,9 @@
      <Compile Include="Assets\Scripts\Audio\MainMenuMusicController.cs" />
      <Compile Include="Assets\Scripts\Items\ItemStore.cs" />
      <Compile Include="Assets\Scripts\Audio\WavesAmbienceController.cs" />
+     <Compile Include="Assets\Scripts\UI\DeathCanvasUI.cs" />
+     <Compile Include="Assets\Scripts\UI\Menu\EndGameController.cs" />
+     <Compile Include="Assets\Scripts\UI\Menu\EndGameLauncher.cs" />
      <None Include="Assets\TextMesh Pro\Shaders\TMPro.cginc" />
      <None Include="Assets\TextMesh Pro\Shaders\TMP_SDF-Mobile Overlay.shader" />
      <None Include="Assets\Scripts\Shaders\TextureMask.shader" />

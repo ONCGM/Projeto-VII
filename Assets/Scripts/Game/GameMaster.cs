@@ -91,7 +91,6 @@ namespace Game {
                 playerStats = value;
                 OnPlayerStatsUpdated?.Invoke();
             }
-            
         }
 
         /// <summary>
@@ -127,11 +126,9 @@ namespace Game {
             set {
                 currentGameDay = value;
                 OnGameDayUpdate?.Invoke();
-                if(currentGameDay >= 10) {
-                    // TODO: Add end game event.
-                    GameSceneWasLoaded = true;
-                    OnEndGameDayUpdate?.Invoke();
-                }
+                if(currentGameDay < 10) return;
+                GameSceneWasLoaded = true;
+                OnEndGameDayUpdate?.Invoke();
             }
         }
 

@@ -997,7 +997,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   CollisionTag: 
-  Event: 
+  Event: event:/SFX/Gameplay_Events/Store_Open
   PlayEvent: 0
   StopEvent: 0
   AllowFadeout: 1
@@ -1005,8 +1005,8 @@ MonoBehaviour:
   Preload: 0
   Params: []
   OverrideAttenuation: 0
-  OverrideMinDistance: -1
-  OverrideMaxDistance: -1
+  OverrideMinDistance: 0
+  OverrideMaxDistance: 0
 --- !u!1 &7052089801747876132
 GameObject:
   m_ObjectHideFlags: 0
@@ -1175,6 +1175,7 @@ Transform:
   - {fileID: 1929183329446579087}
   - {fileID: 3165908318766186870}
   - {fileID: 1193272825138440890}
+  - {fileID: 3004875262090522156}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -1250,6 +1251,8 @@ MonoBehaviour:
   npcSpawnFrequency: 12
   storeOpenEvent: event:/SFX/Gameplay_Events/Store_Open
   coinsPurchaseEvent: event:/SFX/Gameplay_Events/Coins_Purchase
+  eventEmitter: {fileID: 7551783166917763910}
+  purchaseEventEmitter: {fileID: 2548048385864751376}
   openStoreTitleKey:
     key: placeholder
   openStoreMessageKey:
@@ -1454,6 +1457,60 @@ Transform:
   m_Father: {fileID: 2950425267336672256}
   m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &8858794319816723184
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 3004875262090522156}
+  - component: {fileID: 2548048385864751376}
+  m_Layer: 0
+  m_Name: FMOD Emitter Coins
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &3004875262090522156
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8858794319816723184}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 7346824944463505898}
+  m_RootOrder: 12
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &2548048385864751376
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8858794319816723184}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9a6610d2e704f1648819acc8d7460285, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  CollisionTag: 
+  Event: event:/SFX/Gameplay_Events/Coins_Purchase
+  PlayEvent: 0
+  StopEvent: 0
+  AllowFadeout: 1
+  TriggerOnce: 0
+  Preload: 0
+  Params: []
+  OverrideAttenuation: 0
+  OverrideMinDistance: 0
+  OverrideMaxDistance: 0
 --- !u!1001 &6236829030292051615
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -4183,11 +4240,6 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 0c86ef33e2b72c24bbe538fa97d58cb0, type: 3}
---- !u!224 &6920136239567968500 stripped
-RectTransform:
-  m_CorrespondingSourceObject: {fileID: 4098063183769499137, guid: 0c86ef33e2b72c24bbe538fa97d58cb0, type: 3}
-  m_PrefabInstance: {fileID: 6401442450689126133}
-  m_PrefabAsset: {fileID: 0}
 --- !u!114 &7801341480320857878 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 3789096565149604323, guid: 0c86ef33e2b72c24bbe538fa97d58cb0, type: 3}
@@ -4199,3 +4251,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e299bb7add9774a44873c3aeb8727eec, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!224 &6920136239567968500 stripped
+RectTransform:
+  m_CorrespondingSourceObject: {fileID: 4098063183769499137, guid: 0c86ef33e2b72c24bbe538fa97d58cb0, type: 3}
+  m_PrefabInstance: {fileID: 6401442450689126133}
+  m_PrefabAsset: {fileID: 0}

@@ -16,7 +16,7 @@ namespace Town {
         #pragma warning disable 0649
         [Header("Settings and components")]
         [SerializeField] private PlayerController player;
-        [SerializeField] private Transform portSpawnPosition, storeSpawnPosition;
+        [SerializeField] public Transform portSpawnPosition, storeSpawnPosition;
         
         // Components and variables.
         private NavMeshAgent agent;
@@ -73,8 +73,6 @@ namespace Town {
             foreach(var meshRenderer in skinnedMeshRenderers) {
                 meshRenderer.enabled = true;
             }
-
-            if(toggleUI) Destroy(gameObject);
             
             player.PlayerIslandInventory = new Inventory(player.Inventory.InventorySize, new List<InventoryItemEntry>());
         }

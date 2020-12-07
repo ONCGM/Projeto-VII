@@ -218,6 +218,7 @@ MonoBehaviour:
     OnInventoryUpdate:
       m_PersistentCalls:
         m_Calls: []
+  healthRegenOnLevelUpMultiplier: 0.35
   upgradeSettings: {fileID: 11400000, guid: 1ac72461f75352f4aa13208579726fa1, type: 2}
   playerFootstepEmitter: {fileID: 7941221189371104942}
   footstepEvent: event:/SFX/Player_Events/Player_Walk
@@ -229,6 +230,7 @@ MonoBehaviour:
   woodTag: Wood
   groundDistance: {x: 0, y: 1, z: 0}
   DamageCanvasPrefab: {fileID: 8168437462130401804, guid: 8bb4a911fd662ec4e80d3d9b635f6d3f, type: 3}
+  deathCanvasPrefab: {fileID: 586152184084393269, guid: a2053756e26a72048aea3584ac0b5979, type: 3}
   swordSlash: {fileID: 3073336447607837238}
 --- !u!136 &3555962724994509045
 CapsuleCollider:

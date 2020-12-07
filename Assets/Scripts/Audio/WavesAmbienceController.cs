@@ -43,6 +43,7 @@ namespace Audio {
             
             instance = RuntimeManager.CreateInstance(musicEventName);
             instance.start();
+            instance.set3DAttributes(FMODUnity.RuntimeUtils.To3DAttributes(gameObject.transform));
     
             instance.setParameterByName(beachLevelParameter, startingMusicLevel);
             instance.setParameterByName(fadeOutParameter, startingFadeOutLevel);

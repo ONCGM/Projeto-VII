@@ -54,7 +54,8 @@ namespace Store {
         [Header("Audio Settings")]
         [SerializeField, EventRef] private string storeOpenEvent;
         [SerializeField, EventRef] private string coinsPurchaseEvent;
-        private StudioEventEmitter eventEmitter;
+        [SerializeField] private StudioEventEmitter eventEmitter;
+        [SerializeField] private StudioEventEmitter purchaseEventEmitter;
         
         [Header("Localization")] 
         [SerializeField] private LocalizedString openStoreTitleKey;
@@ -178,7 +179,6 @@ namespace Store {
         /// </summary>
         private void OpenStore() {
             GameMaster.Instance.AdvanceOneTimePeriod();
-            eventEmitter.Event = storeOpenEvent;
             eventEmitter.Play();
             HideStoreUi(false);
             SpawnItemInTables();
@@ -278,9 +278,6 @@ namespace Store {
         /// Adds more coins to the stack.
         /// </summary>
         private void AddCoinsToDisplay(int amount) {
-            eventEmitter.Event = coinsPurchaseEvent;
-            
-            
             var position = coinsSpawnPoint.position + 
                            new Vector3(Random.Range(-coinSpawnVariation, coinSpawnVariation),
                                        Random.Range(0f, coinSpawnVariation), Random.Range(-coinSpawnVariation, coinSpawnVariation));
@@ -289,21 +286,21 @@ namespace Store {
             
             if(amount < 100) {
                 Instantiate(coinPrefab, position, rotation, coinsSpawnPoint);
-                eventEmitter.SetParameter("Purchase_Size", 0f);
-                eventEmitter.Play();
+                purchaseEventEmitter.SetParameter("Purchase_Size", 0f);
+                purchaseEventEmitter.Play();
                 return;
             }
             
             if(amount < 500) {
                 Instantiate(coinStackPrefab, position, rotation, coinsSpawnPoint);
-                eventEmitter.SetParameter("Purchase_Size", 1f);
-                eventEmitter.Play();
+                purchaseEventEmitter.SetParameter("Purchase_Size", 1f);
+                purchaseEventEmitter.Play();
                 return;
             }
 
             Instantiate(coinMountainPrefab, position, rotation, coinsSpawnPoint);
-            eventEmitter.SetParameter("Purchase_Size", 2f);
-            eventEmitter.Play();
+            purchaseEventEmitter.SetParameter("Purchase_Size", 2f);
+            purchaseEventEmitter.Play();
         }
         
         /// <summary>
