@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using FMODUnity;
 using UnityEngine;
 
 namespace Entity.Enemies {
@@ -15,6 +16,8 @@ namespace Entity.Enemies {
         [SerializeField, Range(2f, 55f)] private float rangedAttackMaxRange = 50f;
         [SerializeField] private Transform bulletSpawnPosition;
         [SerializeField] private GameObject bulletPrefab;
+        [Header("Extra Sounds")]
+        [SerializeField, EventRef] private string hurtEvent;
         
         #pragma warning restore 0649
         
@@ -41,6 +44,7 @@ namespace Entity.Enemies {
             if(Stamina < 5 || IsDead) return;
             Stamina -= 5;
             StartCoroutine(nameof(AttackRanged));
+            PlaySfx(attackEvent);
         }
 
         /// <summary>
@@ -75,6 +79,12 @@ namespace Entity.Enemies {
             currentState = AiState.Chasing;
 
             StartCoroutine(nameof(MoveTowardsEntity));
+        }
+
+        // Ads sfx.
+        public override void Damage(int amount, Entity dealer) {
+            base.Damage(amount, dealer);
+            PlaySfx(hurtEvent);
         }
     }
 }

@@ -123,10 +123,8 @@ namespace Entity.NPC {
             }
             
             if(HasChosenAnItem) yield break;
-            
-            SetDestinationToWaypoint(store.npcSpawnPoints[Random.Range(0, store.npcSpawnPoints.Count)]);
-            yield return waitUntilPathComplete;
-            store.RemoveNpc(this);
+
+            StartCoroutine(GoToExit());
         }
 
         /// <summary>
@@ -190,6 +188,7 @@ namespace Entity.NPC {
             SetDestinationToWaypoint(store.npcSpawnPoints[Random.Range(0, store.npcSpawnPoints.Count)]);
             yield return waitUntilPathComplete;
             yield return waitOnPurchase;
+            store.RemoveNpc(this);
             Destroy(gameObject);
         }
 

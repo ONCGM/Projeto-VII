@@ -29,7 +29,7 @@ namespace Other {
         /// <summary>
         /// Invokes the event based on settings.
         /// </summary>
-        public void Invoke() { if(triggerOnCall) CallEvent(); }
+        public void InvokeEvent() { if(triggerOnCall) CallEvent(); }
 
         /// <summary>
         /// Triggers the event for however many times specified.

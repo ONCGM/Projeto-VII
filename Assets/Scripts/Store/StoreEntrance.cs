@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using Audio;
 using Entity.Player;
 using UI;
 using UnityEngine;
@@ -13,8 +14,9 @@ namespace Store {
     /// </summary>
     public class StoreEntrance : MonoBehaviour {
         #pragma warning disable 0649
-        [Header("Scene Loading")] [SerializeField]
-        private int sceneIndex;
+        [Header("Scene Loading")] 
+        [SerializeField] private int sceneIndex;
+        [SerializeField] private bool isStore = false;
 
         [Header("Transition")] [SerializeField]
         private Camera mainCamera;
@@ -29,7 +31,6 @@ namespace Store {
             FindObjectOfType<PlayerController>().IsInsideShop = true;
         }
 
-
         // Collision.
         private void OnTriggerEnter(Collider other) {
             if(!other.CompareTag("Player") || startedTransition) return;
@@ -37,6 +38,13 @@ namespace Store {
             var player = FindObjectOfType<PlayerController>();
             player.CanMove = false;
             player.UpdateGameMasterPlayerStats();
+            
+            if(isStore) {
+                FindObjectOfType<StoreMusicController>().TriggerMusicStop();
+            } else {
+                FindObjectOfType<TownMusicController>().TriggerMusicStop();
+            }
+            
             GameObject transitionCamera = Instantiate(transitionPrefab);
             DontDestroyOnLoad(transitionCamera);
             transitionCamera.GetComponent<StoreTransition>().sceneIndex = sceneIndex;

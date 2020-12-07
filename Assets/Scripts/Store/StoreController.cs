@@ -160,9 +160,8 @@ namespace Store {
                              openStoreMessageKey.key,
                              timeAdvanceMessageKey.key,
                              confirmCancelButtons, ExecutionState.PopupPause, i => {
-                                 if(i == 0) {
-                                     OpenStore();
-                                 } 
+                                 if(i != 0) return;
+                                 if(FindObjectOfType<FloorController>().currentFloor == 0) OpenStore();
                              });
         }
 
@@ -173,7 +172,6 @@ namespace Store {
         /// </summary>
         private void OpenStore() {
             GameMaster.Instance.AdvanceOneTimePeriod();
-            GameMaster.Instance.SaveGame();
             HideStoreUi(false);
             SpawnItemInTables();
             StartCoroutine(nameof(SpawnNPCs));
@@ -187,14 +185,14 @@ namespace Store {
                 itemUI.LockButtons(StoreOpen);
             }
             
-            InvokeRepeating(nameof(CheckForItemsToSell), 3f, 0.5f);
+            InvokeRepeating(nameof(CheckForItemsToSell), 3f, 1f);
         }
 
         /// <summary>
         /// Checks to see if all items have been sold.
         /// </summary>
         private void CheckForItemsToSell() {
-            if(ItemsToSell.Count >= 1 || SpawnedNpcs.Count >= 1) return;
+            if(ItemsToSell.Count > 0 || SpawnedNpcs.Count > 0) return;
             if(closeStoreUI.IsOpen) closeStoreUI.HideUi();
             Instantiate(reportPrefab);
             CancelInvoke(nameof(CheckForItemsToSell));
@@ -204,10 +202,10 @@ namespace Store {
         /// Spawns the selected item from the player in the store.
         /// </summary>
         private void SpawnItemInTables() {
-            foreach(var itemStore in ItemsToSell) {
-                Destroy(itemStore.gameObject);
+            foreach(var itemStore in ItemsToSell.Where(itemStore => itemStore != null)) {
+                    Destroy(itemStore.gameObject);
             }
-            
+
             ItemsToSell = new List<ItemStore>();
             
             for(var i = 0; i < StoreInventory.ItemsInInventory.Count; i++) {
@@ -257,7 +255,7 @@ namespace Store {
         public void CloseEarly() {
             Instantiate(reportPrefab);
             CancelInvoke(nameof(CheckForItemsToSell));
-            foreach(var npc in SpawnedNpcs) {
+            foreach(var npc in FindObjectsOfType<NpcController>()) {
                 npc.LeaveStore();
             }
 
@@ -311,7 +309,10 @@ namespace Store {
             var maxNpcSpawn = ItemsToSell.Count * 2;
             
             while(ItemsToSell.Count > 0) {
-                if(SpawnedNpcs.Count >= maxNpcSpawn || SpawnedNpcs.Count >= maxSpawnedNpcs) continue;
+                if(SpawnedNpcs.Count >= maxNpcSpawn || SpawnedNpcs.Count >= maxSpawnedNpcs) {
+                    yield return spawnWait;
+                    continue;
+                }
                 
                 var npc = GameMaster.Instance.PlayerStats.Level > 10 ? npcStats[Random.Range(0, npcStats.Count)] : npcStats[Random.Range(0, 1)];
                 var npcController = Instantiate(npc.npcsVariationsToUse[Random.Range(0, npc.npcsVariationsToUse.Count)],

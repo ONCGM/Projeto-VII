@@ -58,8 +58,11 @@
      <Compile Include="Assets\Scripts\UI\ItemUI.cs" />
      <Compile Include="Assets\Scripts\Entity\Enemies\Critter.cs" />
      <Compile Include="Assets\Scripts\UI\Localization\TextMeshLocalizer.cs" />
+     <Compile Include="Assets\Scripts\UI\SavingUiCanvas.cs" />
      <Compile Include="Assets\Scripts\Islands\IslandsSceneTransition.cs" />
      <Compile Include="Assets\Scripts\Entity\Player\PlayerUpgradeSettings.cs" />
+     <Compile Include="Assets\Scripts\Utility\ItemIdToItemEntry.cs" />
+     <Compile Include="Assets\Scripts\Audio\IslandMusicController.cs" />
      <Compile Include="Assets\Scripts\UI\Localization\LocalizationSystem.cs" />
      <Compile Include="Assets\Scripts\Utility\Enums.cs" />
      <Compile Include="Assets\Scripts\Entity\NPC\IdleNpcAnimations.cs" />
@@ -77,6 +80,7 @@
      <Compile Include="Assets\Scripts\Entity\Enemies\Pirate.cs" />
      <Compile Include="Assets\Thirdparty\AllIn1SpriteShader\Scripts\AllIn1Shader.cs" />
      <Compile Include="Assets\Scripts\Game\GameDebugHelper.cs" />
+     <Compile Include="Assets\Scripts\Audio\TownMusicController.cs" />
      <Compile Include="Assets\Scripts\UI\Popups\CanvasPopupLocationName.cs" />
      <Compile Include="Assets\Scripts\Entity\Enemies\EnemyEnums.cs" />
      <Compile Include="Assets\Scripts\Town\TurnLightsWhenNight.cs" />
@@ -86,6 +90,7 @@
      <Compile Include="Assets\Scripts\Entity\EntityInterfaces.cs" />
      <Compile Include="Assets\Scripts\UI\Menu\GameCreditsController.cs" />
      <Compile Include="Assets\Scripts\Store\BedController.cs" />
+     <Compile Include="Assets\Scripts\Audio\StoreMusicController.cs" />
      <Compile Include="Assets\Scripts\Entity\Enemies\EnemySettings.cs" />
      <Compile Include="Assets\Scripts\GameInput\ActionInputs.cs" />
      <Compile Include="Assets\Scripts\Entity\NPC\NpcController.cs" />
@@ -94,17 +99,21 @@
      <Compile Include="Assets\Scripts\Utility\SaveFileTagger.cs" />
      <Compile Include="Assets\Scripts\Islands\IslandRandomizer.cs" />
      <Compile Include="Assets\Scripts\UI\Tab.cs" />
+     <Compile Include="Assets\Scripts\Entity\NPC\MerchantNPC.cs" />
      <Compile Include="Assets\Scripts\UI\Localization\LocalizedString.cs" />
      <Compile Include="Assets\Scripts\Other\SaveTextureAsIcon.cs" />
      <Compile Include="Assets\Scripts\Items\Inventory.cs" />
+     <Compile Include="Assets\Scripts\UI\LoadingHints.cs" />
      <Compile Include="Assets\Scripts\Store\StoreTransition.cs" />
      <Compile Include="Assets\Scripts\UI\PlayerStatsUI.cs" />
      <Compile Include="Assets\Scripts\UI\TabManager.cs" />
      <Compile Include="Assets\Scripts\Game\ShipTravelLoadingController.cs" />
      <Compile Include="Assets\Scripts\Utility\SaveData.cs" />
      <Compile Include="Assets\Scripts\UI\MinimapUI.cs" />
+     <Compile Include="Assets\Scripts\UI\CloseStoreUI.cs" />
      <Compile Include="Assets\Scripts\Ship\ShipTravelController.cs" />
      <Compile Include="Assets\Scripts\Store\StoreController.cs" />
+     <Compile Include="Assets\Scripts\UI\Menu\GameMenuController.cs" />
      <Compile Include="Assets\Scripts\Game\GameMaster.cs" />
      <Compile Include="Assets\Scripts\UI\Localization\CSVLoader.cs" />
      <Compile Include="Assets\Scripts\UI\EnemyHealthBarUI.cs" />
@@ -127,12 +136,7 @@
      <Compile Include="Assets\Scripts\UI\DamageCanvas.cs" />
      <Compile Include="Assets\Scripts\Audio\MainMenuMusicController.cs" />
      <Compile Include="Assets\Scripts\Items\ItemStore.cs" />
-     <Compile Include="Assets\Scripts\UI\LoadingHints.cs" />
-     <Compile Include="Assets\Scripts\Entity\NPC\MerchantNPC.cs" />
-     <Compile Include="Assets\Scripts\UI\Menu\GameMenuController.cs" />
-     <Compile Include="Assets\Scripts\UI\CloseStoreUI.cs" />
-     <Compile Include="Assets\Scripts\Utility\ItemIdToItemEntry.cs" />
-     <Compile Include="Assets\Scripts\UI\SavingUiCanvas.cs" />
+     <Compile Include="Assets\Scripts\Audio\WavesAmbienceController.cs" />
      <None Include="Assets\TextMesh Pro\Shaders\TMPro.cginc" />
      <None Include="Assets\TextMesh Pro\Shaders\TMP_SDF-Mobile Overlay.shader" />
      <None Include="Assets\Scripts\Shaders\TextureMask.shader" />
@@ -240,9 +244,6 @@
  <Reference Include="Unity.SnapshotDebugger">
  <HintPath>C:/Users/OnCra/Documents/Unity Projects/Projeto-VII/Library/ScriptAssemblies/Unity.SnapshotDebugger.dll</HintPath>
  </Reference>
- <Reference Include="Unity.RemoteConfig">
- <HintPath>C:/Users/OnCra/Documents/Unity Projects/Projeto-VII/Library/ScriptAssemblies/Unity.RemoteConfig.dll</HintPath>
- </Reference>
  <Reference Include="Unity.Rider.Editor">
  <HintPath>C:/Users/OnCra/Documents/Unity Projects/Projeto-VII/Library/ScriptAssemblies/Unity.Rider.Editor.dll</HintPath>
  </Reference>
@@ -293,6 +294,9 @@
  </Reference>
  <Reference Include="AnimationEditorTools.Editor">
  <HintPath>C:/Users/OnCra/Documents/Unity Projects/Projeto-VII/Library/ScriptAssemblies/AnimationEditorTools.Editor.dll</HintPath>
+ </Reference>
+ <Reference Include="Unity.RemoteConfig">
+ <HintPath>C:/Users/OnCra/Documents/Unity Projects/Projeto-VII/Library/ScriptAssemblies/Unity.RemoteConfig.dll</HintPath>
  </Reference>
  <Reference Include="UnityEngine">
  <HintPath>C:/Program Files/Unity/Hub/Editor/2020.1.0f1/Editor/Data/Managed/UnityEngine/UnityEngine.dll</HintPath>

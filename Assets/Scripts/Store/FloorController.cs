@@ -19,7 +19,7 @@ namespace Store {
         [Header("Settings")]
         [SerializeField] private bool displayPopupToChangeFirstFloor;
         [SerializeField] private bool displayPopupToChangeSecondFloor;
-        [SerializeField] private int currentFloor = 0;
+        [SerializeField] public int currentFloor = 0;
         
         [Header("Cameras")]
         [SerializeField] private CinemachineVirtualCamera secondFloorCamera;
@@ -99,6 +99,10 @@ namespace Store {
         /// Teleports the player to the other floor.
         /// </summary>
         private void TeleportPlayerToNextFloor() {
+            var store = FindObjectOfType<StoreController>();
+            store.HideStoreUi();
+            if(store.StoreOpen) return;
+            
             if(currentFloor == 0) {
                 // Go to floor 1
                 player.GetComponent<NavMeshAgent>().enabled = false;

@@ -116,6 +116,7 @@ Transform:
   - {fileID: 4531320632904397289}
   - {fileID: 1432503982534323811}
   - {fileID: 6096491394192132274}
+  - {fileID: 3621081887147876565}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -145,12 +146,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a99d6591fd31ccb4eac0bd677949a5e9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  health: 1
-  maxHealth: 1
-  stamina: 1
-  maxStamina: 1
+  health: 12
+  maxHealth: 12
+  stamina: 6
+  maxStamina: 6
   level: 1
-  maxLevel: 1
+  maxLevel: 30
   experience: 1
   coins: 0
   playerTag: Player
@@ -165,6 +166,13 @@ MonoBehaviour:
   itemsToDrop:
   - {fileID: 11400000, guid: e108f82e77cc9b6459fcd62a2e0c4691, type: 2}
   DamageCanvasPrefab: {fileID: 8168437462130401804, guid: 8bb4a911fd662ec4e80d3d9b635f6d3f, type: 3}
+  attackEvent: event:/SFX/Enemies_Events/Enemy_Critter_Attack
+  deathEvent: event:/SFX/Enemies_Events/Enemy_Critter_Death
+  footstepEvent: event:/SFX/Enemies_Events/Enemy_Critter_Walk
+  footstepParam: GroundType
+  sandTag: Sand
+  woodTag: Wood
+  groundDistance: {x: 0, y: 1, z: 0}
 --- !u!195 &3705584951524824814
 NavMeshAgent:
   m_ObjectHideFlags: 0
@@ -234,6 +242,91 @@ MonoBehaviour:
   triggerOnStart: 0
   triggerOnCall: 1
   repeatCount: 1
+--- !u!114 &4904364962121194147
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3866811657407327059}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b947fa540fb82be44b54490fb30af46e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  customEvent:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 6609065532344468501}
+        m_TargetAssemblyTypeName: Entity.Enemies.Enemy, Assembly-CSharp
+        m_MethodName: PlayFootsteps
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+  triggerOnAwake: 0
+  triggerOnStart: 0
+  triggerOnCall: 1
+  repeatCount: 1
+--- !u!1 &7831328950437509551
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 3621081887147876565}
+  - component: {fileID: 9207024720098100102}
+  m_Layer: 12
+  m_Name: FMOD Event Emitter
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &3621081887147876565
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7831328950437509551}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 3705584951524824810}
+  m_RootOrder: 4
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &9207024720098100102
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7831328950437509551}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9a6610d2e704f1648819acc8d7460285, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  CollisionTag: 
+  Event: event:/SFX/Enemies_Events/Enemy_Critter_Walk
+  PlayEvent: 0
+  StopEvent: 0
+  AllowFadeout: 1
+  TriggerOnce: 0
+  Preload: 0
+  Params: []
+  OverrideAttenuation: 0
+  OverrideMinDistance: 1
+  OverrideMaxDistance: 10
 --- !u!1 &8513845187343583138
 GameObject:
   m_ObjectHideFlags: 0

@@ -79,6 +79,7 @@ namespace Entity.Player {
         private bool isInsideShop;
         
         [Header("Leveling Settings")]
+        [SerializeField, Range(0.1f, 1f)] private float healthRegenOnLevelUpMultiplier = 0.35f;
         private const string upgradeSettingsPath = "Scriptables/Player/Player_Upgrade_Settings";
         [SerializeField] private PlayerUpgradeSettings upgradeSettings;
         
@@ -159,7 +160,6 @@ namespace Entity.Player {
         
         [Header("VFX")]
         [SerializeField] private VisualEffect swordSlash;
-
 
         #pragma warning restore 0649
 
@@ -505,6 +505,7 @@ namespace Entity.Player {
         /// </summary>
         private void ApplyLevelingStats() {
             MaxHealth = Mathf.RoundToInt(MaxHealth * upgradeSettings.statsMultiplier);
+            Health += Mathf.RoundToInt(MaxHealth * healthRegenOnLevelUpMultiplier);
             MaxStamina = Mathf.RoundToInt(MaxStamina * upgradeSettings.statsMultiplier);
             meleeDamage = Mathf.RoundToInt(meleeDamage * upgradeSettings.statsMultiplier);
             rangedDamagePerBullet = Mathf.RoundToInt(rangedDamagePerBullet * upgradeSettings.statsMultiplier);
@@ -542,11 +543,10 @@ namespace Entity.Player {
                 playerFootstepEmitter.Play();
                 playerFootstepEmitter.EventInstance.setParameterByName(footstepParam, (int) currentTypeOfGround);
             } else {
-                if(!string.IsNullOrEmpty(footstepEvent)) {
-                    playerFootstepEmitter.Event = footstepEvent;
-                    playerFootstepEmitter.Play();
-                    playerFootstepEmitter.EventInstance.setParameterByName(footstepParam, (int) currentTypeOfGround);
-                }
+                if(string.IsNullOrEmpty(footstepEvent)) return;
+                playerFootstepEmitter.Event = footstepEvent;
+                playerFootstepEmitter.Play();
+                playerFootstepEmitter.EventInstance.setParameterByName(footstepParam, (int) currentTypeOfGround);
             }
         }
 

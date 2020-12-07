@@ -3,12 +3,14 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using Entity.Player;
+using FMODUnity;
 using Game;
 using Items;
 using UI;
 using UnityEngine;
 using UnityEngine.AI;
 using UnityEngine.EventSystems;
+using UnityEngine.Serialization;
 using UnityEngine.UI;
 using Random = UnityEngine.Random;
 
@@ -34,9 +36,29 @@ namespace Entity.Enemies {
         [Header("Loot Settings")] 
         [SerializeField, Range(0f, 1f)] protected float chanceToDrop = 0.1f;
         [SerializeField] protected List<ItemSettings> itemsToDrop = new List<ItemSettings>();
+        [SerializeField, Range(25, 1000)] protected int maxAmountOfCoinsToDrop = 250;
         
         [Header("Other")]
         [SerializeField] protected GameObject DamageCanvasPrefab;
+        
+        [Header("Sounds")]
+        [SerializeField, EventRef] protected string attackEvent;
+        [FormerlySerializedAs("hurtEvent")] [SerializeField, EventRef] protected string deathEvent;
+        [SerializeField, EventRef] protected string footstepEvent;
+        
+        [Header("Sound Parameters")] 
+        [SerializeField, ParamRef] protected string footstepParam = "GroundType";
+        [SerializeField] protected string sandTag = "Sand";
+        [SerializeField] protected string woodTag = "Wood";
+        
+        // How far under the entity should we check for the ground.
+        [SerializeField] protected Vector3 groundDistance = new Vector3(0f, 1f, 0f);
+
+        // Components.
+        protected StudioEventEmitter eventEmitter;
+        
+        // Current type of ground the player is stepping on.
+        protected PlayerController.footstepSound currentTypeOfGround = PlayerController.footstepSound.WOOD;
         
         
         // Movement related field and variables.
@@ -74,6 +96,7 @@ namespace Entity.Enemies {
 
         // Unity Events.
         protected virtual void Start() {
+            eventEmitter = GetComponentInChildren<StudioEventEmitter>();
             attackingCollider = GetComponentInChildren<SphereCollider>();
             hpBarUI = GetComponentInChildren<EnemyHealthBarUI>();
             GameMaster.OnGameExecutionStateUpdated += GameStateUpdated;
@@ -135,6 +158,7 @@ namespace Entity.Enemies {
             StartCoroutine(settings.isAggressive ? nameof(MoveTowardsEntity) : nameof(PatrolArea));
         }
         
+        #region AI
         /// <summary>
         /// Moves the enemy entity. Uses a NavMeshAgent.
         /// </summary>
@@ -267,6 +291,8 @@ namespace Entity.Enemies {
             Stamina -= 3;
             StopAllCoroutines();
 
+            PlaySfx(attackEvent);
+            
             if(CheckAttackCollision(attackingCollider)) {
                 Instantiate(DamageCanvasPrefab, transform.position, Quaternion.identity)
                     .GetComponent<DamageCanvas>().damageValue = primaryAttackDamage;
@@ -295,7 +321,9 @@ namespace Entity.Enemies {
 
             return false;
         }
+        #endregion
 
+        #region Drops and Damage
         // Updated to enable infighting between enemies.
         public override void Damage(int amount, Entity dealer) {
             anim.SetTrigger(DamagedAnim);
@@ -320,6 +348,8 @@ namespace Entity.Enemies {
             StopAllCoroutines();
             
             anim.SetTrigger(DeadAnim);
+            
+            PlaySfx(deathEvent);
 
             foreach(var coll in GetComponents<Collider>()) {
                 coll.enabled = false;
@@ -341,15 +371,20 @@ namespace Entity.Enemies {
         /// Chooses and spawns a drop based on player progression and random chance.
         /// </summary>
         protected virtual void GenerateDrop() {
-            // TODO: Set Coins based on economy.
-            if(Random.value > settings.chanceToDropItem) return;
+            if(settings.chanceToDropItem >= Random.value) return;
             var availableItems = itemsToDrop.FindAll(itemSettings =>
                                                          GameMaster.Instance.PlayerStats.Level >=
                                                          itemSettings.minimumPlayerLevelToSpawn);
+            var amountOfCoins =
+                Mathf.RoundToInt(Random.Range(2,
+                                              Mathf.Lerp(25, maxAmountOfCoinsToDrop,
+                                                         Mathf.InverseLerp(0, 30,
+                                                                           GameMaster.Instance.PlayerStats.Level))) *
+                                 GameMaster.Instance.GameDifficultyReversed);
 
             if(availableItems.Count < 1) {
                 FindObjectOfType<PlayerController>()
-                    .AddCoins(Mathf.RoundToInt(Random.Range(1, 50) * GameMaster.Instance.GameDifficultyReversed));
+                    .AddCoins(amountOfCoins);
                 return;
             }
 
@@ -361,7 +396,7 @@ namespace Entity.Enemies {
 
             if(availableItems.Count < 1) {
                 FindObjectOfType<PlayerController>()
-                    .AddCoins(Mathf.RoundToInt(Random.Range(1, 25) * GameMaster.Instance.GameDifficultyReversed));
+                    .AddCoins(amountOfCoins);
             }
 
             if(selectedItem == null) return;
@@ -379,7 +414,52 @@ namespace Entity.Enemies {
                                     (settings.spottingRange * 0.5f) / 5f) * 
                                     GameMaster.Instance.GameDifficultyReversed);
         }
+        #endregion
+        
+        #region Sound
+        
+        /// <summary>
+        /// Plays a sound attached to the entity position.
+        /// </summary>
+        /// <param name="soundEvent"> Event to play. </param>
+        public void PlaySfx(string soundEvent) => RuntimeManager.PlayOneShotAttached(soundEvent, gameObject);
 
+        
+        /// <summary>
+        /// Plays the enemy footstep sounds.
+        /// </summary>
+        public void PlayFootsteps() {
+            CheckGround();
+            
+            if(eventEmitter.Event != null) {
+                eventEmitter.Play();
+                eventEmitter.EventInstance.setParameterByName(footstepParam, (int) currentTypeOfGround);
+            } else {
+                if(string.IsNullOrEmpty(footstepEvent)) return;
+                eventEmitter.Event = footstepEvent;
+                eventEmitter.Play();
+                eventEmitter.EventInstance.setParameterByName(footstepParam, (int) currentTypeOfGround);
+            }
+        }
+        
+        // Sets the current type of ground.
+        public void SetCurrentGround(PlayerController.footstepSound type) => currentTypeOfGround = type;
+        
+        // Checks what kind of ground it is.
+        public void CheckGround() {
+            Physics.Linecast((transform.position + groundDistance / 2), transform.position - groundDistance, out var hitInfo);
+        
+            // Sets ground type for footstep sound.
+            if(hitInfo.collider == null) return;
+            
+            if(hitInfo.collider.gameObject.CompareTag(sandTag)) {
+                SetCurrentGround(PlayerController.footstepSound.SAND);
+            } else if(hitInfo.collider.gameObject.CompareTag(woodTag)) {
+                SetCurrentGround(PlayerController.footstepSound.WOOD);
+            }
+        }
+        #endregion
+        
         /// <summary>
         /// Follows the behaviour of the game state if it is changed.
         /// </summary>

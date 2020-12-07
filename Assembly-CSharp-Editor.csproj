@@ -140,9 +140,6 @@
  <Reference Include="Unity.SnapshotDebugger">
  <HintPath>C:/Users/OnCra/Documents/Unity Projects/Projeto-VII/Library/ScriptAssemblies/Unity.SnapshotDebugger.dll</HintPath>
  </Reference>
- <Reference Include="Unity.RemoteConfig">
- <HintPath>C:/Users/OnCra/Documents/Unity Projects/Projeto-VII/Library/ScriptAssemblies/Unity.RemoteConfig.dll</HintPath>
- </Reference>
  <Reference Include="Unity.Rider.Editor">
  <HintPath>C:/Users/OnCra/Documents/Unity Projects/Projeto-VII/Library/ScriptAssemblies/Unity.Rider.Editor.dll</HintPath>
  </Reference>
@@ -193,6 +190,9 @@
  </Reference>
  <Reference Include="AnimationEditorTools.Editor">
  <HintPath>C:/Users/OnCra/Documents/Unity Projects/Projeto-VII/Library/ScriptAssemblies/AnimationEditorTools.Editor.dll</HintPath>
+ </Reference>
+ <Reference Include="Unity.RemoteConfig">
+ <HintPath>C:/Users/OnCra/Documents/Unity Projects/Projeto-VII/Library/ScriptAssemblies/Unity.RemoteConfig.dll</HintPath>
  </Reference>
  <Reference Include="UnityEngine">
  <HintPath>C:/Program Files/Unity/Hub/Editor/2020.1.0f1/Editor/Data/Managed/UnityEngine/UnityEngine.dll</HintPath>

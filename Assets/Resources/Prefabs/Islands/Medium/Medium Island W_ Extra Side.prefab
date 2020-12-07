@@ -550,9 +550,10 @@ GameObject:
   - component: {fileID: 1382500372486906574}
   - component: {fileID: 3570531422985438166}
   - component: {fileID: 5236391015208381766}
+  - component: {fileID: 1154005064995443080}
   m_Layer: 0
   m_Name: Medium Island W_ Extra Side
-  m_TagString: Untagged
+  m_TagString: Sand
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -656,6 +657,20 @@ MonoBehaviour:
   - {fileID: 7544617556613125104, guid: 1efbb2db66435784d8866bd90cf148a0, type: 3}
   chanceOfSpawningLoot: 0.4
   maxLevel: 30
+--- !u!64 &1154005064995443080
+MeshCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3543155076700051487}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 1
+  serializedVersion: 4
+  m_Convex: 1
+  m_CookingOptions: 30
+  m_Mesh: {fileID: -4587693772358289203, guid: c9dd8bb2de529a948a837acfa80b85f6, type: 3}
 --- !u!1 &3607097150560857156
 GameObject:
   m_ObjectHideFlags: 0

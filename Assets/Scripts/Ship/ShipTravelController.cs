@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using Audio;
 using Cinemachine;
 using Entity.Player;
 using FMODUnity;
@@ -54,7 +55,9 @@ namespace Ship {
         
         // Components.
         private Animator anim;
-        private StudioEventEmitter eventEmitter;
+        [Header("Event Emitters")]
+        [SerializeField] private StudioEventEmitter eventEmitter;
+        [SerializeField] private StudioEventEmitter eventWavesEmitter;
         private CinemachineVirtualCamera shipCamera;
         private static readonly int DepartToIsland = Animator.StringToHash("DepartToIsland");
         private static readonly int DepartToTown = Animator.StringToHash("DepartToTown");
@@ -62,7 +65,6 @@ namespace Ship {
         private static readonly int ArriveAtTown = Animator.StringToHash("ArriveAtTown");
         private static readonly string playerSettingsPath = "Scriptables/Player/Player_Upgrade_Settings";
         private PlayerUpgradeSettings upgradeSettings;
-        
         
         /// <summary>
         /// Island Loader Object.
@@ -74,7 +76,6 @@ namespace Ship {
         // Sets the ship up.
         private void Awake() {
             anim = GetComponent<Animator>();
-            eventEmitter = GetComponentInChildren<StudioEventEmitter>();
             shipCamera = GetComponentInChildren<CinemachineVirtualCamera>();
             DontDestroyOnLoad(gameObject);
             upgradeSettings = Resources.Load<PlayerUpgradeSettings>(playerSettingsPath);
@@ -96,11 +97,11 @@ namespace Ship {
                 Destroy(gameObject);
             };
         }
-        
+
         /// <summary>
         /// Rings the ship bell, called by animation.
         /// </summary>
-        public void RingShipBell () => eventEmitter.Play();
+        public void RingShipBell() { if(eventEmitter != null) eventEmitter.Play(); }
 
         #region Travel to Islands
         
@@ -148,6 +149,8 @@ namespace Ship {
 
             GameMaster.Instance.AdvanceOneTimePeriod();
             
+            if(eventWavesEmitter != null) eventWavesEmitter.Play();
+            
             GameMaster.Instance.SelectedIslandSize = (IslandSizes) Mathf.Min(buttonIndex, 2);
             GameMaster.Instance.PlayerStatsBeforeIsland = GameMaster.Instance.PlayerStats;
 
@@ -171,6 +174,7 @@ namespace Ship {
         /// </summary>
         public void UnloadTown() {
             FindObjectOfType<PlayerStatsUI>().ShowHideCanvas(false);
+            FindObjectOfType<TownMusicController>().TriggerMusicStop();
             FindObjectOfType<ShipTravelLoadingController>().StartLoadingSequence(islandsSceneIndex);
         }
 
@@ -188,6 +192,7 @@ namespace Ship {
         /// Unlocks the player and stops the travel routine.
         /// </summary>
         public void AtIslandArrival() {
+            if(eventWavesEmitter != null) eventWavesEmitter.SetParameter("Fade_Out", 1f);
             FindObjectOfType<PlayerSpawnPositionBasedOnLastScene>().UnlockPlayer();
             shipCamera.m_Priority = 9;
             IslandLoader.DisplayIslandType();
@@ -227,6 +232,8 @@ namespace Ship {
                 Destroy(component);
             }
             
+            if(eventWavesEmitter != null) eventWavesEmitter.Play();
+            
             var player = FindObjectOfType<PlayerController>();
             player.UpdateGameMasterPlayerStats();
             Destroy(player.gameObject);
@@ -240,6 +247,7 @@ namespace Ship {
         /// Unloads the island scene and changes active directional light.
         /// </summary>
         public void UnloadIsland() {
+            FindObjectOfType<IslandMusicController>().TriggerMusicStop();
             FindObjectOfType<ShipTravelLoadingController>().StartLoadingSequence(townSceneIndex);
         }
 
@@ -256,6 +264,7 @@ namespace Ship {
         /// Unlocks the player and stops the travel routine.
         /// </summary>
         public void AtTownArrival() {
+            if(eventWavesEmitter != null) eventWavesEmitter.SetParameter("Fade_Out", 1f);
             FindObjectOfType<PlayerSpawnPositionBasedOnLastScene>().UnlockPlayer(true);
             shipCamera.m_Priority = 9;
         }
