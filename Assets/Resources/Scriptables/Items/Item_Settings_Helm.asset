@@ -16,7 +16,7 @@ MonoBehaviour:
   itemModel: {fileID: 2153902071911852467, guid: d8de0e76d1b9c2f44a4a9ee88d3f7ed2, type: 3}
   minimumPlayerLevelToSpawn: 0
   itemId: 7
-  itemNameKey: Item_Name_Helm
+  itemNameKey: GAME_INVENTORY_ITEM
   itemDescriptionKey: Item_Desc_Helm
   itemEffects: Item_Effects_Helm
   maxStackQuantity: 1

@@ -16,7 +16,7 @@ MonoBehaviour:
   itemModel: {fileID: 1624147886774499358, guid: 909b40b2c8920d44783f6b3f59595db2, type: 3}
   minimumPlayerLevelToSpawn: 0
   itemId: 12
-  itemNameKey: Item_Name_Rum
+  itemNameKey: GAME_INVENTORY_ITEM
   itemDescriptionKey: Item_Desc_Rum
   itemEffects: Item_Effects_Rum
   maxStackQuantity: 1

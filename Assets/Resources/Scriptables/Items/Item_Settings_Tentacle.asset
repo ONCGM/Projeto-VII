@@ -16,7 +16,7 @@ MonoBehaviour:
   itemModel: {fileID: 343046480456472176, guid: d7894b2fce74af541a03e8189fb607c0, type: 3}
   minimumPlayerLevelToSpawn: 27
   itemId: 15
-  itemNameKey: Item_Name_Tentacle
+  itemNameKey: GAME_INVENTORY_ITEM
   itemDescriptionKey: Item_Desc_Tentacle
   itemEffects: Item_Effects_Tentacle
   maxStackQuantity: 1

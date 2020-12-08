@@ -19,9 +19,9 @@ namespace Items {
         public List<InventoryItemEntry> ItemsInInventory { get; set;}
         
         // Localization.
-        private const string inventoryFullTitleKey = "placeholder";
-        private const string inventoryFullMessageKey = "placeholder";
-        private const string okKey = "placeholder";
+        private const string inventoryFullTitleKey = "GAME_INVENTORY";
+        private const string inventoryFullMessageKey = "GAME_INVENTORY_FULL";
+        private const string okKey = "MENU_LABEL_OK";
         private List<CanvasPopupDialog.ButtonSettings> buttons = new List<CanvasPopupDialog.ButtonSettings>();
         private const string popUpPrefabPath = "Prefabs/UI/Popups/Pop-Up Canvas";
         private GameObject popupPrefab;

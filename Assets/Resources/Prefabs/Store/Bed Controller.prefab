@@ -66,9 +66,9 @@ MonoBehaviour:
   messageKey:
     key: placeholder
   confirmKey:
-    key: placeholder
+    key: MENU_LABEL_CONFIRM_BUTTON
   cancelKey:
-    key: placeholder
+    key: MENU_LABEL_CANCEL
   popupPrefab: {fileID: 3017782093125859472, guid: ff97a6ef454e32b498a293f927ae08a4, type: 3}
 --- !u!1 &6625254985562118542
 GameObject:

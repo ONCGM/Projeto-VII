@@ -16,7 +16,7 @@ MonoBehaviour:
   itemModel: {fileID: 3178310760883828077, guid: 5dffb7ea31d46db498b5542d5d94a4ac, type: 3}
   minimumPlayerLevelToSpawn: 15
   itemId: 6
-  itemNameKey: Item_Name_Grail
+  itemNameKey: GAME_INVENTORY_ITEM
   itemDescriptionKey: Item_Desc_Grail
   itemEffects: Item_Effects_Grail
   maxStackQuantity: 1

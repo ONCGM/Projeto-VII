@@ -14516,6 +14516,10 @@ PrefabInstance:
       propertyPath: m_SizeDelta.y
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 8502195585519202785, guid: 0cd23411b8bf40b47a0439425b25fa71, type: 3}
+      propertyPath: localizedText.key
+      value: MENU_LABEL_CANCEL
+      objectReference: {fileID: 0}
     - target: {fileID: 8669676646621628630, guid: 0cd23411b8bf40b47a0439425b25fa71, type: 3}
       propertyPath: m_AnchorMin.y
       value: 0

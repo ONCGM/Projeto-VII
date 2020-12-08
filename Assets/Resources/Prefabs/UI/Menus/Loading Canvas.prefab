@@ -769,11 +769,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   objectiveKey:
-    key: placeholder
+    key: CONTEXT_MAIN_OBJECTIVE
   loadingHintKeys:
-  - key: placeholder
-  - key: placeholder
-  - key: placeholder
+  - key: MENU_IO_LOADING
+  - key: MENU_MODE_HELP
+  - key: CONTEXT_CLASS_PIRATE
   hintsText: {fileID: 4473338843061657578}
   objectiveText: {fileID: 1937139220731415339}
   delayBetweenEachCharacter: 0.2

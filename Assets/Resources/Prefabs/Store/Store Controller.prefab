@@ -1258,17 +1258,17 @@ MonoBehaviour:
   openStoreMessageKey:
     key: placeholder
   timeAdvanceMessageKey:
-    key: placeholder
+    key: MENU_POPUP_MESSAGE_TIME
   confirmButtonKey:
     key: MENU_LABEL_CONFIRM_BUTTON
   cancelButtonKey:
     key: MENU_LABEL_CANCEL
   cantOpenAtNightTitleKey:
-    key: placeholder
+    key: CONTEXT_TIME_NIGHT
   cantOpenAtNightMessageKey:
     key: placeholder
   cantOpenWithoutItemsTitleKey:
-    key: placeholder
+    key: GAME_INVENTORY_ITEM_PLURAL
   cantOpenWithoutItemsMessageKey:
     key: placeholder
   popupPrefab: {fileID: 3017782093125859472, guid: ff97a6ef454e32b498a293f927ae08a4, type: 3}

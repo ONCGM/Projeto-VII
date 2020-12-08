@@ -119,7 +119,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1905441753963635613}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 1516990511493444086}
+        m_TargetAssemblyTypeName: UI.Menu.GameMenuController, Assembly-CSharp
+        m_MethodName: ReturnToMainMenu
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!1 &2045519745855534024
 GameObject:
   m_ObjectHideFlags: 0
@@ -240,9 +252,9 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
-        m_TargetAssemblyTypeName: UI.Menu.MainMenuButtons, Assembly-CSharp
-        m_MethodName: QuitToDesktop
+      - m_Target: {fileID: 1516990511493444086}
+        m_TargetAssemblyTypeName: UI.Menu.GameMenuController, Assembly-CSharp
+        m_MethodName: QuitGame
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -1612,23 +1624,23 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   popupPrefab: {fileID: 3017782093125859472, guid: ff97a6ef454e32b498a293f927ae08a4, type: 3}
   gameSavedTitleKey:
-    key: placeholder
+    key: MENU_IO_SAVE_GAME
   gameSavedMessageKey:
     key: placeholder
   backToMenuTitleKey:
-    key: placeholder
+    key: MENU_LABEL_MAINMENU
   backToMenuMessageKey:
-    key: placeholder
+    key: MENU_LABEL_RETURN_MAIN_QUESTION
   quitGameTitleKey:
-    key: placeholder
+    key: MENU_LABEL_QUIT
   quitGameMessageKey:
-    key: placeholder
+    key: MENU_LABEL_QUIT_CONFIRM
   gameSaveProgressSavedKey:
     key: placeholder
   confirmButtonKey:
-    key: placeholder
+    key: MENU_LABEL_CONFIRM_BUTTON
   cancelButtonKey:
-    key: placeholder
+    key: MENU_LABEL_CANCEL
   mainMenuSceneIndex: 1
   fadeAnimationDuration: 1
 --- !u!225 &4416426442137034365
