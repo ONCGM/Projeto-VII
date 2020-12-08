@@ -15,17 +15,19 @@ namespace UI {
         // Components
         private TabManager TabManager { get; set; }
         public Image Background { get; private set; }
-        
+
         // Events.
+        [SerializeField] private UnityEvent onSelected = new UnityEvent();
         /// <summary>
         /// Triggered when tab is selected.
         /// </summary>
-        public UnityEvent OnSelected { get; private set; } = new UnityEvent();
-        
+        public UnityEvent OnSelected => onSelected;
+
+        [SerializeField] private UnityEvent onDeselected = new UnityEvent();
         /// <summary>
         /// Triggered when tab is deselected.
         /// </summary>
-        public UnityEvent OnDeselected { get; private set; } = new UnityEvent();
+        public UnityEvent OnDeselected => onDeselected;
 
         #pragma warning restore 0649
         

@@ -1,7 +1,6 @@
 ﻿using System.Collections;
-using System.Collections.Generic;
+using DG.Tweening;
 using Items;
-using Localization;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
@@ -21,17 +20,28 @@ namespace UI {
         [SerializeField] private TMP_Text amount;
 
         #pragma warning restore 0649
-
+        // Gets references.
         private void Awake() {
             if(icon is null) icon = GetComponentInChildren<Image>();
             if(amount is null) amount = transform.GetComponentInChildren<TMP_Text>();
         }
 
-        public void SetUpItemUi(InventoryItemEntry item) {
+        /// <summary>
+        /// Sets up the item ui with the item information.
+        /// </summary>
+        public void SetUpItemUi(InventoryItemEntry item, float animationTime) {
             itemInfo = item;
             
             icon.sprite = itemInfo.ItemSettings.itemImage;
+            
+            // ReSharper disable once SpecifyACultureInStringConversionExplicitly
             amount.text = itemInfo.Stack.ToString();
+
+            if(animationTime > 0f) {
+                transform.localScale = Vector3.zero;
+
+                transform.DOScale(Vector3.one, animationTime);
+            }
         }
     }
 }

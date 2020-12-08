@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using DG.Tweening;
 using Game;
 using UnityEngine;
+using UnityEngine.EventSystems;
 using UnityEngine.InputSystem;
 
 namespace UI {
@@ -12,14 +13,18 @@ namespace UI {
     /// </summary>
     [RequireComponent(typeof(Canvas))]
     public class OpenCloseGameMenu : MonoBehaviour {
+        #pragma warning disable 0649
         [Header("Settings")] 
         [SerializeField, Range(0.01f, 3f)] private float fadeAnimationSpeed = 0.7f;
+        [SerializeField] private GameObject firstSelected;
         
         // Components
         private ActionInputs inputs;
         private bool isOpen { get; set; }
         private Canvas gameMenuCanvas;
         private CanvasGroup canvasGroup;
+        
+        #pragma warning restore 0649
 
         private void Awake() {
             inputs = new ActionInputs();
@@ -33,6 +38,11 @@ namespace UI {
             isOpen = !isOpen;
             canvasGroup.blocksRaycasts = isOpen;
             GameMaster.Instance.GameMenuIsOpen = isOpen;
+            if(isOpen) {
+                foreach(var eventSystem in FindObjectsOfType<EventSystem>()) {
+                    eventSystem.SetSelectedGameObject(firstSelected);
+                }
+            }
             DOTween.To(()=> canvasGroup.alpha, x=> canvasGroup.alpha = x, (GameMaster.Instance.GameMenuIsOpen ? 1f : 0f), fadeAnimationSpeed);
         }
         

@@ -1,0 +1,27 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 11850693c3c230c48b5ca537732d1651, type: 3}
+  m_Name: Item_Settings_Gem
+  m_EditorClassIdentifier: 
+  itemPrefab: {fileID: 7544617556613125104, guid: 1efbb2db66435784d8866bd90cf148a0, type: 3}
+  itemModel: {fileID: 6772582149924667461, guid: 2f412ffc9227a994cab21560de9f6c2d, type: 3}
+  minimumPlayerLevelToSpawn: 18
+  itemId: 5
+  itemNameKey: CONTEXT_ITEM_GEM
+  itemDescriptionKey: CONTEXT_ITEM_DESCRIPTION_GEM
+  itemEffects: CONTEXT_ITEM_DESCRIPTION_GEM
+  maxStackQuantity: 1
+  itemImage: {fileID: 21300000, guid: 37dc1b07228676b4d821842c40a90d65, type: 3}
+  initialValue: 500
+  itemRarity: 0.1
+  hasEffect: 0
+  effectAmount: 0

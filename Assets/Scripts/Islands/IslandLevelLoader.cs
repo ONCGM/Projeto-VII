@@ -31,6 +31,8 @@ namespace Islands {
         /// Current type of island selected by the loader.
         /// </summary>
         public IslandType CurrentIslandType { get; private set; }
+
+        private bool hasLoadedIslands;
         
         #pragma warning restore 0649
         
@@ -38,17 +40,17 @@ namespace Islands {
         /// Loads an island scene based on GameMaster settings.
         /// </summary>
         public void LoadIslands() {
+            if(hasLoadedIslands) return;
             var islandSize = GameMaster.Instance.SelectedIslandSize;
 
             CurrentIslandType = (IslandType) Random.Range(0, Enum.GetNames(typeof(IslandType)).Length);
-
+            
             GameMaster.Instance.CurrentIslandType = CurrentIslandType;
-
-            // TODO: Proper scenes
-            // var sceneId = Mathf.Clamp(smallIslandIndex + (int) islandSize, smallIslandIndex, largeIslandIndex);
-            var sceneId = smallIslandIndex;
+            
+            var sceneId = Mathf.Clamp(smallIslandIndex + (int) islandSize, smallIslandIndex, largeIslandIndex);
             SceneManager.SetActiveScene(SceneManager.GetSceneByBuildIndex(smallIslandIndex - 1));
             SceneManager.LoadSceneAsync(sceneId, LoadSceneMode.Additive);
+            hasLoadedIslands = true;
         }
 
         /// <summary>

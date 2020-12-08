@@ -1,0 +1,27 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 11850693c3c230c48b5ca537732d1651, type: 3}
+  m_Name: Item_Settings_Rum
+  m_EditorClassIdentifier: 
+  itemPrefab: {fileID: 7544617556613125104, guid: 1efbb2db66435784d8866bd90cf148a0, type: 3}
+  itemModel: {fileID: 1624147886774499358, guid: 909b40b2c8920d44783f6b3f59595db2, type: 3}
+  minimumPlayerLevelToSpawn: 0
+  itemId: 12
+  itemNameKey: CONTEXT_ITEM_RUM
+  itemDescriptionKey: CONTEXT_ITEM_DESCRIPTION_RUM
+  itemEffects: CONTEXT_ITEM_EFFECTS_RUM
+  maxStackQuantity: 1
+  itemImage: {fileID: 21300000, guid: 9579523eb4d60d94d981c326b035f39e, type: 3}
+  initialValue: 165
+  itemRarity: 0.6
+  hasEffect: 1
+  effectAmount: 20

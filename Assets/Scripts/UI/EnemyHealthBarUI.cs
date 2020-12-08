@@ -45,8 +45,8 @@ namespace UI {
         }
 
         private void Start() {
-            canvas.worldCamera = GameObject.FindWithTag("MainCamera").GetComponent<Camera>();
             UpdateUI();
+            canvas.worldCamera = GameObject.FindWithTag("MainCamera").GetComponent<Camera>();
         }
 
         private void LateUpdate() {
@@ -67,7 +67,7 @@ namespace UI {
             healthBar.rectTransform.SetSizeWithCurrentAnchors(RectTransform.Axis.Horizontal, 
                                                               Mathf.Lerp(0f, uiBarsWidth,Mathf.InverseLerp(0f, enemy.MaxHealth, enemy.Health)));
             
-            healthText.text = $"{enemy.Health} / {enemy.MaxHealth}";
+            healthText.text = $"{Mathf.Clamp(enemy.Health, 0, enemy.MaxHealth)} / {enemy.MaxHealth}";
             StartCoroutine(nameof(AnimateHealthBackBar));
         }
         

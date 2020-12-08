@@ -1,10 +1,14 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using Entity.Player;
 using Items;
+using JetBrains.Annotations;
+using Localization;
 using Ship;
 using UnityEngine;
+using Utility;
 
 namespace Game {
     /// <summary>
@@ -16,7 +20,19 @@ namespace Game {
 
         static GameMaster() { }
 
-        private GameMaster() { }
+        private GameMaster() {
+            ItemConverter = Resources.Load<ItemIdToItemEntry>(ItemConverterPath);
+            SavingIconPrefab = Resources.Load<GameObject>(SavingIconPath);
+            SaveSystem.LoadGameFile();
+            MasterSaveData = SaveSystem.LoadedData;
+            PlayerStats = MasterSaveData.currentPlayerStats;
+            playerStats.CurrentInventory = ItemConverter.ReturnEntriesFromIds(MasterSaveData.currentInventoryIds);
+            CurrentGameDay = MasterSaveData.gameDay;
+            CurrentTimeOfDay = MasterSaveData.currentTimeOfDay;
+            DialogsCleared = MasterSaveData.dialogsCleared;
+            GameDifficulty = MasterSaveData.difficulty;
+            LocalizationSystem.CurrentLanguage = MasterSaveData.currentLanguage;
+        }
 
         /// <summary>
         /// The instance of this singleton.
@@ -39,7 +55,7 @@ namespace Game {
             get => gameState;
             set {
                 gameState = value;
-                OnGameExecutionStateUpdated?.Invoke();
+                OnGameExecutionStateUpdated?.Invoke(gameState);
                 Time.timeScale = gameState == ExecutionState.FullPause ? 0f : 1f;
             }
         }
@@ -61,7 +77,7 @@ namespace Game {
         private PlayerStats playerStats = new PlayerStats() {
             Health = 35, MaxHealth = 35, Stamina = 20, MaxStamina = 20,
             MeleeDamage = 7, RangedDamage = 5, MovementSpeed = 15,
-            Level = 0, Experience = 0, TotalExperience = 0,
+            Level = 1, Experience = 0, TotalExperience = 0,
             Coins = 0, CurrentInventory = new List<InventoryItemEntry>(),
             CurrentUpgradeLevel = 0
         };
@@ -75,8 +91,17 @@ namespace Game {
                 playerStats = value;
                 OnPlayerStatsUpdated?.Invoke();
             }
-            
         }
+
+        /// <summary>
+        /// Player stats when he arrived at island.
+        /// </summary>
+        public PlayerStats PlayerStatsBeforeIsland { get; set; }
+
+        /// <summary>
+        /// Important dialogs that the player has seen.
+        /// </summary>
+        public List<bool> DialogsCleared { get; set; } = new List<bool>();
 
         private TimeOfDay currentTimeOfDay = TimeOfDay.Morning;
 
@@ -87,7 +112,7 @@ namespace Game {
             get => currentTimeOfDay;
             set {
                 currentTimeOfDay = value;
-                OnGameTimeOfDayUpdated.Invoke();
+                OnTimeOfDayUpdated?.Invoke();
             }
         }
 
@@ -101,12 +126,28 @@ namespace Game {
             set {
                 currentGameDay = value;
                 OnGameDayUpdate?.Invoke();
-                if(currentGameDay >= 30) {
-                    // TODO: Add end game event.
-                    OnEndGameDayUpdate?.Invoke();
-                }
+                if(currentGameDay < 10) return;
+                GameSceneWasLoaded = true;
+                OnEndGameDayUpdate?.Invoke();
             }
         }
+
+        private float gameDifficulty = 1f;
+
+        /// <summary>
+        /// The current game difficulty.
+        /// </summary>
+        public float GameDifficulty {
+            get => gameDifficulty;
+            set => gameDifficulty = Mathf.Clamp(value, 0.5f, 1.5f);
+        }
+
+        /// <summary>
+        /// Returns the inverse of the current difficulty.
+        /// If its maxed out, will return minimum amount.
+        /// </summary>
+        public float GameDifficultyReversed => Mathf.Lerp(1.5f, 0.5f,
+                     Mathf.InverseLerp(0.5f, 1.5f, gameDifficulty));
 
         /// <summary>
         /// Should the player spawn in front of the store or the port. 
@@ -129,7 +170,14 @@ namespace Game {
         /// The current spawned ship in the game world.
         /// </summary>
         public ShipTravelController ShipTravel { get; set; }
-        
+
+        /// <summary>
+        /// Used in the credits scene, to go back to the correct place.
+        /// </summary>
+        public bool GameSceneWasLoaded { get; set; }
+
+        #region Actions
+
         /// <summary>
         /// Called whenever the PlayerStats are updated.
         /// </summary>
@@ -138,7 +186,7 @@ namespace Game {
         /// <summary>
         /// Called whenever the game execution state is updated.
         /// </summary>
-        public static Action OnGameExecutionStateUpdated;
+        public static Action<ExecutionState> OnGameExecutionStateUpdated;
         
         /// <summary>
         /// Called whenever the game menu is open or closed.
@@ -148,7 +196,7 @@ namespace Game {
         /// <summary>
         /// Called whenever the in game time changes.
         /// </summary>
-        public static Action OnGameTimeOfDayUpdated;
+        public static Action OnTimeOfDayUpdated;
 
         /// <summary>
         /// Called whenever a in game day passes.
@@ -160,13 +208,120 @@ namespace Game {
         /// </summary>
         public static Action OnEndGameDayUpdate;
 
-        //TODO
-        public object SaveData { get; private set; }
+        /// <summary>
+        /// Invoked just before the menu scene starts to load when returning to the main menu.
+        /// </summary>
+        public static Action OnReturnToMenu;
+        
+        /// <summary>
+        /// Invoked just as the credits scene is loaded.
+        /// </summary>
+        public static Action OnCreditsOpen;
 
-        public void SetSaveData(object saveData) {
-            SaveData = saveData;
+        /// <summary>
+        /// Called when a save file is loaded.
+        /// </summary>
+        public static Action OnSaveDataUpdated;
+
+        /// <summary>
+        /// Called whenever the game is saved automatically.
+        /// </summary>
+        public static Action OnGameSaved;
+        
+        #endregion
+
+        #region Time Stuff
+
+        /// <summary>
+        /// Passes time by one period.
+        /// </summary>
+        public void AdvanceOneTimePeriod() {
+            switch(CurrentTimeOfDay) {
+                case TimeOfDay.Morning:
+                    CurrentTimeOfDay = TimeOfDay.Afternoon;
+                    break;
+                case TimeOfDay.Afternoon:
+                    CurrentTimeOfDay = TimeOfDay.Night;
+                    break;
+                case TimeOfDay.Night:
+                    CurrentTimeOfDay = TimeOfDay.Morning;
+                    CurrentGameDay++;
+                    break;
+            }
+            
+            SaveGame();
         }
+
+        #endregion
+        
+        #region Saving
+        
+        /// <summary>
+        /// The save date in use.
+        /// </summary>
+        public SaveData MasterSaveData { get; private set; }
+
+        /// <summary>
+        /// Path to the item converter scriptable object.
+        /// </summary>
+        public string ItemConverterPath = "Scriptables/Items/Item_Converter";
+
+        /// <summary>
+        /// Converts items and ids for serializing.
+        /// </summary>
+        public ItemIdToItemEntry ItemConverter { get; private set; }
+
+        /// <summary>
+        /// Path to the saving icon prefab object.
+        /// </summary>
+        public string SavingIconPath = "Prefabs/UI/Saving Icon Canvas";
+        
+        /// <summary>
+        /// The saving icon prefab.
+        /// </summary>
+        public GameObject SavingIconPrefab { get; private set; }
+
+        /// <summary>
+        /// Last time that the game was saved.
+        /// </summary>
+        private float lastTimeOfSave = 0f;
+        
+        /// <summary>
+        /// How often to save.
+        /// </summary>
+        private const float delayBetweenSaves = 45f;
+
+        /// <summary>
+        /// Overrides save data.
+        /// </summary>
+        public void SetSaveData(SaveData save) {
+            MasterSaveData = save;
+            OnSaveDataUpdated?.Invoke();
+        }
+
+        /// <summary>
+        /// Save the game to a file.
+        /// </summary>
+        public void SaveGame() {
+            MasterSaveData.currentPlayerStats = PlayerStats;
+            MasterSaveData.gameDay = CurrentGameDay;
+            MasterSaveData.dialogsCleared = DialogsCleared;
+            if(MasterSaveData.currentPlayerStats.CurrentInventory != null &&
+               MasterSaveData.currentPlayerStats.CurrentInventory.Count > 0) {
+                MasterSaveData.currentInventoryIds = ItemIdToItemEntry.ReturnIdsFromEntries(MasterSaveData.currentPlayerStats.CurrentInventory);
+            }
+            SaveSystem.LoadedData = MasterSaveData;
+
+            if(Time.time < lastTimeOfSave + delayBetweenSaves) return;
+            SaveSystem.SerializeToFile();
+            OnGameSaved?.Invoke();
+            GameObject.Instantiate(SavingIconPrefab);
+        }
+        
+        #endregion
     }
+
+    #region Enums
     
     /// <summary>
     /// Current execution state of the game.
@@ -181,9 +336,9 @@ namespace Game {
     /// Defines the periods of the day used in the game.
     /// </summary>
     public enum TimeOfDay {
-        Night,
         Morning,
-        Afternoon
+        Afternoon,
+        Night
     }
 
     /// <summary>
@@ -204,4 +359,6 @@ namespace Game {
         TreasureIsland,
         MerchantIsland
     }
+    
+    #endregion
 }

@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   baseMaxHealth: 27
   baseMaxStamina: 18
-  baseMoveSpeed: 13
+  baseMoveSpeed: 3
   baseDamagePrimaryAttack: 11
   attackingRange: 20
   maxLevelCap: 30
@@ -25,10 +25,23 @@ MonoBehaviour:
   levelVariationBasedOnPlayerLevel: 3
   chanceToDropItem: 0.5
   itemsToDrop:
-  - {fileID: 11400000, guid: e108f82e77cc9b6459fcd62a2e0c4691, type: 2}
+  - {fileID: 11400000, guid: ced609e0e9bc860448619cc4d9986bc8, type: 2}
+  - {fileID: 11400000, guid: 8c54860c6686c324b8a7c24367c444f8, type: 2}
+  - {fileID: 11400000, guid: 7e1f0179a7c8b004294ab1f660759ae0, type: 2}
+  - {fileID: 11400000, guid: ed6775c184a6a8144a9286c841b310b0, type: 2}
+  - {fileID: 11400000, guid: 5b182bce692b00a47b7cc2efcb136f09, type: 2}
+  - {fileID: 11400000, guid: 861bb2b69ffab6641a0c9371e37e1822, type: 2}
+  - {fileID: 11400000, guid: 1ff067c18be213c4583a1cb957f38d13, type: 2}
+  - {fileID: 11400000, guid: 7dbf24fb6874ca74b8ddf3f085d7427a, type: 2}
+  - {fileID: 11400000, guid: f622a114f24facf4fa46aaaaecbfffb3, type: 2}
+  - {fileID: 11400000, guid: ea8dd9079a416ec4e8f03096a6f82386, type: 2}
+  - {fileID: 11400000, guid: f40bcb433df107341ba400fad8b6a06a, type: 2}
+  - {fileID: 11400000, guid: f89fd15cf456b034dbbafa43ec32e23c, type: 2}
+  - {fileID: 11400000, guid: 43b8105ab6d79b140b08e9635f3822f1, type: 2}
+  - {fileID: 11400000, guid: 2052019b001c3254a9382673efe96382, type: 2}
+  - {fileID: 11400000, guid: ef18a5d752d41b9488755782e16e0915, type: 2}
   isAggressive: 1
   attacksEntitiesWhoDamagedThisEntity: 1
-  shouldPatrolWhenIdle: 1
   patrolBackAndForth: 0
   patrollingRange: 18
   spottingRange: 25

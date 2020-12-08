@@ -31,12 +31,14 @@ namespace UI {
                                           timeOfDayText;
         [SerializeField] private Image healthBar, staminaBar, levelBar;
         [SerializeField] private Image healthBackBar, staminaBackBar;
+        [SerializeField] private CanvasGroup infoBarCanvasGroup;
+        [SerializeField] private CanvasGroup parentCanvasGroup,
+                                             childCanvasGroup,
+                                             minimapCanvasGroup;
         
         // Components.
         private PlayerController player;
-        private CanvasGroup childCanvasGroup;
-        private CanvasGroup parentCanvasGroup;
-        
+
         // Events.
         /// <summary>
         /// Updates the Ui values being displayed. So it updates on demand.
@@ -45,10 +47,10 @@ namespace UI {
         
         // Constant values and variables.
         private static readonly List<Vector3> ClockRotations = new List<Vector3> {
-            Vector3.zero, new Vector3(0f, 0f, 120f), new Vector3(0f, 0f, 240f)
+            new Vector3(0f, 0f, 120f), new Vector3(0f, 0f, 240f), Vector3.zero
         };
         private static readonly List<string> TimeOfDayLocalizationKeys = new List<string> {
-            "CONTEXT_TIME_NIGHT","CONTEXT_TIME_MORNING","CONTEXT_TIME_AFTERNOON"
+            "CONTEXT_TIME_MORNING","CONTEXT_TIME_AFTERNOON", "CONTEXT_TIME_NIGHT"
         };
         private const string upgradeSettingsPath = "Scriptables/Player/Player_Upgrade_Settings";
         private PlayerUpgradeSettings upgradeSettings;
@@ -61,24 +63,27 @@ namespace UI {
         // Set up and events.
         private void Awake() {
             player = FindObjectOfType<PlayerController>();
-            childCanvasGroup = GetComponentInChildren<CanvasGroup>();
             parentCanvasGroup = GetComponent<CanvasGroup>();
             upgradeSettings = Resources.Load<PlayerUpgradeSettings>(upgradeSettingsPath);
             waitForBarAnimationDelay = new WaitForSeconds(barAnimationDelay);
             waitForBarAnimationFrame = new WaitForFixedUpdate();
             GameMaster.OnGameMenuUpdated += FadeAnimation;
-            GameMaster.OnGameTimeOfDayUpdated += UpdateUiValues;
+            GameMaster.OnTimeOfDayUpdated += UpdateUiValues;
             GameMaster.OnGameDayUpdate += UpdateUiValues;
             GameMaster.OnPlayerStatsUpdated += UpdateUiValues;
             UpdateUiValues += UpdateUi;
             UpdateUiValues?.Invoke();
+            
+            InvokeRepeating(nameof(UpdateUi), 1f, 1f);
         }
 
         private void OnDestroy() {
             GameMaster.OnGameMenuUpdated -= FadeAnimation;
-            GameMaster.OnGameTimeOfDayUpdated -= UpdateUiValues;
+            GameMaster.OnTimeOfDayUpdated -= UpdateUiValues;
             GameMaster.OnPlayerStatsUpdated -= UpdateUiValues;
             GameMaster.OnGameDayUpdate -= UpdateUiValues;
+            StopAllCoroutines();
+            CancelInvoke(nameof(UpdateUi));
             UpdateUiValues = null;
         }
 
@@ -95,34 +100,63 @@ namespace UI {
         /// <param name="state"> Set true to enable the canvas. </param>
         public void ShowHideCanvas(bool state) {
             DOTween.To(()=> parentCanvasGroup.alpha, x=> parentCanvasGroup.alpha = x, (state ? 1f : 0f), fadeAnimationSpeed);
+            DOTween.To(()=> infoBarCanvasGroup.alpha, x=> infoBarCanvasGroup.alpha = x, (state ? 1f : 0f), fadeAnimationSpeed);
+            DOTween.To(()=> childCanvasGroup.alpha, x=> childCanvasGroup.alpha = x, (state ? 1f : 0f), fadeAnimationSpeed);
+            DOTween.To(()=> minimapCanvasGroup.alpha, x=> minimapCanvasGroup.alpha = x, (state ? 1f : 0f), fadeAnimationSpeed);
+        }
+
+        /// <summary>
+        /// Toggles the visibility of the entire player canvas
+        /// except for the clock.
+        /// </summary>
+        /// <param name="state"> Set true to enable the canvas. </param>
+        public void ShowHideCanvasKeepClock(bool state) {
+            DOTween.To(()=> parentCanvasGroup.alpha, x=> parentCanvasGroup.alpha = x, 1f, fadeAnimationSpeed);
+            DOTween.To(()=> infoBarCanvasGroup.alpha, x=> infoBarCanvasGroup.alpha = x, (state ? 1f : 0f), fadeAnimationSpeed);
+            DOTween.To(()=> childCanvasGroup.alpha, x=> childCanvasGroup.alpha = x, (state ? 1f : 0f), fadeAnimationSpeed);
+            DOTween.To(()=> minimapCanvasGroup.alpha, x=> minimapCanvasGroup.alpha = x, (state ? 1f : 0f), fadeAnimationSpeed);
         }
 
         /// <summary>
         /// Updates all UI values.
         /// </summary>
         private void UpdateUi() {
-            timeNeedlePointer.transform.rotation = 
-                Quaternion.Euler(ClockRotations[(int) GameMaster.Instance.CurrentTimeOfDay]);
-            
-            healthBar.rectTransform.SetSizeWithCurrentAnchors(RectTransform.Axis.Horizontal, 
-                Mathf.Lerp(0f, uiBarsWidth,Mathf.InverseLerp(0f, player.MaxHealth, player.Health)));
-            
-            staminaBar.rectTransform.SetSizeWithCurrentAnchors(RectTransform.Axis.Horizontal, 
-                Mathf.Lerp(0f, uiBarsWidth,Mathf.InverseLerp(0f, player.MaxStamina, player.Stamina)));
-            
-            levelBar.rectTransform.SetSizeWithCurrentAnchors(RectTransform.Axis.Horizontal, 
-                Mathf.Lerp(0f, uiBarsWidth,Mathf.InverseLerp(0f, upgradeSettings.GetExperienceNeededForLevelUp(player.Level), player.Experience)));
+            if(timeNeedlePointer != null && timeNeedlePointer.transform.rotation !=
+               Quaternion.Euler(ClockRotations[(int) GameMaster.Instance.CurrentTimeOfDay])) {
+                timeNeedlePointer.transform.DORotate(Quaternion
+                                                     .Euler(ClockRotations[(int) GameMaster.Instance.CurrentTimeOfDay])
+                                                     .eulerAngles,
+                                                     fadeAnimationSpeed * 2f);
+            }
 
-            healthText.text = $"{player.Health} / {player.MaxHealth}";
-            staminaText.text = $"{player.Stamina} / {player.MaxStamina}";
-            levelText.text = (player.Level >= player.MaxLevel ? LocalizationSystem.GetLocalizedValue("CONTEXT_GAMBLING_MAX") : player.Level.ToString());
-            coinsText.text = $"{LocalizationSystem.GetLocalizedValue("CONTEXT_METAL_COIN")} {player.Coins}";
             var dayLocalized = LocalizationSystem.GetLocalizedValue("CONTEXT_TIME_DAY");
             var currentDay = GameMaster.Instance.CurrentGameDay;
-            dayText.text = LocalizationSystem.CurrentLanguage == LocalizationSystem.Language.Japanese ? $"{currentDay} {dayLocalized}" : $"{dayLocalized} {currentDay}";
-            timeOfDayText.text = LocalizationSystem.GetLocalizedValue(TimeOfDayLocalizationKeys[(int) GameMaster.Instance.CurrentTimeOfDay]);
+            if(dayText != null) dayText.text = LocalizationSystem.CurrentLanguage == LocalizationSystem.Language.Japanese ? $"{currentDay} {dayLocalized}" : $"{dayLocalized} {currentDay}";
+            if(timeOfDayText != null) timeOfDayText.text = LocalizationSystem.GetLocalizedValue(TimeOfDayLocalizationKeys[(int) GameMaster.Instance.CurrentTimeOfDay]);
+            
+            if(player == null) {
+                player = FindObjectOfType<PlayerController>();
+                return;
+            }
+            
+            if(healthBar != null) healthBar.rectTransform.SetSizeWithCurrentAnchors(RectTransform.Axis.Horizontal, 
+                Mathf.Lerp(0f, uiBarsWidth,Mathf.InverseLerp(0f, player.MaxHealth, player.Health)));
+            
+            if(staminaBar != null) staminaBar.rectTransform.SetSizeWithCurrentAnchors(RectTransform.Axis.Horizontal, 
+                Mathf.Lerp(0f, uiBarsWidth,Mathf.InverseLerp(0f, player.MaxStamina, player.Stamina)));
+            
+            if(levelBar != null) levelBar.rectTransform.SetSizeWithCurrentAnchors(RectTransform.Axis.Horizontal, 
+                Mathf.Lerp(0f, uiBarsWidth,Mathf.InverseLerp(0f, upgradeSettings.GetExperienceNeededForLevelUp(player.Level), player.Experience)));
 
-            staminaBackBar.material.SetFloat(HitEffectBlend, 1f);
+            if(healthText != null) healthText.text = $"{player.Health} / {player.MaxHealth}";
+            if(staminaText != null) staminaText.text = $"{player.Stamina} / {player.MaxStamina}";
+            if(levelText != null) levelText.text = (player.Level >= player.MaxLevel ? LocalizationSystem.GetLocalizedValue("CONTEXT_GAMBLING_MAX") : player.Level.ToString());
+            
+            DOTween.To(x => coinsText.text = $"{Mathf.RoundToInt(x).ToString()}", int.Parse(coinsText.text), player.Coins, fadeAnimationSpeed * 0.5f);
+
+            if(staminaBackBar != null) staminaBackBar.material.SetFloat(HitEffectBlend, 1f);
+            
+            
             StartCoroutine(nameof(AnimateHealthBackBar));
             StartCoroutine(nameof(AnimateStaminaBackBar));
         }
@@ -133,33 +167,47 @@ namespace UI {
         private IEnumerator AnimateHealthBackBar() {
             yield return waitForBarAnimationDelay;
 
-            if(healthBar.rectTransform.sizeDelta.x > healthBackBar.rectTransform.sizeDelta.x) {
-                healthBackBar.rectTransform.SetSizeWithCurrentAnchors(RectTransform.Axis.Horizontal,
-                         Mathf.Lerp(0f, uiBarsWidth,Mathf.InverseLerp(0f,player.MaxHealth,player.Health)));
-                yield break;
+            if(healthBar != null && healthBackBar != null) {
+                if(healthBar.rectTransform.sizeDelta.x > healthBackBar.rectTransform.sizeDelta.x) {
+                    healthBackBar.rectTransform.SetSizeWithCurrentAnchors(RectTransform.Axis.Horizontal,
+                                                                          Mathf.Lerp(0f, uiBarsWidth,
+                                                                              Mathf.InverseLerp(0f,
+                                                                                  player.MaxHealth,
+                                                                                  player.Health)));
+                    yield break;
+                }
             }
 
             var width = healthBackBar.rectTransform.sizeDelta.x;
-            
+
+            if(healthBar == null || healthBackBar == null) yield break;
             while(healthBackBar.rectTransform.sizeDelta.x > healthBar.rectTransform.sizeDelta.x) {
                 width -= barAnimationSpeed;
+                if(healthBackBar == null) yield break;
                 healthBackBar.rectTransform.SetSizeWithCurrentAnchors(RectTransform.Axis.Horizontal, width);
                 yield return waitForBarAnimationFrame;
             }
         }
-        
+
         /// <summary>
         /// Animates the stamina back bar reducing over time after a delay.
         /// </summary>
         private IEnumerator AnimateStaminaBackBar() {
             yield return waitForBarAnimationDelay;
+            if(staminaBackBar == null) yield break;
+            
             var staminaBarMaterial = staminaBackBar.material;
             staminaBarMaterial.SetFloat(HitEffectBlend, 1f);
-            
-            if(staminaBar.rectTransform.sizeDelta.x > staminaBackBar.rectTransform.sizeDelta.x) {
-                staminaBackBar.rectTransform.SetSizeWithCurrentAnchors(RectTransform.Axis.Horizontal,
-                                                                       Mathf.Lerp(0f, uiBarsWidth,Mathf.InverseLerp(0f,player.MaxStamina,player.Stamina)));
-                yield break;
+
+            if(staminaBar != null && staminaBackBar != null) {
+                if(staminaBar.rectTransform.sizeDelta.x > staminaBackBar.rectTransform.sizeDelta.x) {
+                    staminaBackBar.rectTransform.SetSizeWithCurrentAnchors(RectTransform.Axis.Horizontal,
+                                                                           Mathf.Lerp(0f, uiBarsWidth,
+                                                                               Mathf.InverseLerp(0f,
+                                                                                   player.MaxStamina,
+                                                                                   player.Stamina)));
+                    yield break;
+                }
             }
 
             var width = staminaBackBar.rectTransform.sizeDelta.x;
@@ -168,6 +216,7 @@ namespace UI {
 
             while(staminaBackBar.rectTransform.sizeDelta.x > staminaBar.rectTransform.sizeDelta.x) {
                 width -= barAnimationSpeed;
+                if(staminaBackBar == null) yield break;
                 staminaBackBar.rectTransform.SetSizeWithCurrentAnchors(RectTransform.Axis.Horizontal, width);
                 yield return waitForBarAnimationFrame;
             }

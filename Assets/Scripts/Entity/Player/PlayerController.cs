@@ -1,9 +1,12 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using Entity.Enemies;
+using FMODUnity;
 using Game;
 using Items;
+using Town;
 using UI;
 using UnityEngine;
 using UnityEngine.InputSystem;
@@ -16,7 +19,8 @@ namespace Entity.Player {
     /// </summary>
     public class PlayerController : Entity {
         #pragma warning disable 0649
-        [Header("Movement")]
+        [Header("Movement")] 
+        [SerializeField] private bool isDead;
         [SerializeField, Range(0f, 25f)] private float movementSpeed = 15f;
         [SerializeField, Range(0f, 0.8f)] private float storeMovementSpeedReduction = 0.4f;
         [SerializeField, Range(0f, 2f)] private float rotationSpeed = 0.1f;
@@ -43,15 +47,20 @@ namespace Entity.Player {
 
         [Header("Inventory")] [SerializeField] private int playerInventorySize = 10;
 
-        private Inventory inventory;
+        [SerializeField] private Inventory inventory;
+        
 
         /// <summary>
         /// The player's inventory.
         /// </summary>
         public Inventory Inventory {
             get => inventory;
-            set => inventory = value;
         }
+        
+        /// <summary>
+        /// Holds info on the items that the player got in the island trip.
+        /// </summary>
+        public Inventory PlayerIslandInventory { get; set; } 
 
         // Input
         private ActionInputs inputs;
@@ -64,6 +73,8 @@ namespace Entity.Player {
             Animator.StringToHash("Combo_2")
         };
 
+        
+        private static readonly int AnimReset = Animator.StringToHash("Death Reset");
         private static readonly int AnimSpecial = Animator.StringToHash("Special");
         private static readonly int AnimDead = Animator.StringToHash("Dead");
         private static readonly int AnimDamaged = Animator.StringToHash("Damaged");
@@ -73,6 +84,7 @@ namespace Entity.Player {
         private bool isInsideShop;
         
         [Header("Leveling Settings")]
+        [SerializeField, Range(0.1f, 1f)] private float healthRegenOnLevelUpMultiplier = 0.35f;
         private const string upgradeSettingsPath = "Scriptables/Player/Player_Upgrade_Settings";
         [SerializeField] private PlayerUpgradeSettings upgradeSettings;
         
@@ -94,9 +106,34 @@ namespace Entity.Player {
         
         // Which upgrades to use.
         private int currentUpgrades = 0;
+        
+        // Sound Stuff
+        // Dictionary for the different sound values.
+        public enum footstepSound { SAND, WOOD }
+        // Current type of ground the player is stepping on.
+        private footstepSound currentTypeOfGround = footstepSound.WOOD;
 
+        // The EventEmitter variable for the player sounds.
+        [Header("Sound Emitters")]
+        [SerializeField] private StudioEventEmitter playerFootstepEmitter;
+        
+        [Header("Sound Events")]
+        [SerializeField, EventRef] private string footstepEvent;
+        [SerializeField, EventRef] private string specialAttackEvent;
+        [SerializeField, EventRef] private string meleeSwingEvent;
+        [SerializeField, EventRef] private string meleeHitEvent;
+
+        [Header("Sound Parameters")] 
+        [SerializeField, ParamRef] private string footstepParam = "GroundType";
+        [SerializeField] private string sandTag = "Sand";
+        [SerializeField] private string woodTag = "Wood";
+        
+        // How far under the player should we check for the ground.
+        [SerializeField] private Vector3 groundDistance = new Vector3(0f, 1f, 0f);
+        
         [Header("Other")]
         [SerializeField] private GameObject DamageCanvasPrefab;
+        [SerializeField] private GameObject deathCanvasPrefab;
 
         /// <summary>
         /// Is the player inside the shop? True for yes.
@@ -110,13 +147,16 @@ namespace Entity.Player {
                 PlayerStatsUI.UpdateUiValues?.Invoke();
             }
         }
-
-        // TODO set stats to be based on player settings and such.
         
         /// <summary>
         /// Allows the player to move or not.
         /// </summary>
         public bool CanMove { get; set; } = true;
+        
+        /// <summary>
+        /// Overrides the ability of the player to move or not.
+        /// </summary>
+        public bool CanMoveOverride { get; set; } = true;
 
         /// <summary>
         /// The last enemy that dealt damage to the player.
@@ -126,7 +166,6 @@ namespace Entity.Player {
         
         [Header("VFX")]
         [SerializeField] private VisualEffect swordSlash;
-
 
         #pragma warning restore 0649
 
@@ -142,10 +181,26 @@ namespace Entity.Player {
             upgradeSettings = Resources.Load<PlayerUpgradeSettings>(upgradeSettingsPath);
             agent.speed = playerSpeed;
             agent.autoTraverseOffMeshLink = false;
-            Inventory = new Inventory(playerInventorySize, new List<InventoryItemEntry>());
-            GameMaster.OnGameExecutionStateUpdated += UpdatePlayerMovementToMatchGameState;
+            inventory = new Inventory(playerInventorySize, new List<InventoryItemEntry>());
             LoadGameMasterPlayerStats();
+            inventory.OnInventoryUpdate?.Invoke();
+            inventory.OnInventoryUpdate.AddListener(UpdateGameMasterPlayerStats);
+            PlayerIslandInventory = new Inventory(playerInventorySize, new List<InventoryItemEntry>());
+            GameMaster.OnGameExecutionStateUpdated += UpdatePlayerMovementToMatchGameState;
             InvokeRepeating(nameof(RecoverStamina), 1f, 1f);
+        }
+
+        // "Respawns" the player.
+        public void ResetPlayer() {
+            anim.ResetTrigger(AnimDead);
+            anim.ResetTrigger(AnimDamaged);
+            anim.ResetTrigger(AnimSpecial);
+            anim.SetTrigger(AnimReset);
+            Health = maxHealth;
+            CanMoveOverride = true;
+            CanMove = true;
+            transform.position = FindObjectOfType<PlayerSpawnPositionBasedOnLastScene>().portSpawnPosition.position;
+            isDead = false;
         }
 
         // OnEnable Unity Event, enables input.
@@ -178,15 +233,25 @@ namespace Entity.Player {
 
         #region Entity Base Overrides
 
+        /// <summary>
+        /// Opens the death canvas.
+        /// </summary>
+        public void DisplayDeathCanvas() {
+            Instantiate(deathCanvasPrefab);
+        }
+        
         public override void Kill() {
-            Debug.Log("DEAD!");
+            if(isDead) return;
             anim.SetTrigger(AnimDead);
-            Health = MaxHealth;
+            CanMoveOverride = false;
+            GameMaster.Instance.MasterSaveData.playerDeathCount++;
+            GameMaster.Instance.SaveGame();
+            isDead = true;
         }
 
         public override void Damage(int amount, Entity dealer) {
-            currentGamepad.SetMotorSpeeds(0.8f, 0.8f);
-            StartCoroutine(nameof(StopControllerVibration), 0.2f);
+            if(isDead) return;
+            VibrateController(0.2f, 0.8f, 0.8f);
             anim.SetTrigger(AnimDamaged);
             if(dealer.GetComponent<Enemy>()) LastEnemyToHitPlayer = dealer.GetComponent<Enemy>();
             base.Damage(amount, dealer);
@@ -199,17 +264,28 @@ namespace Entity.Player {
         /// <summary>
         /// Sets the player movement state based on the game execution state.
         /// </summary>
-        private void UpdatePlayerMovementToMatchGameState() {
+        private void UpdatePlayerMovementToMatchGameState(ExecutionState state) {
             CanMove = (GameMaster.Instance.GameState == ExecutionState.Normal);
         }
         
         private void GetInput() {
             movementScale = new Vector3(inputs.Player.Horizontal.ReadValue<float>(), 0f, inputs.Player.Vertical.ReadValue<float>());
 
-            if(movementScale.magnitude < minRotationInput || !CanMove) return;
+            if(movementScale.magnitude < minRotationInput || !CanMove || !CanMoveOverride) return;
             transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.LookRotation(movementScale), rotationSpeed);
         }
 
+        /// <summary>
+        /// Vibrates the controller with the given parameters.
+        /// </summary>
+        /// <param name="time"> How long to vibrate the controller for. Defaults to 0.42 seconds.</param>
+        /// <param name="lowFreq"> Strong vibrations. Defaults to 0.3. </param>
+        /// <param name="highFreq"> Weak vibrations. Defaults to 0.5. </param>
+        private void VibrateController(float time = 0.42f, float lowFreq = 0.3f, float highFreq = 0.5f) {
+            currentGamepad?.SetMotorSpeeds(lowFreq, highFreq);
+            StartCoroutine(nameof(StopControllerVibration), time);
+        }
+        
         /// <summary>
         /// Stops a controller from vibrating.
         /// </summary>
@@ -217,7 +293,7 @@ namespace Entity.Player {
         private IEnumerator StopControllerVibration(float time = 0f) {
             waitTime = new WaitForSeconds(time);
             yield return waitTime;
-            currentGamepad.SetMotorSpeeds(0f, 0f);
+            currentGamepad?.SetMotorSpeeds(0f, 0f);
         }
 
         /// <summary>
@@ -225,7 +301,7 @@ namespace Entity.Player {
         /// </summary>
         private void MovePlayer() {
             anim.SetFloat(AnimSpeed, 0f);
-            if(!agent.enabled || !CanMove) return; 
+            if(!agent.enabled || !CanMove || !CanMoveOverride) return; 
             agent.Move(movementScale * (playerSpeed * Time.deltaTime));
             anim.SetFloat(AnimSpeed, movementScale.magnitude);
         }
@@ -239,7 +315,7 @@ namespace Entity.Player {
         /// </summary>
         private void RecoverStamina() { 
             Stamina = Mathf.Clamp(Stamina + 2, 0, MaxStamina);
-            PlayerStatsUI.UpdateUiValues.Invoke();
+            PlayerStatsUI.UpdateUiValues?.Invoke();
         }
         
         /// <summary>
@@ -251,7 +327,7 @@ namespace Entity.Player {
             Stamina -= 4;
             agent.enabled = false;
             anim.SetTrigger(AnimSpecial);
-            PlayerStatsUI.UpdateUiValues.Invoke();
+            PlayerStatsUI.UpdateUiValues?.Invoke();
         }
 
         /// <summary>
@@ -276,8 +352,8 @@ namespace Entity.Player {
                 bullet.BulletOwner = this;
             }
             
-            currentGamepad.SetMotorSpeeds(0.6f, 0.4f);
-            StartCoroutine(nameof(StopControllerVibration), 0.2f);
+            PlaySfx(specialAttackEvent);
+            VibrateController(0.2f, 0.6f, 0.4f);
         }
         
         /// <summary>
@@ -294,6 +370,7 @@ namespace Entity.Player {
             if(Stamina < 3 || isInsideShop) return;
             Stamina -= 3;
             swordSlash.SendEvent("OnPlay");
+            PlaySfx(meleeSwingEvent);
             
             if(anim.GetCurrentAnimatorStateInfo(1).IsName("Attack Idle")) {
                 comboNumber = 0;
@@ -315,7 +392,7 @@ namespace Entity.Player {
                 comboNumber = 0;
             }
             
-            PlayerStatsUI.UpdateUiValues.Invoke();
+            PlayerStatsUI.UpdateUiValues?.Invoke();
         }
         
         /// <summary>
@@ -324,13 +401,13 @@ namespace Entity.Player {
         public void ComboAttackCollision() {
             swordSlash.SendEvent("OnStop");
             if(!CheckCollisionSword(swordCollider)) return;
-            //TODO: Play audio and effects.
+            //TODO: Play effects.
+            PlaySfx(meleeHitEvent);
             Instantiate(DamageCanvasPrefab, transform.position, Quaternion.identity)
                 .GetComponent<DamageCanvas>().damageValue = 
                 Mathf.RoundToInt(meleeDamage * (1f + meleeDamageComboMultiplier * comboNumber));
-                
-            currentGamepad.SetMotorSpeeds(0.42f, 0.42f);
-            StartCoroutine(nameof(StopControllerVibration), 0.2f);
+
+            VibrateController(0.2f, 0.42f, 0.42f); 
         }
         
         /// <summary>
@@ -346,8 +423,9 @@ namespace Entity.Player {
             if(contacts.Length < 1) return false;
             
             foreach(var contact in contacts) {
-                if(!contact.gameObject.GetComponent<Enemy>()) continue;
-                contact.gameObject.GetComponent<Enemy>().Damage(damageAmount, this);
+                if(!contact.gameObject.GetComponent<Entity>()) continue;
+                if(contact.gameObject.GetComponent<PlayerController>()) continue;
+                contact.gameObject.GetComponent<Entity>().Damage(damageAmount, this);
                 return true;
             }
 
@@ -356,8 +434,16 @@ namespace Entity.Player {
         
         #endregion
         
-        #region Level, Data & Progression Management
+        #region Level, Coins, Data & Progression Management
 
+        /// <summary>
+        /// Adds coins to the player coin count.
+        /// </summary>
+        public void AddCoins(int amount) {
+            Coins += amount;
+            UpdateGameMasterPlayerStats();
+        }
+        
         /// <summary>
         /// Updates the stats in the game master to reflect the player progression.
         /// </summary>
@@ -375,6 +461,7 @@ namespace Entity.Player {
                 TotalExperience = upgradeSettings.GetExperienceNeededForLevelUp(Level) + Experience,
                 Coins = Coins,
                 CurrentInventory = Inventory.ItemsInInventory,
+                InventorySize = playerInventorySize,
                 CurrentUpgradeLevel = 0
             };
 
@@ -383,14 +470,15 @@ namespace Entity.Player {
             }
             
             GameMaster.Instance.PlayerStats = stats;
+            GameMaster.Instance.MasterSaveData.currentPlayerStats = stats;
         }
         
         /// <summary>
         /// Updates the stats in the game master to reflect the player progression.
         /// </summary>
         public void LoadGameMasterPlayerStats() {
-            var stats = GameMaster.Instance.PlayerStats;
-            
+            PlayerStats stats = GameMaster.Instance.PlayerStats;
+
             Health = stats.Health;
             MaxHealth = stats.MaxHealth;
             Stamina = stats.Stamina;
@@ -401,7 +489,12 @@ namespace Entity.Player {
             Level = stats.Level;
             Experience = stats.Experience;
             Coins = stats.Coins;
-            Inventory = new Inventory(playerInventorySize, stats.CurrentInventory);
+            playerInventorySize = stats.InventorySize;
+            if(stats.CurrentInventory.Count > 0)
+                inventory.ItemsInInventory = new List<InventoryItemEntry>(stats.CurrentInventory);
+            else inventory.ItemsInInventory = new List<InventoryItemEntry>();
+
+            inventory.OnInventoryUpdate?.Invoke();
 
             currentUpgrades = stats.CurrentUpgradeLevel;
             
@@ -423,6 +516,8 @@ namespace Entity.Player {
                 Experience -= expToLevelUp;
                 expToLevelUp = upgradeSettings.GetExperienceNeededForLevelUp(Level);
             }
+            
+            UpdateGameMasterPlayerStats();
         }
 
         /// <summary>
@@ -430,11 +525,12 @@ namespace Entity.Player {
         /// </summary>
         private void LevelUp() {
             Level++;
+            UpdateGameMasterPlayerStats();
             
-            if(Level % upgradeSettings.upgradeEveryHowManyLevels == 1) {
-                ApplyLevelingStats();
-                ApplyLevelingUpgrades();
-            }
+            if(Level % upgradeSettings.upgradeEveryHowManyLevels != 1) return;
+            ApplyLevelingStats();
+            ApplyLevelingUpgrades();
+            UpdateGameMasterPlayerStats();
         }
         
         /// <summary>
@@ -442,6 +538,7 @@ namespace Entity.Player {
         /// </summary>
         private void ApplyLevelingStats() {
             MaxHealth = Mathf.RoundToInt(MaxHealth * upgradeSettings.statsMultiplier);
+            Health += Mathf.RoundToInt(MaxHealth * healthRegenOnLevelUpMultiplier);
             MaxStamina = Mathf.RoundToInt(MaxStamina * upgradeSettings.statsMultiplier);
             meleeDamage = Mathf.RoundToInt(meleeDamage * upgradeSettings.statsMultiplier);
             rangedDamagePerBullet = Mathf.RoundToInt(rangedDamagePerBullet * upgradeSettings.statsMultiplier);
@@ -455,8 +552,53 @@ namespace Entity.Player {
             rangedBulletsPerAttack = upgradeSettings.bulletsPerShotUpgradeValues[currentUpgrades];
             bulletSpreadAngle = upgradeSettings.bulletAngleUpgradeValues[currentUpgrades];
             rangedAttackMaxRange = upgradeSettings.bulletRangeUpgradeValues[currentUpgrades];
+            playerInventorySize = upgradeSettings.inventorySizeUpgradeValues[currentUpgrades];
+            inventory.InventorySize = playerInventorySize;
         }
         
+        #endregion
+        
+        #region Sound
+        
+        /// <summary>
+        /// Plays a sound attached to the player position.
+        /// </summary>
+        /// <param name="soundEvent"> Event to play. </param>
+        public void PlaySfx(string soundEvent) => RuntimeManager.PlayOneShotAttached(soundEvent, gameObject);
+
+        /// <summary>
+        ///  Plays footstep sound.
+        /// </summary>
+        public void PlayFootstep() {
+            CheckGround();
+            
+            if(playerFootstepEmitter.Event != null) {
+                playerFootstepEmitter.Play();
+                playerFootstepEmitter.EventInstance.setParameterByName(footstepParam, (int) currentTypeOfGround);
+            } else {
+                if(string.IsNullOrEmpty(footstepEvent)) return;
+                playerFootstepEmitter.Event = footstepEvent;
+                playerFootstepEmitter.Play();
+                playerFootstepEmitter.EventInstance.setParameterByName(footstepParam, (int) currentTypeOfGround);
+            }
+        }
+
+        // Sets the current type of ground.
+        public void SetCurrentGround(footstepSound type) => currentTypeOfGround = type;
+        
+        // Checks what kind of ground it is.
+        public void CheckGround() {
+            Physics.Linecast((transform.position + groundDistance / 2), transform.position - groundDistance, out var hitInfo);
+        
+            // Sets ground type for footstep sound.
+            if(hitInfo.collider == null) return;
+            
+            if(hitInfo.collider.gameObject.CompareTag(sandTag)) {
+                SetCurrentGround(footstepSound.SAND);
+            } else if(hitInfo.collider.gameObject.CompareTag(woodTag)) {
+                SetCurrentGround(footstepSound.WOOD);
+            }
+        }
         #endregion
     }
 }

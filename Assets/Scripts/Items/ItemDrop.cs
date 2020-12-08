@@ -1,11 +1,12 @@
-﻿using System;
-using System.Collections;
+﻿using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using DG.Tweening;
 using Entity;
 using Entity.Player;
 using UnityEngine;
 using FMODUnity;
+using Game;
 
 namespace Items {
     /// <summary>
@@ -14,14 +15,15 @@ namespace Items {
     [RequireComponent( typeof(StudioEventEmitter), typeof(Collider))]
     public class ItemDrop : MonoBehaviour {
         #pragma warning disable 0649
-        [Header("Animation Item Settings")]
+        [Header("Animation Settings")]
         [SerializeField, Range(0.1f, 3f)] private float jumpHeight = 0.75f;
         [SerializeField, Range(0.1f, 5f)] private float jumpTime = 1.5f;
 
-        [Header("Item ItemSettings")] 
+        [Header("Item Settings")] 
         [SerializeField] private ItemSettings settings;
+        [SerializeField] private List<ItemSettings> itemList = new List<ItemSettings>();
 
-        [Header("Collision ItemSettings")]
+        [Header("Collision Settings")]
         [SerializeField] private string playerTag = "Player";
         
         // Components
@@ -42,16 +44,32 @@ namespace Items {
         /// Sets up the item and starts playing an animation.
         /// </summary>
         protected virtual void Awake() {
-             ItemIdleAnimation();
-             eventEmitter = GetComponent<StudioEventEmitter>();
-             Invoke(nameof(CheckObjectSpawn), 1f);
+            eventEmitter = GetComponent<StudioEventEmitter>();
+            Invoke(nameof(CheckObjectSpawn), 1f);
         }
         
         /// <summary>
         /// Checks if it spawned the asset, in case a enemy forgot or this is a stage drop.
         /// </summary>
         protected virtual void CheckObjectSpawn() {
-            if(!hasSpawned) SetItemBasedOnSettings(settings);
+            if(hasSpawned) return;
+            var items = itemList.Where(x => GameMaster.Instance.PlayerStats.Level >= x.minimumPlayerLevelToSpawn).ToList();
+            
+            if(items.Count < 1) {
+                Destroy(gameObject);
+                return;
+            }
+
+            var rng = Random.value;
+            var possibleItems = items.Where(x => x.itemRarity >= rng).ToList();
+            
+            if(possibleItems.Count < 1) {
+                Destroy(gameObject);
+                return;
+            }
+            
+            settings = possibleItems[Random.Range(0, possibleItems.Count)];
+            SetItemBasedOnSettings(settings);
         }
 
         /// <summary>
@@ -61,16 +79,12 @@ namespace Items {
             if(hasSpawned) return;
             
             settings = itemSettings;
-
-            if(transform.childCount > 0) {
-                for(int i = 0; i < transform.childCount; i++) {
-                    Destroy(transform.GetChild(i));
-                }
-            }
             
-            Instantiate(settings.itemModel, transform);
+            Instantiate(settings.itemModel, transform.position, Quaternion.Euler(Vector3.zero), transform);
             
             hasSpawned = true;
+            
+            ItemIdleAnimation();
         }
 
         /// <summary>
@@ -87,13 +101,16 @@ namespace Items {
             if(!other.CompareTag(playerTag)) return;
             if(!other.GetComponent<PlayerController>()) return;
             var player = other.GetComponent<PlayerController>();
-            var stats = new InventoryItemEntry(settings, 1);
-
-            player.Inventory.AddItemEntry(stats);
+            var stats = new InventoryItemEntry(settings);
+            
+            var successfullyAdded = player.Inventory.AddItemEntry(stats, 1);
+            player.PlayerIslandInventory.AddItemEntry(stats, 1, false);
 
             // TODO: Add particles, sfx and effects.
-            eventEmitter.Play();
+            if(!successfullyAdded) return;
+            
             DOTween.Kill(this);
+            eventEmitter.Play();
             Destroy(gameObject);
         }
     }

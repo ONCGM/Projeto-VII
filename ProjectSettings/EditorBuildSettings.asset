@@ -32,5 +32,14 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/Island Scenes/Large Island.unity
     guid: d0ca6ede8b44bb148a08e6a5c34ed4c8
+  - enabled: 1
+    path: Assets/Scenes/Credits.unity
+    guid: 5b6a307e23fd3174d9d934dee33941d8
+  - enabled: 1
+    path: Assets/Scenes/Loading.unity
+    guid: 88b8f283c2a828f40b0839d24e972f4e
+  - enabled: 1
+    path: Assets/Scenes/EndGame.unity
+    guid: 843294e13c425ed48af9d74c8c190d15
   m_configObjects:
     com.unity.input.settings: {fileID: 11400000, guid: 42ec8b8536279ef4189f6e80251b3797, type: 2}

@@ -1,15 +1,19 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using Audio;
 using Cinemachine;
 using Entity.Player;
+using FMODUnity;
 using Game;
 using Islands;
 using Town;
 using UI;
+using UI.Localization;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UI.Popups;
+using static UI.Popups.CanvasPopupDialog;
 using static UI.Popups.CanvasPopupDialog.PopupButtonHighlight;
 
 namespace Ship {
@@ -26,29 +30,34 @@ namespace Ship {
         
         [Header("Settings")]
         [SerializeField] private string playerComponentsTag = "Player Components";
-        [SerializeField] private string playerTag = "Player";
-        [SerializeField] private string townLightTag, seaLightTag, islandLightTag;
+        // [SerializeField] private string playerTag = "Player";
+        // [SerializeField] private string townLightTag, seaLightTag, islandLightTag;
 
         [Header("Localization")] 
-        [SerializeField] private string travelTitleKey;
+        [SerializeField] private LocalizedString travelTitleKey;
 
-        [SerializeField] private string travelMessageKey,
+        [SerializeField] private LocalizedString travelMessageKey,
+                                        timeAdvanceMessageKey,
                                         backToTownMessageKey,
                                         confirmButtonKey,
                                         cancelButtonKey,
                                         smallIslandButtonKey,
                                         mediumIslandButtonKey,
-                                        largeIslandButtonKey;
+                                        largeIslandButtonKey, 
+                                        cantTravelAtNightTitleKey, 
+                                        cantTravelAtNightMessageKey;
         
         // Buttons.
-        private List<CanvasPopupDialog.ButtonSettings> travelButtons = new List<CanvasPopupDialog.ButtonSettings> ();
-        
+        private List<ButtonSettings> travelButtons = new List<ButtonSettings> ();
 
         [Header("Prefabs")] 
         [SerializeField] private GameObject popupPrefab;
         
         // Components.
         private Animator anim;
+        [Header("Event Emitters")]
+        [SerializeField] private StudioEventEmitter eventEmitter;
+        [SerializeField] private StudioEventEmitter eventWavesEmitter;
         private CinemachineVirtualCamera shipCamera;
         private static readonly int DepartToIsland = Animator.StringToHash("DepartToIsland");
         private static readonly int DepartToTown = Animator.StringToHash("DepartToTown");
@@ -56,7 +65,11 @@ namespace Ship {
         private static readonly int ArriveAtTown = Animator.StringToHash("ArriveAtTown");
         private static readonly string playerSettingsPath = "Scriptables/Player/Player_Upgrade_Settings";
         private PlayerUpgradeSettings upgradeSettings;
-        private IslandLevelLoader islandLoader;
+        
+        /// <summary>
+        /// Island Loader Object.
+        /// </summary>
+        public IslandLevelLoader IslandLoader { get; set; }
 
         #pragma warning restore 0649
 
@@ -66,22 +79,31 @@ namespace Ship {
             shipCamera = GetComponentInChildren<CinemachineVirtualCamera>();
             DontDestroyOnLoad(gameObject);
             upgradeSettings = Resources.Load<PlayerUpgradeSettings>(playerSettingsPath);
-            
-            // Toggle light if in town scene.
-            if(SceneManager.GetActiveScene().buildIndex == townSceneIndex) {
-                var townLight = GameObject.FindGameObjectWithTag(townLightTag);
-            
-                townLight.GetComponent<Light>().enabled = true;
-            }
-            
-            
+
             // Populate buttons.
-            travelButtons.Add(new CanvasPopupDialog.ButtonSettings(smallIslandButtonKey, Normal, 0));
-            travelButtons.Add(new CanvasPopupDialog.ButtonSettings(mediumIslandButtonKey, Normal, 1));
-            travelButtons.Add(new CanvasPopupDialog.ButtonSettings(largeIslandButtonKey, Normal, 2));
-            travelButtons.Add(new CanvasPopupDialog.ButtonSettings(confirmButtonKey, StrongHighlight, 3));
-            travelButtons.Add(new CanvasPopupDialog.ButtonSettings(cancelButtonKey, Highlight, 4));
+            travelButtons.Add(new ButtonSettings(smallIslandButtonKey.key, Normal, 0));
+            travelButtons.Add(new ButtonSettings(mediumIslandButtonKey.key, Normal, 1));
+            travelButtons.Add(new ButtonSettings(largeIslandButtonKey.key, Normal, 2));
+            travelButtons.Add(new ButtonSettings(confirmButtonKey.key, StrongHighlight, 3));
+            travelButtons.Add(new ButtonSettings(cancelButtonKey.key, Highlight, 4));
+
+            GameMaster.OnCreditsOpen += () => {
+                if(this == null || GameMaster.Instance.ShipTravel == null) return;
+                GameMaster.Instance.ShipTravel = null;
+                if(gameObject != null && this != null) Destroy(gameObject);
+            };
+            
+            GameMaster.OnReturnToMenu += () => {
+                if(this == null || GameMaster.Instance.ShipTravel == null) return;
+                GameMaster.Instance.ShipTravel = null;
+                if(gameObject != null && this != null) Destroy(gameObject);
+            };
         }
+
+        /// <summary>
+        /// Rings the ship bell, called by animation.
+        /// </summary>
+        public void RingShipBell() { if(eventEmitter != null) eventEmitter.Play(); }
 
         #region Travel to Islands
         
@@ -91,8 +113,8 @@ namespace Ship {
         public void StartTravelToIsland() {
             var popup = Instantiate(popupPrefab).GetComponent<CanvasPopupDialog>();
             var player = FindObjectOfType<PlayerController>();
-            FindObjectOfType<PlayerStatsUI>().ShowHideCanvas(false);
-            var buttons = new List<CanvasPopupDialog.ButtonSettings>();
+            FindObjectOfType<PlayerStatsUI>().ShowHideCanvasKeepClock(false);
+            var buttons = new List<ButtonSettings>();
             var index = 0;
             
             foreach(var islandLevelRequirement in upgradeSettings.islandSizeUnlocksAtLevel) {
@@ -103,8 +125,18 @@ namespace Ship {
             }
 
             buttons.Add(travelButtons[4]);
-            popup.SetUpPopup(travelTitleKey, travelMessageKey, buttons,
-                             ExecutionState.PopupPause, TravelToIsland);
+
+            if(GameMaster.Instance.CurrentTimeOfDay == TimeOfDay.Night) {
+                popup.SetUpPopup(cantTravelAtNightTitleKey.key, cantTravelAtNightMessageKey.key,
+                                 new List<ButtonSettings>() {new ButtonSettings(confirmButtonKey.key, StrongHighlight, 3)},
+                                 ExecutionState.PopupPause, i => {
+                                     FindObjectOfType<PlayerStatsUI>().ShowHideCanvas(true);
+                                     FindObjectOfType<PortSceneTransition>().startedTransition = false;
+                                 });
+            } else {
+                popup.SetUpPopup(travelTitleKey.key, travelMessageKey.key, timeAdvanceMessageKey.key, buttons,
+                                 ExecutionState.PopupPause, TravelToIsland);
+            }
         }
 
         /// <summary>
@@ -116,73 +148,58 @@ namespace Ship {
                 FindObjectOfType<PortSceneTransition>().startedTransition = false;
                 return;
             }
+
+            GameMaster.Instance.AdvanceOneTimePeriod();
+            
+            if(eventWavesEmitter != null) eventWavesEmitter.Play();
             
             GameMaster.Instance.SelectedIslandSize = (IslandSizes) Mathf.Min(buttonIndex, 2);
-            
+            GameMaster.Instance.PlayerStatsBeforeIsland = GameMaster.Instance.PlayerStats;
+
             var components = GameObject.FindGameObjectsWithTag(playerComponentsTag);
             foreach(var component in components) {
-                Destroy(component);
+                if(!component.GetComponent<PlayerStatsUI>()) Destroy(component);
             }
             
-            // TODO: Serialize player stats and inventory before destroying it.
-            
-            Destroy(GameObject.FindWithTag(playerTag));
+            PlayerStatsUI.UpdateUiValues?.Invoke();
+            var player = FindObjectOfType<PlayerController>();
+            player.UpdateGameMasterPlayerStats();
+            Destroy(player.gameObject);
             
             anim.SetTrigger(DepartToIsland);
             shipCamera.m_Priority = 12;
-            SceneManager.LoadScene(travelSceneIndex, LoadSceneMode.Additive);
+            SceneManager.LoadSceneAsync(travelSceneIndex, LoadSceneMode.Additive);
         }
 
         /// <summary>
         /// Unloads the town scene and changes active directional light.
         /// </summary>
         public void UnloadTown() {
-            var townLight = GameObject.FindGameObjectWithTag(townLightTag);
-            var seaLight = GameObject.FindGameObjectWithTag(seaLightTag);
-            
-            townLight.GetComponent<Light>().enabled = false;
-            seaLight.GetComponent<Light>().enabled = true;
-
-            seaLight.transform.rotation = townLight.transform.rotation;
-            
-            SceneManager.UnloadSceneAsync(townSceneIndex);
-
-            StartCoroutine(nameof(LoadIsland));
+            FindObjectOfType<PlayerStatsUI>().ShowHideCanvas(false);
+            FindObjectOfType<TownMusicController>().TriggerMusicStop();
+            FindObjectOfType<ShipTravelLoadingController>().StartLoadingSequence(islandsSceneIndex);
         }
 
         /// <summary>
-        /// Loads the island scene.
+        /// Loads the islands scenes.
         /// </summary>
-        private IEnumerator LoadIsland() {
-            var async = SceneManager.LoadSceneAsync(islandsSceneIndex, LoadSceneMode.Additive);
-            var waitAFrame = new WaitForEndOfFrame();
-
-            while(!async.isDone) {
-                yield return waitAFrame;
-            }
-            
-            var seaLight = GameObject.FindGameObjectWithTag(seaLightTag);
-            var islandLight = GameObject.FindGameObjectWithTag(islandLightTag);
-            
-            seaLight.GetComponent<Light>().enabled = false;
-            islandLight.GetComponent<Light>().enabled = true;
-
-            islandLight.transform.rotation = seaLight.transform.rotation;
+        public void LoadIsland() {
+            FindObjectOfType<WavesAmbienceController>().TriggerEventStop();
             
             anim.SetTrigger(ArriveAtIsland);
             
-            islandLoader = FindObjectOfType<IslandLevelLoader>();
-            islandLoader.LoadIslands();
+            IslandLoader = FindObjectOfType<IslandLevelLoader>();
+            IslandLoader.LoadIslands();
         }
 
         /// <summary>
         /// Unlocks the player and stops the travel routine.
         /// </summary>
         public void AtIslandArrival() {
+            if(eventWavesEmitter != null) eventWavesEmitter.SetParameter("Fade_Out", 1f);
             FindObjectOfType<PlayerSpawnPositionBasedOnLastScene>().UnlockPlayer();
             shipCamera.m_Priority = 9;
-            SceneManager.UnloadSceneAsync(travelSceneIndex);
-            islandLoader.DisplayIslandType();
+            IslandLoader.DisplayIslandType();
         }
         
         #endregion
@@ -194,13 +211,13 @@ namespace Ship {
         /// </summary>
         public void StartTravelToTown() {
             var popup = Instantiate(popupPrefab).GetComponent<CanvasPopupDialog>();
-            var buttons = new List<CanvasPopupDialog.ButtonSettings>();
+            var buttons = new List<ButtonSettings>();
             FindObjectOfType<PlayerStatsUI>().ShowHideCanvas(false);
             
             buttons.Add(travelButtons[3]);
             buttons.Add(travelButtons[4]);
             
-            popup.SetUpPopup(travelTitleKey, backToTownMessageKey, buttons,
+            popup.SetUpPopup(travelTitleKey.key, backToTownMessageKey.key, buttons,
                               ExecutionState.PopupPause, TravelToTown);
         }
         
@@ -219,9 +236,11 @@ namespace Ship {
                 Destroy(component);
             }
             
-            // TODO: Serialize player stats and inventory before destroying it.
-            
-            Destroy(GameObject.FindWithTag(playerTag));
+            if(eventWavesEmitter != null) eventWavesEmitter.Play();
+
+            var player = FindObjectOfType<PlayerController>();
+            player.UpdateGameMasterPlayerStats();
+            Destroy(player.gameObject);
             
             anim.SetTrigger(DepartToTown);
             shipCamera.m_Priority = 12;
@@ -232,41 +251,15 @@ namespace Ship {
         /// Unloads the island scene and changes active directional light.
         /// </summary>
         public void UnloadIsland() {
-            var islandLight = GameObject.FindGameObjectWithTag(islandLightTag);
-            var seaLight = GameObject.FindGameObjectWithTag(seaLightTag);
-            
-            islandLight.GetComponent<Light>().enabled = false;
-            seaLight.GetComponent<Light>().enabled = true;
-
-            seaLight.transform.rotation = islandLight.transform.rotation;
-            
-            islandLoader.UnloadIslands();
-            islandLoader = null;
-
-            SceneManager.UnloadSceneAsync(islandsSceneIndex);
-
-            StartCoroutine(nameof(LoadTown));
+            FindObjectOfType<IslandMusicController>().TriggerMusicStop();
+            FindObjectOfType<WavesAmbienceController>().TriggerEventStop();
+            FindObjectOfType<ShipTravelLoadingController>().StartLoadingSequence(townSceneIndex);
         }
 
         /// <summary>
         /// Loads the town scene.
         /// </summary>
-        private IEnumerator LoadTown() {
-            var async = SceneManager.LoadSceneAsync(townSceneIndex, LoadSceneMode.Additive);
-            var waitAFrame = new WaitForEndOfFrame();
-
-            while(!async.isDone) {
-                yield return waitAFrame;
-            }
-
-            var seaLight = GameObject.FindGameObjectWithTag(seaLightTag);
-            var townLight = GameObject.FindGameObjectWithTag(townLightTag);
-    
-            seaLight.GetComponent<Light>().enabled = false;
-            townLight.GetComponent<Light>().enabled = true;
-
-            townLight.transform.rotation = seaLight.transform.rotation;
-            
+        public void LoadTown() {
             GameMaster.Instance.SpawnInFrontOfStore = false;
             
             anim.SetTrigger(ArriveAtTown);
@@ -276,9 +269,9 @@ namespace Ship {
         /// Unlocks the player and stops the travel routine.
         /// </summary>
         public void AtTownArrival() {
+            if(eventWavesEmitter != null) eventWavesEmitter.SetParameter("Fade_Out", 1f);
             FindObjectOfType<PlayerSpawnPositionBasedOnLastScene>().UnlockPlayer(true);
             shipCamera.m_Priority = 9;
-            SceneManager.UnloadSceneAsync(travelSceneIndex);
         }
         
         #endregion

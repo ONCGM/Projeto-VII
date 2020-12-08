@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using FMODUnity;
 using UnityEngine;
 
 namespace Entity.Enemies {
@@ -15,7 +16,8 @@ namespace Entity.Enemies {
         [SerializeField, Range(2f, 55f)] private float rangedAttackMaxRange = 50f;
         [SerializeField] private Transform bulletSpawnPosition;
         [SerializeField] private GameObject bulletPrefab;
-        private bool inRoutine;
+        [Header("Extra Sounds")]
+        [SerializeField, EventRef] private string hurtEvent;
         
         #pragma warning restore 0649
         
@@ -31,23 +33,24 @@ namespace Entity.Enemies {
             var waitForFrames = new WaitForSeconds(targetPositionUpdateInterval);
 
             while(currentState == AiState.Attacking) {
-                agent.SetDestination(targetEntity.transform.position);
+                var difference = targetEntity.transform.position - transform.position;
+                agent.SetDestination(targetEntity.transform.position - difference.normalized);
                 yield return waitForFrames;
             }
-            
-            SearchForPlayer();
         }
         
         // Overrides base attack to instead attack with a ranged projectile.
         public override void Attack() {
+            if(Stamina < 5 || IsDead) return;
+            Stamina -= 5;
             StartCoroutine(nameof(AttackRanged));
+            PlaySfx(attackEvent);
         }
 
         /// <summary>
         /// Ranged attack coroutine. Allow the enemy to use a weapon a long ranges.
         /// </summary>
         private IEnumerator AttackRanged() {
-            inRoutine = true;
             agent.speed = settings.baseMoveSpeed * 0.1f;
 
             yield return new WaitUntil(() => !anim.GetCurrentAnimatorClipInfo(0)[0].clip.GetHashCode().Equals(AttackAnim));
@@ -72,9 +75,16 @@ namespace Entity.Enemies {
             
             // ReSharper disable once Unity.InefficientPropertyAccess
             agent.speed = settings.baseMoveSpeed;
-            inRoutine = false;
             isAttacking = false;
             currentState = AiState.Chasing;
+
+            StartCoroutine(nameof(MoveTowardsEntity));
+        }
+
+        // Ads sfx.
+        public override void Damage(int amount, Entity dealer) {
+            base.Damage(amount, dealer);
+            PlaySfx(hurtEvent);
         }
     }
 }
