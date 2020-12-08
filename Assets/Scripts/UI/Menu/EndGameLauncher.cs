@@ -2,6 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using Audio;
+using Entity.Player;
 using Game;
 using UnityEngine;
 using UnityEngine.SceneManagement;
@@ -38,6 +39,10 @@ namespace UI.Menu {
                 if(SceneManager.GetSceneByBuildIndex(i).isLoaded) SceneManager.UnloadSceneAsync(i);
             }
 
+            if(FindObjectOfType<PlayerController>()) FindObjectOfType<PlayerController>().CanMoveOverride = false;
+            if(FindObjectOfType<GameDebugHelper>()) FindObjectOfType<GameDebugHelper>().DebugEnabled = false;
+            if(FindObjectOfType<GameDebugHelper>()) FindObjectOfType<GameDebugHelper>().DebugEnabled = false;
+            if(FindObjectOfType<PlayerStatsUI>()) FindObjectOfType<PlayerStatsUI>().ShowHideCanvas(false);
             if(FindObjectOfType<StoreMusicController>()) FindObjectOfType<StoreMusicController>().TriggerMusicStop();
             if(FindObjectOfType<IslandMusicController>()) FindObjectOfType<IslandMusicController>().TriggerMusicStop();
             if(FindObjectOfType<TownMusicController>()) FindObjectOfType<TownMusicController>().TriggerMusicStop();

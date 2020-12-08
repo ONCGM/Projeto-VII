@@ -34,7 +34,8 @@ namespace UI.Menu {
         [SerializeField] private RectTransform creditsHolderRect;
         private CanvasGroup creditsGroup;
         private EventInstance instance;
-        
+        private bool loadingStarted;
+        private bool allowSkip;
         
         #pragma warning restore 0649
 
@@ -65,6 +66,8 @@ namespace UI.Menu {
                         if(i == creditsSceneIndex) continue;
                         if(SceneManager.GetSceneByBuildIndex(i).isLoaded) SceneManager.UnloadSceneAsync(i);
                     }
+
+                    allowSkip = true;
                 };
         }
 
@@ -96,12 +99,16 @@ namespace UI.Menu {
         /// Goes back to the last loaded scene.
         /// </summary>
         public void GoBackToLastScene() {
-            if(GameMaster.Instance.GameSceneWasLoaded) {
-                SceneManager.LoadSceneAsync(gameSceneIndex, LoadSceneMode.Additive);
-                return;
-            }
+            if(loadingStarted) return;
+            // if(GameMaster.Instance.GameSceneWasLoaded) {
+            //     SceneManager.LoadSceneAsync(gameSceneIndex, LoadSceneMode.Additive);
+            //     return;
+            // }
 
+            
+            if(!allowSkip) return;
             SceneManager.LoadSceneAsync(menuSceneIndex, LoadSceneMode.Additive);
+            loadingStarted = true;
         }
         
         /// <summary>

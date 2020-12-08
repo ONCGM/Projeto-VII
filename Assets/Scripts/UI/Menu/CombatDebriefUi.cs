@@ -101,6 +101,9 @@ namespace UI.Menu {
                 inputModule.enabled = false;
                 inputModule.UpdateModule();
                 inputModule.enabled = true;
+                inputModule.DeactivateModule();
+                inputModule.ActivateModule();
+                inputModule.UpdateModule();
             }
             
             GameMaster.Instance.GameState = state;
@@ -111,6 +114,9 @@ namespace UI.Menu {
                         inputModule.enabled = false;
                         inputModule.UpdateModule();
                         inputModule.enabled = true;
+                        inputModule.DeactivateModule();
+                        inputModule.ActivateModule();
+                        inputModule.UpdateModule();
                     }
                 };
         }
@@ -123,6 +129,9 @@ namespace UI.Menu {
                 inputModule.enabled = false;
                 inputModule.UpdateModule();
                 inputModule.enabled = true;
+                inputModule.DeactivateModule();
+                inputModule.ActivateModule();
+                inputModule.UpdateModule();
             }
             
             DOTween.To(x => buttonsGroup.alpha = x, 0f, 1f, popinAnimationDuration).onComplete = () => {
@@ -136,6 +145,9 @@ namespace UI.Menu {
                     inputModule.enabled = false;
                     inputModule.UpdateModule();
                     inputModule.enabled = true;
+                    inputModule.DeactivateModule();
+                    inputModule.ActivateModule();
+                    inputModule.UpdateModule();
                 }
             };
         }

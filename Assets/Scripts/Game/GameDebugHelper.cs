@@ -15,7 +15,6 @@ namespace Game {
     /// </summary>
     public class GameDebugHelper : MonoBehaviour {
         #pragma warning disable 0649
-        private bool debugEnabled;
         private PlayerController player;
         private CanvasGroup canvasGroup;
 
@@ -27,9 +26,7 @@ namespace Game {
         /// <summary>
         /// Is the debug menu currently enabled.
         /// </summary>
-        public bool DebugEnabled {
-            get => debugEnabled;
-        }
+        public bool DebugEnabled { get; set; }
 
         #pragma warning restore 0649
 
@@ -47,12 +44,16 @@ namespace Game {
         /// </summary>
         private void Update() {
             if(Input.GetKeyDown(KeyCode.F1) && Input.GetKeyDown(KeyCode.Home)) {
-                debugEnabled = !debugEnabled;
-                Debug.Log($"Debug options are {(debugEnabled ? "enabled" : "disabled")}!");
-                DOTween.To(()=> canvasGroup.alpha, x=> canvasGroup.alpha = x, (debugEnabled ? 1f : 0f), fadeAnimationSpeed);
+                DebugEnabled = !DebugEnabled;
+                Debug.Log($"Debug options are {(DebugEnabled ? "enabled" : "disabled")}!");
+                DOTween.To(()=> canvasGroup.alpha, x=> canvasGroup.alpha = x, (DebugEnabled ? 1f : 0f), fadeAnimationSpeed);
+            }
+
+            if(!DebugEnabled) {
+                DOTween.To(()=> canvasGroup.alpha, x=> canvasGroup.alpha = x, (DebugEnabled ? 1f : 0f), fadeAnimationSpeed);
+                return;
             }
             
-            if(!debugEnabled) return;
             LocalizationDebug();
             AddCoins();
             AddXp();
@@ -100,8 +101,8 @@ namespace Game {
         private void AddCoins() {
             if(player == null) player = FindObjectOfType<PlayerController>();
             var coins = player.Coins;
-            if(Input.GetKeyDown(KeyCode.Equals)) player.AddCoins(50);
-            if(Input.GetKeyDown(KeyCode.Minus)) player.AddCoins(-50);
+            if(Input.GetKeyDown(KeyCode.Equals)) player.AddCoins(250);
+            if(Input.GetKeyDown(KeyCode.Minus)) player.AddCoins(-250);
             
             if(coins != player.Coins) Debug.Log($"Player coins changed by {player.Coins - coins}.");
         }
@@ -112,8 +113,8 @@ namespace Game {
         private void AddXp() {
             if(player == null) player = FindObjectOfType<PlayerController>();
             var xp = player.Experience;
-            if(Input.GetKeyDown(KeyCode.Alpha0)) player.AddExperience(50);
-            if(Input.GetKeyDown(KeyCode.Alpha9)) player.AddExperience(-50);
+            if(Input.GetKeyDown(KeyCode.Alpha0)) player.AddExperience(150);
+            if(Input.GetKeyDown(KeyCode.Alpha9)) player.Level--;
             
             if(xp != player.Experience) Debug.Log($"Player XP changed by {player.Experience - xp}.");
         }

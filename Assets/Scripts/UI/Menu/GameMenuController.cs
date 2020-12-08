@@ -138,10 +138,16 @@ namespace UI.Menu {
         /// Removes the canvas. 
         /// </summary>
         private void OnSceneLoaded(Scene scene, LoadSceneMode loadMode) {
-            DOTween.To(() => mainCanvasGroup.alpha, x => mainCanvasGroup.alpha = x, 0.98f, fadeAnimationDuration).onComplete =
-                () => {
-                    DOTween.To(() => mainCanvasGroup.alpha, x => mainCanvasGroup.alpha = x, 0f, fadeAnimationDuration).onComplete = () => DOTween.Kill(gameObject);
-                };
+            for(var i = 0; i < SceneManager.sceneCountInBuildSettings; i++) {
+                if(i == mainMenuSceneIndex) continue;
+                if(SceneManager.GetSceneByBuildIndex(i).isLoaded) SceneManager.UnloadSceneAsync(i);
+            }
+            
+            DOTween.To(() => mainCanvasGroup.alpha, x => mainCanvasGroup.alpha = x, 0f, fadeAnimationDuration).onComplete = () => {
+                DOTween.Kill(gameObject);
+                Destroy(gameObject);
+                SceneManager.sceneLoaded -= OnSceneLoaded;
+            };
         }
     }
 }

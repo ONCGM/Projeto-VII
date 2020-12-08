@@ -12,8 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: dacceaf45c02a3642a905f5f6d4d3c33, type: 3}
   m_Name: NPC_Settings_Poor
   m_EditorClassIdentifier: 
-  amountOfCoins: 75
-  basicStatsMultiplier: 1.05
+  amountOfCoins: 120
+  basicStatsMultiplier: 1.06
   levelVariationBasedOnPlayerLevel: 3
   howManyItemsToBrowse: 7
   chanceToBuySomething: 0.7

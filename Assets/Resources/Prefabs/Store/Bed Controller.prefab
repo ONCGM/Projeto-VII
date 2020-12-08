@@ -62,9 +62,9 @@ MonoBehaviour:
   sleepTriggerCooldown: 1
   wakeUpPosition: {fileID: 6625254985562118543}
   titleKey:
-    key: placeholder
+    key: MENU_POPUP_TITLE_SLEEP
   messageKey:
-    key: placeholder
+    key: MENU_POPUP_MESSAGE_SLEEP
   confirmKey:
     key: MENU_LABEL_CONFIRM_BUTTON
   cancelKey:

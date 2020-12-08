@@ -496,6 +496,10 @@ PrefabInstance:
       propertyPath: textFadeAnimationDuration
       value: 3
       objectReference: {fileID: 0}
+    - target: {fileID: 4434563268108179830, guid: 963b93e7c90819b4892f29f2536c0269, type: 3}
+      propertyPath: finalObjectiveKey.key
+      value: CONTEXT_MAIN_OBJECTIVE
+      objectReference: {fileID: 0}
     - target: {fileID: 7273696219042059627, guid: 963b93e7c90819b4892f29f2536c0269, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0

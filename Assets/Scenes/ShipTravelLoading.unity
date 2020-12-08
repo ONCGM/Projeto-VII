@@ -414,6 +414,30 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 1971650465529375921, guid: dca70ecbed4575e4a9ddc74b24d31eba, type: 3}
+      propertyPath: objectiveKey.key
+      value: CONTEXT_MAIN_OBJECTIVE
+      objectReference: {fileID: 0}
+    - target: {fileID: 1971650465529375921, guid: dca70ecbed4575e4a9ddc74b24d31eba, type: 3}
+      propertyPath: loadingHintKeys.Array.data[0].key
+      value: GAME_HINT_STORE
+      objectReference: {fileID: 0}
+    - target: {fileID: 1971650465529375921, guid: dca70ecbed4575e4a9ddc74b24d31eba, type: 3}
+      propertyPath: loadingHintKeys.Array.data[1].key
+      value: GAME_HINT_SLEEP
+      objectReference: {fileID: 0}
+    - target: {fileID: 1971650465529375921, guid: dca70ecbed4575e4a9ddc74b24d31eba, type: 3}
+      propertyPath: loadingHintKeys.Array.data[2].key
+      value: GAME_HINT_NPC
+      objectReference: {fileID: 0}
+    - target: {fileID: 1971650465529375921, guid: dca70ecbed4575e4a9ddc74b24d31eba, type: 3}
+      propertyPath: delayBetweenEachHint
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 1971650465529375921, guid: dca70ecbed4575e4a9ddc74b24d31eba, type: 3}
+      propertyPath: delayBetweenEachCharacter
+      value: 0.03
+      objectReference: {fileID: 0}
     - target: {fileID: 4107834649820313587, guid: dca70ecbed4575e4a9ddc74b24d31eba, type: 3}
       propertyPath: loadingSceneDelay
       value: 2
@@ -552,6 +576,10 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4107834650328317152, guid: dca70ecbed4575e4a9ddc74b24d31eba, type: 3}
       propertyPath: m_SizeDelta.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6818531990489187022, guid: dca70ecbed4575e4a9ddc74b24d31eba, type: 3}
+      propertyPath: m_AnchoredPosition.y
       value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []

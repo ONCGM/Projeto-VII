@@ -207,9 +207,9 @@ MonoBehaviour:
   largeIslandButtonKey:
     key: MENU_POPUP_BUTTON_LARGE_ISLAND
   cantTravelAtNightTitleKey:
-    key: 
+    key: CONTEXT_TIME_NIGHT
   cantTravelAtNightMessageKey:
-    key: 
+    key: MENU_POPUP_MESSAGE_NIGHT
   popupPrefab: {fileID: 3017782093125859472, guid: ff97a6ef454e32b498a293f927ae08a4, type: 3}
   eventEmitter: {fileID: 883884492133742421}
   eventWavesEmitter: {fileID: 954607443732138696}

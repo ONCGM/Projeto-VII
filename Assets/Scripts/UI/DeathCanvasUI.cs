@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using DG.Tweening;
 using Entity.Player;
 using Game;
+using Localization;
 using TMPro;
 using UI.Localization;
 using UnityEngine;
@@ -23,10 +24,12 @@ namespace UI {
         [SerializeField] private int mainMenuSceneIndex = 1;
         [SerializeField] private LocalizedString youWereKilledByKey;
         [SerializeField] private LocalizedString deathCountKey;
+        [SerializeField] private LocalizedString deathCountEndKey;
 
         [Header("Components")] 
         [SerializeField] private TMP_Text titleText;
         [SerializeField] private TMP_Text deadText;
+        private bool startTransition;
 
         private PlayerController player;
         #pragma warning restore 0649
@@ -34,9 +37,14 @@ namespace UI {
         // Sets up the class.
         private void Awake() {
             player = FindObjectOfType<PlayerController>();
-            deadText.text = $"{youWereKilledByKey.value} {player.LastEnemyToHitPlayer.enemyType.ToString()}. " +
-                            $"{Environment.NewLine} {deathCountKey.value} {GameMaster.Instance.MasterSaveData.playerDeathCount}.";
-            
+            if(LocalizationSystem.CurrentLanguage == LocalizationSystem.Language.Japanese) {
+                deadText.text = $"{player.LastEnemyToHitPlayer.enemyType.ToString()} {youWereKilledByKey.value} " +
+                                $"{Environment.NewLine} {deathCountKey.value} {GameMaster.Instance.MasterSaveData.playerDeathCount} {deathCountEndKey.value}";
+            } else {
+                deadText.text = $"{youWereKilledByKey.value} {player.LastEnemyToHitPlayer.enemyType.ToString()}. " +
+                                $"{Environment.NewLine} {deathCountKey.value} {GameMaster.Instance.MasterSaveData.playerDeathCount} {deathCountEndKey.value}";
+            }
+
             mainCanvasGroup.alpha = 0f;
             textCanvasGroup.alpha = 0f;
             buttonsCanvasGroup.alpha = 0f;
@@ -60,15 +68,19 @@ namespace UI {
         /// Continues the game and sets player back at port.
         /// </summary>
         public void Continue() {
+            if(startTransition) return;
+            if(player == null) player = FindObjectOfType<PlayerController>();
             player.ResetPlayer();
-            DOTween.To(() => mainCanvasGroup.alpha, x => mainCanvasGroup.alpha = x, 0f, fadeAnimationDuration);
+            DOTween.To(() => mainCanvasGroup.alpha, x => mainCanvasGroup.alpha = x, 0f, fadeAnimationDuration).onComplete += () => Destroy(gameObject);
             SceneManager.sceneLoaded -= OnSceneLoaded;
+            startTransition = true;
         }
 
         /// <summary>
         /// Goes back to menu.
         /// </summary>
         public void BackToMenu() {
+            if(startTransition) return;
             DontDestroyOnLoad(gameObject);
             GameMaster.OnReturnToMenu?.Invoke();
             GameMaster.Instance.SaveGame();
@@ -82,6 +94,8 @@ namespace UI {
                         if(SceneManager.GetSceneByBuildIndex(i).isLoaded) SceneManager.UnloadSceneAsync(i);
                     }
                 };
+            
+            startTransition = true;
         }
 
         /// <summary>
@@ -89,8 +103,14 @@ namespace UI {
         /// </summary>
         private void OnSceneLoaded(Scene arg0, LoadSceneMode loadSceneMode) {
             if(arg0.buildIndex != mainMenuSceneIndex) return;
-            DOTween.To(() => mainCanvasGroup.alpha, x => mainCanvasGroup.alpha = x, 0.98f, fadeAnimationDuration * 2f)
+            DOTween.To(() => mainCanvasGroup.alpha, x => mainCanvasGroup.alpha = x, 0.98f, fadeAnimationDuration)
                    .onComplete += () => {
+                
+                for(var i = 0; i < SceneManager.sceneCountInBuildSettings; i++) {
+                    if(i == mainMenuSceneIndex) continue;
+                    if(SceneManager.GetSceneByBuildIndex(i).isLoaded) SceneManager.UnloadSceneAsync(i);
+                }
+                
                 DOTween.To(() => mainCanvasGroup.alpha, x => mainCanvasGroup.alpha = x, 0f,
                            fadeAnimationDuration)
                        .onComplete += () => { Destroy(gameObject); };

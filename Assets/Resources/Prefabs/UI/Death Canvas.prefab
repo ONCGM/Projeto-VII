@@ -1028,9 +1028,11 @@ MonoBehaviour:
   buttonsCanvasGroup: {fileID: 586152183070720034}
   mainMenuSceneIndex: 1
   youWereKilledByKey:
-    key: placeholder
+    key: CONTEXT_MESSAGE_KILLED_BY
   deathCountKey:
-    key: placeholder
+    key: CONTEXT_MESSAGE_KILLED_TIMES
+  deathCountEndKey:
+    key: CONTEXT_MESSAGE_KILLED_TIMES_END
   titleText: {fileID: 586152183091116279}
   deadText: {fileID: 586152183745182039}
 --- !u!1 &586152184386024201

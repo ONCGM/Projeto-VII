@@ -72,6 +72,9 @@ namespace UI.Popups {
                     inputModule.enabled = false;
                     inputModule.UpdateModule();
                     inputModule.enabled = true;
+                    inputModule.DeactivateModule();
+                    inputModule.ActivateModule();
+                    inputModule.UpdateModule();
                 }
             };
         }

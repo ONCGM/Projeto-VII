@@ -12,8 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: dacceaf45c02a3642a905f5f6d4d3c33, type: 3}
   m_Name: NPC_Settings_Rich
   m_EditorClassIdentifier: 
-  amountOfCoins: 300
-  basicStatsMultiplier: 1.05
+  amountOfCoins: 350
+  basicStatsMultiplier: 1.08
   levelVariationBasedOnPlayerLevel: 3
   howManyItemsToBrowse: 5
   chanceToBuySomething: 0.55

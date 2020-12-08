@@ -1254,9 +1254,9 @@ MonoBehaviour:
   eventEmitter: {fileID: 7551783166917763910}
   purchaseEventEmitter: {fileID: 2548048385864751376}
   openStoreTitleKey:
-    key: placeholder
+    key: GAME_ACTION_OPEN
   openStoreMessageKey:
-    key: placeholder
+    key: MENU_POPUP_MESSAGE_OPEN_STORE
   timeAdvanceMessageKey:
     key: MENU_POPUP_MESSAGE_TIME
   confirmButtonKey:
@@ -1266,11 +1266,11 @@ MonoBehaviour:
   cantOpenAtNightTitleKey:
     key: CONTEXT_TIME_NIGHT
   cantOpenAtNightMessageKey:
-    key: placeholder
+    key: MENU_POPUP_MESSAGE_NIGHT
   cantOpenWithoutItemsTitleKey:
     key: GAME_INVENTORY_ITEM_PLURAL
   cantOpenWithoutItemsMessageKey:
-    key: placeholder
+    key: MENU_POPUP_MESSAGE_NO_ITEMS
   popupPrefab: {fileID: 3017782093125859472, guid: ff97a6ef454e32b498a293f927ae08a4, type: 3}
   reportPrefab: {fileID: 1431586088839324939, guid: 11567dafa68467a43b5eac4d60d71ddc, type: 3}
   itemPrefab: {fileID: 6051722543644622443, guid: 02d67b2339c2f9d408cc7a3aead63b60, type: 3}
@@ -4149,6 +4149,10 @@ PrefabInstance:
     - target: {fileID: 3531971781607879720, guid: 0c86ef33e2b72c24bbe538fa97d58cb0, type: 3}
       propertyPath: m_Alpha
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3789096565149604323, guid: 0c86ef33e2b72c24bbe538fa97d58cb0, type: 3}
+      propertyPath: closeStoreMessageKey.key
+      value: MENU_POPUP_MESSAGE_CLOSE_STORE
       objectReference: {fileID: 0}
     - target: {fileID: 4098063183769499137, guid: 0c86ef33e2b72c24bbe538fa97d58cb0, type: 3}
       propertyPath: m_LocalPosition.x

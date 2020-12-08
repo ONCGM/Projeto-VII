@@ -111,9 +111,9 @@ MonoBehaviour:
   firstFloorTeleportPosition: {fileID: 6042591354084013601}
   secondFloorTeleportPosition: {fileID: 6042591354293855926}
   titleKey:
-    key: placeholder
+    key: MENU_POPUP_TITLE_CHANGE_FLOORS
   messageKey:
-    key: placeholder
+    key: MENU_POPUP_MESSAGE_CHANGE_FLOORS
   confirmKey:
     key: MENU_LABEL_CONFIRM_BUTTON
   cancelKey:

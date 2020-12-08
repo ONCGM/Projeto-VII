@@ -88,13 +88,15 @@ namespace Ship {
             travelButtons.Add(new ButtonSettings(cancelButtonKey.key, Highlight, 4));
 
             GameMaster.OnCreditsOpen += () => {
+                if(this == null || GameMaster.Instance.ShipTravel == null) return;
                 GameMaster.Instance.ShipTravel = null;
-                Destroy(gameObject);
+                if(gameObject != null && this != null) Destroy(gameObject);
             };
             
             GameMaster.OnReturnToMenu += () => {
+                if(this == null || GameMaster.Instance.ShipTravel == null) return;
                 GameMaster.Instance.ShipTravel = null;
-                Destroy(gameObject);
+                if(gameObject != null && this != null) Destroy(gameObject);
             };
         }
 

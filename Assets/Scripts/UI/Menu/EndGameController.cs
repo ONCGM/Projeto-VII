@@ -7,6 +7,7 @@ using Entity.Player;
 using FMOD.Studio;
 using FMODUnity;
 using Game;
+using Items;
 using TMPro;
 using UI.Localization;
 using UnityEngine;
@@ -74,7 +75,7 @@ namespace UI.Menu {
         /// </summary>
         private void DisplayObjectiveText() {
             mainText.text = string.Empty;
-            var coinsText = $"{finalObjectiveKey.value} {finalObjectiveAmount + 1} {coinsKey.value}." +
+            var coinsText = $"{finalObjectiveKey.value}" +
                             $" {Environment.NewLine} {totalCoinsKey.value} {GameMaster.Instance.PlayerStats.Coins}";
                 
             DOTween.To(() => mainText.text, x => mainText.text = x, coinsText, textFadeAnimationDuration).onComplete += () => {
@@ -100,8 +101,15 @@ namespace UI.Menu {
         /// Allows the player to go back to main menu.
         /// </summary>
         private void DisplayContinueButton() {
+            SaveSystem.DeleteLoadedFile();
             GameMaster.Instance.SetSaveData(new SaveData());
-            GameMaster.Instance.PlayerStats = new PlayerStats();
+            GameMaster.Instance.PlayerStats = new PlayerStats(){
+            Health = 35, MaxHealth = 35, Stamina = 20, MaxStamina = 20,
+            MeleeDamage = 7, RangedDamage = 5, MovementSpeed = 15,
+            Level = 1, Experience = 0, TotalExperience = 0,
+            Coins = 0, CurrentInventory = new List<InventoryItemEntry>(),
+            CurrentUpgradeLevel = 0
+            };
             GameMaster.Instance.SaveGame();
 
             DOTween.To(() => buttonCanvasGroup.alpha, x => buttonCanvasGroup.alpha = x, 1f, fadeAnimationDuration);

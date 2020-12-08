@@ -126,8 +126,19 @@ namespace UI.Menu {
             masterSlider.value = data.audioMasterVolume;
             musicSlider.value = data.audioMusicVolume;
             sfxSlider.value = data.audioSfxVolume;
+            
+            Invoke(nameof(RemoveGameController), 3f);
+            Invoke(nameof(RemoveGameController), 6f);
         }
 
+        /// <summary>
+        /// Removes the game controller.
+        /// </summary>
+        private void RemoveGameController() {
+            if(FindObjectOfType<GameMenuController>()) {
+                Destroy(FindObjectOfType<GameMenuController>().gameObject);
+            }
+        }
         #endregion
         
         #region Navigation
@@ -326,11 +337,18 @@ namespace UI.Menu {
                 loadGameGroup.interactable = false;
                 SaveSystem.LoadedData = new SaveData();
                 GameMaster.Instance.SetSaveData(new SaveData());
+                GameMaster.Instance.MasterSaveData.currentPlayerStats = new PlayerStats() {
+                    Health = 35, MaxHealth = 35, Stamina = 20, MaxStamina = 20,
+                    MeleeDamage = 7, RangedDamage = 5, MovementSpeed = 15,
+                    Level = 1, Experience = 0, TotalExperience = 0,
+                    Coins = 0, CurrentInventory = new List<InventoryItemEntry>(),
+                    CurrentUpgradeLevel = 0
+                };
                 GameMaster.Instance.SaveGame();
                 GameMaster.Instance.PlayerStats = new PlayerStats() {
                     Health = 35, MaxHealth = 35, Stamina = 20, MaxStamina = 20,
                     MeleeDamage = 7, RangedDamage = 5, MovementSpeed = 15,
-                    Level = 0, Experience = 0, TotalExperience = 0,
+                    Level = 1, Experience = 0, TotalExperience = 0,
                     Coins = 0, CurrentInventory = new List<InventoryItemEntry>(),
                     CurrentUpgradeLevel = 0
                 };

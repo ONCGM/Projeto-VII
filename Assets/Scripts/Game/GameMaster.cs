@@ -306,7 +306,10 @@ namespace Game {
             MasterSaveData.currentPlayerStats = PlayerStats;
             MasterSaveData.gameDay = CurrentGameDay;
             MasterSaveData.dialogsCleared = DialogsCleared;
-            MasterSaveData.currentInventoryIds = ItemIdToItemEntry.ReturnIdsFromEntries(MasterSaveData.currentPlayerStats.CurrentInventory);
+            if(MasterSaveData.currentPlayerStats.CurrentInventory != null &&
+               MasterSaveData.currentPlayerStats.CurrentInventory.Count > 0) {
+                MasterSaveData.currentInventoryIds = ItemIdToItemEntry.ReturnIdsFromEntries(MasterSaveData.currentPlayerStats.CurrentInventory);
+            }
             SaveSystem.LoadedData = MasterSaveData;
 
             if(Time.time < lastTimeOfSave + delayBetweenSaves) return;

@@ -1319,7 +1319,7 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 8384049594753507638}
   m_HandleRect: {fileID: 8384049594753507639}
   m_Direction: 2
-  m_Value: 0
+  m_Value: 1
   m_Size: 1
   m_NumberOfSteps: 0
   m_OnValueChanged:
@@ -1626,7 +1626,7 @@ MonoBehaviour:
   gameSavedTitleKey:
     key: MENU_IO_SAVE_GAME
   gameSavedMessageKey:
-    key: placeholder
+    key: MENU_IO_SAVED
   backToMenuTitleKey:
     key: MENU_LABEL_MAINMENU
   backToMenuMessageKey:
@@ -1636,7 +1636,7 @@ MonoBehaviour:
   quitGameMessageKey:
     key: MENU_LABEL_QUIT_CONFIRM
   gameSaveProgressSavedKey:
-    key: placeholder
+    key: MENU_IO_WILL_SAVE
   confirmButtonKey:
     key: MENU_LABEL_CONFIRM_BUTTON
   cancelButtonKey:

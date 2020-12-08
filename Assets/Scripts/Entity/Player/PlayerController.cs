@@ -19,7 +19,8 @@ namespace Entity.Player {
     /// </summary>
     public class PlayerController : Entity {
         #pragma warning disable 0649
-        [Header("Movement")]
+        [Header("Movement")] 
+        [SerializeField] private bool isDead;
         [SerializeField, Range(0f, 25f)] private float movementSpeed = 15f;
         [SerializeField, Range(0f, 0.8f)] private float storeMovementSpeedReduction = 0.4f;
         [SerializeField, Range(0f, 2f)] private float rotationSpeed = 0.1f;
@@ -47,6 +48,7 @@ namespace Entity.Player {
         [Header("Inventory")] [SerializeField] private int playerInventorySize = 10;
 
         [SerializeField] private Inventory inventory;
+        
 
         /// <summary>
         /// The player's inventory.
@@ -71,6 +73,8 @@ namespace Entity.Player {
             Animator.StringToHash("Combo_2")
         };
 
+        
+        private static readonly int AnimReset = Animator.StringToHash("Death Reset");
         private static readonly int AnimSpecial = Animator.StringToHash("Special");
         private static readonly int AnimDead = Animator.StringToHash("Dead");
         private static readonly int AnimDamaged = Animator.StringToHash("Damaged");
@@ -188,12 +192,15 @@ namespace Entity.Player {
 
         // "Respawns" the player.
         public void ResetPlayer() {
-            anim.StopPlayback();
-            anim.StartPlayback();
+            anim.ResetTrigger(AnimDead);
+            anim.ResetTrigger(AnimDamaged);
+            anim.ResetTrigger(AnimSpecial);
+            anim.SetTrigger(AnimReset);
             Health = maxHealth;
             CanMoveOverride = true;
             CanMove = true;
             transform.position = FindObjectOfType<PlayerSpawnPositionBasedOnLastScene>().portSpawnPosition.position;
+            isDead = false;
         }
 
         // OnEnable Unity Event, enables input.
@@ -234,13 +241,16 @@ namespace Entity.Player {
         }
         
         public override void Kill() {
+            if(isDead) return;
             anim.SetTrigger(AnimDead);
             CanMoveOverride = false;
             GameMaster.Instance.MasterSaveData.playerDeathCount++;
             GameMaster.Instance.SaveGame();
+            isDead = true;
         }
 
         public override void Damage(int amount, Entity dealer) {
+            if(isDead) return;
             VibrateController(0.2f, 0.8f, 0.8f);
             anim.SetTrigger(AnimDamaged);
             if(dealer.GetComponent<Enemy>()) LastEnemyToHitPlayer = dealer.GetComponent<Enemy>();
@@ -304,7 +314,7 @@ namespace Entity.Player {
         /// Recovers the player stamina at a steady rate.
         /// </summary>
         private void RecoverStamina() { 
-            Stamina = Mathf.Clamp(Stamina + 1, 0, MaxStamina);
+            Stamina = Mathf.Clamp(Stamina + 2, 0, MaxStamina);
             PlayerStatsUI.UpdateUiValues?.Invoke();
         }
         
@@ -467,8 +477,8 @@ namespace Entity.Player {
         /// Updates the stats in the game master to reflect the player progression.
         /// </summary>
         public void LoadGameMasterPlayerStats() {
-            var stats = GameMaster.Instance.PlayerStats;
-            
+            PlayerStats stats = GameMaster.Instance.PlayerStats;
+
             Health = stats.Health;
             MaxHealth = stats.MaxHealth;
             Stamina = stats.Stamina;
@@ -480,7 +490,9 @@ namespace Entity.Player {
             Experience = stats.Experience;
             Coins = stats.Coins;
             playerInventorySize = stats.InventorySize;
-            inventory.ItemsInInventory = new List<InventoryItemEntry>(stats.CurrentInventory);
+            if(stats.CurrentInventory.Count > 0)
+                inventory.ItemsInInventory = new List<InventoryItemEntry>(stats.CurrentInventory);
+            else inventory.ItemsInInventory = new List<InventoryItemEntry>();
 
             inventory.OnInventoryUpdate?.Invoke();
 

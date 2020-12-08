@@ -201,7 +201,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   localizedText:
-    key: placeholder
+    key: MENU_TITLE_MERCHANT
 --- !u!114 &203904863059223406
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -861,7 +861,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   localizedText:
-    key: placeholder
+    key: GAME_INVENTORY_SELL
 --- !u!114 &203904864123621657
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1809,7 +1809,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   localizedText:
-    key: placeholder
+    key: MENU_LABEL_CANCEL
 --- !u!114 &1973783362865341877
 MonoBehaviour:
   m_ObjectHideFlags: 0
