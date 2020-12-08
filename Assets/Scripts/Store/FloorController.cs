@@ -91,7 +91,7 @@ namespace Store {
 
             popupDialog.SetUpPopup(titleKey.key, messageKey.key, travelButtons, ExecutionState.PopupPause, i => {
                 if(i <= 0) TeleportPlayerToNextFloor();
-                else FloorTravelTrigger.OnResetTriggerLock.Invoke();
+                else FloorTravelTrigger.OnResetTriggerLock?.Invoke();
             });
         }
         
@@ -123,7 +123,7 @@ namespace Store {
 
             player.CanMove = true;
             player.GetComponent<NavMeshAgent>().enabled = true;
-            FloorTravelTrigger.OnResetTriggerLock.Invoke();
+            FloorTravelTrigger.OnResetTriggerLock?.Invoke();
         }
         
         // Clears the action.

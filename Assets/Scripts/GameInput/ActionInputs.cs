@@ -84,6 +84,17 @@ public class @ActionInputs : IInputActionCollection, IDisposable
                 },
                 {
                     ""name"": ""positive"",
+                    ""id"": ""c5d24656-4a2c-437c-ba01-18c6819776d6"",
+                    ""path"": ""<Keyboard>/rightArrow"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Horizontal"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": ""positive"",
                     ""id"": ""5ac22407-8266-4655-aa5d-0e8d8a3b2f0a"",
                     ""path"": ""<Gamepad>/leftStick/right"",
                     ""interactions"": """",
@@ -97,6 +108,17 @@ public class @ActionInputs : IInputActionCollection, IDisposable
                     ""name"": ""negative"",
                     ""id"": ""37182348-a0d4-4664-a62f-a99b6f9cdfb0"",
                     ""path"": ""<Keyboard>/a"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Horizontal"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": ""negative"",
+                    ""id"": ""d029478a-cf43-43f5-8480-2e7e0b8dc6bb"",
+                    ""path"": ""<Keyboard>/leftArrow"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",
@@ -139,6 +161,17 @@ public class @ActionInputs : IInputActionCollection, IDisposable
                 },
                 {
                     ""name"": ""positive"",
+                    ""id"": ""6bbd79f3-d3d4-49eb-add0-5b43b7e45550"",
+                    ""path"": ""<Keyboard>/upArrow"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Vertical"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": ""positive"",
                     ""id"": ""7f460449-4c3a-4b40-99be-ce040cbd15a0"",
                     ""path"": ""<Gamepad>/leftStick/up"",
                     ""interactions"": """",
@@ -152,6 +185,17 @@ public class @ActionInputs : IInputActionCollection, IDisposable
                     ""name"": ""negative"",
                     ""id"": ""98c06bb3-65f7-4e29-a4f9-066a8efdf10d"",
                     ""path"": ""<Keyboard>/s"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Vertical"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": ""negative"",
+                    ""id"": ""941338cc-cd25-4db1-8cdf-ff8d900e5a4f"",
+                    ""path"": ""<Keyboard>/downArrow"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",

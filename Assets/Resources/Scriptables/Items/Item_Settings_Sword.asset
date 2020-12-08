@@ -17,8 +17,8 @@ MonoBehaviour:
   minimumPlayerLevelToSpawn: 23
   itemId: 14
   itemNameKey: CONTEXT_ITEM_SWORD
-  itemDescriptionKey: Item_Desc_Sword
-  itemEffects: Item_Effects_Sword
+  itemDescriptionKey: CONTEXT_ITEM_DESCRIPTION_SWORD
+  itemEffects: CONTEXT_ITEM_DESCRIPTION_SWORD
   maxStackQuantity: 1
   itemImage: {fileID: 21300000, guid: dae286545384a7144980db542bf786f9, type: 3}
   initialValue: 189

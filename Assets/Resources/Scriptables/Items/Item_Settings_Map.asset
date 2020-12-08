@@ -17,8 +17,8 @@ MonoBehaviour:
   minimumPlayerLevelToSpawn: 0
   itemId: 9
   itemNameKey: GAME_MAP
-  itemDescriptionKey: Item_Desc_Map
-  itemEffects: Item_Effects_Map
+  itemDescriptionKey: CONTEXT_ITEM_DESCRIPTION_MAP
+  itemEffects: CONTEXT_ITEM_DESCRIPTION_MAP
   maxStackQuantity: 1
   itemImage: {fileID: 21300000, guid: 8c821cfa62ad287449225c830f725180, type: 3}
   initialValue: 50

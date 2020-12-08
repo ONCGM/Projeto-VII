@@ -17,11 +17,11 @@ MonoBehaviour:
   minimumPlayerLevelToSpawn: 2
   itemId: 3
   itemNameKey: CONTEXT_ITEM_BOOK
-  itemDescriptionKey: Item_Desc_Book
-  itemEffects: Item_Effects_Book
+  itemDescriptionKey: CONTEXT_ITEM_DESCRIPTION_BOOK
+  itemEffects: CONTEXT_ITEM_DESCRIPTION_BOOK
   maxStackQuantity: 1
   itemImage: {fileID: 21300000, guid: ac472245e89e60b428ac2b2173d1a35b, type: 3}
   initialValue: 25
-  itemRarity: 0.5
+  itemRarity: 0.65
   hasEffect: 0
   effectAmount: 0

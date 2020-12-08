@@ -17,8 +17,8 @@ MonoBehaviour:
   minimumPlayerLevelToSpawn: 18
   itemId: 5
   itemNameKey: CONTEXT_ITEM_GEM
-  itemDescriptionKey: Item_Desc_Gem
-  itemEffects: Item_Effects_Gem
+  itemDescriptionKey: CONTEXT_ITEM_DESCRIPTION_GEM
+  itemEffects: CONTEXT_ITEM_DESCRIPTION_GEM
   maxStackQuantity: 1
   itemImage: {fileID: 21300000, guid: 37dc1b07228676b4d821842c40a90d65, type: 3}
   initialValue: 500

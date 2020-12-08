@@ -40,8 +40,11 @@ namespace UI {
             
             icon.sprite = itemInfo.ItemSettings.itemImage;
             title.text = $"{LocalizationSystem.GetLocalizedValue(itemInfo.ItemSettings.itemNameKey)} x {itemInfo.Stack}";
-            description.text = LocalizationSystem.GetLocalizedValue(itemInfo.ItemSettings.itemDescriptionKey);
-            
+            description.text = item.ItemSettings.hasEffect
+                                   ? $"{LocalizationSystem.GetLocalizedValue(itemInfo.ItemSettings.itemDescriptionKey)} " +
+                                     $"{Environment.NewLine} {LocalizationSystem.GetLocalizedValue(itemInfo.ItemSettings.itemEffects)}"
+                                   : LocalizationSystem.GetLocalizedValue(itemInfo.ItemSettings.itemDescriptionKey);
+
             if(item.ItemSettings.hasEffect) {
                 consume.onClick.AddListener(item.ItemSettings.ApplyEffect);
             } else {

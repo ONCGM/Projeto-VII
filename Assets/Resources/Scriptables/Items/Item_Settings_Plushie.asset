@@ -16,9 +16,9 @@ MonoBehaviour:
   itemModel: {fileID: 8913448247219037676, guid: b64dfbe1227f3d04e9b4fe44ad7d6b68, type: 3}
   minimumPlayerLevelToSpawn: 20
   itemId: 11
-  itemNameKey: GAME_INVENTORY_ITEM
-  itemDescriptionKey: Item_Desc_Plushie
-  itemEffects: Item_Effects_Plushie
+  itemNameKey: CONTEXT_ITEM_PLUSHIE
+  itemDescriptionKey: CONTEXT_ITEM_DESCRIPTION_PLUSHIE
+  itemEffects: CONTEXT_ITEM_DESCRIPTION_PLUSHIE
   maxStackQuantity: 1
   itemImage: {fileID: 21300000, guid: de98ad294b135a04fb08f18331df396c, type: 3}
   initialValue: 115

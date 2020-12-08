@@ -488,6 +488,14 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 4434563268108179830, guid: 963b93e7c90819b4892f29f2536c0269, type: 3}
+      propertyPath: fadeAnimationDuration
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 4434563268108179830, guid: 963b93e7c90819b4892f29f2536c0269, type: 3}
+      propertyPath: textFadeAnimationDuration
+      value: 3
+      objectReference: {fileID: 0}
     - target: {fileID: 7273696219042059627, guid: 963b93e7c90819b4892f29f2536c0269, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0

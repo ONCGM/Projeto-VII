@@ -16,9 +16,9 @@ MonoBehaviour:
   itemModel: {fileID: 2153902071911852467, guid: d8de0e76d1b9c2f44a4a9ee88d3f7ed2, type: 3}
   minimumPlayerLevelToSpawn: 0
   itemId: 7
-  itemNameKey: GAME_INVENTORY_ITEM
-  itemDescriptionKey: Item_Desc_Helm
-  itemEffects: Item_Effects_Helm
+  itemNameKey: CONTEXT_ITEM_HELM
+  itemDescriptionKey: CONTEXT_ITEM_DESCRIPTION_HELM
+  itemEffects: CONTEXT_ITEM_DESCRIPTION_HELM
   maxStackQuantity: 1
   itemImage: {fileID: 21300000, guid: 9530a1501888d924894cde938cea976b, type: 3}
   initialValue: 75

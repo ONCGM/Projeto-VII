@@ -88,7 +88,7 @@ namespace Entity.NPC {
             
             for(var i = 0; i < itemsToCreate; i++) {
                 if(npcInventory.ItemsInInventory.Count < npcInventory.InventorySize - 1) npcInventory.
-                    AddItemEntry(new InventoryItemEntry(usableItems[Random.Range(0, usableItems.Count)]));
+                    AddItemEntry(new InventoryItemEntry(usableItems[Random.Range(0, usableItems.Count)]), 1, false);
             }
         }
 
@@ -243,7 +243,7 @@ namespace Entity.NPC {
         /// </summary>
         private void AddToStoreInventory(InventoryItemEntry itemEntry) {
             if(npcInventory.ItemsInInventory.Count >= merchantInventorySize) return;
-            npcInventory.AddItemEntry(itemEntry);
+            npcInventory.AddItemEntry(itemEntry, 1, false);
             player.Inventory.RemoveItemEntry(itemEntry);
             UpdateItemDisplays();
         }
@@ -253,7 +253,7 @@ namespace Entity.NPC {
         /// </summary>
         private void RemoveFromStoreInventory(InventoryItemEntry itemEntry) {
             if(player.Inventory.ItemsInInventory.Count >= player.Inventory.InventorySize) return;
-            player.Inventory.AddItemEntry(itemEntry);
+            player.Inventory.AddItemEntry(itemEntry, 1, false);
             npcInventory.RemoveItemEntry(itemEntry);
             selectedItems.Add(itemEntry.ItemSettings);
             UpdateItemDisplays();

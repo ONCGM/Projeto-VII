@@ -435,7 +435,7 @@ namespace Store {
         /// </summary>
         private void AddToStoreInventory(InventoryItemEntry itemEntry) {
             if(StoreInventory.ItemsInInventory.Count >= storeInventorySize) return;
-            StoreInventory.AddItemEntry(itemEntry);
+            StoreInventory.AddItemEntry(itemEntry, 1, false);
             PlayerDuplicateInventory.RemoveItemEntry(itemEntry);
             UpdateItemDisplays();
         }
@@ -445,7 +445,7 @@ namespace Store {
         /// </summary>
         private void RemoveFromStoreInventory(InventoryItemEntry itemEntry) {
             if(PlayerDuplicateInventory.ItemsInInventory.Count >= PlayerDuplicateInventory.InventorySize) return;
-            PlayerDuplicateInventory.AddItemEntry(itemEntry);
+            PlayerDuplicateInventory.AddItemEntry(itemEntry, 1, false);
             StoreInventory.RemoveItemEntry(itemEntry);
             UpdateItemDisplays();
         }

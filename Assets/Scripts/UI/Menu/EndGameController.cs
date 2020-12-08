@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using Audio;
 using DG.Tweening;
+using Entity.Player;
 using FMOD.Studio;
 using FMODUnity;
 using Game;
@@ -100,6 +101,7 @@ namespace UI.Menu {
         /// </summary>
         private void DisplayContinueButton() {
             GameMaster.Instance.SetSaveData(new SaveData());
+            GameMaster.Instance.PlayerStats = new PlayerStats();
             GameMaster.Instance.SaveGame();
 
             DOTween.To(() => buttonCanvasGroup.alpha, x => buttonCanvasGroup.alpha = x, 1f, fadeAnimationDuration);

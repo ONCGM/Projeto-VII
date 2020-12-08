@@ -16,12 +16,12 @@ MonoBehaviour:
   itemModel: {fileID: 1586735804636865550, guid: 5cb89fbb7b1c2b543ab050e56cc93fd2, type: 3}
   minimumPlayerLevelToSpawn: 0
   itemId: 1
-  itemNameKey: CONTEXT_ITEM_COND_RUSTY
-  itemDescriptionKey: Item_Desc_Anchor
-  itemEffects: Item_Effects_Anchor
+  itemNameKey: CONTEXT_ITEM_ANCHOR
+  itemDescriptionKey: CONTEXT_ITEM_DESCRIPTION_ANCHOR
+  itemEffects: CONTEXT_ITEM_DESCRIPTION_ANCHOR
   maxStackQuantity: 1
   itemImage: {fileID: 21300000, guid: ac6dc1292bce99f40bcecc461083510d, type: 3}
   initialValue: 50
-  itemRarity: 0.9
+  itemRarity: 0.75
   hasEffect: 0
   effectAmount: 0
