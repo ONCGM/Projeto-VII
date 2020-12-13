@@ -159,12 +159,16 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 1024
   settings: {fileID: 11400000, guid: c288be17c299454488341bf198e4d273, type: 2}
+  enemyType: 1
   targetPositionUpdateInterval: 0.1
   patrollingPlayerSearchFrequency: 2
   patrollingTargetPositionTolerance: 0.3
   chanceToDrop: 0.1
   itemsToDrop: []
+  maxAmountOfCoinsToDrop: 55
   DamageCanvasPrefab: {fileID: 8168437462130401804, guid: 8bb4a911fd662ec4e80d3d9b635f6d3f, type: 3}
+  eliteMaterial: {fileID: 2100000, guid: e40b82bf140a396409f382c7b8c86025, type: 2}
+  enemyMeshRenderer: {fileID: 4753899010477414993}
   attackEvent: event:/SFX/Enemies_Events/Enemy_Pirate_Attack_Ranged
   deathEvent: event:/SFX/Enemies_Events/Enemy_Pirate_Death
   footstepEvent: event:/SFX/Enemies_Events/Enemy_Pirate_Walk
@@ -544,5 +548,10 @@ GameObject:
 --- !u!4 &7484818559428877165 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: a5468f61530b8204d95bc0a7bb33f0b7, type: 3}
+  m_PrefabInstance: {fileID: 6941687152149216390}
+  m_PrefabAsset: {fileID: 0}
+--- !u!137 &4753899010477414993 stripped
+SkinnedMeshRenderer:
+  m_CorrespondingSourceObject: {fileID: 2426576368824837847, guid: a5468f61530b8204d95bc0a7bb33f0b7, type: 3}
   m_PrefabInstance: {fileID: 6941687152149216390}
   m_PrefabAsset: {fileID: 0}

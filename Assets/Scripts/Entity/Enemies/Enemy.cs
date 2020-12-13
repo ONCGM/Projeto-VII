@@ -40,6 +40,9 @@ namespace Entity.Enemies {
         
         [Header("Other")]
         [SerializeField] protected GameObject DamageCanvasPrefab;
+
+        [SerializeField] protected Material eliteMaterial;
+        [SerializeField] protected SkinnedMeshRenderer enemyMeshRenderer;
         
         [Header("Sounds")]
         [SerializeField, EventRef] protected string attackEvent;
@@ -123,6 +126,11 @@ namespace Entity.Enemies {
             var isElite = (Random.value < settings.chanceToSpawnAsElite) && canBeElite;
             var enemyLevel = Mathf.Max(Random.Range(GameMaster.Instance.PlayerStats.Level - settings.levelVariationBasedOnPlayerLevel, 
                                                     GameMaster.Instance.PlayerStats.Level + settings.levelVariationBasedOnPlayerLevel), 1);
+
+            if(isElite) {
+                enemyMeshRenderer.material = eliteMaterial;
+            }
+            
             Level = enemyLevel;
             
             Health = settings.baseMaxHealth;
@@ -177,13 +185,13 @@ namespace Entity.Enemies {
                 yield break;
             }
             
-            if(agent != null && agent.isOnNavMesh) agent.SetDestination(targetEntity.transform.position);
+            if(agent != null && agent.isOnNavMesh && targetEntity != null) agent.SetDestination(targetEntity.transform.position);
             
-            while(Vector3.Distance(transform.position, targetEntity.transform.position) > settings.attackingRange) {
+            while(targetEntity != null && Vector3.Distance(transform.position, targetEntity.transform.position) > settings.attackingRange) {
                 if(agent != null && agent.isOnNavMesh) agent.SetDestination(targetEntity.transform.position);
                 yield return waitForFrames;
 
-                if(Vector3.Distance(transform.position, targetEntity.transform.position) < settings.spottingRange) continue;
+                if(targetEntity != null && Vector3.Distance(transform.position, targetEntity.transform.position) < settings.spottingRange) continue;
                 targetEntity = null;
                 currentState = AiState.Idle;
                 isChasing = false;
@@ -372,32 +380,32 @@ namespace Entity.Enemies {
         /// </summary>
         protected virtual void GenerateDrop() {
             if(settings.chanceToDropItem >= Random.value) return;
-            var availableItems = itemsToDrop.FindAll(itemSettings =>
-                                                         GameMaster.Instance.PlayerStats.Level >=
-                                                         itemSettings.minimumPlayerLevelToSpawn);
             var amountOfCoins =
                 Mathf.RoundToInt(Random.Range(2,
                                               Mathf.Lerp(25, maxAmountOfCoinsToDrop,
-                                                         Mathf.InverseLerp(0, 30,
+                                                         Mathf.InverseLerp(0, 30, 
                                                                            GameMaster.Instance.PlayerStats.Level))) *
                                  GameMaster.Instance.GameDifficultyReversed);
+            
+            
+            var availableItems = itemsToDrop.FindAll(itemSettings =>
+                                                         GameMaster.Instance.PlayerStats.Level >=
+                                                         itemSettings.minimumPlayerLevelToSpawn);
+            
 
             if(availableItems.Count < 1) {
-                FindObjectOfType<PlayerController>()
-                    .AddCoins(amountOfCoins);
+                FindObjectOfType<PlayerController>().AddCoins(amountOfCoins);
                 return;
             }
 
 
             var rng = Random.value;
             var possibleItems = availableItems.FindAll(itemSettings => itemSettings.itemRarity >= rng);
+            
+            if(possibleItems.Count < 1) return;
+            
             possibleItems = new List<ItemSettings>(possibleItems.OrderBy(x => x.itemRarity));
             var selectedItem = rng >= 0.5f ? possibleItems?.First() : possibleItems[Random.Range(0, possibleItems.Count)];
-
-            if(availableItems.Count < 1) {
-                FindObjectOfType<PlayerController>()
-                    .AddCoins(amountOfCoins);
-            }
 
             if(selectedItem == null) return;
                 Instantiate(selectedItem.itemPrefab, transform.position, Quaternion.identity).GetComponent<ItemDrop>()
@@ -488,20 +496,20 @@ namespace Entity.Enemies {
         }
 
         #if UNITY_EDITOR
-        private void OnDrawGizmos() {
-            Gizmos.color = targetEntity == null ? Color.red : Color.green;
-            
-            if(!Application.isPlaying) return;
-            if(!agent.hasPath) return;
-            
-            for(int i = 0; i < agent.path.corners.Length - 1; i++) {
-                Gizmos.DrawLine(agent.path.corners[i], agent.path.corners[i + 1]);
-            }
-            
-            Gizmos.color = Color.blue;
-            
-            Gizmos.DrawWireSphere(transform.position, settings.attackingRange);
-        }
+        // private void OnDrawGizmos() {
+        //     Gizmos.color = targetEntity == null ? Color.red : Color.green;
+        //     
+        //     if(!Application.isPlaying) return;
+        //     if(!agent.hasPath) return;
+        //     
+        //     for(int i = 0; i < agent.path.corners.Length - 1; i++) {
+        //         Gizmos.DrawLine(agent.path.corners[i], agent.path.corners[i + 1]);
+        //     }
+        //     
+        //     Gizmos.color = Color.blue;
+        //     
+        //     Gizmos.DrawWireSphere(transform.position, settings.attackingRange);
+        // }
         #endif
     }
 }

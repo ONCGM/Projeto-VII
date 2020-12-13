@@ -344,7 +344,6 @@ namespace UI.Menu {
                     Coins = 0, CurrentInventory = new List<InventoryItemEntry>(),
                     CurrentUpgradeLevel = 0
                 };
-                GameMaster.Instance.SaveGame();
                 GameMaster.Instance.PlayerStats = new PlayerStats() {
                     Health = 35, MaxHealth = 35, Stamina = 20, MaxStamina = 20,
                     MeleeDamage = 7, RangedDamage = 5, MovementSpeed = 15,
@@ -356,6 +355,8 @@ namespace UI.Menu {
                 GameMaster.Instance.CurrentGameDay = 1;
                 GameMaster.Instance.CurrentTimeOfDay = TimeOfDay.Morning;
                 GameMaster.Instance.GameSceneWasLoaded = false;
+                
+                GameMaster.Instance.SaveGame();
                 SceneManager.LoadSceneAsync(loadingSceneIndex, LoadSceneMode.Additive);
             });
 

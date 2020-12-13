@@ -119,6 +119,7 @@ namespace Store {
                 player.transform.rotation = firstFloorTeleportPosition.rotation;
                 secondFloorCamera.enabled = false;
                 currentFloor = 0;
+                FindObjectOfType<BedController>().canTriggerSleep = true;
             }
 
             player.CanMove = true;

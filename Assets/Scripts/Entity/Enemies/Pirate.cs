@@ -28,15 +28,46 @@ namespace Entity.Enemies {
         }
 
         protected override IEnumerator MoveTowardsEntity() {
-            yield return base.MoveTowardsEntity();
+            currentState = AiState.Chasing;
+            isChasing = true;
+            isAttacking = false;
+            isPatrolling = false;
             
             var waitForFrames = new WaitForSeconds(targetPositionUpdateInterval);
+            
+            if(targetEntity == null) {
+                currentState = AiState.Idle;
+                isChasing = false;
+                SearchForPlayer();
+                yield break;
+            }
 
-            while(currentState == AiState.Attacking) {
+            if(agent != null && agent.isOnNavMesh && targetEntity != null) {
                 var difference = targetEntity.transform.position - transform.position;
                 agent.SetDestination(targetEntity.transform.position - difference.normalized);
-                yield return waitForFrames;
             }
+            
+            while(targetEntity != null && Vector3.Distance(transform.position, targetEntity.transform.position) > settings.attackingRange) {
+                if(agent != null && agent.isOnNavMesh) {
+                    var difference = targetEntity.transform.position - transform.position;
+                    agent.SetDestination(targetEntity.transform.position - difference.normalized);
+                }
+                
+                yield return waitForFrames;
+
+                if(targetEntity != null && Vector3.Distance(transform.position, targetEntity.transform.position) < settings.spottingRange) continue;
+                targetEntity = null;
+                currentState = AiState.Idle;
+                isChasing = false;
+                StartCoroutine(nameof(PatrolArea));
+                yield break;
+            }
+            
+            anim.SetTrigger(AttackAnim);
+            currentState = AiState.Attacking;
+            isChasing = false;
+            isAttacking = true;
+            isPatrolling = false;
         }
         
         // Overrides base attack to instead attack with a ranged projectile.
@@ -51,9 +82,9 @@ namespace Entity.Enemies {
         /// Ranged attack coroutine. Allow the enemy to use a weapon a long ranges.
         /// </summary>
         private IEnumerator AttackRanged() {
-            agent.speed = settings.baseMoveSpeed * 0.1f;
+            agent.speed = settings.baseMoveSpeed * 0.02f;
 
-            yield return new WaitUntil(() => !anim.GetCurrentAnimatorClipInfo(0)[0].clip.GetHashCode().Equals(AttackAnim));
+            yield return new WaitUntil(() => anim.GetCurrentAnimatorClipInfo(0)[0].clip.GetHashCode().Equals(AttackAnim));
             
             var angleOffsetPerBullet = bulletSpreadAngle / rangedBulletsPerAttack;
             var position = bulletSpawnPosition.position;

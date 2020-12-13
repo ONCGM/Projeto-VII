@@ -209,7 +209,7 @@ namespace UI.Menu {
             eventEmitter.Play();
             yield return waitForStats;
             
-            DOTween.To(x => coinsText.text = $"{stats.Coins} (+{Mathf.RoundToInt(x)})", 0, coinDifference, statsAnimationDuration);
+            DOTween.To(x => coinsText.text = $"{stats.Coins} ({(stats.Coins > 0 ? "+" : string.Empty)}{Mathf.RoundToInt(x)})", 0, coinDifference, statsAnimationDuration);
             eventEmitter.Play();
             yield return waitForStats;
             
@@ -221,23 +221,23 @@ namespace UI.Menu {
             // ReSharper disable once ConvertSwitchStatementToSwitchExpression
             switch(LocalizationSystem.CurrentLanguage) {
                 case LocalizationSystem.Language.Portuguese_Brazil:
-                    upgradeText = player.Level >= player.MaxLevel ? $"{levelKey.value} {maxLevelKey.value}" :
-                                           $"{nextKey.value} {upgradeKey.value} {Environment.NewLine} " +
-                                           $"{particleKey.value} {levelKey.value} {levelsRequired}";
+                    upgradeText = levelsRequired >= player.MaxLevel ? $"{levelKey.value} {maxLevelKey.value}" :
+                                      $"{nextKey.value} {upgradeKey.value} {Environment.NewLine} " +
+                                      $"{particleKey.value} {levelKey.value} {levelsRequired}";
                     break;
                 case LocalizationSystem.Language.English:
-                    upgradeText = player.Level >= player.MaxLevel ? $"{maxLevelKey.value} {levelKey.value}" :
-                                           $"{nextKey.value} {upgradeKey.value} {Environment.NewLine} " +
-                                           $"{particleKey.value} {levelKey.value} {levelsRequired}";
+                    upgradeText = levelsRequired >= player.MaxLevel ? $"{maxLevelKey.value} {levelKey.value}" :
+                                      $"{nextKey.value} {upgradeKey.value} {Environment.NewLine} " +
+                                      $"{particleKey.value} {levelKey.value} {levelsRequired}";
                     break;
                 case LocalizationSystem.Language.Japanese:
-                    upgradeText = player.Level >= player.MaxLevel ? $"{maxLevelKey.value} {levelKey.value}" :
-                                           $"{levelKey.value} {levelsRequired} {particleKey.value} {Environment.NewLine} " +
-                                           $"{nextKey.value} {upgradeKey.value}";
+                    upgradeText = levelsRequired >= player.MaxLevel ? $"{maxLevelKey.value} {levelKey.value}" :
+                                     $"{levelKey.value} {levelsRequired} {particleKey.value} {Environment.NewLine} " +
+                                     $"{nextKey.value} {upgradeKey.value}";
                     break;
                 default:
-                    upgradeText = player.Level >= player.MaxLevel ? $"{maxLevelKey.value} {levelKey.value}" :
-                                           $"{nextKey.value} {upgradeKey.value} {particleKey.value} {levelKey.value} {levelsRequired}";
+                    upgradeText = levelsRequired >= player.MaxLevel ? $"{maxLevelKey.value} {levelKey.value}" :
+                                      $"{nextKey.value} {upgradeKey.value} {particleKey.value} {levelKey.value} {levelsRequired}";
                     break;
             }
 

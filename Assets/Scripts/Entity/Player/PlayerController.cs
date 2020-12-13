@@ -11,6 +11,7 @@ using UI;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.VFX;
+using Utility;
 using Random = UnityEngine.Random;
 
 namespace Entity.Player {
@@ -201,6 +202,7 @@ namespace Entity.Player {
             CanMove = true;
             transform.position = FindObjectOfType<PlayerSpawnPositionBasedOnLastScene>().portSpawnPosition.position;
             isDead = false;
+            agent.enabled = true;
         }
 
         // OnEnable Unity Event, enables input.
@@ -253,6 +255,7 @@ namespace Entity.Player {
             if(isDead) return;
             VibrateController(0.2f, 0.8f, 0.8f);
             anim.SetTrigger(AnimDamaged);
+            agent.enabled = true;
             if(dealer.GetComponent<Enemy>()) LastEnemyToHitPlayer = dealer.GetComponent<Enemy>();
             base.Damage(amount, dealer);
         }
@@ -465,6 +468,9 @@ namespace Entity.Player {
                 CurrentUpgradeLevel = 0
             };
 
+            GameMaster.Instance.MasterSaveData.currentInventoryIds =
+                ItemIdToItemEntry.ReturnIdsFromEntries(Inventory.ItemsInInventory);
+
             for(var i = 0; i < Level; i++) {
                 if(i % upgradeSettings.upgradeEveryHowManyLevels == 1) stats.CurrentUpgradeLevel++;
             }
@@ -490,9 +496,11 @@ namespace Entity.Player {
             Experience = stats.Experience;
             Coins = stats.Coins;
             playerInventorySize = stats.InventorySize;
-            if(stats.CurrentInventory.Count > 0)
-                inventory.ItemsInInventory = new List<InventoryItemEntry>(stats.CurrentInventory);
-            else inventory.ItemsInInventory = new List<InventoryItemEntry>();
+            
+            inventory.ItemsInInventory = 
+                GameMaster.Instance.MasterSaveData.currentInventoryIds.Count > 0 ? 
+                    new List<InventoryItemEntry>(GameMaster.Instance.ItemConverter.ReturnEntriesFromIds(GameMaster.Instance.MasterSaveData.currentInventoryIds)) :
+                    new List<InventoryItemEntry>();
 
             inventory.OnInventoryUpdate?.Invoke();
 

@@ -13104,6 +13104,10 @@ PrefabInstance:
       propertyPath: maxSpawnedNpcs
       value: 6
       objectReference: {fileID: 0}
+    - target: {fileID: 4333030613534174688, guid: 0cd23411b8bf40b47a0439425b25fa71, type: 3}
+      propertyPath: storeInventorySize
+      value: 8
+      objectReference: {fileID: 0}
     - target: {fileID: 4368785039327834376, guid: 0cd23411b8bf40b47a0439425b25fa71, type: 3}
       propertyPath: m_AnchorMin.y
       value: 0
@@ -14194,11 +14198,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7346824945709312991, guid: 0cd23411b8bf40b47a0439425b25fa71, type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: -24.999756
+      value: -24.999695
       objectReference: {fileID: 0}
     - target: {fileID: 7346824945729510474, guid: 0cd23411b8bf40b47a0439425b25fa71, type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: -24.999756
+      value: -24.999695
       objectReference: {fileID: 0}
     - target: {fileID: 7352647382675270395, guid: 0cd23411b8bf40b47a0439425b25fa71, type: 3}
       propertyPath: m_AnchorMin.y

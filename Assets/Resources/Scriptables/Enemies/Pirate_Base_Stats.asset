@@ -19,8 +19,8 @@ MonoBehaviour:
   attackingRange: 20
   maxLevelCap: 30
   enemyType: 1
-  basicStatsMultiplier: 1.07
-  attackStatsMultiplier: 1.07
+  basicStatsMultiplier: 1.05
+  attackStatsMultiplier: 1.03
   eliteStatsMultiplier: 1.3
   levelVariationBasedOnPlayerLevel: 3
   chanceToDropItem: 0.5

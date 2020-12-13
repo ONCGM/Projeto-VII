@@ -159,13 +159,17 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 1024
   settings: {fileID: 11400000, guid: 1939d06c0fe00674c904c50edbff3a8b, type: 2}
+  enemyType: 0
   targetPositionUpdateInterval: 0.2
   patrollingPlayerSearchFrequency: 2
   patrollingTargetPositionTolerance: 1
   chanceToDrop: 0.1
   itemsToDrop:
   - {fileID: 11400000, guid: e108f82e77cc9b6459fcd62a2e0c4691, type: 2}
+  maxAmountOfCoinsToDrop: 25
   DamageCanvasPrefab: {fileID: 8168437462130401804, guid: 8bb4a911fd662ec4e80d3d9b635f6d3f, type: 3}
+  eliteMaterial: {fileID: 2100000, guid: ba79eb02ed1d0074598e88d23599d43d, type: 2}
+  enemyMeshRenderer: {fileID: 6715813568580295059}
   attackEvent: event:/SFX/Enemies_Events/Enemy_Critter_Attack
   deathEvent: event:/SFX/Enemies_Events/Enemy_Critter_Death
   footstepEvent: event:/SFX/Enemies_Events/Enemy_Critter_Walk
@@ -211,37 +215,6 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 84
   m_CollisionDetection: 0
---- !u!114 &7077708918273896869
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3866811657407327059}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b947fa540fb82be44b54490fb30af46e, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  customEvent:
-    m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 6609065532344468501}
-        m_TargetAssemblyTypeName: Entity.Enemies.Enemy, Assembly-CSharp
-        m_MethodName: Attack
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
-  triggerOnAwake: 0
-  triggerOnStart: 0
-  triggerOnCall: 1
-  repeatCount: 1
 --- !u!114 &4904364962121194147
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -260,6 +233,37 @@ MonoBehaviour:
       - m_Target: {fileID: 6609065532344468501}
         m_TargetAssemblyTypeName: Entity.Enemies.Enemy, Assembly-CSharp
         m_MethodName: PlayFootsteps
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+  triggerOnAwake: 0
+  triggerOnStart: 0
+  triggerOnCall: 1
+  repeatCount: 1
+--- !u!114 &7077708918273896869
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3866811657407327059}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b947fa540fb82be44b54490fb30af46e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  customEvent:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 6609065532344468501}
+        m_TargetAssemblyTypeName: Entity.Enemies.Enemy, Assembly-CSharp
+        m_MethodName: Attack
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -868,6 +872,11 @@ GameObject:
 --- !u!4 &4531320632904397289 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: c7fde542643c9ac438ae8b8fdeb91efe, type: 3}
+  m_PrefabInstance: {fileID: 4136773303661975042}
+  m_PrefabAsset: {fileID: 0}
+--- !u!137 &6715813568580295059 stripped
+SkinnedMeshRenderer:
+  m_CorrespondingSourceObject: {fileID: -1991829372517134447, guid: c7fde542643c9ac438ae8b8fdeb91efe, type: 3}
   m_PrefabInstance: {fileID: 4136773303661975042}
   m_PrefabAsset: {fileID: 0}
 --- !u!1001 &5505655621956663082

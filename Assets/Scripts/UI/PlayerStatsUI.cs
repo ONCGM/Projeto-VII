@@ -157,8 +157,8 @@ namespace UI {
             if(staminaBackBar != null) staminaBackBar.material.SetFloat(HitEffectBlend, 1f);
             
             
-            StartCoroutine(nameof(AnimateHealthBackBar));
-            StartCoroutine(nameof(AnimateStaminaBackBar));
+            if(this != null) StartCoroutine(nameof(AnimateHealthBackBar));
+            if(this != null) StartCoroutine(nameof(AnimateStaminaBackBar));
         }
 
         /// <summary>

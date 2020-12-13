@@ -36,7 +36,7 @@ namespace Store {
         // Variables.
         private CanvasGroup canvasGroup;
         private PlayerController player;
-        private bool canTriggerSleep = true;
+        public bool canTriggerSleep = true;
         
         private CanvasPopupDialog popupDialog;
         private List<ButtonSettings> sleepButtons = new List<ButtonSettings> ();
@@ -87,29 +87,65 @@ namespace Store {
         /// </summary>
         private void Sleep() {
             canvasGroup.interactable = false;
+
+            DOTween.To(() => canvasGroup.alpha, x => canvasGroup.alpha = x, 1f, fadeAnimationTime * 0.5f).onComplete +=
+                PassDay;
+        }
+
+        /// <summary>
+        /// Passing the day logic.
+        /// </summary>
+        private void PassDay() {
+            if(GameMaster.Instance.CurrentTimeOfDay == TimeOfDay.Night) GameMaster.Instance.AdvanceOneTimePeriod();
+            else {
+                GameMaster.Instance.CurrentGameDay++;
+                GameMaster.Instance.CurrentTimeOfDay = TimeOfDay.Morning;
+            }
+
+            var agent = player.GetComponent<NavMeshAgent>();
+            agent.enabled = false;
+            player.transform.position = wakeUpPosition.position;
+            player.transform.rotation = wakeUpPosition.rotation;
+            player.Health = player.MaxHealth;
+            GameMaster.Instance.SaveGame();
+
+            DOTween.To(() => canvasGroup.alpha,
+                       x => canvasGroup.alpha = x,
+                       0f, fadeAnimationTime * 0.5f).onComplete = () => {
+                canTriggerSleep = true;
+                agent.enabled = true;
+            };
+        }
+
+        /// <summary>
+        /// Animates the sleep sequence.
+        /// </summary>
+        private IEnumerator SleepRoutine() {
+            while(canvasGroup.alpha > 0f) {
+                canvasGroup.alpha -= fadeAnimationTime * Time.deltaTime;
+                yield return new WaitForEndOfFrame();
+            }
             
-            DOTween.To(()=> canvasGroup.alpha, x=> canvasGroup.alpha = x, 1f, fadeAnimationTime * 0.5f).onComplete =
-                () => {
-                    if(GameMaster.Instance.CurrentTimeOfDay == TimeOfDay.Night) GameMaster.Instance.AdvanceOneTimePeriod();
-                    else {
-                        GameMaster.Instance.CurrentGameDay++;
-                        GameMaster.Instance.CurrentTimeOfDay = TimeOfDay.Morning;
-                    }
-
-                    var agent = player.GetComponent<NavMeshAgent>();
-                    agent.enabled = false;
-                    player.transform.position = wakeUpPosition.position;
-                    player.transform.rotation = wakeUpPosition.rotation;
-                    player.Health = player.MaxHealth;
-                    GameMaster.Instance.SaveGame();
-
-                    DOTween.To(() => canvasGroup.alpha,
-                               x => canvasGroup.alpha = x,
-                               0f, fadeAnimationTime * 0.5f).onComplete = () => {
-                        canTriggerSleep = true;
-                        agent.enabled = enabled;
-                    };
-                };
+            if(GameMaster.Instance.CurrentTimeOfDay == TimeOfDay.Night) GameMaster.Instance.AdvanceOneTimePeriod();
+            else {
+                GameMaster.Instance.CurrentGameDay++;
+                GameMaster.Instance.CurrentTimeOfDay = TimeOfDay.Morning;
+            }
+            
+            var agent = player.GetComponent<NavMeshAgent>();
+            agent.enabled = false;
+            player.transform.position = wakeUpPosition.position;
+            player.transform.rotation = wakeUpPosition.rotation;
+            player.Health = player.MaxHealth;
+            GameMaster.Instance.SaveGame();
+            
+            while(canvasGroup.alpha < 1f) {
+                canvasGroup.alpha += fadeAnimationTime * Time.deltaTime;
+                yield return new WaitForEndOfFrame();
+            }
+            
+            canTriggerSleep = true;
+            agent.enabled = true;
         }
     }
 }

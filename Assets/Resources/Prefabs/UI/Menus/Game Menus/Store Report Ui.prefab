@@ -262,7 +262,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   localizedText:
-    key: placeholder
+    key: MENU_TITLE_SOLD_ITEMS
 --- !u!114 &2139753552196755512
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -548,7 +548,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   localizedText:
-    key: placeholder
+    key: MENU_TITLE_STORE_DEBRIEF
 --- !u!114 &31676019823044937
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1647,7 +1647,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   localizedText:
-    key: placeholder
+    key: MENU_TITLE_PROFIT
 --- !u!114 &2616473424048366084
 MonoBehaviour:
   m_ObjectHideFlags: 0
