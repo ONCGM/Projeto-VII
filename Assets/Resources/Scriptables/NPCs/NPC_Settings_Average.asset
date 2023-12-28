@@ -1,0 +1,22 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: dacceaf45c02a3642a905f5f6d4d3c33, type: 3}
+  m_Name: NPC_Settings_Average
+  m_EditorClassIdentifier: 
+  amountOfCoins: 275
+  basicStatsMultiplier: 1.07
+  levelVariationBasedOnPlayerLevel: 5
+  howManyItemsToBrowse: 3
+  chanceToBuySomething: 0.6
+  npcsVariationsToUse:
+  - {fileID: 4183022347136945761, guid: de967b4cb88fcd24989078b91311a7a4, type: 3}
+  - {fileID: 7167756977951031862, guid: a51e4e29dad10394691f7bd252397fbb, type: 3}

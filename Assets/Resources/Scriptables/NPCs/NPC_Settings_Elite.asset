@@ -1,0 +1,21 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: dacceaf45c02a3642a905f5f6d4d3c33, type: 3}
+  m_Name: NPC_Settings_Elite
+  m_EditorClassIdentifier: 
+  amountOfCoins: 1250
+  basicStatsMultiplier: 1.1
+  levelVariationBasedOnPlayerLevel: 3
+  howManyItemsToBrowse: 9
+  chanceToBuySomething: 0.4
+  npcsVariationsToUse:
+  - {fileID: 7167756977951031862, guid: 227ccb83c1ac3ec40af64f8e4579393f, type: 3}

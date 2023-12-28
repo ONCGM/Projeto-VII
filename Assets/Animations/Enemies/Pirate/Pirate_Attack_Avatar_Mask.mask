@@ -1,0 +1,71 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!319 &31900000
+AvatarMask:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Name: Pirate_Attack_Avatar_Mask
+  m_Mask: 00000000010000000100000000000000000000000100000001000000010000000100000000000000000000000100000001000000
+  m_Elements:
+  - m_Path: 
+    m_Weight: 1
+  - m_Path: Armature
+    m_Weight: 1
+  - m_Path: Armature/RootPart
+    m_Weight: 1
+  - m_Path: Armature/RootPart/LeftLegConnection
+    m_Weight: 1
+  - m_Path: Armature/RootPart/LeftLegConnection/LeftUpperLeg
+    m_Weight: 1
+  - m_Path: Armature/RootPart/LeftLegConnection/LeftUpperLeg/LeftLowerLeg
+    m_Weight: 1
+  - m_Path: Armature/RootPart/LeftLegConnection/LeftUpperLeg/LeftLowerLeg/LeftFoot
+    m_Weight: 1
+  - m_Path: Armature/RootPart/LeftLegConnection/LeftUpperLeg/LeftLowerLeg/LeftFoot/LeftFoot_end
+    m_Weight: 1
+  - m_Path: Armature/RootPart/LowerTorso
+    m_Weight: 1
+  - m_Path: Armature/RootPart/LowerTorso/MidTorso
+    m_Weight: 1
+  - m_Path: Armature/RootPart/LowerTorso/MidTorso/LeftArmConnection
+    m_Weight: 1
+  - m_Path: Armature/RootPart/LowerTorso/MidTorso/LeftArmConnection/LeftUpperArm
+    m_Weight: 1
+  - m_Path: Armature/RootPart/LowerTorso/MidTorso/LeftArmConnection/LeftUpperArm/LeftLowerArm
+    m_Weight: 1
+  - m_Path: Armature/RootPart/LowerTorso/MidTorso/LeftArmConnection/LeftUpperArm/LeftLowerArm/LeftHand
+    m_Weight: 1
+  - m_Path: Armature/RootPart/LowerTorso/MidTorso/LeftArmConnection/LeftUpperArm/LeftLowerArm/LeftHand/LeftHand_end
+    m_Weight: 1
+  - m_Path: Armature/RootPart/LowerTorso/MidTorso/RightArmConnection
+    m_Weight: 1
+  - m_Path: Armature/RootPart/LowerTorso/MidTorso/RightArmConnection/RightUpperArm
+    m_Weight: 1
+  - m_Path: Armature/RootPart/LowerTorso/MidTorso/RightArmConnection/RightUpperArm/Cannon
+    m_Weight: 1
+  - m_Path: Armature/RootPart/LowerTorso/MidTorso/RightArmConnection/RightUpperArm/RightLowerArm
+    m_Weight: 1
+  - m_Path: Armature/RootPart/LowerTorso/MidTorso/RightArmConnection/RightUpperArm/RightLowerArm/RightHand
+    m_Weight: 1
+  - m_Path: Armature/RootPart/LowerTorso/MidTorso/RightArmConnection/RightUpperArm/RightLowerArm/RightHand/RightHand_end
+    m_Weight: 1
+  - m_Path: Armature/RootPart/LowerTorso/MidTorso/UpperTorso
+    m_Weight: 1
+  - m_Path: Armature/RootPart/LowerTorso/MidTorso/UpperTorso/Head
+    m_Weight: 1
+  - m_Path: Armature/RootPart/LowerTorso/MidTorso/UpperTorso/Head/Head_end
+    m_Weight: 1
+  - m_Path: Armature/RootPart/RightLegConnection
+    m_Weight: 1
+  - m_Path: Armature/RootPart/RightLegConnection/RightUpperLeg
+    m_Weight: 1
+  - m_Path: Armature/RootPart/RightLegConnection/RightUpperLeg/RightLowerLeg
+    m_Weight: 1
+  - m_Path: Armature/RootPart/RightLegConnection/RightUpperLeg/RightLowerLeg/RightFoot
+    m_Weight: 1
+  - m_Path: Armature/RootPart/RightLegConnection/RightUpperLeg/RightLowerLeg/RightFoot/RightFoot_end
+    m_Weight: 1
+  - m_Path: Redhead_Beard
+    m_Weight: 1

@@ -1,0 +1,19 @@
+fileFormatVersion: 2
+guid: abd30120a5220364c95490d4bc58e217
+MonoImporter:
+  externalObjects: {}
+  serializedVersion: 2
+  defaultReferences:
+  - swordCollider: {instanceID: 0}
+  - bulletSpawnPosition: {instanceID: 0}
+  - bulletPrefab: {fileID: 5173478839772874508, guid: 9ab390d8334dfe8429e4894c880874ee, type: 3}
+  - upgradeSettings: {fileID: 11400000, guid: 1ac72461f75352f4aa13208579726fa1, type: 2}
+  - playerFootstepEmitter: {instanceID: 0}
+  - DamageCanvasPrefab: {fileID: 8168437462130401804, guid: 8bb4a911fd662ec4e80d3d9b635f6d3f, type: 3}
+  - deathCanvasPrefab: {fileID: 586152184084393269, guid: a2053756e26a72048aea3584ac0b5979, type: 3}
+  - swordSlash: {instanceID: 0}
+  executionOrder: 0
+  icon: {instanceID: 0}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
